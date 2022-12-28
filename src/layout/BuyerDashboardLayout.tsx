@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const Layout = () => {
+const BuyerDashboardLayout = () => {
   return (
     <div className=''>
               <main className=' '>
@@ -12,4 +12,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default BuyerDashboardLayout;
