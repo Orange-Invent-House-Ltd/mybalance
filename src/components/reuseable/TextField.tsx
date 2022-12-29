@@ -10,7 +10,7 @@ const TextField: React.FC<ITextField> = (props) => {
   return (
     <div>
       <p
-        className={clsx("text-sm mb-[6px]", {
+        className={clsx("text-sm mb-[6px] capitalize", {
           "text-[#DA1E28]": props.error,
         })}
       >
