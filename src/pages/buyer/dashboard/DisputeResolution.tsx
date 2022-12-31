@@ -19,16 +19,15 @@ const DisputeResolution = () => {
           <TextField label="priority" />
         </div>
         <TextField label="Reason for filing your dispute" />
-        <TextField label=" Type in the box below" multiple minLength={50} />
-        <div className="flex justify-end" >
-          <div className="w-[350px]" >
-             <Button disabled fullWidth >
-          submit
-        </Button> 
+
+        <TextField label=" Type in the box below" />
+        <div className="flex justify-end">
+          <div className="w-[350px]">
+            <Button disabled fullWidth>
+              submit
+            </Button>
           </div>
-        
         </div>
-        
       </form>
     </div>
   );

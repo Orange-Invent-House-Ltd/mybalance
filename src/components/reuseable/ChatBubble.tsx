@@ -5,8 +5,12 @@ interface IChatBubble {
 }
 const ChatBubble:FC<IChatBubble> = ({user}) => {
   return (
-    <div className=" w-[315px]">
-      <div className="flex items-center justify-between">
+    <div
+      className={clsx("  block  w-[315px]", {
+        "ml-auto ": !user,
+      })}
+    >
+      <div className="flex  items-center justify-between">
         <p className="font-medium text-lg">MyBalance</p>
         <p className="text-[#6D6D6D] text-sm ">Friday 2:21pm</p>
       </div>
