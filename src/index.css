@@ -148,3 +148,6 @@
 html,body{
     @apply font-satoshi
 }
+.h6{
+  @apply text-[23px] font-medium leading-[31.05px];
+}
