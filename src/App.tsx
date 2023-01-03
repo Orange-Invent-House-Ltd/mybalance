@@ -10,6 +10,7 @@ import Register from "./pages/buyer/auth/Register";
 import RegVerification from "./pages/buyer/auth/RegVerification";
 import Dashboard from "./pages/buyer/dashboard/Dashboard";
 import QuickAction from "./pages/buyer/dashboard/QuickAction";
+import LockNewAmount from "./pages/buyer/dashboard/LockNewAmount";
 
 
 const App: React.FC = () => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="profile" element={<Profile />} />
           <Route path="customer-support" element={<CustomerSupport />} />
+          <Route path="lock" element={<LockNewAmount />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path='/register' element= {<Register/>} />
