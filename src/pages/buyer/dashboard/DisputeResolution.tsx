@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/reuseable/Button";
+import MultilineTextField from "../../../components/reuseable/MultilineTextField";
 import TextField from "../../../components/reuseable/TextField";
 
 const DisputeResolution = () => {
@@ -20,7 +21,8 @@ const DisputeResolution = () => {
         </div>
         <TextField label="Reason for filing your dispute" />
 
-        <TextField label=" Type in the box below" />
+        <MultilineTextField label="Type in the box below" />
+
         <div className="flex justify-end">
           <div className="w-[350px]">
             <Button disabled fullWidth>

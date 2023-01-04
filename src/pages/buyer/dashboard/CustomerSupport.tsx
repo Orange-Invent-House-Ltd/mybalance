@@ -4,7 +4,7 @@ import MultilineTextField from "../../../components/reuseable/MultilineTextField
 
 const CustomerSupport = () => {
   return (
-    <div>
+    <div >
       <header className="mb-16">
         <h1 className="text-[23px] capitalize font-medium ">
           Customer Support
