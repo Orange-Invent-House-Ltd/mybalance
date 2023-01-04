@@ -2,6 +2,8 @@ import {useState} from 'react'
 import TextField from '../../../components/reuseable/TextField'
 import { Button } from '../../../components/reuseable/Button'
 import check from '../../../assets/Icons/check.svg'
+import back from '../../../assets/Icons/back.svg'
+import { Link } from 'react-router-dom'
 
 const LockNewAmount = () => {
   const [value, setValue] = useState("")
@@ -13,6 +15,7 @@ const LockNewAmount = () => {
 
   return (
     <div className=''>
+      <div className='flex gap-4 items-center pt-10 mb-8'><Link to="/buyer/quick-action"><img src={back} alt="back" /></Link> <h6 className='h6'>Lock New Amount </h6></div>
       <h1 className='text-[#EDEDED] text-lg font-medium'>SENDER ADDITIONAL INFORMATION</h1>
       <div className='mt-6 flex flex-col gap-4'>
         <TextField 

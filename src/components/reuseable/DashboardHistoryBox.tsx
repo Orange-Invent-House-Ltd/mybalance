@@ -9,7 +9,7 @@ type historyprops = {
 
 const HistoryBox = ({header, text, price, subtext}: historyprops) => {
   return (
-    <div className='my-4 flex justify-between items-center rounded border shadow shadow-[#E4E4E4] border-white w-[676px] h-[80px] px-8 py-4'>
+    <div className='my-4 flex justify-between items-center gap-2 rounded border shadow shadow-[#E4E4E4] border-white max-w-[676px] h-[80px] px-6 py-4'>
       <div>
         <p className='text-lg font-medium'>{header}</p>
         <p className='text-sm font-normal'>{text}</p>

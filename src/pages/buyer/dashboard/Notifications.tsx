@@ -1,14 +1,6 @@
-import { useState } from "react"
+import { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { Button } from "../../../components/reuseable/Button";
 import Header from '../../../components/reuseable/Header'
-import DashboardLockedBox from '../../../components/reuseable/DashboardLockedBox'
-import DashboardQuickBox from '../../../components/reuseable/DashboardQuickBox'
-import plus  from '../../../assets/Icons/plus.svg'
-import lock from '../../../assets/Icons/lock.svg'
-import unlock from '../../../assets/Icons/unlock.svg'
-import download from '../../../assets/Icons/download.svg'
-import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryBox'
 import logo from '../../../assets/Icons/logo.svg'
 import handburger from '../../../assets/Icons/handburger.svg'
 import close from '../../../assets/Icons/close.svg'
@@ -17,7 +9,7 @@ import linkedin from '../../../assets/Icons/LinkedIn.svg'
 import  facebook from '../../../assets/Icons/Facecook.svg'
 
 
-const Dashboard = () => {
+const Notifications = () => {
   const[sidebar, setSidebar] = useState(false)
 
   const showSidebar =()=>{
@@ -25,7 +17,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='mb-16'>
+    <div>
       {/* Mobile Navbar ****************** */}
       <div className='md:hidden flex justify-between items-center mb-10'>
         <img src={logo} alt="My Balance Logo" />
@@ -36,7 +28,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <nav className={sidebar? "navMenu right-0 duration-300" : "navMenu -right-full duration-700"}>
-            <ul >
+            <ul>
               <li>
                 <Link to="#"><img src={close} alt="close" className='w-12 py-4 mb-2 mx-auto' onClick={showSidebar}/></Link>
               </li>
@@ -54,68 +46,21 @@ const Dashboard = () => {
       </div>
       {/* ******************************** */}
       <Header
-        Heading='Welcome Jamjam!'
-        Text='Your last login was on 01/12/2022 10:00:34 AM'
+        Heading='Notifications'
+        Text='Get instant notification as you perform real-time transaction immediately on MyBalance.'
       />
-      <div className='flex flex-wrap gap-2 mt-16'>
-        <div  className='border border-[#FECA9F] rounded w-[403px] h-[125px] p-6 '>
-          <p className='mb-2 font-base font-normal leading-[21.6px]'>Available balance in escrow</p>
-          <h4 className='font-bold text-[32px] leading-[43.2px]'>₦40,000.00</h4>
-        </div>
-        <DashboardLockedBox 
-          Text='Locked amount'
-          Amount= '₦30,000.00' 
-        />
-        <DashboardLockedBox 
-          Text='Unlocked amount'
-          Amount= '₦0.00'
-        />
+      <p className='text-[#121212] text-lg font-bold'>You have  1 unread notifications</p>
+      <div className='mt-6'>
+        {
+          datas.map((data, key) =>(
+            <div key={key} className='w-[325px] mt-4 pl-6 pb-4 rounded border-b border-[#E4E4E4]'>
+              <p className='text-[#121212] text-lg font-medium'>{data.heading}</p>
+              <p className='text-[#303030] text-sm font-normal'>{data.text}</p>
+              <p className='text-[10px] text-[#B7B7B7] font-normal'>{data.date}</p>
+            </div>
+          ))
+        }
       </div>
-      <h6 className='h6 mt-10 mb-6'>Quick actions</h6>
-      <div className='flex flex-wrap mb-4'>
-        <Link to='/buyer/quick-action' className='mb-4 mr-4'>
-          <DashboardQuickBox 
-          icon ={plus}
-          text='Deposit money'
-          subtext='Tap on this to add money to your escrow wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action' className='mr-4'>
-          <DashboardQuickBox 
-            icon ={lock}
-            text='Lock money'
-            subtext='Tap on this to lock your money in your wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action' className='mr-4'>
-          <DashboardQuickBox 
-            icon ={unlock}
-            text='Unlock money'
-            subtext='Tap on this to release the money in your wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action'>
-          <DashboardQuickBox 
-            icon ={download}
-            text='Withdraw money'
-            subtext='Tap on this to release the money in your wallet'
-          />
-        </Link>
-      </div>
-      <h6 className='h6 mt-10'>Transaction history</h6>
-      <DashboardHistoryBox 
-        header='White Air Jordans'
-        text='Pair of white Air Jordans from Young Jonn'
-        price='₦20,000.00'
-        subtext='Dec 11, 2022 3:00 PM'
-      />
-      <DashboardHistoryBox 
-        header='Apple Series 2'
-        text='Apple series 2 smartwatch ...'
-        price='₦10,000.00'
-        subtext='Dec 11, 2022 3:00 PM'
-      />
-      <div className='w-[343px]'><Link to='/buyer/transaction-history'><Button fullWidth variant="outlined">View all transactions</Button></Link></div>
       {/* Mobile footer */}
       <div className="pl-8 mt-24 mb-16 md:hidden">
         <div className="flex gap-6 mb-2 ">
@@ -128,6 +73,24 @@ const Dashboard = () => {
     </div>
   )
 }
+
+const datas =[
+  {
+    heading:"You have locked 10,000",
+    text: "For Apple Series 2 ...",
+    date: "Just now"
+  },
+  {
+    heading:"You have locked 20,000",
+    text: "For White pair of Air Jordans ...",
+    date: "3 days ago"
+  },
+  {
+    heading:"You have locked 30,000",
+    text: "You have deposited 30,000 into your wallet",
+    date: "10 days ago"
+  }
+]
 
 const sidebarDatas = [
   {
@@ -203,4 +166,4 @@ const sidebarDatas = [
   }
 ]
 
-export default Dashboard
+export default Notifications

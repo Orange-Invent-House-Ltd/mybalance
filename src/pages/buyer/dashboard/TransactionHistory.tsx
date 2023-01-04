@@ -1,13 +1,6 @@
 import { useState } from "react"
-import {Link} from 'react-router-dom'
-import { Button } from "../../../components/reuseable/Button";
-import Header from '../../../components/reuseable/Header'
-import DashboardLockedBox from '../../../components/reuseable/DashboardLockedBox'
-import DashboardQuickBox from '../../../components/reuseable/DashboardQuickBox'
-import plus  from '../../../assets/Icons/plus.svg'
-import lock from '../../../assets/Icons/lock.svg'
-import unlock from '../../../assets/Icons/unlock.svg'
-import download from '../../../assets/Icons/download.svg'
+import { Link } from "react-router-dom"
+import Header from "../../../components/reuseable/Header"
 import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryBox'
 import logo from '../../../assets/Icons/logo.svg'
 import handburger from '../../../assets/Icons/handburger.svg'
@@ -17,7 +10,7 @@ import linkedin from '../../../assets/Icons/LinkedIn.svg'
 import  facebook from '../../../assets/Icons/Facecook.svg'
 
 
-const Dashboard = () => {
+const TransactionHistory = () => {
   const[sidebar, setSidebar] = useState(false)
 
   const showSidebar =()=>{
@@ -25,7 +18,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='mb-16'>
+    <div>
       {/* Mobile Navbar ****************** */}
       <div className='md:hidden flex justify-between items-center mb-10'>
         <img src={logo} alt="My Balance Logo" />
@@ -35,8 +28,8 @@ const Dashboard = () => {
               <img src={handburger} alt="menue" onClick={showSidebar} className="w-7 h-7"/>
             </Link>
           </div>
-          <nav className={sidebar? "navMenu right-0 duration-300" : "navMenu -right-full duration-700"}>
-            <ul >
+          <nav className={sidebar? "navMenu right-0 duration-300" : "navMenu -right-full transition-all duration-700"}>
+            <ul>
               <li>
                 <Link to="#"><img src={close} alt="close" className='w-12 py-4 mb-2 mx-auto' onClick={showSidebar}/></Link>
               </li>
@@ -54,55 +47,9 @@ const Dashboard = () => {
       </div>
       {/* ******************************** */}
       <Header
-        Heading='Welcome Jamjam!'
-        Text='Your last login was on 01/12/2022 10:00:34 AM'
+        Heading='Transaction History'
+        Text='You can view an endless list of transaction you have transacted over time.'
       />
-      <div className='flex flex-wrap gap-2 mt-16'>
-        <div  className='border border-[#FECA9F] rounded w-[403px] h-[125px] p-6 '>
-          <p className='mb-2 font-base font-normal leading-[21.6px]'>Available balance in escrow</p>
-          <h4 className='font-bold text-[32px] leading-[43.2px]'>₦40,000.00</h4>
-        </div>
-        <DashboardLockedBox 
-          Text='Locked amount'
-          Amount= '₦30,000.00' 
-        />
-        <DashboardLockedBox 
-          Text='Unlocked amount'
-          Amount= '₦0.00'
-        />
-      </div>
-      <h6 className='h6 mt-10 mb-6'>Quick actions</h6>
-      <div className='flex flex-wrap mb-4'>
-        <Link to='/buyer/quick-action' className='mb-4 mr-4'>
-          <DashboardQuickBox 
-          icon ={plus}
-          text='Deposit money'
-          subtext='Tap on this to add money to your escrow wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action' className='mr-4'>
-          <DashboardQuickBox 
-            icon ={lock}
-            text='Lock money'
-            subtext='Tap on this to lock your money in your wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action' className='mr-4'>
-          <DashboardQuickBox 
-            icon ={unlock}
-            text='Unlock money'
-            subtext='Tap on this to release the money in your wallet'
-          />
-        </Link>
-        <Link to='/buyer/quick-action'>
-          <DashboardQuickBox 
-            icon ={download}
-            text='Withdraw money'
-            subtext='Tap on this to release the money in your wallet'
-          />
-        </Link>
-      </div>
-      <h6 className='h6 mt-10'>Transaction history</h6>
       <DashboardHistoryBox 
         header='White Air Jordans'
         text='Pair of white Air Jordans from Young Jonn'
@@ -115,7 +62,6 @@ const Dashboard = () => {
         price='₦10,000.00'
         subtext='Dec 11, 2022 3:00 PM'
       />
-      <div className='w-[343px]'><Link to='/buyer/transaction-history'><Button fullWidth variant="outlined">View all transactions</Button></Link></div>
       {/* Mobile footer */}
       <div className="pl-8 mt-24 mb-16 md:hidden">
         <div className="flex gap-6 mb-2 ">
@@ -203,4 +149,4 @@ const sidebarDatas = [
   }
 ]
 
-export default Dashboard
+export default TransactionHistory

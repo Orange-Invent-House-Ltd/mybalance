@@ -11,6 +11,8 @@ import RegVerification from "./pages/buyer/auth/RegVerification";
 import Dashboard from "./pages/buyer/dashboard/Dashboard";
 import QuickAction from "./pages/buyer/dashboard/QuickAction";
 import LockNewAmount from "./pages/buyer/dashboard/LockNewAmount";
+import TransactionHistory from "./pages/buyer/dashboard/TransactionHistory";
+import Notifications from "./pages/buyer/dashboard/Notifications";
 
 
 const App: React.FC = () => {
@@ -21,6 +23,8 @@ const App: React.FC = () => {
           <Route index element={<Home />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="quick-action" element={<QuickAction />} />
+          <Route path="transaction-history" element={<TransactionHistory/>} />
+          <Route path="notifications" element={<Notifications/>} />
           <Route path="dispute-resolution" element={<DisputeResolution />} />
           <Route path="settings" element={<Settings />} />
           <Route path="profile" element={<Profile />} />
