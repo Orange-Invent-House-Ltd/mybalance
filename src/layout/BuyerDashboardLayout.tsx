@@ -13,7 +13,7 @@ const BuyerDashboardLayout = () => {
 
   return (
     <div className="flex">
-      <div className="hidden md:block w-[250px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
+      <div className="hidden md:block w-[350px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
         <header className="h-[150px] flex justify-center items-center">
           <img src={logo} alt="my balance logo"/>
         </header>
