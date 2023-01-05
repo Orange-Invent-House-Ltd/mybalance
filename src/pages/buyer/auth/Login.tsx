@@ -42,7 +42,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-
       <img
         className=" w-screen h-[300px] md:flex-[.5]  md:h-screen object-cover"
         src={sideImg}

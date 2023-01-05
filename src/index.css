@@ -148,3 +148,9 @@
 html,body{
     @apply font-satoshi
 }
+.h6{
+  @apply text-[23px] font-medium leading-[31.05px];
+}
+.navMenu{
+  @apply text-white bg-[#3A3A3A] w-[220px] h-full fixed top-0 transition-all z-10;
+}

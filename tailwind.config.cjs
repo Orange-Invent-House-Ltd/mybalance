@@ -14,6 +14,7 @@ module.exports = {
         },
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
+        'black-rgba': 'rgba(58, 58, 58, 0.6)',
       },
     },
   },
