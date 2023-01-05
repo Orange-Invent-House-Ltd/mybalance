@@ -4,7 +4,7 @@ import Modal from "../components/reuseable/Modal";
 const BuyerDashboardLayout = () => {
   return (
     <div className="flex">
-      <Modal />
+      {/* <Modal /> */}
       <div className="w-[287px] text-white sticky top-0 left-0 h-screen bg-green-600 ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil autem aut
         culpa alias earum quibusdam quisquam esse vero dolorem. Vel, ipsam!
