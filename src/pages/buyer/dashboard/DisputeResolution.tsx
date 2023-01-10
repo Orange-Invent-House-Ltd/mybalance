@@ -14,8 +14,8 @@ const DisputeResolution = () => {
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
-      <form className="w-[720px] space-y-8  ">
-        <div className="flex gap-5 w-full ">
+      <form className="max-w-[720px] space-y-8  ">
+        <div className="flex gap-5 w-full flex-wrap ">
           <TextField label="Reference code/ Transaction ID" />
           <TextField label="priority" />
         </div>
