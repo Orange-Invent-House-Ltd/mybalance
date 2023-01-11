@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/reuseable/Button";
+import MultilineTextField from "../../../components/reuseable/MultilineTextField";
 import TextField from "../../../components/reuseable/TextField";
 
 const DisputeResolution = () => {
@@ -13,14 +14,15 @@ const DisputeResolution = () => {
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
-      <form className="w-[720px] space-y-8  ">
-        <div className="flex gap-5 w-full ">
+      <form className="max-w-[720px] space-y-8  ">
+        <div className="flex gap-5 w-full flex-wrap ">
           <TextField label="Reference code/ Transaction ID" />
           <TextField label="priority" />
         </div>
         <TextField label="Reason for filing your dispute" />
 
-        <TextField label=" Type in the box below" />
+        <MultilineTextField label="Type in the box below" />
+
         <div className="flex justify-end">
           <div className="w-[350px]">
             <Button disabled fullWidth>

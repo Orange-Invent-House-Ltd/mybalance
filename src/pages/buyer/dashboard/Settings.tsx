@@ -11,7 +11,7 @@ const Settings = () => {
           Make changes to your email, password and so on.
         </p>
       </header>
-      <div className="flex gap-20">
+      <div className="flex gap-20 flex-wrap">
               <ChangeEmailForm />
               <ChangePasswordForm/>
       </div>

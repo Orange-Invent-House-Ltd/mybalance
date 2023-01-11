@@ -22,7 +22,7 @@ const MultilineTextField = (props: IMultilineTextField) => {
         cols={60}
         name="text"
         placeholder="Enter text"
-        className="w-full p-3  focus-within:border-[#747373] border border-[#B7B7B7]"
+        className="w-full resize-none rounded-md outline-none  p-3  focus-within:border-[#747373] border border-[#B7B7B7]"
       ></textarea>
 
       <p
