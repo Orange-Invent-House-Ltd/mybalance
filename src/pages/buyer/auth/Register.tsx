@@ -6,15 +6,22 @@ import { Button } from '../../../components/reuseable/Button';
 import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
 
-const Register = () => {
+
+const Register = ({ setActiveTab}:any) => {
   // tabs
   const [openTab, setOpenTab] = useState(1);
-
+  //buyer
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
   const [email, setEmail ] = useState("")
   const [password, setPassword] = useState("")
+  //seller
+  const [businessName, setBusinessName] = useState("")
+  const [discription, setDiscription] = useState("")
+  const [address, setAddress] = useState("")
+  const [sellerPhone, setSellerPhone] = useState("")
 
+  //buyer functions
   const handleName=(e:any)=>{
     let name = e.target.value
     setName(name)
@@ -31,9 +38,29 @@ const Register = () => {
     let password = e.target.value
     setPassword(password)
   }
+  //seller functions
+  const handleBusinessName=(e:any)=>{
+    let businessName = e.target.value
+    setBusinessName(businessName)
+  }
+  const handleDiscription=(e:any)=>{
+    let discription= e.target.value
+    setDiscription(discription)
+  }
+  const handleAddress=(e:any)=>{
+    let address = e.target.value
+    setAddress(address)
+  }
+  const handleSellerPhone=(e:any)=>{
+    let sellerPhone = e.target.value
+    setSellerPhone(sellerPhone)
+  }
+  const handleClick=(e:any)=>{
+    setActiveTab(2)
+  }
 
   return ( 
-    <div className=' md:flex justify-center flex-row-reverse '>
+    <div className=' md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
       <header className='md:hidden ml-[5%] mb-4 mt-[5%] '>
         <img src={logo} alt="my-balance" />
@@ -100,6 +127,7 @@ const Register = () => {
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
+                    {/* create account as buyer */}
                     <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                       <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
@@ -108,23 +136,31 @@ const Register = () => {
                         <TextField value={email} onChange={handleEmail} label = "Email" placeholder='e.g al.bert@gmail.com'/>
                         <TextField value={phone} onChange={handlePhone}  label = "Phone" placeholder='+234 000 0000 000'/>
                         <TextField value={password} onChange={handlePassword} label = "Password" type="password" placeholder='************'/>
-                        <Link to='/register/verification'><Button disabled = {password ? false : true} fullWidth = {true}>Next</Button></Link>
+                        <Link to='/register/verification'><Button disabled = {password ? false : true} fullWidth = {true} onClick={handleClick}>Next</Button></Link>
                       </div>
                     </div>
+                    {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                      <p>
-                      Create as a seller
-                      </p>
+                      <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
+                      <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
+                      <div className='grid gap-y-3.5'>
+                        <TextField value={businessName} onChange={handleBusinessName}  label = "Business name" placeholder='e.g “Musty Feet”'/>
+                        <TextField value={discription} onChange={handleDiscription} label = "Describe your service" placeholder='Sales of sneakers, footwear, etc'/>
+                        <TextField value={address} onChange={handleAddress}  label = "Address" placeholder='Ikeja, Lagos.'/>
+                        <TextField value={sellerPhone} onChange={handleSellerPhone} label = "Phone" type="phone" placeholder='+234 000 0000 000'/>
+                        <Link to='/register/verification'><Button disabled = {sellerPhone ? false : true} fullWidth = {true} onClick={handleClick}>Next</Button></Link>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
-          <p className='text-sm font-normal text-center'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
         </div>
       </div>
     </div>
-)};
+  )
+};
 
 export default Register

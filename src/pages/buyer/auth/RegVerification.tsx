@@ -6,12 +6,14 @@ import check from "../../../assets/Icons/check.svg"
 import { Button } from '../../../components/reuseable/Button';
 import ReactInputVerificationCode from 'react-input-verification-code';
 import "./Regverification.css"
+import Register from './Register'
 
 
 
 const RegVerification = () => {
   // tabs
-  const [openTab, setOpenTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(1);
+ 
 
   const [verifyValue, setVerifyValue] = useState("")
   const [isVerify, setIsVerify] = useState(false);
@@ -34,7 +36,7 @@ const RegVerification = () => {
           <img src={logo} alt="my-balance" />
         </header>
         
-        <div className='w-[343px] md::w-[376px] my-8 mx-auto'>
+        <div className='w-[365px] md::w-[376px] my-8 mx-auto'>
           {/* tabs */}
           <div className="flex flex-wrap">
             <div className="w-full">
@@ -46,13 +48,13 @@ const RegVerification = () => {
                   <a
                     className={
                       "text-xs font-bold uppercase py-3 block leading-normal " +
-                      (openTab === 1
+                      (activeTab === 1
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(1);
+                      setActiveTab(1);
                     }}
                     data-toggle="tab"
                     href="#link1"
@@ -65,13 +67,13 @@ const RegVerification = () => {
                   <a
                     className={
                       "text-xs font-bold uppercase py-3  block leading-normal " +
-                      (openTab === 2
+                      (activeTab === 2
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(2);
+                      setActiveTab(2);
                     }}
                     data-toggle="tab"
                     href="#link2"
@@ -82,9 +84,9 @@ const RegVerification = () => {
                 </li>
               </ul>
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-                <div className="px-4 py-5 flex-auto">
+                <div className="mx-auto py-5 flex-auto">
                   <div className="tab-content tab-space">
-                    <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                    <div className={activeTab === 1 ? "block" : "hidden"} id="link1">
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>
                       <div className='grid gap-y-3.5'>
@@ -112,7 +114,7 @@ const RegVerification = () => {
                         </div>
                       )}
                     </div>
-                    <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                    <div className={activeTab === 2 ? "block" : "hidden"} id="link2">
                       <p>
                       Create as a seller
                       </p>
