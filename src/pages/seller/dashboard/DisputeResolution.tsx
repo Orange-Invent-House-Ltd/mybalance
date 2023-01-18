@@ -1,7 +1,7 @@
-import React from "react";
-import { Button } from "../../../components/reuseable/Button";
-import MultilineTextField from "../../../components/reuseable/MultilineTextField";
-import TextField from "../../../components/reuseable/TextField";
+import React from 'react'
+import { Button } from '../../../components/reuseable/Button';
+import MultilineTextField from '../../../components/reuseable/MultilineTextField';
+import TextField from '../../../components/reuseable/TextField';
 
 const DisputeResolution = () => {
   return (
@@ -14,7 +14,7 @@ const DisputeResolution = () => {
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
-      <form className="max-w-[720px] space-y-8  ">
+      <form className="max-w-[720px]  space-y-8  ">
         <div className="flex gap-5 w-full flex-col lg:flex-row ">
           <TextField label="Reference code/ Transaction ID" />
           <TextField label="priority" />
@@ -33,6 +33,6 @@ const DisputeResolution = () => {
       </form>
     </div>
   );
-};
+}
 
-export default DisputeResolution;
+export default DisputeResolution
