@@ -6,12 +6,6 @@ import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryB
 
 
 const TransactionHistory = () => {
-  const[sidebar, setSidebar] = useState(false)
-
-  const showSidebar =()=>{
-    setSidebar(!sidebar)
-  }
-
   return (
     <div>
       <Header

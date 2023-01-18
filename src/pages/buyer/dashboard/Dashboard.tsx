@@ -12,12 +12,6 @@ import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryB
 
 
 const Dashboard = () => {
-  const[sidebar, setSidebar] = useState(false)
-
-  const showSidebar =()=>{
-    setSidebar(!sidebar)
-  }
-
   return (
     <div className='mb-16'>
       <Header

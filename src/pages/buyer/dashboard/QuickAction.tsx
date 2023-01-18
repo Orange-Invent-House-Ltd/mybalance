@@ -16,18 +16,12 @@ const QuickAction = () => {
   // withdraw
   const [value, setValue] = useState("") 
   const [isWithdraw, setIsWithdraw] = useState(false);
-  // mobile menu
-  const[sidebar, setSidebar] = useState(false)
 
   const handlePin =(e:any)=>{
     setPin(e.target.value)
   }
   const handleChange = (e:any)=>{
     setValue(e.target.value)
-  }
-  // mobile menu
-  const showSidebar =()=>{
-    setSidebar(!sidebar)
   }
 
   return (

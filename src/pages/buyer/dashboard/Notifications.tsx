@@ -4,12 +4,6 @@ import Header from '../../../components/reuseable/Header'
 
 
 const Notifications = () => {
-  const[sidebar, setSidebar] = useState(false)
-
-  const showSidebar =()=>{
-    setSidebar(!sidebar)
-  }
-
   return (
     <div>
       <Header
