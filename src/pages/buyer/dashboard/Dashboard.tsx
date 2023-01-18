@@ -26,33 +26,6 @@ const Dashboard = () => {
 
   return (
     <div className='mb-16'>
-      {/* Mobile Navbar ****************** */}
-      <div className='md:hidden flex justify-between items-center mb-10'>
-        <img src={logo} alt="My Balance Logo" />
-        <div>
-          <div>
-            <Link to="#">
-              <img src={handburger} alt="menue" onClick={showSidebar} className="w-7 h-7"/>
-            </Link>
-          </div>
-          <nav className={sidebar? "navMenu right-0 duration-300" : "navMenu -right-full duration-700"}>
-            <ul >
-              <li>
-                <Link to="#"><img src={close} alt="close" className='w-12 py-4 mb-2 mx-auto' onClick={showSidebar}/></Link>
-              </li>
-              {sidebarDatas.map((item, index) =>(
-                <li key={index}>
-                  <Link to={item.path} className="flex items-center gap-4 h-10 pl-4 mb-4 hover:bg-white hover:text-black">
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </div>
-      {/* ******************************** */}
       <Header
         Heading='Welcome Jamjam!'
         Text='Your last login was on 01/12/2022 10:00:34 AM'
