@@ -6,7 +6,6 @@ import check from "../../../assets/Icons/check.svg"
 import { Button } from '../../../components/reuseable/Button';
 import ReactInputVerificationCode from 'react-input-verification-code';
 import "./Regverification.css"
-import Register from './Register'
 
 
 
@@ -73,7 +72,6 @@ const RegVerification = () => {
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setActiveTab(2);
                     }}
                     data-toggle="tab"
                     href="#link2"

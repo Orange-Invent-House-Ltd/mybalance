@@ -7,6 +7,9 @@ import { NavLink } from "react-router-dom";
 import handburger from "../assets/Icons/handburger.svg";
 import closeIcon from "../assets/Icons/close.svg";
 import sidebarDatas from "./sidebarDatas";
+import twitter from '../assets/Icons/Twitter.svg'
+import linkedin from '../assets/Icons/LinkedIn.svg'
+import  facebook from '../assets/Icons/Facecook.svg'
 import './active.css'
 
 const BuyerDashboardLayout = () => {
@@ -147,6 +150,15 @@ const BuyerDashboardLayout = () => {
         </div>
         <main className="w-full pl-6 pr-[5%] pt-4 md:pt-[70px] pb-10">
           <Outlet />
+          {/* Mobile footer */}
+          <div className="pl-8 mt-24 mb-16 md:hidden">
+            <div className="flex gap-6 mb-2 ">
+              <img src={twitter} alt="Twitter" />
+              <img src={linkedin} alt="LinkedIn" />
+              <img src={facebook} alt="Facebook" />
+            </div>
+            <p className='text-[#121212] text-base font-medium mt-4'>© 2022 MyBalance. All rights reserved.</p>
+          </div>
         </main>
       </div>
     </div>
