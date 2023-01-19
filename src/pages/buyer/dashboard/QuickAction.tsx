@@ -214,7 +214,7 @@ const QuickAction = () => {
                     heading="White Nike Air Max"
                     text="Pair of white Nike Air Max from Young Jonn"
                   />
-                  <div className="w-[343px] mt-6 mb-16"><a href="/buyer/lock"><Button fullWidth>Lock new amount</Button></a></div>
+                  <div className="w-[343px] mt-6 mb-16"><a href="quick-action/lock"><Button fullWidth>Lock new amount</Button></a></div>
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {/* Unlock Money Tab ***************************************** */}

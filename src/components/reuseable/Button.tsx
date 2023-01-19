@@ -14,7 +14,7 @@ export const Button = (props: IButton) => {
       disabled={disabled}
       {...props}
       className={clsx(
-        "rounded-md py-3 px-2 capitalize cursor-pointer transition-all",
+        "rounded-md py-3 px-4 capitalize cursor-pointer transition-all",
         {
           "w-full": fullWidth === true,
           "bg-primary-normal  text-white hover:bg-primary-dark ":

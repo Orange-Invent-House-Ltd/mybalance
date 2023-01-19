@@ -31,7 +31,7 @@ const Index = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="profile" element={<Profile />} />
         <Route path="customer-support" element={<CustomerSupport />} />
-        <Route path="lock" element={<LockNewAmount />} />
+        <Route path="quick-action/lock" element={<LockNewAmount />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

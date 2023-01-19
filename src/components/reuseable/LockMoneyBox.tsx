@@ -19,7 +19,6 @@ const LockMoneyBox = ({lockicon, date, heading, text}:lockprops) => {
         <p className="text-lg font-medium">{heading}</p>
         <p className="mt-1">{text}</p>
       </div>
-
     </div>
   )
 }
