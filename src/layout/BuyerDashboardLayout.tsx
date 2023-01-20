@@ -100,7 +100,7 @@ const BuyerDashboardLayout = () => {
           </div>
         </div>
         {/* desktop navbar */}
-        <div className="hidden md:block w-[350px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
+        <div className="hidden md:block w-[287px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
           <header className="h-[150px] flex justify-center items-center">
             <img src={logo} alt="my balance logo" />
           </header>
@@ -151,7 +151,7 @@ const BuyerDashboardLayout = () => {
         <main className="w-full pl-6 pr-[5%] pt-4 md:pt-[70px] pb-10">
           <Outlet />
           {/* Mobile footer */}
-          <div className="pl-8 mt-24 mb-16 md:hidden">
+          <div className="mt-24 mb-16 md:hidden">
             <div className="flex gap-6 mb-2 ">
               <img src={twitter} alt="Twitter" />
               <img src={linkedin} alt="LinkedIn" />

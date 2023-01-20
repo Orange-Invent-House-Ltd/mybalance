@@ -63,7 +63,7 @@ const Register = ({ setActiveTab}:any) => {
     <div className=' md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
       <header className='md:hidden ml-[5%] mb-4 mt-[5%] '>
-        <img src={logo} alt="my-balance" />
+        <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
       </header>
       <div className='md:w-[48%] lg:w-[35%]'>
         <img src={phoneImage} alt="Image of a phone" className="hidden md:flex" />
@@ -72,9 +72,9 @@ const Register = ({ setActiveTab}:any) => {
       <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%] "/>
       
       <div className='md:w-[52%] lg:w-[65%]'>
-        {/* medium size header */}
+        {/* Desktop header */}
         <header className='hidden md:flex ml-[5%] mt-[5%]'>
-          <img src={logo} alt="my-balance" />
+          <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
         </header>
         
         <div className='w-[343px] mx-auto my-6 '>

@@ -16,18 +16,12 @@ const QuickAction = () => {
   // withdraw
   const [value, setValue] = useState("") 
   const [isWithdraw, setIsWithdraw] = useState(false);
-  // mobile menu
-  const[sidebar, setSidebar] = useState(false)
 
   const handlePin =(e:any)=>{
     setPin(e.target.value)
   }
   const handleChange = (e:any)=>{
     setValue(e.target.value)
-  }
-  // mobile menu
-  const showSidebar =()=>{
-    setSidebar(!sidebar)
   }
 
   return (
@@ -220,7 +214,7 @@ const QuickAction = () => {
                     heading="White Nike Air Max"
                     text="Pair of white Nike Air Max from Young Jonn"
                   />
-                  <div className="w-[343px] mt-6 mb-16"><a href="/buyer/lock"><Button fullWidth>Lock new amount</Button></a></div>
+                  <div className="w-[343px] mt-6 mb-16"><a href="quick-action/lock"><Button fullWidth>Lock new amount</Button></a></div>
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {/* Unlock Money Tab ***************************************** */}

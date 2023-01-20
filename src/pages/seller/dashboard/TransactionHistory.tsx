@@ -1,5 +1,3 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
 import Header from "../../../components/reuseable/Header"
 import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryBox'
 

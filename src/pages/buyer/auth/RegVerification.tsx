@@ -5,6 +5,7 @@ import phone from "../../../assets/images/R-phone.png"
 import check from "../../../assets/Icons/check.svg"
 import { Button } from '../../../components/reuseable/Button';
 import ReactInputVerificationCode from 'react-input-verification-code';
+import { Link } from 'react-router-dom'
 import "./Regverification.css"
 
 
@@ -21,7 +22,7 @@ const RegVerification = () => {
     <div className='md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
       <header className='md:hidden ml-[5%] mb-4 mt-[5%]'>
-        <img src={logo} alt="my-balance" />
+        <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
       </header>
       <div className='md:w-[40%] lg:w-[30%]'>
         <img src={phone} alt="" className="hidden md:flex"/>
@@ -30,9 +31,9 @@ const RegVerification = () => {
       <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%]"/>
       {/* medium size header */}
       <div className='md:w-[60%] lg:w-[70%]'>
-        {/* medium size header */}
+        {/* Desktop header */}
         <header className='hidden md:flex ml-[5%] mt-[5%]'>
-          <img src={logo} alt="my-balance" />
+          <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
         </header>
         
         <div className='w-[365px] md::w-[376px] my-8 mx-auto'>
