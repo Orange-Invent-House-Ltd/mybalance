@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import SellerDashboardLayout from "../../layout/SellerDashboardLayout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import RegisterIdentity from "./auth/RegisterIdentity";
 import CreateEscrowLink from "./dashboard/CreateEscrowLink";
 import Dashboard from "./dashboard/Dashboard";
 import DisputeResolution from "./dashboard/DisputeResolution";
@@ -17,6 +18,7 @@ const Index = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/register/identity" element={<RegisterIdentity />} />
       <Route path="/" element={<SellerDashboardLayout />}>
       <Route path="dashboard" element={<Dashboard />} />
         <Route path="transaction-history" element={<TransactionHistory />} />

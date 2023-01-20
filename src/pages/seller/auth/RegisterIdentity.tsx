@@ -7,56 +7,22 @@ import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
 
 
-const Register = ({ setActiveTab}:any) => {
+const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
-  //buyer
-  const [name, setName] = useState("")
-  const [phone, setPhone] = useState("")
-  const [email, setEmail ] = useState("")
-  const [password, setPassword] = useState("")
+
   //seller
   const [sellerEmail, setSellerEmail] = useState("")
-  const [sellerPassword, setSellerPassword] = useState("")
-  const [bankName, setBankName] = useState("")
-  const [accountNumber, setAccountNumber] = useState("")
+  const [idNumber, setIdNumber] = useState("")
 
-  //buyer functions
-  const handleName=(e:any)=>{
-    let name = e.target.value
-    setName(name)
-  }
-  const handlePhone=(e:any)=>{
-    let phone = e.target.value
-    setPhone(phone)
-  }
-  const handleEmail=(e:any)=>{
-    let email= e.target.value
-    setEmail(email)
-  }
-  const handlePassword=(e:any)=>{
-    let password = e.target.value
-    setPassword(password)
-  }
   //seller functions
   const handleSellerEmail=(e:any)=>{
     let sellerEmail = e.target.value
     setSellerEmail(sellerEmail)
   }
-  const handleSellerPassword=(e:any)=>{
-    let sellerPassword= e.target.value
-    setSellerPassword(sellerPassword)
-  }
-  const handleBankName=(e:any)=>{
-    let bankName = e.target.value
-    setBankName(bankName)
-  }
-  const handleAccountNumber=(e:any)=>{
-    let accountNumber = e.target.value
-    setAccountNumber(accountNumber)
-  }
-  const handleClick=(e:any)=>{
-    setActiveTab(2)
+  const handleIdNumber=(e:any)=>{
+    let idNumber= e.target.value
+    setIdNumber(idNumber)
   }
 
   return ( 
@@ -95,7 +61,7 @@ const Register = ({ setActiveTab}:any) => {
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(1);
+                      setOpenTab(2);
                     }}
                     data-toggle="tab"
                     href="#link1"
@@ -128,30 +94,17 @@ const Register = ({ setActiveTab}:any) => {
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
                     {/* create account as buyer */}
-                    <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                      <form>
-                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
-                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
-                        <div className='grid gap-y-3.5'>
-                          <TextField value={name} onChange={handleName}  label = "Full name" placeholder='e.g Albert'/>
-                          <TextField value={email} onChange={handleEmail} label = "Email" placeholder='e.g al.bert@gmail.com'/>
-                          <TextField value={phone} onChange={handlePhone}  label = "Phone" placeholder='+234 000 0000 000'/>
-                          <TextField value={password} onChange={handlePassword} label = "Password" type="password" placeholder='************'/>
-                          <Link to='verification'><Button disabled = {password ? false : true} fullWidth = {true} onClick={handleClick}>Next</Button></Link>
-                        </div>
-                      </form>
-                    </div>
+                    {/* <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                    </div> */}
                     {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                       <form>
-                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
-                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
+                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>We need your identity</h6>
+                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Enter your NIN, Int’l passport, Driver’s license or Voter’s card number below.</p>
                         <div className='grid gap-y-3.5'>
-                          <TextField value={sellerEmail} onChange={handleSellerEmail}  label = "Email" placeholder='e.g tmusty@gmail.com'/>
-                          <TextField value={sellerPassword} type="password" onChange={handleSellerPassword} label = "Add password" placeholder='************'/>
-                          <TextField value={bankName} onChange={handleBankName}  label = "Bank name" placeholder='e.g UBA'/>
-                          <TextField value={accountNumber} onChange={handleAccountNumber} label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
-                          <Link to='identity'><Button disabled = {accountNumber ? false : true} fullWidth = {true}>Next</Button></Link>
+                          <TextField value={sellerEmail}  onChange={handleSellerEmail}  label = "Email" placeholder='e.g tmusty@gmail.com'/>
+                          <TextField value={idNumber} type="phone" onChange={handleIdNumber} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
+                          <Link to='regverification'><Button disabled = {idNumber ? false : true} fullWidth = {true}>Next</Button></Link>
                         </div>
                       </form>
                     </div>
@@ -167,4 +120,4 @@ const Register = ({ setActiveTab}:any) => {
   )
 };
 
-export default Register
+export default RegisterIdentity
