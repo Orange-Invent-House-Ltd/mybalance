@@ -21,10 +21,10 @@ const Dashboard = () => {
           Text='Total amount in escrow'
           Amount= '₦30,000.00'
         />
-      </div>
+      </div>escrow-link
       <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
-        <button className="bg-[#9A4D0C] w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">Share my escrow link</button>
-        <button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">Raise a dispute</button>
+        <Link to="escrow-link"><button className="bg-[#9A4D0C] w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">Share my escrow link</button></Link>
+        <Link to="/seller/dispute-resolution"><button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">Raise a dispute</button></Link>
       </div>
       <h6 className='h6 mt-10'>Transaction history</h6>
       <DashboardHistoryBox 

@@ -102,9 +102,20 @@ const RegisterIdentity = () => {
                         <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>We need your identity</h6>
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Enter your NIN, Int’l passport, Driver’s license or Voter’s card number below.</p>
                         <div className='grid gap-y-3.5'>
-                          <TextField value={sellerEmail}  onChange={handleSellerEmail}  label = "Email" placeholder='e.g tmusty@gmail.com'/>
-                          <TextField value={idNumber} type="phone" onChange={handleIdNumber} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
-                          <Link to='regverification'><Button disabled = {idNumber ? false : true} fullWidth = {true}>Next</Button></Link>
+                          <form action="">
+                            <label htmlFor="ID" className="text-sm mb-[6px] capitalize block">Means of ID</label>
+                            <select name="ids" id="ids" className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6">
+                              <option value="select">Select</option>
+                              <option value="nin">NIN</option>
+                              <option value="international passport">International Passport</option>
+                              <option value="voter’s card">Voter’s Card</option>
+                              <option value="driver’s license">Driver’s License</option>
+                            </select>
+                            <TextField value={idNumber} type="phone" onChange={handleIdNumber} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
+                            <div className="mt-6">
+                              <Link to='verification'><Button disabled = {idNumber ? false : true} fullWidth = {true}>Next</Button></Link>
+                            </div>
+                          </form>
                         </div>
                       </form>
                     </div>
