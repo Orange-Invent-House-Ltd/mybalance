@@ -107,7 +107,7 @@ const RegVerification = () => {
                             <h6 className='h6'>ACCOUNT CREATED! 👍🏾</h6>
                             <p className='mt-4 text-center text-base font-normal leading-[21.6px]'>Weldone! You have successfully created an account with MyBalance. Let’s get you started.</p>
                             <div className=' mt-4 w-[300px]' >
-                            <Button disabled = {false} fullWidth = {true} onClick={() => setIsVerify(false)}>Continue</Button>
+                            <Link to= "/buyer/dashboard"><Button disabled = {false} fullWidth = {true} onClick={() => setIsVerify(false)}>Continue</Button></Link>
                             </div>
                           </div>
                         </div>
@@ -123,7 +123,7 @@ const RegVerification = () => {
               </div>
             </div>
           </div>
-          <p className='text-sm font-normal mt-6 text-center'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
+          <p className='text-sm font-normal mt-6 text-center'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
         </div>
       </div>
     </div>

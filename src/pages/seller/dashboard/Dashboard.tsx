@@ -1,3 +1,4 @@
+
 import {Link} from 'react-router-dom'
 import { Button } from "../../../components/reuseable/Button";
 import SellerHeader from '../../../components/reuseable/SellerHeader'
@@ -6,6 +7,8 @@ import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryB
 
 
 const Dashboard = () => {
+ 
+
   return (
     <div className='mb-16'>
       <SellerHeader
@@ -21,7 +24,7 @@ const Dashboard = () => {
           Text='Total amount in escrow'
           Amount= '₦30,000.00'
         />
-      </div>escrow-link
+      </div>
       <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
         <Link to="escrow-link"><button className="bg-[#9A4D0C] w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">Share my escrow link</button></Link>
         <Link to="/seller/dispute-resolution"><button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">Raise a dispute</button></Link>
