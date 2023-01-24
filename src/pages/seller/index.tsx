@@ -4,13 +4,12 @@ import SellerDashboardLayout from "../../layout/SellerDashboardLayout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import RegisterIdentity from "./auth/RegisterIdentity";
-import CreateEscrowLink from "./dashboard/CreateEscrowLink";
 import CustomerSupport from "./dashboard/CustomerSupport";
 import Dashboard from "./dashboard/Dashboard";
 import DisputeResolution from "./dashboard/DisputeResolution";
 import Notifications from "./dashboard/Notifications";
 import Profile from "./dashboard/Profile";
-import RegVerification from "./dashboard/RegVerification";
+import RegVerification from "./auth/RegVerification";
 import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
 
@@ -30,7 +29,6 @@ const Index = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="dispute-resolution" element={<DisputeResolution />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="dashboard/escrow-link" element={<CreateEscrowLink />} />
       </Route>
     </Routes>
   );

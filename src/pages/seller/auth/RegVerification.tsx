@@ -12,7 +12,7 @@ import "./../../buyer/auth/Regverification.css"
 
 const RegVerification = () => {
   // tabs
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(2);
  
 
   const [verifyValue, setVerifyValue] = useState("")
@@ -36,7 +36,7 @@ const RegVerification = () => {
           <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
         </header>
         
-        <div className='w-[365px] md::w-[376px] my-8 mx-auto'>
+        <div className='w-[365px] md:w-[376px] my-8 mx-auto'>
           {/* tabs */}
           <div className="flex flex-wrap">
             <div className="w-full">
@@ -54,7 +54,7 @@ const RegVerification = () => {
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setActiveTab(1);
+                      
                     }}
                     data-toggle="tab"
                     href="#link1"
@@ -73,6 +73,7 @@ const RegVerification = () => {
                     }
                     onClick={e => {
                       e.preventDefault();
+                      setActiveTab(2);
                     }}
                     data-toggle="tab"
                     href="#link2"
@@ -86,6 +87,12 @@ const RegVerification = () => {
                 <div className="mx-auto py-5 flex-auto">
                   <div className="tab-content tab-space">
                     <div className={activeTab === 1 ? "block" : "hidden"} id="link1">
+                      <p>
+                        Create as a buyer
+                      </p>
+                      
+                    </div>
+                    <div className={activeTab === 2 ? "block" : "hidden"} id="link2">
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>
                       <div className='grid gap-y-3.5'>
@@ -107,23 +114,18 @@ const RegVerification = () => {
                             <h6 className='h6'>ACCOUNT CREATED! 👍🏾</h6>
                             <p className='mt-4 text-center text-base font-normal leading-[21.6px]'>Weldone! You have successfully created an account with MyBalance. Let’s get you started.</p>
                             <div className=' mt-4 w-[300px]' >
-                            <Button disabled = {false} fullWidth = {true} onClick={() => setIsVerify(false)}>Continue</Button>
+                            <Link to= "/seller/dashboard"><Button disabled = {false} fullWidth = {true} onClick={() => setIsVerify(false)}>Continue</Button></Link>
                             </div>
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className={activeTab === 2 ? "block" : "hidden"} id="link2">
-                      <p>
-                      Create as a seller
-                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <p className='text-sm font-normal mt-6 text-center'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
+          <p className='text-sm font-normal mt-6 text-center'>Existing user? <a href="/seller/login" className='text-[#121212] font-bold'>Log in here</a></p>
         </div>
       </div>
     </div>

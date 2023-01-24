@@ -95,7 +95,7 @@ const Register = ({ setActiveTab}:any) => {
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(1);
+                      
                     }}
                     data-toggle="tab"
                     href="#link1"
@@ -129,17 +129,7 @@ const Register = ({ setActiveTab}:any) => {
                   <div className="tab-content tab-space">
                     {/* create account as buyer */}
                     <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                      <form>
-                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
-                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
-                        <div className='grid gap-y-3.5'>
-                          <TextField value={name} onChange={handleName}  label = "Full name" placeholder='e.g Albert'/>
-                          <TextField value={email} onChange={handleEmail} label = "Email" placeholder='e.g al.bert@gmail.com'/>
-                          <TextField value={phone} onChange={handlePhone}  label = "Phone" placeholder='+234 000 0000 000'/>
-                          <TextField value={password} onChange={handlePassword} label = "Password" type="password" placeholder='************'/>
-                          <Link to='verification'><Button disabled = {password ? false : true} fullWidth = {true} onClick={handleClick}>Next</Button></Link>
-                        </div>
-                      </form>
+                      
                     </div>
                     {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
@@ -159,7 +149,7 @@ const Register = ({ setActiveTab}:any) => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/seller/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
       </div>

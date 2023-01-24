@@ -159,7 +159,7 @@ const Register = ({ setActiveTab}:any) => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
       </div>
