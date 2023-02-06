@@ -1,0 +1,25 @@
+.unchecked::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #FECA9F;
+}
+.checked::before {
+  content: "✓";
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+  display: inline-block;
+  color: #FECA9F;
+  border: 1px;
+  padding: 0px 5px;
+  border-radius: 30%;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #FECA9F;
+}

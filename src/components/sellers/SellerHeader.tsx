@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import bell from "../../assets/Icons/notification.svg"
-import { Button } from "./Button"
-import TextField from "../../components/reuseable/TextField"
+import { Button } from "../reuseable/Button"
+import TextField from "../reuseable/TextField"
 import back from "../../assets/Icons/back.svg"
 
 
