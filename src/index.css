@@ -157,3 +157,6 @@ html,body{
 .active{
   @apply bg-white
 }
+.status_style{
+  @apply w-fit px-[8px] py-[2px] rounded-2xl text-center text-[14px] ml-auto font-medium;
+}

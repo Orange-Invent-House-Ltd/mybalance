@@ -3,7 +3,6 @@ import Modal from "../components/reuseable/Modal";
 import logo from "../assets/Icons/logo.svg";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-
 import handburger from "../assets/Icons/handburger.svg";
 import closeIcon from "../assets/Icons/close.svg";
 import sellerSidebarDatas from "./sellerSidebarDatas";

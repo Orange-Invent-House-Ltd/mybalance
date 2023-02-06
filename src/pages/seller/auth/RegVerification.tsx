@@ -8,8 +8,6 @@ import ReactInputVerificationCode from 'react-input-verification-code';
 import { Link } from 'react-router-dom'
 import "./../../buyer/auth/Regverification.css"
 
-
-
 const RegVerification = () => {
   // tabs
   const [activeTab, setActiveTab] = useState(2);

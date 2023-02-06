@@ -1,14 +1,13 @@
 
 import {Link} from 'react-router-dom'
 import { Button } from "../../../components/reuseable/Button";
-import SellerHeader from '../../../components/reuseable/SellerHeader'
+import SellerHeader from '../../../components/sellers/SellerHeader'
 import SellerDashboardBox from '../../../components/reuseable/SellerDashboardBox'
 import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryBox'
 
 
 const Dashboard = () => {
- 
-
+  
   return (
     <div className='mb-16'>
       <SellerHeader
@@ -33,12 +32,14 @@ const Dashboard = () => {
       <DashboardHistoryBox 
         header='White Air Jordans'
         text='Pair of white Air Jordans from Young Jonn'
+        status='In progress'
         price='₦20,000.00'
         subtext='Dec 11, 2022 3:00 PM'
       />
       <DashboardHistoryBox 
         header='Apple Series 2'
         text='Apple series 2 smartwatch ...'
+        status='Pending'
         price='₦20,000.00'
         subtext='Dec 11, 2022 3:00 PM'
       />

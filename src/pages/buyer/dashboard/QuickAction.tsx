@@ -4,13 +4,20 @@ import Header from "../../../components/reuseable/Header"
 import TextField from "../../../components/reuseable/TextField";
 import copy from '../../../assets/Icons/copy.svg'
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
-import lockicon from '../../../assets/Icons/lock.svg'
 import check from '../../../assets/Icons/check.svg'
+import LockNewAmount from "./LockNewAmount";
+import EditLockedAmount from "../../../components/buyers/EditLockedAmount";
+import lockDatas from "../../../util/lockDatas";
+import UnlockAmount from "../../../components/buyers/UnlockAmount";
 
 
 const QuickAction = () => {
   const [openTab, setOpenTab] = useState(1);
   const [openTabs, setOpenTabs] = useState(1);
+  //lock
+  const [lock, setLock] = useState(false)
+  const [editLocked, setEditLocked]= useState(false)
+  const [unlock, setUnlock] = useState(false)
   // 
   const [pin, setPin] = useState("")
   // withdraw
@@ -22,6 +29,11 @@ const QuickAction = () => {
   }
   const handleChange = (e:any)=>{
     setValue(e.target.value)
+  }
+  //lock function
+  const handleEdit =(e:any)=>{
+    let data = e.target.value
+    setEditLocked(true)
   }
 
   return (
@@ -202,35 +214,46 @@ const QuickAction = () => {
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   {/* Lock Money Tab ***************************************** */}
                   <p className="w-[344px] text-base font-normal">Locked amount shows you a list of amount you have locked over a period of time.</p>
-                  <LockMoneyBox
-                    lockicon= {lockicon}
-                    date="Dec 15, 2022 4:56 PM"
-                    heading="White Air Jordans"
-                    text="Pair of white Air Jordans from Young Jonn"
-                  />
-                  <LockMoneyBox
-                    lockicon= {lockicon}
-                    date="Dec 15, 2022 4:56 PM"
-                    heading="White Nike Air Max"
-                    text="Pair of white Nike Air Max from Young Jonn"
-                  />
-                  <div className="w-[343px] mt-6 mb-16"><a href="quick-action/lock"><Button fullWidth>Lock new amount</Button></a></div>
+                  <div onClick={()=>setEditLocked(true)}>
+                    {lockDatas.map(({date, heading, text}:any, key:any)=>(
+                    <LockMoneyBox 
+                      date={date}
+                      heading={heading}
+                      text={text}
+                      key={key}
+                    />
+                    ))}
+                  </div>
+                  { editLocked && 
+                    <EditLockedAmount
+                      setEditLocked = {setEditLocked}
+                    />
+                  }
+                  <div className="w-[343px] mt-6 mb-16"><Button fullWidth onClick={()=> setLock(true)}>Lock new amount</Button></div>
+                  { lock &&(
+                    <LockNewAmount 
+                      setLock = {setLock}
+                    />
+                  )}
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {/* Unlock Money Tab ***************************************** */}
                   <p className="max-w-[449px] text-base font-normal">Click on the card with the information of the item you want to unlock and click on the unlock button. That’s it.</p>
-                  <LockMoneyBox
-                    lockicon= {lockicon}
-                    date="Dec 15, 2022 4:56 PM"
-                    heading="White Air Jordans"
-                    text="Pair of white Air Jordans from Young Jonn"
-                  />
-                  <LockMoneyBox
-                    lockicon= {lockicon}
-                    date="Dec 15, 2022 4:56 PM"
-                    heading="White Nike Air Max"
-                    text="Pair of white Nike Air Max from Young Jonn"
-                  />
+                  <div onClick={()=>setUnlock(true)}>
+                    {lockDatas.map(({date, heading, text}:any, key:any)=>(
+                    <LockMoneyBox 
+                      date={date}
+                      heading={heading}
+                      text={text}
+                      key={key}
+                    />
+                    ))}
+                  </div>
+                  { unlock && 
+                    <UnlockAmount
+                      setUnlock = {setUnlock}
+                    />
+                  }
                 </div>
                 <div className={openTab === 4 ? "block" : "hidden"} id="link4">
                   {/* Withdraw Money Tab ***************************************** */}
@@ -289,5 +312,6 @@ const QuickAction = () => {
     </div>
   )
 }
+
 
 export default QuickAction

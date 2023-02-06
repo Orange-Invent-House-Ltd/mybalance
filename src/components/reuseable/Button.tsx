@@ -5,10 +5,11 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
+  success?: boolean;
   variant?: "outlined" | "contained";
 }
 export const Button = (props: IButton) => {
-  const { children, fullWidth, disabled, variant = "contained" } = props;
+  const { children, fullWidth, disabled, success, variant = "contained" } = props;
   return (
     <button
       disabled={disabled}
@@ -25,6 +26,8 @@ export const Button = (props: IButton) => {
             variant === "outlined",
           "border-primary-light text-primary-light cursor-not-allowed hover:bg-white ":
             variant === "outlined" && disabled,
+          "bg-[#039855]  text-white hover:bg-[#04b766] ":
+            variant === "contained" && success,
         }
       )}
     >

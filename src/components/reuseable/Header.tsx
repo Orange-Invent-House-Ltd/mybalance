@@ -4,7 +4,7 @@ type HeaderProps = {
   Heading: string;
   Text:string;
 };
-const Header = ({Heading, Text}:HeaderProps) => {
+const BuyerHeader = ({Heading, Text}:HeaderProps) => {
   return (
     <div className="md:flex justify-between mb-8">
       <div>
@@ -17,4 +17,4 @@ const Header = ({Heading, Text}:HeaderProps) => {
   )
 }
 
-export default Header
+export default BuyerHeader
