@@ -11,7 +11,6 @@ import "./../../buyer/auth/Regverification.css"
 const RegVerification = () => {
   // tabs
   const [activeTab, setActiveTab] = useState(2);
- 
 
   const [verifyValue, setVerifyValue] = useState("")
   const [isVerify, setIsVerify] = useState(false);
@@ -42,6 +41,7 @@ const RegVerification = () => {
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
                 role="tablist"
               >
+                {/* customer tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -61,6 +61,7 @@ const RegVerification = () => {
                     Create as a customer
                   </a>
                 </li>
+                {/* seller tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -84,12 +85,7 @@ const RegVerification = () => {
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
                 <div className="mx-auto py-5 flex-auto">
                   <div className="tab-content tab-space">
-                    <div className={activeTab === 1 ? "block" : "hidden"} id="link1">
-                      <p>
-                        Create as a buyer
-                      </p>
-                      
-                    </div>
+                    {/* create account as seller */}
                     <div className={activeTab === 2 ? "block" : "hidden"} id="link2">
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>

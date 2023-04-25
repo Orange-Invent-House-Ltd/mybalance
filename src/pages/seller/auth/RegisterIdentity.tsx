@@ -12,18 +12,7 @@ const RegisterIdentity = () => {
   const [openTab, setOpenTab] = useState(2);
 
   //seller
-  const [sellerEmail, setSellerEmail] = useState("")
   const [idNumber, setIdNumber] = useState("")
-
-  //seller functions
-  const handleSellerEmail=(e:any)=>{
-    let sellerEmail = e.target.value
-    setSellerEmail(sellerEmail)
-  }
-  const handleIdNumber=(e:any)=>{
-    let idNumber= e.target.value
-    setIdNumber(idNumber)
-  }
 
   return ( 
     <div className=' md:flex justify-center flex-row-reverse'>
@@ -51,6 +40,7 @@ const RegisterIdentity = () => {
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
                 role="tablist"
               >
+                {/* customer tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -70,6 +60,7 @@ const RegisterIdentity = () => {
                     Create as a customer
                   </a>
                 </li>
+                {/* seller tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -93,9 +84,6 @@ const RegisterIdentity = () => {
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
-                    {/* create account as buyer */}
-                    {/* <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                    </div> */}
                     {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                       <form>
@@ -111,7 +99,7 @@ const RegisterIdentity = () => {
                               <option value="voter’s card">Voter’s Card</option>
                               <option value="driver’s license">Driver’s License</option>
                             </select>
-                            <TextField value={idNumber} type="phone" onChange={handleIdNumber} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
+                            <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
                             <div className="mt-6">
                               <Link to='verification'><Button disabled = {idNumber ? false : true} fullWidth = {true}>Next</Button></Link>
                             </div>
