@@ -1,4 +1,4 @@
-import {EventHandler, SyntheticEvent, useState} from "react";
+import {useState} from "react";
 import logo from "../../../assets/Icons/logo.svg"
 import phoneImage from "../../../assets/images/R-phone.png"
 import mphone from "../../../assets/images/m-phone.png"
@@ -7,14 +7,15 @@ import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
 
 
-const Register = ({ setActiveTab}:any) => {
+const RegisterContinue = ({ setActiveTab}:any) => {
   // tabs
-  const [openTab, setOpenTab] = useState(1);
+  const [openTab, setOpenTab] = useState(2);
+
   //seller
-  const [businessName, setBusinessName] = useState("")
-  const [discription, setDiscription] = useState("")
-  const [address, setAddress] = useState("")
-  const [sellerPhone, setSellerPhone] = useState("")
+  const [sellerEmail, setSellerEmail] = useState("")
+  const [sellerPassword, setSellerPassword] = useState("")
+  const [bankName, setBankName] = useState("")
+  const [accountNumber, setAccountNumber] = useState("")
 
   return ( 
     <div className=' md:flex justify-center flex-row-reverse'>
@@ -44,38 +45,36 @@ const Register = ({ setActiveTab}:any) => {
               >
                 {/* customer tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
-                <Link
-                  to ='/buyer/register'
-                ><a
-                    className={
-                      "text-xs font-bold uppercase py-3 block leading-normal " +
-                      (openTab === 0
-                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                    }
-                    // onClick={e => {
-                    //   e.preventDefault();
-                    //   setOpenTab(1);
-                    // }}
-                    data-toggle="tab"
-                    href="#link1"
-                    role="tablist"
-                  >
-                    Create as a Customer
-                  </a></Link>
-                </li>
-                {/* Seller tab */}
-                <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
-                      "text-xs font-bold uppercase py-3  block leading-normal " +
+                      "text-xs font-bold uppercase py-3 block leading-normal " +
                       (openTab === 1
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(1);
+                      
+                    }}
+                    data-toggle="tab"
+                    href="#link1"
+                    role="tablist"
+                  >
+                    Create as a customer
+                  </a>
+                </li>
+                {/* seller tab */}
+                <li className="-mb-px last:mr-0 flex-auto text-center">
+                  <a
+                    className={
+                      "text-xs font-bold uppercase py-3  block leading-normal " +
+                      (openTab === 2
+                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                    }
+                    onClick={e => {
+                      e.preventDefault();
+                      setOpenTab(2);
                     }}
                     data-toggle="tab"
                     href="#link2"
@@ -89,16 +88,16 @@ const Register = ({ setActiveTab}:any) => {
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
                     {/* create account as seller */}
-                    <div className={openTab === 1 ? "block" : "hidden"} id="link2">
+                    <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                       <form>
                         <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
                         <div className='grid gap-y-3.5'>
-                          <TextField value={businessName} onChange={e=>setBusinessName(e.target.value)}  label = "Business name" placeholder='e.g “Musty Feet”'/>
-                          <TextField value={discription} onChange={e=>setDiscription(e.target.value)} label = "Describe your service" placeholder='Sales of sneakers, footwear, etc'/>
-                          <TextField value={address} onChange={e=>setAddress(e.target.value)}  label = "Address" placeholder='Ikeja, Lagos.'/>
-                          <TextField value={sellerPhone} onChange={e=>setSellerPhone(e.target.value)} label = "Phone" type="phone" placeholder='+234 000 0000 000'/>
-                          <Link to='/seller/register/continue'><Button disabled = {sellerPhone ? false : true} fullWidth = {true}>Next</Button></Link>
+                          <TextField value={sellerEmail} onChange={e=>setSellerEmail(e.target.value)}  label = "Email" placeholder='e.g tmusty@gmail.com'/>
+                          <TextField value={sellerPassword} type="password" onChange={e=>setSellerPassword(e.target.value)} label = "Add password" placeholder='************'/>
+                          <TextField value={bankName} onChange={e=>setBankName(e.target.value)} label = "Bank name" placeholder='e.g UBA'/>
+                          <TextField value={accountNumber} onChange={e=>setAccountNumber(e.target.value)} label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
+                          <Link to='identity'><Button disabled = {accountNumber ? false : true} fullWidth = {true}>Next</Button></Link>
                         </div>
                       </form>
                     </div>
@@ -106,7 +105,7 @@ const Register = ({ setActiveTab}:any) => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/seller/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
       </div>
@@ -114,4 +113,4 @@ const Register = ({ setActiveTab}:any) => {
   )
 };
 
-export default Register
+export default RegisterContinue

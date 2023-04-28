@@ -44,6 +44,7 @@ const RegVerification = () => {
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
                 role="tablist"
               >
+                {/* customer tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -63,6 +64,7 @@ const RegVerification = () => {
                     Create as a customer
                   </a>
                 </li>
+                {/* seller tab */}
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
@@ -85,6 +87,7 @@ const RegVerification = () => {
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
                 <div className="mx-auto py-5 flex-auto">
                   <div className="tab-content tab-space">
+                    {/* create account as customer */}
                     <div className={activeTab === 1 ? "block" : "hidden"} id="link1">
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>
@@ -112,11 +115,6 @@ const RegVerification = () => {
                           </div>
                         </div>
                       )}
-                    </div>
-                    <div className={activeTab === 2 ? "block" : "hidden"} id="link2">
-                      <p>
-                      Create as a seller
-                      </p>
                     </div>
                   </div>
                 </div>

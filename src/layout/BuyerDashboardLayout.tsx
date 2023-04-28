@@ -3,7 +3,6 @@ import Modal from "../components/reuseable/Modal";
 import logo from "../assets/Icons/logo.svg";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-
 import handburger from "../assets/Icons/handburger.svg";
 import closeIcon from "../assets/Icons/close.svg";
 import sidebarDatas from "./sidebarDatas";
@@ -72,30 +71,30 @@ const BuyerDashboardLayout = () => {
                 onClick={() =>setLogoutModal(true)}
                 className="mt-[20px] pl-4 text-[#DA1E28] hover:bg-white focus:bg-white"
               >
-              <div className="flex gap-4 py-2" onClick={() =>setSidebar(false)}>
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                >
-                  <g
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    clip-path="url(#a)"
+                <div className="flex gap-4 py-2" onClick={() =>setSidebar(false)}>
+                  <svg
+                    className="w-6 h-6 stroke-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
                   >
-                    <path d="M14 8.592v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" />
-                    <path d="M7 12.592h14l-3-3m0 6 3-3" />
-                  </g>
-                  <defs>
-                    <clipPath id="a">
-                      <path fill="#fff" d="M0 .592h24v24H0z" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                Logout
+                    <g
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      clip-path="url(#a)"
+                    >
+                      <path d="M14 8.592v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" />
+                      <path d="M7 12.592h14l-3-3m0 6 3-3" />
+                    </g>
+                    <defs>
+                      <clipPath id="a">
+                        <path fill="#fff" d="M0 .592h24v24H0z" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  Logout
+                </div>
               </div>
-            </div>
             </nav>
           </div>
         </div>

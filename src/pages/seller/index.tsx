@@ -12,15 +12,17 @@ import Profile from "./dashboard/Profile";
 import RegVerification from "./auth/RegVerification";
 import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
+import RegisterContinue from "./auth/RegisterContinue";
 
 
 const Index = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/register/identity" element={<RegisterIdentity />} />
-      <Route path="/register/identity/verification" element={<RegVerification />} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/register/continue" element={<RegisterContinue />} />
+      <Route path="/register/continue/identity" element={<RegisterIdentity />} />
+      <Route path="/register/continue/identity/verification" element={<RegVerification />} />
       <Route path="/" element={<SellerDashboardLayout />}>
       <Route path="dashboard" element={<Dashboard />} />
         <Route path="transaction-history" element={<TransactionHistory />} />CustomerSupport
