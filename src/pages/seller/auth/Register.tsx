@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom'
 
 const Register = ({ setActiveTab}:any) => {
   // tabs
-  const [openTab, setOpenTab] = useState(2);
+  const [openTab, setOpenTab] = useState(1);
   //seller
   const [businessName, setBusinessName] = useState("")
   const [discription, setDiscription] = useState("")
@@ -49,7 +49,7 @@ const Register = ({ setActiveTab}:any) => {
                 ><a
                     className={
                       "text-xs font-bold uppercase py-3 block leading-normal " +
-                      (openTab === 1
+                      (openTab === 0
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
@@ -69,13 +69,13 @@ const Register = ({ setActiveTab}:any) => {
                   <a
                     className={
                       "text-xs font-bold uppercase py-3  block leading-normal " +
-                      (openTab === 2
+                      (openTab === 1
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
                     onClick={e => {
                       e.preventDefault();
-                      setOpenTab(2);
+                      setOpenTab(1);
                     }}
                     data-toggle="tab"
                     href="#link2"
@@ -89,7 +89,7 @@ const Register = ({ setActiveTab}:any) => {
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
                     {/* create account as seller */}
-                    <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                    <div className={openTab === 1 ? "block" : "hidden"} id="link2">
                       <form>
                         <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
