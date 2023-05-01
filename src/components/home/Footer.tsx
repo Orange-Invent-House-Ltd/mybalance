@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/icons/logo.svg";
-import facebook from "../../assets/icons/Facebook.svg";
-import twitter from "../../assets/icons/Twitter.svg";
-import linkedin from "../../assets/icons/Linkedin.svg";
+import logo from "../../assets/Icons/logo.svg";
+import facebook from "../../assets/Icons/Facebook.svg";
+import twitter from "../../assets/Icons/Twitter.svg";
+import linkedin from "../../assets/Icons/Linkedin.svg";
 const Footer = () => {
   return (
     <div className="max-w-7xl w-full mx-auto ">

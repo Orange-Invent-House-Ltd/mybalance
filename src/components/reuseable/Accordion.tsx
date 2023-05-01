@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
-import minusIcon from "../../assets/icons/minusIcon.svg";
-import plusIcon from "../../assets/icons/plusIcon.svg";
+import minusIcon from "../../assets/Icons/minusIcon.svg";
+import plusIcon from "../../assets/Icons/plusIcon.svg";
 
 interface IAccordion {
   title: string;

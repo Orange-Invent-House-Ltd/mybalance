@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from '../reuseable/Button';
 import phoneImage from "../../assets/images/iPhone.png";
 import bg from "../../assets/images/bg.png";
-import line from "../../assets/icons/line.svg";
+import line from "../../assets/Icons/line.svg";
 
 const Introduction: FC = () => {
   const navigate = useNavigate()

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {Link, useNavigate} from "react-router-dom"
 import { Button } from '../reuseable/Button';
-import logo from "../../assets/icons/logo.svg"
+import logo from "../../assets/Icons/logo.svg"
 import handburger from "../../assets/Icons/handburger.svg"
-import close from '../../assets/icons/close.svg'
-import caret from '../../assets/icons/dropdown.svg'
+import close from '../../assets/Icons/close.svg'
+import caret from '../../assets/Icons/dropdown.svg'
 
 const  Header = () =>{
   const [ display, setDisplay ] = useState(false)
