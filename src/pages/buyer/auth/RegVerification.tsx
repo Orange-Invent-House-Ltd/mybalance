@@ -22,7 +22,7 @@ const RegVerification = () => {
     <div className='md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
       <header className='md:hidden ml-[5%] mb-4 mt-[5%]'>
-        <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
+        <Link to="/"><img src={logo} alt="my-balance" /></Link>
       </header>
       <div className='md:w-[40%] lg:w-[30%]'>
         <img src={phone} alt="" className="hidden md:flex"/>
@@ -33,7 +33,7 @@ const RegVerification = () => {
       <div className='md:w-[60%] lg:w-[70%]'>
         {/* Desktop header */}
         <header className='hidden md:flex ml-[5%] mt-[5%]'>
-          <Link to="/buyer/register"><img src={logo} alt="my-balance" /></Link>
+          <Link to="/"><img src={logo} alt="my-balance" /></Link>
         </header>
         
         <div className='w-[365px] md::w-[376px] my-8 mx-auto'>

@@ -15,7 +15,12 @@ module.exports = {
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
         'black-rgba': 'rgba(58, 58, 58, 0.6)',
+        headingColor: "#121212",
+        tertiary: "#B1580E",
       },
+      backgroundImage:{
+        'benefit': "url('./src/assets/images/bg-pix.png')",
+      }
     },
   },
   plugins: [],
