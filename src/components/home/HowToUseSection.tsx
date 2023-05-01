@@ -2,7 +2,7 @@ import man from "../../assets/images/man holding phone.png";
 import woman from "../../assets/images/woman holding phone.png";
 import rectangle2 from "../../assets/images/Rectangle2.png";
 import rectangle3 from "../../assets/images/Rectangle3.png";
-import line from "../../assets/icons/line.svg";
+import line from "../../assets/Icons/line.svg";
 
 const HowToUseSection = () => {
   return (

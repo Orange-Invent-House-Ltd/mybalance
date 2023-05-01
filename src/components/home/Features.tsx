@@ -1,9 +1,9 @@
 import React from 'react'
-import cash from '../../assets/icons/cash.svg'
-import link from "../../assets/icons/link.svg";
-import card from "../../assets/icons/card.svg";
-import moneyPhone from "../../assets/icons/moneyPhone.svg";
-import line from "../../assets/icons/line.svg";
+import cash from '../../assets/Icons/cash.svg'
+import link from "../../assets/Icons/link.svg";
+import card from "../../assets/Icons/card.svg";
+import moneyPhone from "../../assets/Icons/moneyPhone.svg";
+import line from "../../assets/Icons/line.svg";
 
 const Features = () => {
   return (

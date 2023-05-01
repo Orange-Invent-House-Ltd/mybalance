@@ -1,6 +1,6 @@
-import email from "../../assets/icons/email.svg";
-import location from "../../assets/icons/location.svg";
-import phone from "../../assets/icons/phone.svg";
+import email from "../../assets/Icons/email.svg";
+import location from "../../assets/Icons/location.svg";
+import phone from "../../assets/Icons/phone.svg";
 
 const ContactSection = () => {
   return (

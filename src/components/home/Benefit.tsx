@@ -1,10 +1,10 @@
-import signup from "../../assets/images/icons8-sign-up-96 1.png"
-import question from "../../assets/images/icons8-where-to-quest-96 1.png"
-import nocash from "../../assets/images/icons8-no-cash-96 1.png"
-import trust from "../../assets/images/icons8-trust-96 1.png"
+import signup from "../../assets/images/Icons8-sign-up-96 1.png"
+import question from "../../assets/images/Icons8-where-to-quest-96 1.png"
+import nocash from "../../assets/images/Icons8-no-cash-96 1.png"
+import trust from "../../assets/images/Icons8-trust-96 1.png"
 import { Button } from '../reuseable/Button';
 import { useNavigate } from "react-router-dom";
-import line from "../../assets/icons/line.svg";
+import line from "../../assets/Icons/line.svg";
 
 const Benefit = () => {
   const navigate = useNavigate()
