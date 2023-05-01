@@ -15,11 +15,11 @@ import Profile from "./dashboard/Profile";
 import QuickAction from "./dashboard/QuickAction";
 import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
+import PageNotFound from "../home/PageNotFound";
 
 const Index = () => {
   return (
     <Routes>
-      
       <Route path="/" element={<BuyerDashboardLayout />}>
         <Route index element={<Home />} />
         <Route path="dashboard" element={<Dashboard />} />
@@ -35,10 +35,8 @@ const Index = () => {
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route
-        path="/register/verification"
-        element={<RegVerification />}
-      />
+      <Route path="/register/verification" element={<RegVerification />}/>
+      <Route path="*" element={<PageNotFound/>}/>
     </Routes>
   );
 };

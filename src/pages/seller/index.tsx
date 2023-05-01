@@ -13,6 +13,7 @@ import RegVerification from "./auth/RegVerification";
 import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
 import RegisterContinue from "./auth/RegisterContinue";
+import PageNotFound from "../home/PageNotFound";
 
 
 const Index = () => {
@@ -32,6 +33,7 @@ const Index = () => {
         <Route path="dispute-resolution" element={<DisputeResolution />} />
         <Route path="profile" element={<Profile />} />
       </Route>
+      <Route path="*" element={<PageNotFound/>}/>
     </Routes>
   );
 };

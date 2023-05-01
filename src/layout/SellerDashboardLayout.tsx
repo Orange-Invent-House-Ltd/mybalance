@@ -2,14 +2,13 @@ import { Outlet } from "react-router-dom";
 import Modal from "../components/reuseable/Modal";
 import logo from "../assets/Icons/logo.svg";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import handburger from "../assets/Icons/handburger.svg";
 import closeIcon from "../assets/Icons/close.svg";
 import sellerSidebarDatas from "./sellerSidebarDatas";
 import twitter from '../assets/Icons/Twitter.svg'
 import linkedin from '../assets/Icons/LinkedIn.svg'
-import  facebook from '../assets/Icons/Facecook.svg'
-import './active.css'
+import  facebook from '../assets/Icons/Facebook.svg'
 
 const SellerDashboardLayout = () => {
   const [logoutModal, setLogoutModal] = useState(false);
@@ -25,7 +24,7 @@ const SellerDashboardLayout = () => {
       <div className="md:flex">
         {/* mobile navbar */}
         <div className="md:hidden bg-white sticky top-0 left-0 z-50 py-[5%] px-5 flex justify-between items-center mb-10">
-          <img src={logo} alt="My Balance Logo" />
+        <Link to='/seller/dashboard'><img src={logo} alt="My Balance Logo" className="cursor-pointer"/></Link>
           <div>
             <div>
               <NavLink to="#">
@@ -101,7 +100,7 @@ const SellerDashboardLayout = () => {
         {/* desktop navbar */}
         <div className="hidden md:block w-[287px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
           <header className="h-[150px] flex justify-center items-center">
-            <img src={logo} alt="my balance logo" />
+          <Link to='/seller/dashboard'><img src={logo} alt="My Balance Logo" className="cursor-pointer"/></Link>
           </header>
           <nav>
             <ul className="flex flex-col gap-2">
