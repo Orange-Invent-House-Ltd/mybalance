@@ -1,10 +1,10 @@
-import signup from "../../assets/images/Icons8-sign-up-96 1.png"
-import question from "../../assets/images/Icons8-where-to-quest-96 1.png"
-import nocash from "../../assets/images/Icons8-no-cash-96 1.png"
-import trust from "../../assets/images/Icons8-trust-96 1.png"
+import signup from "../../assets/images/icons8-sign-up-96.png"
+import question from "../../assets/images/icons8-where-to-quest-96.png"
+import nocash from "../../assets/images/icons8-no-cash-96.png"
+import trust from "../../assets/images/icons8-trust-96.png"
 import { Button } from '../reuseable/Button';
 import { useNavigate } from "react-router-dom";
-import line from "../../assets/Icons/line.svg";
+import line from "../../assets/icons/line.svg";
 
 const Benefit = () => {
   const navigate = useNavigate()
@@ -37,7 +37,7 @@ const Benefit = () => {
           ))}
         </div>
       </div>
-      <div className="bg-benefit h-[325px] bg-center bg-cover">
+      <div className="bg-benefit h-[325px] bg-center mx-[5%]">
         <h3 className="h5 w-[289px] text-center pt-[40px] sm:font-black sm:text-[36px] sm:mb-6 sm:w-[470px] mx-auto sm:pt-[70px] ">
           Enough talk, Let’s get you started on the journey!
         </h3>
