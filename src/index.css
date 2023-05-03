@@ -183,3 +183,9 @@ html,body{
 .status_style{
   @apply w-fit px-[8px] py-[2px] rounded-2xl text-center text-[14px] ml-auto font-medium;
 }
+
+/* no increase and decrease arrow in input type number for verification code boxes */
+.spin-button-none::-webkit-outer-spin-button,
+.spin-button-none::-webkit-inner-spin-button{
+  appearance: none;
+}

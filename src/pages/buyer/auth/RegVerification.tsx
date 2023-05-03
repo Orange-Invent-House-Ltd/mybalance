@@ -1,22 +1,51 @@
-import {useState} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import logo from "../../../assets/Icons/logo.svg"
 import mphone from "../../../assets/images/m-phone.png"
 import phone from "../../../assets/images/R-phone.png"
 import check from "../../../assets/Icons/check.svg"
 import { Button } from '../../../components/reuseable/Button';
-import ReactInputVerificationCode from 'react-input-verification-code';
 import { Link } from 'react-router-dom'
-import "./Regverification.css"
 
-
+// otp index
+let currentOTPIndex:number = 0;
 
 const RegVerification = () => {
+  // otp state
+  const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
+  const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0)
+
   // tabs
   const [activeTab, setActiveTab] = useState(1);
- 
 
   const [verifyValue, setVerifyValue] = useState("")
   const [isVerify, setIsVerify] = useState(false);
+
+  // otp continue
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleChange = ({target}:React.ChangeEvent<HTMLInputElement>):void =>{
+    const {value} = target;
+    // the spread operator help to get all the input value
+    const newOTP = [...otp] 
+    // get the last value of the input
+    newOTP[currentOTPIndex] = value.substring(value.length-1)
+
+    // moke the focus to the next box on each change
+    if(!value) setActiveOTPIndex(currentOTPIndex - 1)
+    else setActiveOTPIndex(currentOTPIndex + 1);
+    // all the input values
+    setOtp(newOTP)
+  }
+
+  const handleKeyDown =({key}:React.KeyboardEvent<HTMLInputElement>, index:number) =>{
+    currentOTPIndex = index
+    if (key === "Backspace") setActiveOTPIndex(currentOTPIndex - 1)
+  }
+
+  useEffect(()=>{
+    // input box focus 
+    inputRef.current?.focus();
+  },[activeOTPIndex])
 
   return (
     <div className='md:flex justify-center flex-row-reverse'>
@@ -92,14 +121,24 @@ const RegVerification = () => {
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>
                       <div className='grid gap-y-3.5'>
-                        <div className="custom-styles">
-                          <ReactInputVerificationCode 
-                            value={verifyValue}
-                            onChange={setVerifyValue} 
-                            autoFocus
-                            length={6}
-                            placeholder=""
-                          />
+                        {/* otp input boxes */}
+                        <div className=" mb-6 flex justify-start items-center space-x-2">
+                          {otp.map((_, index) => {
+                            return (
+                              <React.Fragment key={index}>
+                                <input
+                                  // make the input box focus start from the first one
+                                  ref={index === activeOTPIndex ? inputRef : null}
+                                  type="number"
+                                  placeholder=''
+                                  value={otp[index]}
+                                  onChange={handleChange}
+                                  onKeyDown={(e) => handleKeyDown(e, index) }
+                                  className="w-[50px] h-[50px] rounded bg-transparent text-center font-semibold text-xl spin-button-none outline-none border border-[#cccccc] focus:border-gray-700 text-primary transition"
+                                />
+                              </React.Fragment>
+                            );
+                          })}
                         </div>
                         <Button disabled = {verifyValue ? false : true} fullWidth = {true} onClick={() => setIsVerify(true)}>Verify</Button>
                       </div>
