@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/Icons/logo.svg";
 import facebook from "../../assets/Icons/Facebook.svg";
 import twitter from "../../assets/Icons/Twitter.svg";
-import linkedin from "../../assets/Icons/Linkedin.svg";
+import linkedin from "../../assets/Icons/LinkedIn.svg";
 const Footer = () => {
   return (
     <div className="max-w-7xl w-full mx-auto ">
