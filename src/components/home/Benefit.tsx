@@ -4,7 +4,7 @@ import nocash from "../../assets/images/icons8-no-cash-96.png"
 import trust from "../../assets/images/icons8-trust-96.png"
 import { Button } from '../reuseable/Button';
 import { useNavigate } from "react-router-dom";
-import line from "../../assets/icons/line.svg";
+import line from "../../assets/Icons/line.svg";
 
 const Benefit = () => {
   const navigate = useNavigate()
