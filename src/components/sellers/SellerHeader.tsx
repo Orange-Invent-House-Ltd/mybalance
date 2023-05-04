@@ -37,7 +37,7 @@ const Header = ({Heading, Text}:HeaderProps) => {
           <div className= "w-[400px] bg-white pl-[16px] pr-[34px] overflow-y-scroll">
             <div className="flex gap-4 items-center mt-10 mb-4">
               <img src={back} alt="back" onClick={() => setIsVerify(false)}/>
-              <h6 className="h6">Create an Escrow Link</h6>
+              <h6 className="text-[23px] font-medium">Create an Escrow Link</h6>
             </div>
             <p className="text-[16px] text-[#303030] font-normal mb-8">Create your one-time escrow link and share with your prospective customers.</p>
             <h1 className="text-[#EDEDED] text-lg font-medium">
@@ -66,9 +66,10 @@ const Header = ({Heading, Text}:HeaderProps) => {
               VENDOR ACCOUNT INFORMATION
             </h1>
             <div className="mt-6 flex flex-col gap-4">
-              <TextField label="Select bank" placeholder="Access Bank" />
-              <TextField label="Select account name" placeholder="e.g JMusty Feet"/>
-              <TextField label="Enter account number" placeholder="1234567890"/>
+              <TextField label="Bank Name" placeholder="Access Bank" />
+              <TextField label="Enter Account number" placeholder="1234567890"/>
+              <TextField label="Account Name" placeholder="e.g JMusty Feet"/>
+              <TextField label="Email" placeholder="e.g JMustyfeet@gmail.com"/>
               <TextField
                 label="Phone number"
                 placeholder="090123456789"

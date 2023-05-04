@@ -8,6 +8,7 @@ import PageNotFound from "./pages/home/PageNotFound";
 import Home from "./pages/home/Home";
 import Login from "./pages/buyer/auth/Login";
 import Register from "./pages/buyer/auth/Register";
+import ShareEscrowLink from "./pages/home/ShareEscrowLink";
 
 
 const App: React.FC = () => { 
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/forgot-password/email-verification" element={<ForgotPasswordVerification/>} />
         <Route path="/set-new-password" element={<SetNewPassword/>} />
+        <Route path="/share-escrow-link" element={<ShareEscrowLink/>} />
         <Route path="/buyer/*" element={<Buyer />} />
         <Route path="/seller/*" element={<Seller />} />
         <Route path="*" element={<PageNotFound />} />

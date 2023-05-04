@@ -21,10 +21,9 @@ const PageNotFound = () => {
           </div>
         </div>
         <div>
-          <img src={image404} alt="" />
+          <img src={image404} alt="404 image" />
         </div>
       </div>
-      
     </div>
   )
 }
