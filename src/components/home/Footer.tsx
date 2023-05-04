@@ -9,7 +9,7 @@ const Footer = () => {
     <div className="max-w-7xl w-full mx-auto ">
       <div className="bg-[#ededed29] py-16  pl-[30px] sm:pl-[60px] md:pl-[121px]  flex flex-col md:flex-row gap-[100px]">
         <div className="">
-          <img src={logo} alt="" className="mb-[43px]" />
+        <Link to='/'><img src={logo} alt="" className="mb-[43px]" /></Link>
           <p className="w-[258px] font-normal ">
             We are a platform where buyers are assured of getting value for
             their money and the seller can bank on us to get paid for the

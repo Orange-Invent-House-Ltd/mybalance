@@ -10,9 +10,13 @@ import {Link} from 'react-router-dom'
 const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
-
+  const [selectedValue, setSelectedValue] = useState('');
   //seller
-  const [idNumber, setIdNumber] = useState("")
+  const [idNumber, setIdNumber] = useState('');
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
+  };
 
   return ( 
     <div className=' md:flex justify-center flex-row-reverse'>
@@ -92,14 +96,41 @@ const RegisterIdentity = () => {
                         <div className='grid gap-y-3.5'>
                           <form action="">
                             <label htmlFor="ID" className="text-sm mb-[6px] capitalize block">Means of ID</label>
-                            <select name="ids" id="ids" className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6">
+                            <select name="ids" id="ids" onChange={handleSelectChange} className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6">
                               <option value="select">Select</option>
-                              <option value="nin">NIN</option>
                               <option value="international passport">International Passport</option>
+                              <option value="nin">NIN</option>
                               <option value="voter’s card">Voter’s Card</option>
                               <option value="driver’s license">Driver’s License</option>
                             </select>
-                            <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Valid ID number" placeholder='e.g 1234 1234 123'/>
+                            { 
+                              selectedValue === "international passport" ? (
+                                <div>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Passport number" placeholder='1234 1234 123'/>
+                                  <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "Last name" placeholder='Saka'/>
+                                </div>
+                              ) : selectedValue === "nin" ? (
+                                <div>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "NIN number" placeholder='e.g 1234 1234 123'/>
+                                </div>
+                              ) : selectedValue === "voter’s card" ? (
+                                <div>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
+                                  <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "First name" placeholder='Bukola'/>
+                                  <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "Last name" placeholder='Saka'/>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
+                                  <div className="flex justify-center gap-4">
+                                    <TextField variant = "short" value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "State" placeholder='Lagos'/>
+                                    <TextField variant = "short" value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "LGA" placeholder='Eti-Osa'/>
+                                  </div>
+                                </div>
+                              ) : selectedValue === "driver’s license" ? (
+                                <div>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Card number" placeholder='e.g 1234 1234 123'/>
+                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Date of birth number" placeholder='DD-MM-YY'/>
+                                </div>
+                              ) : ( <></>)
+                            }
                             <div className="mt-6">
                               <Link to='verification'><Button disabled = {idNumber ? false : true} fullWidth = {true}>Next</Button></Link>
                             </div>

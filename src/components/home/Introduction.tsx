@@ -8,7 +8,7 @@ import line from "../../assets/Icons/line.svg";
 const Introduction: FC = () => {
   const navigate = useNavigate()
   return (
-    <div className="lg:flex items-center gap-[30px] lg:pl-[5%] overflow-hidden">
+    <div className="lg:flex items-center gap-[30px] lg:pl-[5%] overflow-hidden mt-[90px]">
       <div className="text-center px-[5%] lg:px-[0px] lg:text-left">
         <h1 className="mx-auto lg:mx-0 h4 sm:text-[52px] text-headingColor sm:font-black sm:leading-[70.2px] sm:h-[210px] sm:w-[509px]">
           Your{" "}

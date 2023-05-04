@@ -16,6 +16,7 @@ const RegisterContinue = ({ setActiveTab}:any) => {
   const [sellerPassword, setSellerPassword] = useState("")
   const [bankName, setBankName] = useState("")
   const [accountNumber, setAccountNumber] = useState("")
+  const [accountName, setAccountName] = useState("")
 
   return ( 
     <div className=' md:flex justify-center flex-row-reverse'>
@@ -97,6 +98,7 @@ const RegisterContinue = ({ setActiveTab}:any) => {
                           <TextField value={sellerPassword} type="password" onChange={e=>setSellerPassword(e.target.value)} label = "Add password" placeholder='************'/>
                           <TextField value={bankName} onChange={e=>setBankName(e.target.value)} label = "Bank name" placeholder='e.g UBA'/>
                           <TextField value={accountNumber} onChange={e=>setAccountNumber(e.target.value)} label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
+                          <TextField value={accountName} onChange={e=>setAccountName(e.target.value)} label = "Account name" placeholder=''/>
                           <Link to='identity'><Button disabled = {accountNumber ? false : true} fullWidth = {true}>Next</Button></Link>
                         </div>
                       </form>

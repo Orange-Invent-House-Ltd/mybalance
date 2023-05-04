@@ -17,7 +17,6 @@ const RegVerification = () => {
   // tabs
   const [activeTab, setActiveTab] = useState(2);
 
-  const [verifyValue, setVerifyValue] = useState("")
   const [isVerify, setIsVerify] = useState(false);
 
   // otp continue
@@ -141,7 +140,7 @@ const RegVerification = () => {
                             );
                           })}
                         </div>
-                        <Button disabled = {verifyValue ? false : true} fullWidth = {true} onClick={() => setIsVerify(true)}>Verify</Button>
+                        <Button disabled = {otp.length === 6 ? false : true} fullWidth = {true} onClick={() => setIsVerify(true)}>Verify</Button>
                       </div>
                       {isVerify && (
                         <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1">
