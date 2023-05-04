@@ -166,9 +166,12 @@ html,body{
 .mobileh5{
   @apply text-lg font-bold leading-[24.3px] mb-[20px] mt-[50px] text-primary-normal;
 }
-/* .navMenu{
-  @apply text-white bg-secondary-100 pt-4 pb-8 pr-[5%] w-[280px] fixed top-0 transition-all z-50;
-} */
+.homeHeader{
+  @apply flex justify-between items-center px-[5%] text-base h-[80px] fixed top-0 right-0 left-0 z-10;
+}
+.homeNavMenu{
+  @apply bg-white px-[5%] pt-4 pb-8 w-full fixed top-[80px] bottom-0 transition-all z-10 no-scrollbar overflow-y-auto;
+}
 
 
 .h6{
@@ -182,6 +185,18 @@ html,body{
 }
 .status_style{
   @apply w-fit px-[8px] py-[2px] rounded-2xl text-center text-[14px] ml-auto font-medium;
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* no scrollbar */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 /* no increase and decrease arrow in input type number for verification code boxes */

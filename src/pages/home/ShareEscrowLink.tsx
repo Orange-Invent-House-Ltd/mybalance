@@ -1,15 +1,11 @@
 import React from 'react'
 import Header from '../../components/home/Header'
 import { Button } from '../../components/reuseable/Button'
-import { Link, useNavigate} from 'react-router-dom'
-import back from '../../assets/Icons/black-back.svg'
-import image404 from '../../assets/Icons/404.svg'
 import TextField from '../../components/reuseable/TextField'
 
 const ShareEscrowLink = () => {
-  const navigate = useNavigate()
   return (
-    <div>
+    <div className='px-[5%]'>
       <Header/>
       <div className='w-fit mx-auto mt-[50px]'>
         <h6 className='h6'>TMusty Shared an Escrow Link With You</h6>

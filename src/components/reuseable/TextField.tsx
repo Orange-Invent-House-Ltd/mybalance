@@ -30,6 +30,7 @@ const TextField: React.FC<ITextField> = (props) => {
       ) : (
         <input
           {...props}
+          name="text"
           className={clsx(
             "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
             {

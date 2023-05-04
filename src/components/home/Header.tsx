@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {Link, useNavigate} from "react-router-dom"
 import { Button } from '../reuseable/Button';
 import logo from "../../assets/Icons/logo.svg"
-import handburger from "../../assets/Icons/handburger.svg"
-import close from '../../assets/Icons/close.svg'
+import handburger from "../../assets/Icons/menuicon.png"
+import close from '../../assets/Icons/blackClose.svg'
 import caret from '../../assets/Icons/dropdown.svg'
 
 const  Header = () =>{
@@ -22,45 +22,47 @@ const  Header = () =>{
   }
   
   return (
-    <div className="flex justify-between items-center px-[5%] text-base h-[80px]">
+    <div className= {showMenu ? 'bg-[#F7F7F7]  homeHeader ' : 'bg-white homeHeader'}>
       <div>
         <Link to='/'><img src={logo} alt="logo" className='w-[39px]'/></Link> 
       </div>
       {/* mobile Menu */}
       <div className="md:hidden text-right" >
+        {/* handburger - Open menu */}
         <button className='relative' onClick={handleClick}>
-          <img src={handburger} alt="Menue" />
+          <img src={handburger} alt="Menu" />
         </button>
-          <nav className={showMenu ? 'navMenu right-0 duration-300' : 'navMenu -right-full duration-700'}>
-            <ul className="text-[#373737] font-medium">
-              <li className='navbar-toggle '>
-                <Link to="#" className='menu-bars'><img src={close} alt="close" className='flex ml-auto w-12 mb-6' onClick={handleClick}/></Link>
-              </li>
-              <li className="font-bold text-primary mb-2"><Link to="/">Home</Link></li>
-              <li className='mb-2'><Link to="#">About us</Link></li>
-              <li className='mb-2'><Link to="#">How we work</Link></li>
-              <li className='mb-2'><Link to="#">FAQs</Link></li>
-              <li className='mb-2'>
-                <button onClick={handleDropdown}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
-                <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
-                  <div>
-                    <a href="#" className='text-base font-medium'>Buyers & Vendors</a>
-                    <p className='text-[13px] font-normal pl-6'>For small scale vendors and individual buyers</p>
-                  </div>
-                  <div className='mt-2'>
-                    <a href="#" className='text-base font-medium'>Companies & Merchants</a>
-                    <p className='text-[13px] font-normal pl-6'>For organizations and their merchants</p>
-                  </div>
-                  <div className='mt-2'>
-                    <a href="#" className='text-base font-medium'>Government & Contractors</a>
-                    <p className='text-[13px] font-normal pl-6'>For government parastatals and contractors</p>
-                  </div>
+        <nav className={showMenu ? 'homeNavMenu right-0 duration-300' : 'homeNavMenu -right-full duration-700'}>
+          <ul className="flex flex-col gap-5 text-[#373737] font-medium text-left">
+            {/* close button - close menu
+            <li>
+              <Link to="#"><img src={close} alt="close" className='flex ml-auto w-12 mb-6' onClick={handleClick}/></Link>
+            </li> */}
+            <li className="font-bold text-primary mb-2"><Link to="/">Home</Link></li>
+            <li><Link to="#">About us</Link></li>
+            <li><Link to="#">How we work</Link></li>
+            <li><Link to="#">FAQs</Link></li>
+            <li className='mb-2'>
+              <button onClick={handleDropdown}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
+              <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
+                <div>
+                  <a href="#" className='text-base font-medium'>Buyers & Vendors</a>
+                  <p className='text-[13px] font-normal pl-6'>For small scale vendors and individual buyers</p>
                 </div>
-              </li>
-              <li className='mb-4'><Link to="#">Contact</Link></li>
-            </ul>
-            <div className="w-[103px] ml-auto mr-0" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
-          </nav>
+                <div className='mt-2'>
+                  <a href="#" className='text-base font-medium'>Companies & Merchants</a>
+                  <p className='text-[13px] font-normal pl-6'>For organizations and their merchants</p>
+                </div>
+                <div className='mt-2'>
+                  <a href="#" className='text-base font-medium'>Government & Contractors</a>
+                  <p className='text-[13px] font-normal pl-6'>For government parastatals and contractors</p>
+                </div>
+              </div>
+            </li>
+            <li className='mb-4'><Link to="#">Contact</Link></li>
+          </ul>
+          <div className="w-[130px]" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
+        </nav>
       </div>
       {/* Desktop Menu */}
       <nav className='hidden md:flex'>

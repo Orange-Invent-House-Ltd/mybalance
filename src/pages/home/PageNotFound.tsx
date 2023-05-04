@@ -10,18 +10,18 @@ const PageNotFound = () => {
   return (
     <div>
       <Header/>
-      <div className='md:flex justify-center items-center gap-48 py-[200px] px-[5%]'>
-        <div>
+      <div className='md:flex flex-row-reverse justify-center items-center gap-32 mt-[100px] md:py-[100px] px-[5%]'>
+        <div className='mb-10 md:mb-0 px-[5%] md:px-0'>
+          <img src={image404} alt="404 image" />
+        </div>
+        <div className='min-w-[330px]'>
           <p className='font-normal text-[16px] text-primary-normal mb-2'>404 error</p>
           <h1 className='text-headingColor font-bold text-[32px] mb-2'>Page not found</h1>
           <p className='para mb-10'>Sorry, the page you are looking for doesn't exist.</p>
-          <div className='flex gap-4 '>
-            <div className='w-[145px]' onClick={()=>navigate(-1)}><Button fullWidth variant='black-outlined'><div className='flex gap-2'><img src={back} alt="back arrow"/> Go back</div></Button></div>
-            <Link to='/'><Button>Take me home</Button></Link>
+          <div className='md:flex gap-4 '>
+            <div className='w-full md:w-[145px] mb-2 md:mb-0' onClick={()=>navigate(-1)}><Button fullWidth variant='black-outlined'><div className='flex justify-center gap-2'><img src={back} alt="back arrow"/> Go back</div></Button></div>
+            <Link to='/'><div className='w-full md:w-[145px]'><Button fullWidth >Take me home</Button></div></Link>
           </div>
-        </div>
-        <div>
-          <img src={image404} alt="404 image" />
         </div>
       </div>
     </div>
