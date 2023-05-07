@@ -5,6 +5,9 @@ import phone from "../../../assets/images/R-phone.png"
 import check from "../../../assets/Icons/check.svg"
 import { Button } from '../../../components/reuseable/Button';
 import { Link } from 'react-router-dom'
+import facebook from '../../../assets/Icons/Facebook.svg'
+import twitter from '../../../assets/Icons/Twitter.svg'
+import linkedin from '../../../assets/Icons/LinkedIn.svg'
 
 // otp index
 let currentOTPIndex:number = 0;
@@ -53,6 +56,7 @@ const RegVerification = () => {
       <header className='md:hidden ml-[5%] mb-4 mt-[5%]'>
         <Link to="/"><img src={logo} alt="my-balance" /></Link>
       </header>
+      {/* Desktop Image */}
       <div className='md:w-[40%] lg:w-[30%]'>
         <img src={phone} alt="" className="hidden md:flex"/>
       </div>
@@ -65,9 +69,9 @@ const RegVerification = () => {
           <Link to="/"><img src={logo} alt="my-balance" /></Link>
         </header>
         
-        <div className='w-[365px] md::w-[376px] my-8 mx-auto'>
+        <div className='w-[365px] md:w-[376px] my-8 mx-auto'>
           {/* tabs */}
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap px-[3%]">
             <div className="w-full">
               <ul
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
@@ -159,8 +163,16 @@ const RegVerification = () => {
                 </div>
               </div>
             </div>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
-          <p className='text-sm font-normal mt-6 text-center'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+        </div>
+        <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
+          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <img src={facebook} alt="" />
+            <img src={twitter} alt="" />
+            <img src={linkedin} alt="" />
+          </div>
         </div>
       </div>
     </div>

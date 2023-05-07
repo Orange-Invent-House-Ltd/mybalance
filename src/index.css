@@ -152,7 +152,7 @@ html,body{
   @apply leading-[21.6px] text-base font-normal;
 }
 .h3{
-  @apply text-headingColor font-black text-[36px] mb-6;
+  @apply text-headingColor text-[36px] mb-6 font-black;
 }
 .h5{
   @apply  text-headingColor font-bold text-[29px] leading-[39px] mb-[30px];
@@ -185,6 +185,9 @@ html,body{
 }
 .status_style{
   @apply w-fit px-[8px] py-[2px] rounded-2xl text-center text-[14px] ml-auto font-medium;
+}
+.active {
+  @apply  text-primary-normal font-bold ;
 }
 
 @layer utilities {

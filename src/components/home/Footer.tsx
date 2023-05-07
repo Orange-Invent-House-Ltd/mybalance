@@ -6,14 +6,12 @@ import twitter from "../../assets/Icons/Twitter.svg";
 import linkedin from "../../assets/Icons/LinkedIn.svg";
 const Footer = () => {
   return (
-    <div className="max-w-7xl w-full mx-auto ">
-      <div className="bg-[#ededed29] py-16  pl-[30px] sm:pl-[60px] md:pl-[121px]  flex flex-col md:flex-row gap-[100px]">
+    <div className=" w-full">
+      <div className="bg-[#ededed29] py-16 px-[5%] flex flex-col md:flex-row gap-[100px]">
         <div className="">
         <Link to='/'><img src={logo} alt="" className="mb-[43px]" /></Link>
           <p className="w-[258px] font-normal ">
-            We are a platform where buyers are assured of getting value for
-            their money and the seller can bank on us to get paid for the
-            product sold.
+            MyBalance offers escrow services for businesses, organizations and government parastatals with our world’s most secure payment method.
           </p>
         </div>
         <div className="flex gap-14 md:gap-24 flex-wrap ">
@@ -31,7 +29,7 @@ const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="  px-[16px] md:px-[121px] bg-white py-7 gap-5 md:py-12 flex-wrap-reverse flex justify-between">
+      <div className="px-[5%] bg-white py-7 gap-5 md:py-12 flex-wrap-reverse flex justify-between">
         <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
         <div className="flex items-center gap-5">
           <img src={facebook} alt="" />

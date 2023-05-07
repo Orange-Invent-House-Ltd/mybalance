@@ -9,6 +9,9 @@ import Home from "./pages/home/Home";
 import Login from "./pages/buyer/auth/Login";
 import Register from "./pages/buyer/auth/Register";
 import ShareEscrowLink from "./pages/home/ShareEscrowLink";
+import About from "./pages/home/About";
+import HowWeWork from "./pages/home/HowWeWork";
+import Contact from "./pages/home/Contact";
 
 
 const App: React.FC = () => { 
@@ -16,6 +19,10 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<About />} />
+        <Route path="/how-we-work" element={<HowWeWork />} />
+        <Route path="/contact" element={<Contact />} />
+
         <Route path="/buyer/login" element={<Login />} />
         <Route path="/buyer/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />

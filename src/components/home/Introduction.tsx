@@ -28,7 +28,7 @@ const Introduction: FC = () => {
           escrow payment solution
         </h1>
         <p className="mx-auto lg:mx-0 w-[257px] leading-[24.3px] font-lg sm:w-[359px] text-[#3A3A3A] my-[20px]">
-          For every buyer and seller in Nigeria and across the entire globe.
+        MyBalance offers escrow services for businesses, organizations and government parastatals with our world’s most secure payment method.
         </p>
         <div className="mb-[20px] sm:flex gap-4">
           <div className="mx-auto lg:mx-0 w-[244px] mb-[20px]">

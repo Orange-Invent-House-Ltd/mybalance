@@ -4,8 +4,8 @@ import { InputHTMLAttributes } from "react";
 
 interface ITextField extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  error?: boolean;
-  helperText?: string;
+  error?: any;
+  helperText?: any;
   variant?: "long" | "short";
 }
 
@@ -19,28 +19,19 @@ const TextField: React.FC<ITextField> = (props) => {
       >
         {props.label}
       </p>
-      {props.multiple ? (
-        <textarea
-          rows={5}
-          cols={60}
-          name="text"
-          placeholder="Enter text"
-          className="w-full  focus-within:border-[#747373] border border-[#B7B7B7]"
-        ></textarea>
-      ) : (
-        <input
-          {...props}
-          name="text"
-          className={clsx(
-            "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
-            {
-              "w-[165px]":
-              props.variant== "short",
-              "border-[#DA1E28] focus:border-[#DA1E28]": props.error,
-            }
-          )}
-        />
-      )}
+
+      <input
+        {...props}
+        name="text"
+        className={clsx(
+          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
+          {
+            "w-[165px]":
+            props.variant== "short",
+            "border-[#DA1E28] focus:border-[#DA1E28]": props.error,
+          }
+        )}
+      />
 
       <p
         className={clsx("text-sm mt-[6px]", {

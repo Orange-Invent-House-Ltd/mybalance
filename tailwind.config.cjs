@@ -15,6 +15,7 @@ module.exports = {
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
         'black-rgba': 'rgba(58, 58, 58, 0.6)',
+        greyBg: 'rgba(237, 237, 237, 0.16)',
         headingColor: "#121212",
         tertiary: "#B1580E",
       },

@@ -5,6 +5,9 @@ import mphone from "../../../assets/images/m-phone.png"
 import { Button } from '../../../components/reuseable/Button';
 import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
+import facebook from '../../../assets/Icons/Facebook.svg'
+import twitter from '../../../assets/Icons/Twitter.svg'
+import linkedin from '../../../assets/Icons/LinkedIn.svg'
 
 
 const Register = ({ setActiveTab}:any) => {
@@ -106,7 +109,15 @@ const Register = ({ setActiveTab}:any) => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+          </div>
+        </div>
+        <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
+          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <img src={facebook} alt="" />
+            <img src={twitter} alt="" />
+            <img src={linkedin} alt="" />
           </div>
         </div>
       </div>
