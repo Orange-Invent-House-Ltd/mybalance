@@ -5,6 +5,9 @@ import mphone from "../../../assets/images/m-phone.png"
 import { Button } from '../../../components/reuseable/Button';
 import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
+import facebook from '../../../assets/Icons/Facebook.svg'
+import twitter from '../../../assets/Icons/Twitter.svg'
+import linkedin from '../../../assets/Icons/LinkedIn.svg'
 
 
 const RegisterIdentity = () => {
@@ -106,28 +109,28 @@ const RegisterIdentity = () => {
                             { 
                               selectedValue === "international passport" ? (
                                 <div>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Passport number" placeholder='1234 1234 123'/>
+                                  <TextField type="phone" label = "Passport number" placeholder='1234 1234 123'/>
                                   <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "Last name" placeholder='Saka'/>
                                 </div>
                               ) : selectedValue === "nin" ? (
                                 <div>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "NIN number" placeholder='e.g 1234 1234 123'/>
+                                  <TextField type="phone" label = "NIN number" placeholder='e.g 1234 1234 123'/>
                                 </div>
                               ) : selectedValue === "voter’s card" ? (
                                 <div>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
-                                  <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "First name" placeholder='Bukola'/>
-                                  <TextField value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "Last name" placeholder='Saka'/>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
+                                  <TextField type="phone" label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
+                                  <TextField type="text" label = "First name" placeholder='Bukola'/>
+                                  <TextField type="text" label = "Last name" placeholder='Saka'/>
+                                  <TextField type="phone" label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
                                   <div className="flex justify-center gap-4">
-                                    <TextField variant = "short" value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "State" placeholder='Lagos'/>
-                                    <TextField variant = "short" value={idNumber} type="text" onChange={e=>setIdNumber(e.target.value)} label = "LGA" placeholder='Eti-Osa'/>
+                                    <TextField variant = "short" type="text" label = "State" placeholder='Lagos'/>
+                                    <TextField variant = "short" type="text" label = "LGA" placeholder='Eti-Osa'/>
                                   </div>
                                 </div>
                               ) : selectedValue === "driver’s license" ? (
                                 <div>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Card number" placeholder='e.g 1234 1234 123'/>
-                                  <TextField value={idNumber} type="phone" onChange={e=>setIdNumber(e.target.value)} label = "Date of birth number" placeholder='DD-MM-YY'/>
+                                  <TextField label = "Card number" placeholder='e.g 1234 1234 123'/>
+                                  <TextField label = "Date of birth number" placeholder='DD-MM-YY'/>
                                 </div>
                               ) : ( <></>)
                             }
@@ -142,7 +145,15 @@ const RegisterIdentity = () => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/seller/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/seller/login" className='text-[#121212] font-bold'>Log in here</a></p>
+          </div>
+        </div>
+        <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
+          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <img src={facebook} alt="" />
+            <img src={twitter} alt="" />
+            <img src={linkedin} alt="" />
           </div>
         </div>
       </div>

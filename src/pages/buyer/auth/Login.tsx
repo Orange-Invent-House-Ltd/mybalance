@@ -1,11 +1,25 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import sideImg from "../../../assets/images/rightImg.png";
 import { Button } from "../../../components/reuseable/Button";
 import { Link } from "react-router-dom";
 import TextField from "../../../components/reuseable/TextField";
 import logo from '../../../assets/Icons/logo.svg'
 
+import facebook from '../../../assets/Icons/Facebook.svg'
+import twitter from '../../../assets/Icons/Facebook.svg'
+import linkedin from '../../../assets/Icons/Facebook.svg'
+
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState:{errors},
+  } = useForm()
+
+  const onSubmit = (data:{}) => console.log(data);
+
   return (
     <div className="flex flex-col-reverse relative md:flex-row">
       <div className="flex-[.7]  flex items-center  justify-center px-5">
@@ -19,15 +33,33 @@ const Login = () => {
               login as a seller
             </p>
           </div>
-          <form>
+          <form 
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <h1 className="font-medium text-2xl mb-2">
               Log in to your account
             </h1>
             <p className="text-base text-gray mb-8">
               Welcome back! Please enter your details and access your dashboard.
             </p>
-            <TextField label="email" />
-            <TextField label="password" type="password" />
+            <TextField 
+              {
+                ...register('email', {
+                  required: 'this field is required',
+                  pattern:{
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ ,
+                    message: 'invalid email format',
+                  },
+                }) 
+              }
+              error={errors?.email} 
+              helperText={errors?.email?.message}
+              label="email" 
+              autoComplete="email"
+            />
+            <TextField 
+              
+              label="password" type="password" />
             <div className="flex items-center justify-between py-5">
               <div className="flex items-center gap-2">
                 <input type="checkbox" name="" id="" />
@@ -35,7 +67,7 @@ const Login = () => {
               </div>
               <Link to='/forgot-password' className="font-bold">forget password</Link>
             </div>
-            <Button fullWidth disabled>
+            <Button fullWidth>
               login
             </Button>
             <div className="mt-6">

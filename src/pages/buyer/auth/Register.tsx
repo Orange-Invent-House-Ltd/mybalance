@@ -5,6 +5,9 @@ import mphone from "../../../assets/images/m-phone.png"
 import { Button } from '../../../components/reuseable/Button';
 import TextField from '../../../components/reuseable/TextField';
 import {Link} from 'react-router-dom'
+import facebook from '../../../assets/Icons/Facebook.svg'
+import twitter from '../../../assets/Icons/Twitter.svg'
+import linkedin from '../../../assets/Icons/LinkedIn.svg'
 
 
 const Register = ({ setActiveTab}:any) => {
@@ -22,12 +25,12 @@ const Register = ({ setActiveTab}:any) => {
       <header className='md:hidden ml-[5%] mb-4 mt-[5%] '>
         <Link to="/"><img src={logo} alt="my-balance" /></Link>
       </header>
-      <div className='md:w-[48%] lg:w-[35%]'>
-        <img src={phoneImage} alt="Image of a phone" className="hidden md:flex" />
-      </div>
       {/* mobile phone Image */}
       <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%] "/>
-      
+      {/* Desktop Image */}
+      <div className=''>
+        <img src={phoneImage} alt="Image of a phone" className="hidden md:flex" />
+      </div>
       <div className='md:w-[52%] lg:w-[65%]'>
         {/* Desktop header */}
         <header className='hidden md:flex ml-[5%] mt-[5%]'>
@@ -95,8 +98,8 @@ const Register = ({ setActiveTab}:any) => {
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
                         <div className='grid gap-y-3.5'>
                           <TextField value={name} onChange={e=>setName(e.target.value)}  label = "Full name" placeholder='e.g Albert'/>
-                          <TextField value={email} onChange={e=>setPhone(e.target.value)} label = "Email" placeholder='e.g al.bert@gmail.com'/>
-                          <TextField value={phone} onChange={e=>setEmail(e.target.value)}  label = "Phone" placeholder='+234 000 0000 000'/>
+                          <TextField value={email} onChange={e=>setEmail(e.target.value)} label = "Email" placeholder='e.g al.bert@gmail.com'/>
+                          <TextField value={phone} onChange={e=>setPhone(e.target.value)}  label = "Phone" placeholder='+234 000 0000 000'/>
                           <TextField value={password} onChange={e=>setPassword(e.target.value)} label = "Password" type="password" placeholder='************'/>
                           <Link to='verification'><Button disabled = {password ? false : true} fullWidth = {true}>Next</Button></Link>
                         </div>
@@ -109,7 +112,15 @@ const Register = ({ setActiveTab}:any) => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold cursor-pointer'>Log in here</a></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold cursor-pointer'>Log in here</a></p>
+          </div>
+        </div>
+        <div className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
+          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <img src={facebook} alt="" />
+            <img src={twitter} alt="" />
+            <img src={linkedin} alt="" />
           </div>
         </div>
       </div>

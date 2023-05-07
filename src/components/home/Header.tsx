@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Link, useNavigate} from "react-router-dom"
+import {NavLink, Link, useNavigate} from "react-router-dom"
 import { Button } from '../reuseable/Button';
 import logo from "../../assets/Icons/logo.svg"
 import handburger from "../../assets/Icons/menuicon.png"
@@ -38,28 +38,28 @@ const  Header = () =>{
             <li>
               <Link to="#"><img src={close} alt="close" className='flex ml-auto w-12 mb-6' onClick={handleClick}/></Link>
             </li> */}
-            <li className="font-bold text-primary mb-2"><Link to="/">Home</Link></li>
-            <li><Link to="#">About us</Link></li>
-            <li><Link to="#">How we work</Link></li>
-            <li><Link to="#">FAQs</Link></li>
+            <li className="mb-2"><NavLink to="/">Home</NavLink></li>
+            <li><NavLink to="/about-us">About us</NavLink></li>
+            <li><NavLink to="/how-we-work">How we work</NavLink></li>
+            <li><NavLink to="/faq">FAQs</NavLink></li>
             <li className='mb-2'>
               <button onClick={handleDropdown}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
               <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
                 <div>
-                  <a href="#" className='text-base font-medium'>Buyers & Vendors</a>
+                  <NavLink to="#" className='text-base font-medium'>Buyers & Vendors</NavLink>
                   <p className='text-[13px] font-normal pl-6'>For small scale vendors and individual buyers</p>
                 </div>
                 <div className='mt-2'>
-                  <a href="#" className='text-base font-medium'>Companies & Merchants</a>
+                  <NavLink to="#" className='text-base font-medium'>Companies & Merchants</NavLink>
                   <p className='text-[13px] font-normal pl-6'>For organizations and their merchants</p>
                 </div>
                 <div className='mt-2'>
-                  <a href="#" className='text-base font-medium'>Government & Contractors</a>
+                  <NavLink to="#" className='text-base font-medium'>Government & Contractors</NavLink>
                   <p className='text-[13px] font-normal pl-6'>For government parastatals and contractors</p>
                 </div>
               </div>
             </li>
-            <li className='mb-4'><Link to="#">Contact</Link></li>
+            <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>
           </ul>
           <div className="w-[130px]" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
         </nav>
@@ -67,23 +67,23 @@ const  Header = () =>{
       {/* Desktop Menu */}
       <nav className='hidden md:flex'>
         <ul className="flex gap-6 text-[#373737] font-medium">
-          <li className="font-bold text-primary"><Link to="/">Home</Link></li>
-          <li><Link to="#">About us</Link></li>
-          <li><Link to="#">How we work</Link></li>
+          <li className=""><NavLink to="/">Home</NavLink></li>
+          <li><NavLink to="/about-us">About us</NavLink></li>
+          <li><NavLink to="/how-we-work">How we work</NavLink></li>
           <li>
             <button onClick={handleDropdown} className="flex">Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto' /></button>
             <div className={display? "absolute top-[70px] left-0 w-full z-10 bg-white" : "hidden absolute top-[70px] left-0 w-full z-10 bg-white"}>
               <div className='flex justify-evenly items-center gap-10 h-[142px] px-[5%]'>
                 <div>
-                  <a href="#" className='text-[23px] font-bold'>Buyers & Vendors</a>
+                  <NavLink to="#" className='text-[23px] font-bold'>Buyers & Vendors</NavLink>
                   <p className='text-sm font-regular text-[#6D6D6D]'>For small scale vendors and individual buyers</p>
                 </div>
                 <div>
-                  <a href="#" className='text-[23px] font-bold'>Companies & Merchants</a>
+                  <NavLink to="#" className='text-[23px] font-bold'>Companies & Merchants</NavLink>
                   <p className='text-sm font-regular text-[#6D6D6D]'>For organizations and their merchants</p>
                 </div>
                 <div>
-                  <a href="#" className='text-[23px] font-bold'>Government & Contractors</a>
+                  <NavLink to="#" className='text-[23px] font-bold'>Government & Contractors</NavLink>
                   <p className='text-sm font-regular text-[#6D6D6D]'>For government parastatals and contractors</p>
                 </div>
               </div>
@@ -92,8 +92,8 @@ const  Header = () =>{
               </div>
             </div>
           </li>
-          <li><Link to="#">FAQs</Link></li>
-          <li><Link to="#">Contact</Link></li>
+          <li><NavLink to="/faq">FAQs</NavLink></li>
+          <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>
       <div className="w-[130px] hidden md:flex" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
