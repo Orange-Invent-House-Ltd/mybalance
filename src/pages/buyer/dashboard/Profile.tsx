@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/reuseable/Button";
-import TextField from "../../../components/reuseable/TextField";
+import TextField from "../../../components/reuseable/TextField1";
 
 const Profile = () => {
   return (

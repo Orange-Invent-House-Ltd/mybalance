@@ -4,7 +4,7 @@ import mphone from "../../assets/images/m-phone.png"
 import phone from "../../assets/images/R-phone.png"
 import key from "../../assets/Icons/key.svg"
 import { Button } from '../../components/reuseable/Button';
-import TextField from '../../components/reuseable/TextField';
+import TextField from '../../components/reuseable/TextField1';
 import { Link } from 'react-router-dom'
 
 

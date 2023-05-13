@@ -34,7 +34,7 @@ const data = [
   },
   {
     Icon: phone,
-    heading: "office",
+    heading: "phone",
     subHeading: "Mon-Fri from 8am to 5pm.",
     contact: "(+234) 813 2444 211",
   },

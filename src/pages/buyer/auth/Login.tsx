@@ -1,24 +1,51 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+// Zod - A typescript-first schema validation library.
+import { object, string, TypeOf } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import sideImg from "../../../assets/images/rightImg.png";
 import { Button } from "../../../components/reuseable/Button";
 import { Link } from "react-router-dom";
 import TextField from "../../../components/reuseable/TextField";
 import logo from '../../../assets/Icons/logo.svg'
-
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Facebook.svg'
 import linkedin from '../../../assets/Icons/Facebook.svg'
+import { email } from "../../../components/regex/email";
+
+//type definition with error messages for the form input
+const loginSchema = object({
+  email: string()
+    .min(1, "Email address is required")
+    .email("Email Address is invalid"),
+  password: string()
+    .min(1, "Password is required")
+    .min(8, "Password must be more than 8 characters")
+    .max(32, "Password must be less than 32 characters"),
+});
+
+//type definition for login form
+export type LoginInput = TypeOf<typeof loginSchema>;
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState:{errors},
-  } = useForm()
+  const methods = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const onSubmit = (data:{}) => console.log(data);
+  //useForm() destructuring or methods destructuring . Here methods = useForm()
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = methods;
+
+  const onSubmit= (data:LoginInput) => console.log(data);
+
+  // //onsubmit run register function with the values collected from the form which is used as data in registerUser
+  // const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
+  //   console.log(values);
+  //   // registerUser(values);
+  // };
 
   return (
     <div className="flex flex-col-reverse relative md:flex-row">
@@ -33,6 +60,7 @@ const Login = () => {
               login as a seller
             </p>
           </div>
+          <FormProvider {...methods}>
           <form 
             onSubmit={handleSubmit(onSubmit)}
           >
@@ -43,22 +71,11 @@ const Login = () => {
               Welcome back! Please enter your details and access your dashboard.
             </p>
             <TextField 
-              {
-                ...register('email', {
-                  required: 'this field is required',
-                  pattern:{
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ ,
-                    message: 'invalid email format',
-                  },
-                }) 
-              }
-              error={errors?.email} 
-              helperText={errors?.email?.message}
-              label="email" 
-              autoComplete="email"
+              name="email"
+              label="email"
             />
             <TextField 
-              
+              name="password"
               label="password" type="password" />
             <div className="flex items-center justify-between py-5">
               <div className="flex items-center gap-2">
@@ -76,6 +93,7 @@ const Login = () => {
               </p>
             </div>
           </form>
+          </FormProvider>
         </div>
       </div>
       <img

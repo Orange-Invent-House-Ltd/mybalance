@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TextField from "../../../components/reuseable/TextField";
+import TextField from "../../../components/reuseable/TextField1";
 import { Button } from "../../../components/reuseable/Button";
 import check from "../../../assets/Icons/check.svg";
 import back from "../../../assets/Icons/back.svg";
@@ -18,7 +18,7 @@ const LockNewAmount = ({setLock}:any) => {
       <div className= "w-[393px] bg-white pl-[16px] pr-[34px] overflow-y-scroll">
         <div className="flex gap-4 items-center pt-10 mb-8">
           <img src={back} alt="back" onClick={()=> setLock(false)} className="cursor-pointer" />
-          <h6 className="h6">Lock New Amount </h6>
+          <h6 className="text-[23px] font-medium">Lock New Amount</h6>
         </div>
         <h1 className="text-[#EDEDED] text-lg font-medium">
           SENDER ADDITIONAL INFORMATION

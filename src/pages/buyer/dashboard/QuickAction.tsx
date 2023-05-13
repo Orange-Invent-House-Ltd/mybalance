@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button } from "../../../components/reuseable/Button";
 import Header from "../../../components/reuseable/Header"
-import TextField from "../../../components/reuseable/TextField";
+import TextField from "../../../components/reuseable/TextField1";
 import copy from '../../../assets/Icons/copy.svg'
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
 import check from '../../../assets/Icons/check.svg'

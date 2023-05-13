@@ -1,11 +1,11 @@
 export interface IUser {
   email: string;
   email_verified?: boolean;
+  name?:string;
+  phone?:number;
   user_type?: string;
   user_id?: string;
-  first_name?:string;
-  last_name?: string;
-  phone_number?:number;
+
   gender?:string;
   date_of_birth?:string;
   nationality?:string;
