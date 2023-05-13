@@ -40,8 +40,6 @@ const  Header = () =>{
             </li> */}
             <li className="mb-2"><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/about-us">About us</NavLink></li>
-            <li><NavLink to="/how-we-work">How we work</NavLink></li>
-            <li><NavLink to="/faq">FAQs</NavLink></li>
             <li className='mb-2'>
               <button onClick={handleDropdown}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
               <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
@@ -69,7 +67,6 @@ const  Header = () =>{
         <ul className="flex gap-6 text-[#373737] font-medium">
           <li className=""><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/about-us">About us</NavLink></li>
-          <li><NavLink to="/how-we-work">How we work</NavLink></li>
           <li>
             <button onClick={handleDropdown} className="flex">Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto' /></button>
             <div className={display? "absolute top-[70px] left-0 w-full z-10 bg-white" : "hidden absolute top-[70px] left-0 w-full z-10 bg-white"}>
@@ -92,7 +89,6 @@ const  Header = () =>{
               </div>
             </div>
           </li>
-          <li><NavLink to="/faq">FAQs</NavLink></li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>

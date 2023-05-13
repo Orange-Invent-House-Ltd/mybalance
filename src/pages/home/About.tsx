@@ -7,13 +7,14 @@ import number1 from '../../assets/Icons/01.svg'
 import number2 from '../../assets/Icons/02.svg'
 import number3 from '../../assets/Icons/03.svg'
 import number4 from '../../assets/Icons/04.svg'
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
     <div>
       <Header />
       <div className='mt-[80px]'>
-        <div className='px-[7%] h-[700px] flex flex-col justify-center items-center bg-primary-normal text-white'>
+        <div className='px-[7%] h-[400px] md:h-[700px] flex flex-col justify-center items-center bg-primary-normal text-white'>
           <p className='text-base font-medium text-[#373737] mb-6'>
             <a href="/" className='underline text-black '>Home</a> | About Us
           </p>
@@ -64,7 +65,7 @@ const About = () => {
         <div className='py-24 px-[5%]'>
           <h3 className='text-[29px] md:text-[36px] mb-6 font-bold text-primary-normal max-w-[618px] text-center mx-auto'>Interested in connecting with the people behind our success?</h3>
           <div className='flex flex-col items-center justify-center gap-4'>
-            <div className='w-[244px]'><Button fullWidth variant='outlined'>Contact us</Button></div>
+            <Link to='/contact'><div className='w-[244px]'><Button fullWidth variant='outlined'>Contact us</Button></div></Link> 
             <div className='w-[244px]'><Button fullWidth>See vacancies</Button></div>
           </div>
         </div>

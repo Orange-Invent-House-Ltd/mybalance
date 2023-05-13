@@ -1,6 +1,6 @@
 import { useState } from "react"
 import back from "../../assets/Icons/back.svg"
-import TextField from "../reuseable/TextField"
+import TextField from "../reuseable/TextField1"
 import { Button } from "../reuseable/Button"
 
 const EditLockedAmount = ({setEditLocked, description, timeline, amount}:any) => {

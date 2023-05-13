@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Header from '../../../components/reuseable/Header'
 import { Button } from '../../../components/reuseable/Button';
-import TextField from '../../../components/reuseable/TextField';
+import TextField from '../../../components/reuseable/TextField1';
 import back from "../../../assets/Icons/back.svg"
 import RejectModal from '../../../components/sellers/RejectModal';
 import { data } from '../../../util/data';

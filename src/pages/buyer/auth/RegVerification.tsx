@@ -1,18 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react'
+// Zod - A typescript-first schema validation library.
+import { object, string, TypeOf } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { authApi } from "../../../api/authApi";
+import { GenericResponse } from "../../../api/types";
+import useStore from "../../../store";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { Button } from '../../../components/reuseable/Button';
+import { LoadingButton } from "../../../components/reuseable/LoadingButton";
 import logo from "../../../assets/Icons/logo.svg"
 import mphone from "../../../assets/images/m-phone.png"
 import phone from "../../../assets/images/R-phone.png"
 import check from "../../../assets/Icons/check.svg"
-import { Button } from '../../../components/reuseable/Button';
-import { Link } from 'react-router-dom'
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Twitter.svg'
 import linkedin from '../../../assets/Icons/LinkedIn.svg'
+
 
 // otp index
 let currentOTPIndex:number = 0;
 
 const RegVerification = () => {
+  const store = useStore();
+  const navigate = useNavigate();
+  const { verificationCode } = useParams();
+
   // otp state
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0)
@@ -20,7 +34,6 @@ const RegVerification = () => {
   // tabs
   const [activeTab, setActiveTab] = useState(1);
 
-  const [verifyValue, setVerifyValue] = useState("")
   const [isVerify, setIsVerify] = useState(false);
 
   // otp continue
@@ -49,6 +62,42 @@ const RegVerification = () => {
     // input box focus 
     inputRef.current?.focus();
   },[activeOTPIndex])
+
+  useEffect(() => {
+    if (verificationCode) {
+      const otpCode = verificationCode.split('')
+      setOtp(otpCode);
+    }
+  }, []);
+
+  const verifyEmail = async (otp:[]) => {
+    const stringOtp = otp.join("").toString()
+    try {
+      store.setRequestLoading(true);
+      const response = await authApi.post<GenericResponse>(
+        `auth/verify-account/`,
+        {
+          otp : stringOtp
+        }
+      );
+      store.setRequestLoading(false);
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      navigate("/login");
+    } catch (error: any) {
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
+  };
 
   return (
     <div className='md:flex justify-center flex-row-reverse'>
@@ -125,26 +174,35 @@ const RegVerification = () => {
                       <h6 className='h6'>Check your email</h6>
                       <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>We sent a verification link to [emailAddressSupplied]</p>
                       <div className='grid gap-y-3.5'>
-                        {/* otp input boxes */}
-                        <div className=" mb-6 flex justify-start items-center space-x-2">
-                          {otp.map((_, index) => {
-                            return (
-                              <React.Fragment key={index}>
-                                <input
-                                  // make the input box focus start from the first one
-                                  ref={index === activeOTPIndex ? inputRef : null}
-                                  type="number"
-                                  placeholder=''
-                                  value={otp[index]}
-                                  onChange={handleChange}
-                                  onKeyDown={(e) => handleKeyDown(e, index) }
-                                  className="w-[50px] h-[50px] rounded bg-transparent text-center font-semibold text-xl spin-button-none outline-none border border-[#cccccc] focus:border-gray-700 text-primary transition"
-                                />
-                              </React.Fragment>
-                            );
-                          })}
-                        </div>
-                        <Button disabled = {verifyValue ? false : true} fullWidth = {true} onClick={() => setIsVerify(true)}>Verify</Button>
+                          <form
+                            onSubmit={()=>verifyEmail} >
+                            {/* otp input boxes */}
+                            <div className=" mb-6 flex justify-start items-center space-x-2">
+                              {otp.map((_, index) => {
+                                return (
+                                  <React.Fragment key={index}>
+                                    <input
+                                      // make the input box focus start from the first one
+                                      ref={index === activeOTPIndex ? inputRef : null}
+                                      type="number"
+                                      placeholder=''
+                                      value={otp[index]}
+                                      onChange={handleChange}
+                                      onKeyDown={(e) => handleKeyDown(e, index) }
+                                      className="w-[50px] h-[50px] rounded bg-transparent text-center font-semibold text-xl spin-button-none outline-none border border-[#cccccc] focus:border-gray-700 text-primary transition"
+                                    />
+                                  </React.Fragment>
+                                );
+                              })}
+                            </div>
+                            <LoadingButton
+                              loading={store.requestLoading}
+                              fullWidth
+                              disabled = {otp.length === 6 ? false : true}
+                            >
+                              Verify
+                            </LoadingButton>
+                          </form>
                       </div>
                       {isVerify && (
                         <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1">

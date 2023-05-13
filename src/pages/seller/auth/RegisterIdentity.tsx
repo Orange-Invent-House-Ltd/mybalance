@@ -3,7 +3,7 @@ import logo from "../../../assets/Icons/logo.svg"
 import phoneImage from "../../../assets/images/R-phone.png"
 import mphone from "../../../assets/images/m-phone.png"
 import { Button } from '../../../components/reuseable/Button';
-import TextField from '../../../components/reuseable/TextField';
+import TextField from '../../../components/reuseable/TextField1';
 import {Link} from 'react-router-dom'
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Twitter.svg'
