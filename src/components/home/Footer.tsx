@@ -4,6 +4,7 @@ import logo from "../../assets/Icons/logo.svg";
 import facebook from "../../assets/Icons/Facebook.svg";
 import twitter from "../../assets/Icons/Twitter.svg";
 import linkedin from "../../assets/Icons/LinkedIn.svg";
+
 const Footer = () => {
   return (
     <div className=" w-full">
@@ -30,7 +31,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="px-[5%] bg-white py-7 gap-5 md:py-12 flex-wrap-reverse flex justify-between">
-        <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+        <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
         <div className="flex items-center gap-5">
           <a href="https://www.facebook.com/themybalanceapp" target="_blank"><img src={facebook} alt="Facebook" /></a>
           <a href="https://twitter.com/mybalance_app" target="_blank"><img src={twitter} alt="Twitter" /></a>

@@ -1,16 +1,20 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IUser } from '../api/types';
+import { IUser, IUserProfile } from '../api/types';
 
 type Store = {
   authEmail: string;
   authUser: IUser | null;
+  userProfile: IUserProfile | null;
   requestLoading: boolean;
   authToken: string;
+  tempId: string;
   setAuthEmail:(email:string) => void;
   setAuthUser: (user: IUser | null) => void;
+  setUserProfile: (profile: IUserProfile | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
-  setToken:(token:string) => void;
+  setAuthToken:(token:string) => void;
+  setTempId:(tempId: string) => void;
 };
 
 const useStore = create(
@@ -18,12 +22,16 @@ const useStore = create(
     (set, get) =>({
     authEmail: "",
     authUser: null,
+    userProfile: null,
     requestLoading: false,
     authToken: "",
+    tempId: '',
     setAuthEmail: (email) => set((state) => ({ ...state, authEmail: email })),
     setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
+    setUserProfile: (profile) => set((state) => ({ ...state, userProfile: profile })),
     setRequestLoading: (isLoading) => set((state) => ({ ...state, requestLoading: isLoading })),
-    setToken: (token) => set((state) => ({ ...state, authToken: token })),
+    setAuthToken: (token) => set((state) => ({ ...state, authToken: token })),
+    setTempId: (tempId) => set((state) => ({...state, tempId: tempId }))
     }),
     {
       name: 'store', // Set a name for your persisted store

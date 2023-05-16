@@ -1,7 +1,7 @@
 import bell from "../../assets/Icons/notification.svg"
 
 type HeaderProps = {
-  Heading: string;
+  Heading: any;
   Text:string;
 };
 const BuyerHeader = ({Heading, Text}:HeaderProps) => {

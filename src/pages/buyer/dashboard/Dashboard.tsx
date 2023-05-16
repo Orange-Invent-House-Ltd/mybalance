@@ -1,23 +1,72 @@
-import { useState } from "react"
-import {Link} from 'react-router-dom'
+import { useEffect} from "react"
+import useStore from '../../../store'
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { authApi } from "../../../api/authApi";
 import { Button } from "../../../components/reuseable/Button";
-import Header from '../../../components/reuseable/Header'
+import { IUserResponse } from "../../../api/types";
 import DashboardLockedBox from '../../../components/reuseable/DashboardLockedBox'
 import DashboardQuickBox from '../../../components/reuseable/DashboardQuickBox'
 import plus  from '../../../assets/Icons/plus.svg'
 import lock from '../../../assets/Icons/lock.svg'
 import unlock from '../../../assets/Icons/unlock.svg'
 import download from '../../../assets/Icons/download.svg'
+import bell from "../../../assets/Icons/notification.svg"
 import DashboardHistoryBox from '../../../components/reuseable/DashboardHistoryBox'
 
 
 const Dashboard = () => {
+  const store = useStore();
+  const navigate = useNavigate();
+  const user = store.authUser;
+  const profile = store.userProfile
+
+  const getUser = async () => {
+    try {
+      store.setRequestLoading(true);
+      const response = await authApi.get<IUserResponse>(
+        "/auth/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${store.authToken}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      store.setRequestLoading(false);
+      store.setUserProfile(response.data?.data);
+    } catch (error: any) {
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+      // navigate('/login')
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div className='mb-16'>
-      <Header
-        Heading='Welcome Jamjam!'
-        Text='Your last login was on 01/12/2022 10:00:34 AM'
-      />
+      <div className="md:flex justify-between mb-8">
+        <div>
+          <h6 className='h6'>Welcome {user?.name}</h6>
+          <p className='max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px] '>
+            Your last login was on {profile?.lastLoginDate}
+          </p>
+        </div>
+
+        <img src={bell} alt="notification bell" className="hidden md:flex"/>
+      </div>
+      
       <div className='flex flex-wrap gap-3 mt-16'>
         <div  className='border border-[#FECA9F] rounded w-[403px] h-[125px] p-6 '>
           <p className='mb-2 font-base font-normal leading-[21.6px]'>Available balance in escrow</p>

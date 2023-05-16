@@ -6,6 +6,7 @@ import handburger from "../../assets/Icons/menuicon.png"
 import close from '../../assets/Icons/blackClose.svg'
 import caret from '../../assets/Icons/dropdown.svg'
 
+
 const  Header = () =>{
   const [ display, setDisplay ] = useState(false)
   const [showMenu, setShowMenu] = useState(false);
@@ -41,7 +42,10 @@ const  Header = () =>{
             <li className="mb-2"><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/about-us">About us</NavLink></li>
             <li className='mb-2'>
-              <button onClick={handleDropdown}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
+              <button onClick={()=>{
+                navigate('/solutions');
+                handleDropdown
+                }}>Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto inline-block' /></button>
               <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
                 <div>
                   <NavLink to="#" className='text-base font-medium'>Buyers & Vendors</NavLink>
@@ -68,7 +72,10 @@ const  Header = () =>{
           <li className=""><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/about-us">About us</NavLink></li>
           <li>
-            <button onClick={handleDropdown} className="flex">Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto' /></button>
+            <button onClick={()=>{
+                navigate('/solutions');
+                handleDropdown
+                }} className="flex">Solutions <img src={caret} alt="dropdown" className='ml-2 my-auto' /></button>
             <div className={display? "absolute top-[70px] left-0 w-full z-10 bg-white" : "hidden absolute top-[70px] left-0 w-full z-10 bg-white"}>
               <div className='flex justify-evenly items-center gap-10 h-[142px] px-[5%]'>
                 <div>

@@ -3,67 +3,60 @@ import {useState} from "react";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { authApi } from "../../../api/authApi";
-import { GenericResponse } from "../../../api/types";
-import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { LoadingButton } from "../../../components/reuseable/LoadingButton";
-import TextField from '../../../components/reuseable/TextField';
-import logo from "../../../assets/Icons/logo.svg"
-import phoneImage from "../../../assets/images/R-phone.png"
-import mphone from "../../../assets/images/m-phone.png"
-import facebook from '../../../assets/Icons/Facebook.svg'
-import twitter from '../../../assets/Icons/Twitter.svg'
-import linkedin from '../../../assets/Icons/LinkedIn.svg'
+import { authApi } from "../../api/authApi";
+import { GenericResponse } from "../../api/types";
+import { Link, useNavigate  } from "react-router-dom";
+import useStore from "../../store";
+import { LoadingButton } from "../../components/reuseable/LoadingButton";
+import TextField from "../../components/reuseable/TextField";
+import phoneImage from "../../assets/images/R-phone.png"
+import mphone from "../../assets/images/m-phone.png"
+import logo from '../../assets/Icons/logo.svg'
+import facebook from '../../assets/Icons/Facebook.svg'
+import twitter from '../../assets/Icons/Twitter.svg'
+import linkedin from '../../assets/Icons/LinkedIn.svg'
 
 //type definition with error messages for the form input
-const registerSchema = object({
-  name: string()
-    .min(1, "Full name is required")
-    .min(8, "Full name must be more than 8 characters")
-    .max(32, "Full name must be less than 50 characters"),
+const loginSchema = object({
   email: string()
     .min(1, "Email address is required")
     .email("Email Address is invalid"),
-  phone: string()
-  .min(1, "Phone number is required - numbers only")
-  .max(11, "Phone number must not be more than 11 digits")
-  .regex(/^([0-9]{11})$/, "Phone number must be 11 digits"),
   password: string()
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters")
-    .regex(
-      /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
-      'Password must contain at least one special character, one Upper case, and one number,'
-    ),
+    .max(32, "Password must be less than 32 characters"),
 });
 
-//type definition for form
-export type SignupInput = TypeOf<typeof registerSchema>;
+//type definition for login form
+export type LoginInput = TypeOf<typeof loginSchema>;
 
-const Register = () => {
+const Login = () => {
   // tabs
   const [openTab, setOpenTab] = useState(1);
+
   const store = useStore();
   const navigate = useNavigate();
-  const methods = useForm<SignupInput>({
-    resolver: zodResolver(registerSchema),
+  const methods = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
   });
 
+  const userEmail = store.authEmail
+
+  //useForm() destructuring or methods destructuring . Here methods = useForm()
   const {
     handleSubmit,
-  } = methods
+  } = methods;
 
-  const registerUser= async (data: SignupInput) => {
+  const loginUser= async (data: LoginInput) => {
+    store.setAuthEmail(data.email);
     try {
       console.log(data)
       //set button loading to true
       store.setRequestLoading(true);
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
-        "auth/register",
+        "auth/login",
         data
       );
       //Form submition success notifications
@@ -71,15 +64,21 @@ const Register = () => {
         position: "top-right",
       });
       store.setRequestLoading(false);
-      store.setAuthEmail(data?.email);
+      store.setAuthToken(response.data.data?.token);
+      store.setAuthUser(response.data.data?.user);
       store.setTempId(response.data.data?.tempId);
       //navigate to verification page after submition
-      navigate("/email-verification");
+      response.data.data.user.isVerified === false ? navigate('/email-verification') :
+      response.data.data.user.isBuyer === true ? navigate('/buyer/dashboard') : navigate( "/seller/dashboard")
     } catch (error: any) {
       console.log(error)
       store.setRequestLoading(false);
       const resMessage =
-        error.response.data.errors.email.toString();
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
       //Form submition error notifications
       toast.error(resMessage, {
         position: "top-right",
@@ -87,7 +86,37 @@ const Register = () => {
     }
   };
 
-  return ( 
+  const resendVerifyEmail = async (userEmail:string) => {
+    try {
+      const response = await authApi.post(
+        'auth/resend-otp',
+        {
+          email: userEmail
+        }
+      );
+      //Form submition success notifications
+      toast.success(response.data.message as string, {
+        toastId: 'success1',
+        position: "top-right",
+      });
+      store.setTempId(response.data.data?.tempId);
+    } catch (error:any) {
+      console.error(error);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        toastId: 'error1',
+        position: "top-right",
+      });
+    }
+  };
+
+  return (
     <div className=' md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
       <header className='md:hidden ml-[5%] mb-4 mt-[5%] '>
@@ -130,7 +159,7 @@ const Register = () => {
                     href="#link1"
                     role="tablist"
                   >
-                    Create as a customer
+                    Login as a customer
                   </a>
                 </li>
                 {/* seller tab */}
@@ -144,55 +173,65 @@ const Register = () => {
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
                     }
-                    // onClick={e => {
-                    //   e.preventDefault();
-                    //   setOpenTab(2);
-                    // }}
+                    onClick={e => {
+                      e.preventDefault();
+                      setOpenTab(2);
+                    }}
                     data-toggle="tab"
                     href="#link2"
                     role="tablist"
                   >
-                    Create as a seller
+                    Login as a seller
                   </a></Link>
                 </li>
               </ul>
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
                 <div className="px-4 py-5 flex-auto">
                   <div className="tab-content tab-space">
-                    {/* create account as customer */}
-                    <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                    {/* Login as customer */}
+                    <div className={openTab === 1 ? "block" : "block"} id="link1">
                       <FormProvider {...methods}>
                       <form 
-                        onSubmit={handleSubmit(registerUser)}
+                        onSubmit={handleSubmit(loginUser)}
                       >
-                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
-                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
+                        <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Log in to your account</h6>
+                        <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Welcome back! Please enter your details and access your dashboard.</p>
                         <div className='grid gap-y-3.5'>
-                          <TextField 
-                            name="name" label = "Full name" placeholder='e.g Albert'/>
                           <TextField
                             name="email" label = "Email" placeholder='e.g al.bert@gmail.com'/>
-                          <TextField 
-                            name="phone"
-                            label = "Phone" placeholder='+234 000 0000 000'/>
                           <TextField
                             name="password"
                             label = "Password" type="password" placeholder='************'/>
+                          <div className="flex items-center justify-between py-5">
+                            <div className="flex items-center gap-2">
+                              <input type="checkbox" name="" id="" />
+                              <label htmlFor="">remember me</label>
+                            </div>
+                            <Link to='/forgot-password' className="font-bold">forget password</Link>
+                          </div>
                           <LoadingButton
                             loading={store.requestLoading}
-                          > Next</LoadingButton>
+                          > Login</LoadingButton>
                         </div>
                       </form>
                       </FormProvider>
                     </div>
-                    {/* create account as seller */}
+                    {/* Login as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold cursor-pointer'>Log in here</a></p>
+            <p className='text-sm font-normal mb-1 w-fit mx-auto'>Don’t have an account? <Link to='/buyer/register' className='text-[#121212] font-bold cursor-pointer'>Create one</Link></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Have not verify your email? 
+              <span className='text-[#121212] font-bold cursor-pointer'
+                onClick={e=>{
+                  e.preventDefault();
+                  navigate('/email-verification')
+                  resendVerifyEmail(userEmail)
+                }}
+              > Verify Email</span></p>
           </div>
         </div>
         <div className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
@@ -204,8 +243,8 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </div>
-  )
+    </div>  
+  );
 };
 
-export default Register
+export default Login;
