@@ -113,7 +113,7 @@ const Register = ({ setActiveTab}:any) => {
           </div>
         </div>
         <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
-          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
+          <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
           <div className="flex items-center gap-3">
             <img src={facebook} alt="" />
             <img src={twitter} alt="" />

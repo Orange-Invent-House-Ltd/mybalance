@@ -24,7 +24,7 @@ const TextField: React.FC<ITextField> = (props) => {
         {...props}
         name="text"
         className={clsx(
-          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
+          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373]",
           {
             "w-[165px]":
             props.variant== "short",

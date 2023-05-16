@@ -7,7 +7,7 @@ type FormInputProps = {
   name: string;
   type?: string;
   placeholder?: string;
-  variant?: "short" | "long";
+  variant?: "short" | "medium" |"long";
 };
 
 const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeholder, variant="long"}) => {
@@ -27,13 +27,13 @@ const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeh
         type={type}
         placeholder= {placeholder}
         className={clsx(
-          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
+          "block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
           {
-            // "w-[300px] md:w-[390px]":
-            // variant== "long",
+            "w-[319px]":
+            variant== "medium",
             "w-[165px]":
             variant== "short",
-            "border-[#DA1E28] focus:border-[#DA1E28]": errors[name]
+            "border-[#DA1E28] focus:border-[#DA1E28]": errors[name],
           }
         )}
         {...register(name)}

@@ -4,28 +4,28 @@ import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { authApi } from "../../../api/authApi";
-import { GenericResponse } from "../../../api/types";
-import useStore from "../../../store";
+import { authApi } from "../../api/authApi";
+import { GenericResponse } from "../../api/types";
+import useStore from "../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { Button } from '../../../components/reuseable/Button';
-import { LoadingButton } from "../../../components/reuseable/LoadingButton";
-import logo from "../../../assets/Icons/logo.svg"
-import mphone from "../../../assets/images/m-phone.png"
-import phone from "../../../assets/images/R-phone.png"
-import check from "../../../assets/Icons/check.svg"
-import facebook from '../../../assets/Icons/Facebook.svg'
-import twitter from '../../../assets/Icons/Twitter.svg'
-import linkedin from '../../../assets/Icons/LinkedIn.svg'
+import { Button } from '../../components/reuseable/Button';
+import { LoadingButton } from "../../components/reuseable/LoadingButton";
+import logo from "../../assets/Icons/logo.svg"
+import mphone from "../../assets/images/m-phone.png"
+import phone from "../../assets/images/R-phone.png"
+import check from "../../assets/Icons/check.svg"
+import facebook from '../../assets/Icons/Facebook.svg'
+import twitter from '../../assets/Icons/Twitter.svg'
+import linkedin from '../../assets/Icons/LinkedIn.svg'
 
 
 // otp index
 let currentOTPIndex:number = 0;
 
-const RegVerification = () => {
+const EmailVerification = () => {
   const store = useStore();
   const navigate = useNavigate();
-  const { verificationCode } = useParams();
+  const userEmail = store.authEmail
 
   // otp state
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
@@ -78,7 +78,8 @@ const RegVerification = () => {
       const response = await authApi.post<GenericResponse>(
         `auth/verify-account`,
         {
-          otp : stringOtp
+          otp : stringOtp,
+          tempId: store.tempId
         }
       );
       store.setRequestLoading(false);
@@ -101,7 +102,36 @@ const RegVerification = () => {
     }
   };
 
-  const userEmail = store.authEmail
+  const resendVerifyEmail = async (userEmail:string) => {
+    try {
+      const response = await authApi.post(
+        'auth/resend-otp',
+        {
+          email: userEmail
+        }
+      );
+      //Form submition success notifications
+      toast.success(response.data.message as string, {
+        toastId: 'success1',
+        position: "top-right",
+      });
+      store.setTempId(response.data.data?.tempId);
+    } catch (error:any) {
+      console.error(error);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        toastId: 'error1',
+        position: "top-right",
+      });
+    }
+  };
+
   return (
     <div className='md:flex justify-center flex-row-reverse'>
       {/* mobile header */}
@@ -209,6 +239,14 @@ const RegVerification = () => {
                             >
                               Verify
                             </LoadingButton>
+                            <p className='mt-4 text-[#121212]'>Didn’t receive the email?
+                              <span className='font-semibold cursor-pointer'
+                                onClick={e=>{
+                                  e.preventDefault();
+                                  resendVerifyEmail(userEmail)
+                                }}
+                              > Click to resend</span>
+                            </p>
                           </form>
                       </div>
                       {isVerify && (
@@ -244,4 +282,4 @@ const RegVerification = () => {
   )
 }
 
-export default RegVerification
+export default EmailVerification

@@ -1,6 +1,7 @@
 import React from 'react'
 import Footer from "../../components/home/Footer";
 import Header from "../../components/home/Header";
+import HeroSection from '../../components/reuseable/HeroSection';
 import { Button } from '../../components/reuseable/Button';
 import ourValueImg from '../../assets/images/our-value.png'
 import number1 from '../../assets/Icons/01.svg'
@@ -9,19 +10,16 @@ import number3 from '../../assets/Icons/03.svg'
 import number4 from '../../assets/Icons/04.svg'
 import { Link } from 'react-router-dom';
 
+
 const About = () => {
   return (
     <div>
       <Header />
       <div className='mt-[80px]'>
-        <div className='px-[7%] h-[400px] md:h-[700px] flex flex-col justify-center items-center bg-primary-normal text-white'>
-          <p className='text-base font-medium text-[#373737] mb-6'>
-            <a href="/" className='underline text-black '>Home</a> | About Us
-          </p>
-          <h3 className='max-w-[725px] text-center text-[29px] md:text-[36px] font-bold'>
-            Never shop online without MyBalance escrow service. Services and Product delivery guaranteed
-          </h3>
-        </div>
+        <HeroSection 
+          menu='About Us' 
+          text='Never shop online without MyBalance escrow service. Services and Product delivery guaranteed'
+        />
         <div className='py-20 px-[7%] mb-16'>
           <h3 className='h3 text-center'>About</h3>
           <p className='text-center text-base md:text-lg max-w-[635px] mx-auto'>MyBalance offers escrow services for businesses, organizations and government parastatals with our world’s most secure payment method from a counterparty risk perspective - thereby protecting both buyer and seller, all funds transacted using escrow are kept in trust. 

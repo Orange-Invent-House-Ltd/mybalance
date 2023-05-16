@@ -32,7 +32,7 @@ const Introduction: FC = () => {
         </p>
         <div className="mb-[20px] sm:flex gap-4">
           <div className="mx-auto lg:mx-0 w-[244px] mb-[20px]">
-            <Button variant="outlined" fullWidth={true} onClick={()=>navigate('/buyer/login')}>
+            <Button variant="outlined" fullWidth={true} onClick={()=>navigate('/login')}>
               Login to continue
             </Button>
           </div>

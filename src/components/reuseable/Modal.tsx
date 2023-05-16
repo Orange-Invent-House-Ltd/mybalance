@@ -1,10 +1,24 @@
 import React from "react";
 import warningIcon from "../../assets/Icons/warningIcon.svg";
+import useStore from "../../store";
+import {useNavigate } from "react-router-dom";
+
 const Modal = ({
   setLogoutModal,
 }: {
   setLogoutModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const store = useStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Call an API to log out the user
+    store.setAuthToken("");
+    store.setAuthEmail("");
+    //navigate to email verification page after submition
+    navigate('/login')
+  };
+
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-full bg-[#3a3a3a]/50  backdrop-blur-[8px]">
       <div className="w-[400px] py-6 px-6 min-h-[246px] rounded absolute bg-white backdrop-blur-xl top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 ">
@@ -20,7 +34,7 @@ const Modal = ({
           >
             cancel
           </button>
-          <button className=" rounded-md py-3 px-14 capitalize text-white bg-[#D92D20] text-lg font-medium ">
+          <button onClick={handleLogout} className=" rounded-md py-3 px-14 capitalize text-white bg-[#D92D20] text-lg font-medium ">
             logout
           </button>
         </div>

@@ -3,45 +3,30 @@ export interface IUser {
   email_verified?: boolean;
   name?:string;
   phone?:number;
-  user_type?: string;
-  user_id?: string;
-
-  gender?:string;
-  date_of_birth?:string;
-  nationality?:string;
-  vnin?:number;
-  nin_verified?: boolean;
-  postal_code?:string;
-  address?: string;
-  address_verified?:boolean;
-  district?: string;
-  lga?:string;
-  state?:string;
-  company_name?: string;
-  company_category?:string;
-  company_phone_number?:string;
+  isVerified?: boolean;
+  id?: string;
+  isBuyer?: boolean;
+  isSeller?: boolean;
+}
+export interface IUserProfile {
+  id: string;
+  bankAccount : {};
+  lastLoginDate: string;
+  lockedAmount: number
 }
 
 export interface GenericResponse {
-  status: string;
   message: string;
   email: string;
-  token: string;
-  user: IUser;
-  state: string;
-  lga: string;
-  district: string
-  data?: {
-    authorizer_first_name?:string;
-    authorizer_last_name?: string;
-    verified?: string;
-    id?: string;
-    state: string;
-    lga: string;
-    district: string
-  } | any
-  
-  
+  data: {
+    tempId : string;
+    token: string;
+    user: IUser
+  } 
+}
+export interface IUserResponse {
+  status: string;
+  data: IUserProfile;
 }
 
 export interface ILoginResponse {
@@ -49,13 +34,6 @@ export interface ILoginResponse {
   token: string;
   expires_in:number;
   user: IUser;
-}
-
-export interface IUserResponse {
-  status: string;
-  data: {
-    user: IUser;
-  };
 }
 
 export interface EmailResponse {

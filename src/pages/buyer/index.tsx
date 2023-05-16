@@ -1,9 +1,7 @@
 import React from "react";
 import {  Route, Routes } from "react-router-dom";
 import BuyerDashboardLayout from "../../layout/BuyerDashboardLayout";
-import Login from "./auth/Login";
 import Register from "./auth/Register";
-import RegVerification from "./auth/RegVerification";
 import AddNewDispute from "./dashboard/AddNewDispute";
 import CustomerSupport from "./dashboard/CustomerSupport";
 import Dashboard from "./dashboard/Dashboard";
@@ -21,7 +19,6 @@ const Index = () => {
   return (
     <Routes>
       <Route path="/" element={<BuyerDashboardLayout />}>
-        <Route index element={<Home />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="quick-action" element={<QuickAction />} />
         <Route path="transaction-history" element={<TransactionHistory />} />
@@ -33,9 +30,7 @@ const Index = () => {
         <Route path="customer-support" element={<CustomerSupport />} />
         <Route path="quick-action/lock" element={<LockNewAmount />} />
       </Route>
-      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/register/verification" element={<RegVerification />}/>
       <Route path="*" element={<PageNotFound/>}/>
     </Routes>
   );
