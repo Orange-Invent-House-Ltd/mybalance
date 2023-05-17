@@ -33,10 +33,10 @@ const Solutions = () => {
             <div className="flex justify-center">
               <div className="relative">
                 <img className="" src={lightcard} alt="someone with credit card" />
-                <img className="absolute bottom-[150px] left-10" src={shirt50} alt="background rectangle shape" />
+                <img className="absolute bottom-[150px] left-3 md:left-10" src={shirt50} alt="background rectangle shape" />
               </div>
-              <div className=" relative">
-                <img className="absolute top-[130px] left-[25px]" src={pc} alt="someone shoping online" />
+              <div className=" relative mr-4 md:mr-0">
+                <img className="absolute top-[130px] left-3 md:left-[25px]" src={pc} alt="someone shoping online" />
                 <img className="mt-[150px] -z-10" src={darkcard} alt="bacgrund rectangle shape" />
               </div>
             </div>
@@ -46,10 +46,10 @@ const Solutions = () => {
             <div className="flex justify-center">
               <div className="relative">
                 <img className="" src={lightcard} alt="someone with credit card" />
-                <img className="absolute bottom-[150px] left-10" src={officeTower} alt="background rectangle shape" />
+                <img className="absolute bottom-[180px] left-3 md:left-10" src={officeTower} alt="background rectangle shape" />
               </div>
-              <div className=" relative">
-                <img className="absolute top-[130px] right-[25px]" src={office} alt="someone shoping online" />
+              <div className=" relative mb-8">
+                <img className="absolute top-[130px] right-3 md:right-[25px]" src={office} alt="someone shoping online" />
                 <img className="mt-[150px] -z-10" src={darkcard} alt="bacgrund rectangle shape" />
               </div>
             </div>
@@ -71,10 +71,10 @@ const Solutions = () => {
             <div className="flex justify-center">
               <div className="relative">
                 <img className="" src={lightcard} alt="someone with credit card" />
-                <img className="absolute bottom-[150px] left-10" src={buildingTower} alt="background rectangle shape" />
+                <img className="absolute bottom-[150px] left-3 md:left-10" src={buildingTower} alt="background rectangle shape" />
               </div>
-              <div className=" relative">
-                <img className="absolute top-[130px] left-[25px]" src={tractor} alt="someone shoping online" />
+              <div className=" relative mr-4 md:mr-0">
+                <img className="absolute top-[130px] left-3 md:left-[25px]" src={tractor} alt="someone shoping online" />
                 <img className="mt-[150px] -z-10" src={darkcard} alt="bacgrund rectangle shape" />
               </div>
             </div>
