@@ -103,7 +103,7 @@ const SetNewPassword = () => {
           <Link to="/"><img src={logo} alt="my-balance" /></Link>
         </header>
         
-        <div className='w-[365px] md::w-[376px] mt-16 mx-auto mb-10 md:mb-0'>
+        <div className='w-[365px] md::w-[376px] mt-16 mx-auto mb-10 md:mb-0 px-[5%] md:px-0'>
           <img src={key} alt="password" className='mx-auto' />
           <h6 className='mt-12 text-[#121212] text-center font-medium text-[23px] leading-[31.05px]'>Set new password</h6>
           <p className='mt-2 mb-8 text-center text-[#6D6D6D] text-[18px] leading-5 font-normal'>Enter your new password below. Password must be 8 characters or more.</p>
