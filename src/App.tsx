@@ -14,6 +14,7 @@ import HowWeWork from "./pages/home/HowWeWork";
 import Contact from "./pages/home/Contact";
 import EmailVerification from "./pages/auth/EmailVerification";
 import Solutions from "./pages/home/Solutions";
+import PasswordReset from "./pages/auth/PasswordReset";
 
 
 const App: React.FC = () => { 
@@ -31,7 +32,9 @@ const App: React.FC = () => {
         <Route path="/email-verification" element={<EmailVerification />} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/forgot-password/email-verification" element={<ForgotPasswordVerification/>} />
-        <Route path="/set-new-password" element={<SetNewPassword/>} />
+        <Route path="/reset-password" element={<SetNewPassword/>} />
+        <Route path="/reset-password/:verificationCode" element={<SetNewPassword/>} />
+        <Route path="/reset-password/password-reset" element={<PasswordReset/>} />
         <Route path="/share-escrow-link" element={<ShareEscrowLink/>} />
         <Route path="/buyer/*" element={<Buyer />} />
         <Route path="/seller/*" element={<Seller />} />

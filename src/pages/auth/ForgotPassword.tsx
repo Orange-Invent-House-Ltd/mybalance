@@ -1,15 +1,76 @@
 import {useState} from 'react'
+// Zod - A typescript-first schema validation library.
+import { object, string, TypeOf } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { Link, useNavigate} from "react-router-dom";
+import { authApi } from "../../api/authApi";
+import { GenericResponse } from "../../api/types";
+import useStore from "../../store";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { LoadingButton } from "../../components/reuseable/LoadingButton";
 import logo from "../../assets/Icons/logo.svg"
 import mphone from "../../assets/images/m-phone.png"
 import phone from "../../assets/images/R-phone.png"
 import key from "../../assets/Icons/key.svg"
 import { Button } from '../../components/reuseable/Button';
-import TextField from '../../components/reuseable/TextField1';
-import { Link } from 'react-router-dom'
+import TextField from '../../components/reuseable/TextField';
 
+//type definition with error messages for the form input
+const ForgotPasswordSchema = object({
+  email: string()
+    .min(1, "Email address is required")
+    .email("Email Address is invalid"),
+});
+
+//type definition for login form
+export type ForgotPasswordInput = TypeOf<typeof ForgotPasswordSchema>;
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("")
+  const store = useStore();
+  const navigate = useNavigate();
+  const methods = useForm<ForgotPasswordInput>({
+    resolver: zodResolver(ForgotPasswordSchema),
+  });
+
+  const userEmail = store.authEmail
+
+  //useForm() destructuring or methods destructuring . Here methods = useForm()
+  const {
+    handleSubmit,
+  } = methods;
+
+  const getUserEmail = async (data: ForgotPasswordInput) => {
+    try {
+      //set button loading to true
+      store.setRequestLoading(true);
+      //post input datas to database
+      const response = await authApi.post<GenericResponse>(
+        "auth/forgot-password",
+        data
+      );
+      store.setRequestLoading(false);
+      store.setAuthEmail(data.email)
+      //Form submition success notifications
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      //navigate to reset password page after submition
+      navigate("email-verification");
+    } catch (error: any) {
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
+  };
 
   return (
     <div className='md:flex justify-center flex-row-reverse'>
@@ -33,11 +94,16 @@ const ForgotPassword = () => {
           <img src={key} alt="password" className='mx-auto' />
           <h6 className='mt-12 text-[#121212] text-center font-medium text-[23px] leading-[31.05px]'>Forgot password?</h6>
           <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>No worries, we’ll send you reset instructions.</p>
-          <form action="">
-            <TextField value={email} onChange={e=>setEmail(e.target.value)}  label = "Email" placeholder='e.g “Musty Feet”'/> <br />
-            <Button fullWidth>Reset password</Button>
-          </form>
-          
+          <FormProvider {...methods}>
+            <form 
+              onSubmit={handleSubmit(getUserEmail)}
+            >
+              <TextField name='email' label = "Email" placeholder='e.g “Musty Feet”'/> <br />
+              <LoadingButton fullWidth
+                loading={store.requestLoading}
+              >Reset password</LoadingButton>
+            </form>
+          </FormProvider>
         </div>
       </div>
     </div>

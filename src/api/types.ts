@@ -1,12 +1,15 @@
 export interface IUser {
-  email: string;
+  email?: string;
   email_verified?: boolean;
   name?:string;
-  phone?:number;
+  phone?:string;
   isVerified?: boolean;
   id?: string;
   isBuyer?: boolean;
   isSeller?: boolean;
+  businessName?: string;
+  businessDescription?: string;
+  address?: string;
 }
 export interface IUserProfile {
   id: string;
