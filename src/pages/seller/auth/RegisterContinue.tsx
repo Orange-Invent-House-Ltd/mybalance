@@ -8,6 +8,7 @@ import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { authApi } from "../../../api/authApi";
 import { GenericResponse } from "../../../api/types";
+import { BankResponse } from "../../../api/types";
 import logo from "../../../assets/Icons/logo.svg"
 import phoneImage from "../../../assets/images/R-phone.png"
 import mphone from "../../../assets/images/m-phone.png"
@@ -34,6 +35,8 @@ const registerSchema = object({
     .regex(/^([0-9]{10})$/, "Account number must be 10 digits"),
   accountName: string()
   .min(1, "Account name is required"),
+  bankCode : string()
+  .min(1, "Account name is required"),
 });
 
 //type definition for form
@@ -42,6 +45,8 @@ export type SignupInput = TypeOf<typeof registerSchema>;
 const RegisterContinue = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
+  const [banksAndCodes, setBanksAndCodes] = useState([])
+  // const [userBankCode, setuserBankCode] = useState("")
 
   const store = useStore();
   const navigate = useNavigate();
@@ -56,22 +61,68 @@ const RegisterContinue = () => {
     watch,
   } = methods
 
-  // get postal_code input filed value once === 6 digits
   useEffect(() => {
-    const watchAN = watch("accountNumber")
-    if (watchAN.length === 10) {
-      console.log(watchAN)
-      getAccountName(watchAN)
-    }
+    getBankCode()
   }, []);
 
-  // get the user's account name.
-  const getAccountName = async (accountName:string) => {
+  // get user bank code from bank name once bank number input filed  === 10 digits
+  useEffect(() => {
+    const userAccountNumber = watch("accountNumber")
+    let userBankCode = '';
+    if (userAccountNumber.length === 10) {
+      console.log(userAccountNumber)
+      // get user bank code
+      const bankName = getValues("bankName")
+      console.log(bankName)
+      banksAndCodes.map((bankAndCode:any, key) => {
+        bankAndCode.name === bankName ? userBankCode = bankAndCode.code : ''
+      })
+      console.log(userBankCode)
+      getAccountName(userBankCode, userAccountNumber)
+    }
+  }, [watch("accountNumber")]);
+
+  // get all bankcode.
+  const getBankCode = async () => {
     try {
-      const response = await authApi.get<GenericResponse>(
-        `postcodes/data?post_code=${accountName}`
+      const response = await authApi.get<BankResponse>(
+        `/shared/banks`
       );
-      setValue("accountName", accountName);
+      setBanksAndCodes(response.data?.data);
+      //Form submition success notifications
+      // toast.success(response.data.status as string, {
+      //   toastId: 'success1',
+      //   position: "top-right",
+      // });
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        toastId: 'error1',
+        position: "top-right",
+      });
+    }
+  };
+
+  // get the user's account name.
+  const getAccountName = async (userBankCode:string, userAccountNumber:string) => {
+    try {
+      const response = await authApi.post<GenericResponse>(
+        `shared/lookup/nuban`,
+        {
+          bankCode : userBankCode,
+          accountNumber : userAccountNumber
+        }
+      );
+      setValue("accountName", response.data.data?.accountName);
+      setValue('bankCode', userBankCode)
       //Form submition success notifications
       // toast.success(response.data.status as string, {
       //   toastId: 'success1',
@@ -95,7 +146,8 @@ const RegisterContinue = () => {
   };
 
   const registerUser =(data: SignupInput) => {
-    store.setAuthUser(data);
+    store.setAuthUser({...store.authUser, ...data});
+    store.setAuthEmail(data.email);
     //navigate to next page
     navigate('identity');
   };
@@ -180,10 +232,13 @@ const RegisterContinue = () => {
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
                         <div className='grid gap-y-3.5'>
                           <TextField name="email" label = "Email" placeholder='e.g tmusty@gmail.com'/>
-                          <TextField name="password"  label = "Add password" placeholder='************'/>
+                          <TextField name="password"  label = "Add password" type="password" placeholder='************'/>
                           <TextField name="bankName"  label = "Bank name" placeholder='e.g UBA'/>
                           <TextField name="accountNumber" label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
                           <TextField name="accountName" label = "Account name" placeholder=''/>
+                          <div className="hidden">
+                            <TextField name="bankCode" label = "bankCode" placeholder=''/>
+                          </div>
                           <Button fullWidth>Next</Button>
                         </div>
                       </form>

@@ -10,6 +10,11 @@ export interface IUser {
   businessName?: string;
   businessDescription?: string;
   address?: string;
+  password?: string;
+  bankName?: string;
+  accountNumber?: string;
+  accountName ?: string;
+  bankCode?: string;
 }
 export interface IUserProfile {
   id: string;
@@ -24,7 +29,8 @@ export interface GenericResponse {
   data: {
     tempId : string;
     token: string;
-    user: IUser
+    accountName:string;
+    user: IUser;
   } 
 }
 export interface IUserResponse {
@@ -39,10 +45,8 @@ export interface ILoginResponse {
   user: IUser;
 }
 
-export interface EmailResponse {
+export interface BankResponse {
   status: string;
   message: string;
-  data: {
-    user: IUser;
-  };
+  data: [];
 }
