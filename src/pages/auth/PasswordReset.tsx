@@ -1,15 +1,15 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import logo from "../../assets/Icons/logo.svg"
 import mphone from "../../assets/images/m-phone.png"
 import phone from "../../assets/images/R-phone.png"
 import check from "../../assets/Icons/check.svg"
 import { Button } from '../../components/reuseable/Button';
-import TextField from '../../components/reuseable/TextField1';
 import { Link } from 'react-router-dom'
 
 
 const PasswordReset = () => {
-  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
 
   return (
     <div className='md:flex justify-center flex-row-reverse'>
@@ -29,16 +29,11 @@ const PasswordReset = () => {
           <Link to="/"><img src={logo} alt="my-balance" /></Link>
         </header>
         
-        <div className='w-[365px] md::w-[376px] mt-16 mx-auto mb-10 md:mb-0 px-[5%]'>
+        <div className='w-[365px] md::w-[376px] mt-16 mx-auto mb-10 md:mb-0'>
           <img src={check} alt="password" className='mx-auto' />
-          <h6 className='mt-12 text-[#121212] text-center font-medium text-[23px] leading-[31.05px]'>Set new password</h6>
-          <p className='mt-2 mb-8 text-center text-[#6D6D6D] text-[18px] leading-5 font-normal'>Enter your new password below. Password must be 8 characters or more.</p>
-          <form action="">
-            <TextField value={email} onChange={e=>setEmail(e.target.value)}  label = "New password" placeholder='******'/>
-            <TextField value={email} onChange={e=>setEmail(e.target.value)}  label = "Retype new password" placeholder='******'/> <br />
-            <Button fullWidth>Reset password</Button>
-            <p className='mt-6 text-sm font-normal w-fit mx-auto'>Didn’t receive the email? <span className='text-primary-normal'>Click to resend</span></p>
-          </form>
+          <h6 className='mt-12 text-[#121212] text-center font-medium text-[23px] leading-[31.05px]'>Password reset</h6>
+          <p className='mt-6 mb-8 text-center text-[#3A3A3A] text-[18px] leading-5 font-normal'>Your password has been successfully reset. Click button below to continue.</p>
+            <Button fullWidth onClick={()=> navigate('/login')}>Continue</Button>
         </div>
       </div>
     </div>

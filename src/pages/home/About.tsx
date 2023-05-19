@@ -21,7 +21,7 @@ const About = () => {
           text='Never shop online without MyBalance escrow service. Services and Product delivery guaranteed'
         />
         <div className='py-20 px-[7%] mb-16'>
-          <h3 className='h3 text-center'>About</h3>
+          <h3 className='h3700 text-center'>About</h3>
           <p className='text-center text-base md:text-lg max-w-[635px] mx-auto'>MyBalance offers escrow services for businesses, organizations and government parastatals with our world’s most secure payment method from a counterparty risk perspective - thereby protecting both buyer and seller, all funds transacted using escrow are kept in trust. 
             MyBalance is a product of Orange Invent Limited with <span className='font-medium'>CAC Registration Number RC 1303150</span>. Our core mission is to mitigate the fear of transaction fraud, scenarios of what I ordered vs what I got and pay after delivery. 
             We are a platform where buyers are assured of getting value for their money and the seller can bank on us to get paid for the product sold.

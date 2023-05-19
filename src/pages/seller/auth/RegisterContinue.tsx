@@ -1,25 +1,156 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
+// Zod - A typescript-first schema validation library.
+import { object, string, TypeOf } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import useStore from "../../../store";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { authApi } from "../../../api/authApi";
+import { GenericResponse } from "../../../api/types";
+import { BankResponse } from "../../../api/types";
 import logo from "../../../assets/Icons/logo.svg"
 import phoneImage from "../../../assets/images/R-phone.png"
 import mphone from "../../../assets/images/m-phone.png"
 import { Button } from '../../../components/reuseable/Button';
-import TextField from '../../../components/reuseable/TextField1';
-import {Link} from 'react-router-dom'
+import TextField from '../../../components/reuseable/TextField';
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Twitter.svg'
 import linkedin from '../../../assets/Icons/LinkedIn.svg'
 
+//type definition with error messages for the form input
+const registerSchema = object({
+  email: string()
+    .min(1, "Email address is required")
+    .email("Email Address is invalid"),
+  password: string()
+    .min(1, "Password is required")
+    .min(8, "Password must be more than 8 characters")
+    .max(32, "Password must be less than 32 characters"),
+  bankName: string()
+  .min(1, "Bank name is required"),
+  accountNumber: string()
+    .min(1, "Account number is required - numbers only")
+    .max(10, "Account number must not be more than 10 digits")
+    .regex(/^([0-9]{10})$/, "Account number must be 10 digits"),
+  accountName: string()
+  .min(1, "Account name is required"),
+  bankCode : string()
+  .min(1, "Account name is required"),
+});
 
-const RegisterContinue = ({ setActiveTab}:any) => {
+//type definition for form
+export type SignupInput = TypeOf<typeof registerSchema>;
+
+const RegisterContinue = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
+  const [banksAndCodes, setBanksAndCodes] = useState([])
+  // const [userBankCode, setuserBankCode] = useState("")
 
-  //seller
-  const [sellerEmail, setSellerEmail] = useState("")
-  const [sellerPassword, setSellerPassword] = useState("")
-  const [bankName, setBankName] = useState("")
-  const [accountNumber, setAccountNumber] = useState("")
-  const [accountName, setAccountName] = useState("")
+  const store = useStore();
+  const navigate = useNavigate();
+  const methods = useForm<SignupInput>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+  } = methods
+
+  useEffect(() => {
+    getBankCode()
+  }, []);
+
+  // get user bank code from bank name once bank number input filed  === 10 digits
+  useEffect(() => {
+    const userAccountNumber = watch("accountNumber")
+    let userBankCode = '';
+    if (userAccountNumber.length === 10) {
+      console.log(userAccountNumber)
+      // get user bank code
+      const bankName = getValues("bankName")
+      console.log(bankName)
+      banksAndCodes.map((bankAndCode:any, key) => {
+        bankAndCode.name === bankName ? userBankCode = bankAndCode.code : ''
+      })
+      console.log(userBankCode)
+      getAccountName(userBankCode, userAccountNumber)
+    }
+  }, [watch("accountNumber")]);
+
+  // get all bankcode.
+  const getBankCode = async () => {
+    try {
+      const response = await authApi.get<BankResponse>(
+        `/shared/banks`
+      );
+      setBanksAndCodes(response.data?.data);
+      //Form submition success notifications
+      // toast.success(response.data.status as string, {
+      //   toastId: 'success1',
+      //   position: "top-right",
+      // });
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        toastId: 'error1',
+        position: "top-right",
+      });
+    }
+  };
+
+  // get the user's account name.
+  const getAccountName = async (userBankCode:string, userAccountNumber:string) => {
+    try {
+      const response = await authApi.post<GenericResponse>(
+        `shared/lookup/nuban`,
+        {
+          bankCode : userBankCode,
+          accountNumber : userAccountNumber
+        }
+      );
+      setValue("accountName", response.data.data?.accountName);
+      setValue('bankCode', userBankCode)
+      //Form submition success notifications
+      // toast.success(response.data.status as string, {
+      //   toastId: 'success1',
+      //   position: "top-right",
+      // });
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        toastId: 'error1',
+        position: "top-right",
+      });
+    }
+  };
+
+  const registerUser =(data: SignupInput) => {
+    store.setAuthUser({...store.authUser, ...data});
+    store.setAuthEmail(data.email);
+    //navigate to next page
+    navigate('identity');
+  };
 
   return ( 
     <div className=' md:flex justify-center flex-row-reverse'>
@@ -93,18 +224,25 @@ const RegisterContinue = ({ setActiveTab}:any) => {
                   <div className="tab-content tab-space">
                     {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                      <form>
+                    <FormProvider {...methods}>
+                      <form 
+                        onSubmit={handleSubmit(registerUser)}
+                      >
                         <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>Create your account now</h6>
                         <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Create your account in seconds and enjoy the full features of MyBalance.</p>
                         <div className='grid gap-y-3.5'>
-                          <TextField value={sellerEmail} onChange={e=>setSellerEmail(e.target.value)}  label = "Email" placeholder='e.g tmusty@gmail.com'/>
-                          <TextField value={sellerPassword} type="password" onChange={e=>setSellerPassword(e.target.value)} label = "Add password" placeholder='************'/>
-                          <TextField value={bankName} onChange={e=>setBankName(e.target.value)} label = "Bank name" placeholder='e.g UBA'/>
-                          <TextField value={accountNumber} onChange={e=>setAccountNumber(e.target.value)} label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
-                          <TextField value={accountName} onChange={e=>setAccountName(e.target.value)} label = "Account name" placeholder=''/>
-                          <Link to='identity'><Button disabled = {accountNumber ? false : true} fullWidth = {true}>Next</Button></Link>
+                          <TextField name="email" label = "Email" placeholder='e.g tmusty@gmail.com'/>
+                          <TextField name="password"  label = "Add password" type="password" placeholder='************'/>
+                          <TextField name="bankName"  label = "Bank name" placeholder='e.g UBA'/>
+                          <TextField name="accountNumber" label = "Bank account number" type="phone" placeholder='e.g 0000000000'/>
+                          <TextField name="accountName" label = "Account name" placeholder=''/>
+                          <div className="hidden">
+                            <TextField name="bankCode" label = "bankCode" placeholder=''/>
+                          </div>
+                          <Button fullWidth>Next</Button>
                         </div>
                       </form>
+                    </FormProvider>
                     </div>
                   </div>
                 </div>

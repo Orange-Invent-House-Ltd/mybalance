@@ -154,6 +154,9 @@ html,body{
 .h3{
   @apply text-headingColor text-[36px] mb-6 font-black;
 }
+.h3700{
+  @apply text-headingColor text-[36px] mb-6 font-bold;
+}
 .h5{
   @apply  text-headingColor font-bold text-[29px] leading-[39px] mb-[30px];
 }

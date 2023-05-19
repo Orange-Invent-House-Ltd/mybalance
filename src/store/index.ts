@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { IUser, IUserProfile } from '../api/types';
 
 type Store = {
-  authEmail: string;
+  authEmail: string | undefined;
   authUser: IUser | null;
   userProfile: IUserProfile | null;
   requestLoading: boolean;
