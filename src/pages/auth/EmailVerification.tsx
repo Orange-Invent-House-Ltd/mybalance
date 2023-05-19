@@ -102,7 +102,7 @@ const EmailVerification = () => {
     }
   };
 
-  const resendVerifyEmail = async (userEmail:string) => {
+  const resendVerifyEmail = async (userEmail:any) => {
     try {
       const response = await authApi.post(
         'auth/resend-otp',
