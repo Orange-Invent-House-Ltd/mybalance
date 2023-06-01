@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 // Zod - A typescript-first schema validation library.
 import { object, string, TypeOf, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { authApi } from "../../../api/authApi";
 import { GenericResponse } from "../../../api/types";
+import { IUser } from "../../../api/types";
 import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import TextField from '../../../components/reuseable/TextField';
@@ -16,13 +17,29 @@ import { Button } from '../../../components/reuseable/Button';
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Twitter.svg'
 import linkedin from '../../../assets/Icons/LinkedIn.svg'
+import { LoadingButton } from "../../../components/reuseable/LoadingButton";
 
 //type definition with error messages for the form input
 const registerSchema = z.object({
+  kycType: z.string(),
+  kycMeta: z.object({
+    number : string(),
+    lastName: string()
+  }),
+  name: z
+  .union([z.string().length(0), z.string()
+    .min(3, "name should be 3 character")
+    .max(52, "name must not be more than 52 character")
+  ])
+  .optional(),
+  number: z
+    .union([z.string().length(0), z.string()
+    ])
+    .optional(),
   passportNumber: z
     .union([z.string().length(0), z.string()
       .min(9, "passport number should be 9 alphanumeric character")
-      .max(9, "passport number must not be more than 11 digits")
+      .max(9, "passport number must not be more than 9 alphanumeric character")
       .regex(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{9}$/, "passport number must be 9 alphanumeric characters - A01234567")
     ])
     .optional(),
@@ -60,9 +77,9 @@ const registerSchema = z.object({
     .optional(),
   cardNumber: z
     .union([z.string().length(0), z.string()
-      .min(8, "Card number should be at least 8 digits")
-      .max(8, "Card number must not be more than 8 digits")
-      .regex(/^([0-9]{8})$/, "Card number must be 8-digit")
+      .min(8, "Driver Card number should be at least 8 digits")
+      .max(8, "Driver Card number must not be more than 8 digits")
+      .regex(/^([0-9]{8})$/, "Driver Card number must be 8-digit")
     ])
     .optional(),
   state: z
@@ -86,6 +103,7 @@ const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [selectedValue, setSelectedValue] = useState('');
+  const [isName, setIsName] = useState('');
 
   const store = useStore();
   const navigate = useNavigate();
@@ -95,32 +113,222 @@ const RegisterIdentity = () => {
 
   const {
     handleSubmit,
+    getValues,
+    setValue,
+    watch
   } = methods
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(event.target.value);
+    setValue('kycType', selectedValue)
   };
 
   //onsubmit run registerUser function with the values collected from the form which is used as data in registerUser
   const onSubmitHandler: SubmitHandler<SignupInput> = (values) => {
-    const identytyData = {
-      kycType: selectedValue,
-      kycMeta: values
+    // selectedValue === "IP" ? verifyPassport() :
+    // selectedValue === "NIN" ? verifyNIN() :
+    // selectedValue === "VC" ? verifyVC() : verifyDL();
+
+    // const identytyData = {
+    //   kycType: selectedValue,
+    //   kycMeta: values,
+    //   name: isName
+    // }
+    // console.log(identytyData.name)
+    // console.log(identytyData.kycType)
+    // store.setAuthUser({...store.authUser, ...identytyData});
+    // console.log(store.authUser);
+    // setIsName(isName)
+    registerUser(values)
+  };
+
+  useEffect(() => {
+    selectedValue === "IP" && watch('lastName') ? verifyPassport() :
+    selectedValue === "NIN"  && watch('NIN') ? verifyNIN() :
+    selectedValue === "VC" && watch('lga') ? verifyVC() : 
+    selectedValue === "DL" && watch('DOB') ? verifyDL()  : ''
+
+    setValue('kycMeta' , {
+      number : getValues('number'),
+      lastName: getValues('lastName')
+    })  
+
+    // const identytyData = {
+    //   kycType: selectedValue,
+    //   kycMeta: {
+    //     number : getValues('number'),
+    //     lastName: getValues('lastName')
+    //   },
+    //   name: isName
+    // }
+    // console.log(identytyData.name)
+    // console.log(identytyData.kycType)
+    // store.setAuthUser({...store.authUser, ...identytyData});
+    // console.log(store.authUser);
+    
+
+  }, [watch('lastName'), watch('NIN'), watch('lga'), watch('DOB'), isName]);
+
+  const verifyPassport= async () => {
+    try {
+      //set button loading to true
+      store.setRequestLoading(true);
+      const number = getValues('passportNumber')
+      //post input datas to database
+      const response = await authApi.post<GenericResponse>(
+        "shared/lookup/passport",
+        {
+          number: number,
+          lastName: getValues('lastName')
+        }
+      );
+      //Form submition success notifications
+      const firstName = response.data?.data.firstName
+      const lastName = response.data?.data.lastName
+      const name = firstName + ' ' + lastName
+      setValue('name', name)
+      setValue('number', number)
+      setIsName(name)
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      store.setRequestLoading(false);
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        error.response.data.errors.email.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
     }
-    store.setAuthUser({...store.authUser, ...identytyData});
-    console.log(store.authUser);
-    registerUser(values);
+  };
+
+  const verifyNIN= async () => {
+    try {
+      //set button loading to true
+      store.setRequestLoading(true);
+      const number = getValues('NIN')
+      //post input datas to database
+      const response = await authApi.post<GenericResponse>(
+        "shared/lookup/nin",
+        {
+          number: number
+        }
+      );
+      //Form submition success notifications
+      const firstName = response.data?.data.firstname
+      const lastName = response.data?.data.surname
+      const name = firstName + ' ' + lastName
+      console.log(name)
+      setValue('name', name)
+      setValue('number', number)
+      setIsName(name)
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      store.setRequestLoading(false);
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        error.response.data.errors.email.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
+  };
+
+  const verifyVC= async () => {
+    try {
+      //set button loading to true
+      store.setRequestLoading(true);
+      const number = getValues('VIN');
+      //post input datas to database
+      const response = await authApi.post<GenericResponse>(
+        "shared/lookup/voter-card",
+        {
+          number: number,
+          firstName: getValues('firstName'),
+          lastName: getValues('lastName'),
+          state: getValues('state'),
+          lga: getValues('lga'),
+          dob: getValues('DOB')
+        }
+      );
+      //Form submition success notifications
+      const firstName = response.data?.data.firstName
+      const lastName = response.data?.data.lastName
+      const name = firstName + ' ' + lastName
+      setValue('name', name)
+      setValue('number', number)
+      setIsName(name)
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      store.setRequestLoading(false);
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        error.response.data.message.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
+  };
+
+  const verifyDL= async () => {
+    try {
+      //set button loading to true
+      const number = getValues('cardNumber')
+      store.setRequestLoading(true);
+      //post input datas to database
+      const response = await authApi.post<GenericResponse>(
+        "shared/lookup/driver-license",
+        {
+          cardNumber: number,
+          dob: getValues('DOB')
+        }
+      );
+      //Form submition success notifications
+      const firstName = response.data?.data.firstName
+      const lastName = response.data?.data.lastName
+      const name = firstName + ' ' + lastName
+      setValue('name', name)
+      setValue('number', number)
+      setIsName(name)
+      toast.success(response.data.message as string, {
+        position: "top-right",
+      });
+      store.setRequestLoading(false);
+    } catch (error: any) {
+      console.log(error)
+      store.setRequestLoading(false);
+      const resMessage =
+        error.response.data.message.toString();
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
+    }
   };
 
   const registerUser= async (data: SignupInput) => {
     try {
-      console.log(store.authUser)
+      console.log(data)
       //set button loading to true
       store.setRequestLoading(true);
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
         "auth/register/seller",
-        store.authUser
+        {
+          ...store.authUser, 
+          ...data
+        }
       );
       //Form submition success notifications
       toast.success(response.data.message as string, {
@@ -214,10 +422,7 @@ const RegisterIdentity = () => {
                   <div className="tab-content tab-space">
                     {/* create account as seller */}
                     <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                      <FormProvider {...methods}>
-                        <form 
-                          onSubmit={handleSubmit(onSubmitHandler)}
-                        >
+                      
                           <h6 className='mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]'>We need your identity</h6>
                           <p className='mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal'>Enter your NIN, Int’l passport, Driver’s license or Voter’s card number below.</p>
                           <div className='grid gap-y-3.5'>
@@ -231,38 +436,112 @@ const RegisterIdentity = () => {
                               </select>
                               { 
                                 selectedValue === "IP" ? (
-                                  <div>
-                                    <TextField name="passportNumber" type="phone"  label = "Passport number" placeholder='1234 1234 123'/>
-                                    <TextField name="lastName" label = "Last name" placeholder='Saka'/>
-                                  </div>
+                                  <FormProvider {...methods}>
+                                    <form 
+                                      onSubmit={handleSubmit(onSubmitHandler)}
+                                    >
+                                      <div>
+                                        <TextField name="passportNumber" type="phone"  label = "Passport number" placeholder='1234 1234 123'/>
+                                        <TextField name="lastName" label = "Last name" placeholder='Saka'/>
+                                        <TextField name="name" label = "name" placeholder=''/>
+                                        {/* <LoadingButton 
+                                          loading={store.requestLoading}
+                                          variant="outlined"
+                                          onClick={(e)=>{
+                                            e.preventDefault();
+                                            verifyPassport()
+                                          }}
+                                        >
+                                          verify Passport
+                                        </LoadingButton> */}
+                                        <div className="mt-6">
+                                          <Button fullWidth = {true}>Next</Button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </FormProvider>
                                 ) : selectedValue === "NIN" ? (
-                                  <div>
-                                    <TextField name="NIN" type="phone" label = "NIN number" placeholder='e.g 1234 1234 123'/>
-                                  </div>
+                                  <FormProvider {...methods}>
+                                    <form 
+                                      onSubmit={handleSubmit(onSubmitHandler)}
+                                    >
+                                      <div>
+                                        <TextField name="NIN" type="phone" label = "NIN number" placeholder='e.g 1234 1234 123'/>
+                                        {/* <LoadingButton 
+                                          loading={store.requestLoading}
+                                          variant="outlined"
+                                          onClick={(e)=>{
+                                            e.preventDefault();
+                                            verifyNIN()
+                                          }}
+                                        >
+                                          verify NIN
+                                        </LoadingButton> */}
+                                        <div className="mt-6">
+                                          <Button fullWidth = {true}>Next</Button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </FormProvider>
                                 ) : selectedValue === "VC" ? (
-                                  <div>
-                                    <TextField name="VIN" type="phone" label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
-                                    <TextField name="firstName" type="text" label = "First name" placeholder='Bukola'/>
-                                    <TextField name="lastName" type="text" label = "Last name" placeholder='Saka'/>
-                                    <TextField name="DOB" type="phone" label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
-                                    <div className="flex justify-center gap-4">
-                                      <TextField name="state" variant = "short" type="text" label = "State" placeholder='Lagos'/>
-                                      <TextField name="lga" variant = "short" type="text" label = "LGA" placeholder='Eti-Osa'/>
-                                    </div>
-                                  </div>
+                                  <FormProvider {...methods}>
+                                    <form 
+                                      onSubmit={handleSubmit(onSubmitHandler)}
+                                    >
+                                      <div>
+                                        <TextField name="VIN" type="phone" label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
+                                        <TextField name="firstName" type="text" label = "First name" placeholder='Bukola'/>
+                                        <TextField name="lastName" type="text" label = "Last name" placeholder='Saka'/>
+                                        <TextField name="DOB" type="phone" label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
+                                        <div className="flex justify-center gap-4">
+                                          <TextField name="state" variant = "short" type="text" label = "State" placeholder='Lagos'/>
+                                          <TextField name="lga" variant = "short" type="text" label = "LGA" placeholder='Eti-Osa'/>
+                                        </div>
+                                        {/* <LoadingButton 
+                                          loading={store.requestLoading}
+                                          variant="outlined"
+                                          onClick={(e)=>{
+                                            e.preventDefault();
+                                            verifyVC()
+                                          }}
+                                        >
+                                          verify Voter’s Card
+                                        </LoadingButton> */}
+                                        <div className="mt-6">
+                                          <Button fullWidth = {true}>Next</Button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </FormProvider>
                                 ) : selectedValue === "DL" ? (
-                                  <div>
-                                    <TextField name="cardNumber" label = "Card number" placeholder='e.g 1234 1234 123'/>
-                                    <TextField name="DOB" label = "Date of birth" placeholder='DD-MM-YY'/>
-                                  </div>
+                                  <FormProvider {...methods}>
+                                    <form 
+                                      onSubmit={handleSubmit(onSubmitHandler)}
+                                    >
+                                      <div>
+                                        <TextField name="cardNumber" label = "Card number" placeholder='e.g 1234 1234 123'/>
+                                        <TextField name="DOB" label = "Date of birth" placeholder='DD-MM-YY'/>
+                                        {/* <LoadingButton 
+                                          loading={store.requestLoading}
+                                          variant="outlined"
+                                          onClick={(e)=>{
+                                            e.preventDefault();
+                                            verifyDL()
+                                          }}
+                                        >
+                                          verify Voter’s Card
+                                        </LoadingButton> */}
+                                      <div className="mt-6">
+                                          <Button fullWidth = {true}>Next</Button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </FormProvider>
                                 ) : ( <></>)
                               }
-                              <div className="mt-6">
-                                <Button fullWidth = {true}>Next</Button>
-                              </div>
+                              
                           </div>
-                        </form>
-                      </FormProvider>
+                        
                     </div>
                   </div>
                 </div>
