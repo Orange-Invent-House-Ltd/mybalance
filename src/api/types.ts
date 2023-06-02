@@ -30,6 +30,10 @@ export interface GenericResponse {
     tempId : string;
     token: string;
     accountName:string;
+    lastName: string;
+    surname: string;
+    firstName: string;
+    firstname: string;
     user: IUser;
   } 
 }

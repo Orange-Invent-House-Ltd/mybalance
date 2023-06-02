@@ -166,6 +166,9 @@ html,body{
 .h6{
   @apply text-headingColor text-[23px] font-bold leading-[31.05px] mb-[30px];
 }
+.privacyHeading{
+  @apply text-headingColor leading-tight text-[26px] md:text-[32px] mb-2 font-bold;
+}
 .mobileh5{
   @apply text-lg font-bold leading-[24.3px] mb-[20px] mt-[50px] text-primary-normal;
 }
