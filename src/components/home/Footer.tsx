@@ -23,7 +23,7 @@ const Footer = () => {
               </p>
               <ul className="gap-y-3 capitalize flex flex-col font-medium  text-[#6D6D6D]">
                 {items.map(({ name, link }) => (
-                  <Link to={link}>{name}</Link>
+                  <a href={link}>{name}</a>
                 ))}
               </ul>
             </div>
@@ -104,11 +104,11 @@ const footerData = [
     items: [
       {
         name: "terms",
-        link: "/",
+        link: "/t&c",
       },
       {
         name: "privacy",
-        link: "/",
+        link: "/privacy",
       },
       {
         name: "cookies",

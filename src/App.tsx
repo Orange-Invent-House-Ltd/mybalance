@@ -15,6 +15,8 @@ import Contact from "./pages/home/Contact";
 import EmailVerification from "./pages/auth/EmailVerification";
 import Solutions from "./pages/home/Solutions";
 import PasswordReset from "./pages/auth/PasswordReset";
+import TermsAndCondition from "./pages/home/TermsAndCondition";
+import Privacy from "./pages/home/Privacy";
 
 
 const App: React.FC = () => { 
@@ -26,6 +28,8 @@ const App: React.FC = () => {
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/how-we-work" element={<HowWeWork />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/t&c" element={<TermsAndCondition/>} />
+        <Route path="/privacy" element={<Privacy/>} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/buyer/register" element={<Register />} />

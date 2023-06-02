@@ -22,10 +22,6 @@ import { LoadingButton } from "../../../components/reuseable/LoadingButton";
 //type definition with error messages for the form input
 const registerSchema = z.object({
   kycType: z.string(),
-  kycMeta: z.object({
-    number : string(),
-    lastName: string()
-  }),
   name: z
   .union([z.string().length(0), z.string()
     .min(3, "name should be 3 character")
@@ -103,8 +99,7 @@ const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [selectedValue, setSelectedValue] = useState('');
-  const [isName, setIsName] = useState('');
-
+  
   const store = useStore();
   const navigate = useNavigate();
   const methods = useForm<SignupInput>({
@@ -120,65 +115,26 @@ const RegisterIdentity = () => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(event.target.value);
-    setValue('kycType', selectedValue)
-  };
-
-  //onsubmit run registerUser function with the values collected from the form which is used as data in registerUser
-  const onSubmitHandler: SubmitHandler<SignupInput> = (values) => {
-    // selectedValue === "IP" ? verifyPassport() :
-    // selectedValue === "NIN" ? verifyNIN() :
-    // selectedValue === "VC" ? verifyVC() : verifyDL();
-
-    // const identytyData = {
-    //   kycType: selectedValue,
-    //   kycMeta: values,
-    //   name: isName
-    // }
-    // console.log(identytyData.name)
-    // console.log(identytyData.kycType)
-    // store.setAuthUser({...store.authUser, ...identytyData});
-    // console.log(store.authUser);
-    // setIsName(isName)
-    registerUser(values)
+    setValue('kycType', event.target.value)
   };
 
   useEffect(() => {
     selectedValue === "IP" && watch('lastName') ? verifyPassport() :
-    selectedValue === "NIN"  && watch('NIN') ? verifyNIN() :
+    selectedValue === "NIN"  && watch('number') ? verifyNIN() :
     selectedValue === "VC" && watch('lga') ? verifyVC() : 
     selectedValue === "DL" && watch('DOB') ? verifyDL()  : ''
-
-    setValue('kycMeta' , {
-      number : getValues('number'),
-      lastName: getValues('lastName')
-    })  
-
-    // const identytyData = {
-    //   kycType: selectedValue,
-    //   kycMeta: {
-    //     number : getValues('number'),
-    //     lastName: getValues('lastName')
-    //   },
-    //   name: isName
-    // }
-    // console.log(identytyData.name)
-    // console.log(identytyData.kycType)
-    // store.setAuthUser({...store.authUser, ...identytyData});
-    // console.log(store.authUser);
     
-
-  }, [watch('lastName'), watch('NIN'), watch('lga'), watch('DOB'), isName]);
+  }, [watch('lastName'), watch('number'), watch('lga'), watch('DOB')]);
 
   const verifyPassport= async () => {
     try {
       //set button loading to true
       store.setRequestLoading(true);
-      const number = getValues('passportNumber')
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
         "shared/lookup/passport",
         {
-          number: number,
+          number: getValues('number'),
           lastName: getValues('lastName')
         }
       );
@@ -187,9 +143,8 @@ const RegisterIdentity = () => {
       const lastName = response.data?.data.lastName
       const name = firstName + ' ' + lastName
       setValue('name', name)
-      setValue('number', number)
-      setIsName(name)
       toast.success(response.data.message as string, {
+        toastId: 'success1',
         position: "top-right",
       });
       store.setRequestLoading(false);
@@ -200,21 +155,21 @@ const RegisterIdentity = () => {
         error.response.data.errors.email.toString();
       //Form submition error notifications
       toast.error(resMessage, {
+        toastId: 'error1',
         position: "top-right",
       });
     }
   };
 
-  const verifyNIN= async () => {
+  const verifyNIN = async () => {
     try {
       //set button loading to true
       store.setRequestLoading(true);
-      const number = getValues('NIN')
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
         "shared/lookup/nin",
         {
-          number: number
+          number: getValues('number')
         }
       );
       //Form submition success notifications
@@ -223,8 +178,6 @@ const RegisterIdentity = () => {
       const name = firstName + ' ' + lastName
       console.log(name)
       setValue('name', name)
-      setValue('number', number)
-      setIsName(name)
       toast.success(response.data.message as string, {
         position: "top-right",
       });
@@ -245,12 +198,11 @@ const RegisterIdentity = () => {
     try {
       //set button loading to true
       store.setRequestLoading(true);
-      const number = getValues('VIN');
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
         "shared/lookup/voter-card",
         {
-          number: number,
+          number: getValues('number'),
           firstName: getValues('firstName'),
           lastName: getValues('lastName'),
           state: getValues('state'),
@@ -263,8 +215,6 @@ const RegisterIdentity = () => {
       const lastName = response.data?.data.lastName
       const name = firstName + ' ' + lastName
       setValue('name', name)
-      setValue('number', number)
-      setIsName(name)
       toast.success(response.data.message as string, {
         position: "top-right",
       });
@@ -284,13 +234,12 @@ const RegisterIdentity = () => {
   const verifyDL= async () => {
     try {
       //set button loading to true
-      const number = getValues('cardNumber')
       store.setRequestLoading(true);
       //post input datas to database
       const response = await authApi.post<GenericResponse>(
         "shared/lookup/driver-license",
         {
-          cardNumber: number,
+          cardNumber: getValues('number'),
           dob: getValues('DOB')
         }
       );
@@ -299,8 +248,6 @@ const RegisterIdentity = () => {
       const lastName = response.data?.data.lastName
       const name = firstName + ' ' + lastName
       setValue('name', name)
-      setValue('number', number)
-      setIsName(name)
       toast.success(response.data.message as string, {
         position: "top-right",
       });
@@ -317,7 +264,7 @@ const RegisterIdentity = () => {
     }
   };
 
-  const registerUser= async (data: SignupInput) => {
+  const registerUser= async (data:any) => {
     try {
       console.log(data)
       //set button loading to true
@@ -326,7 +273,7 @@ const RegisterIdentity = () => {
       const response = await authApi.post<GenericResponse>(
         "auth/register/seller",
         {
-          ...store.authUser, 
+          ...store.authUser,
           ...data
         }
       );
@@ -348,6 +295,18 @@ const RegisterIdentity = () => {
         position: "top-right",
       });
     }
+  };
+
+  //onsubmit run registerUser function with the values collected from the form which is used as data in registerUser
+  const onSubmitHandler: SubmitHandler<SignupInput> = (values) => {
+
+    const identytyData = {
+      kycType: getValues('kycType'),
+      kycMeta: values,
+      name: getValues('name')
+    }
+
+    registerUser(identytyData )
   };
 
   return ( 
@@ -441,19 +400,9 @@ const RegisterIdentity = () => {
                                       onSubmit={handleSubmit(onSubmitHandler)}
                                     >
                                       <div>
-                                        <TextField name="passportNumber" type="phone"  label = "Passport number" placeholder='1234 1234 123'/>
+                                        <TextField name="number" label = "Passport number" placeholder='1234 1234 123'/>
                                         <TextField name="lastName" label = "Last name" placeholder='Saka'/>
-                                        <TextField name="name" label = "name" placeholder=''/>
-                                        {/* <LoadingButton 
-                                          loading={store.requestLoading}
-                                          variant="outlined"
-                                          onClick={(e)=>{
-                                            e.preventDefault();
-                                            verifyPassport()
-                                          }}
-                                        >
-                                          verify Passport
-                                        </LoadingButton> */}
+                                        {/* <TextField name="name" label = "name" placeholder=''/> */}
                                         <div className="mt-6">
                                           <Button fullWidth = {true}>Next</Button>
                                         </div>
@@ -466,17 +415,7 @@ const RegisterIdentity = () => {
                                       onSubmit={handleSubmit(onSubmitHandler)}
                                     >
                                       <div>
-                                        <TextField name="NIN" type="phone" label = "NIN number" placeholder='e.g 1234 1234 123'/>
-                                        {/* <LoadingButton 
-                                          loading={store.requestLoading}
-                                          variant="outlined"
-                                          onClick={(e)=>{
-                                            e.preventDefault();
-                                            verifyNIN()
-                                          }}
-                                        >
-                                          verify NIN
-                                        </LoadingButton> */}
+                                        <TextField name="number" type="phone" label = "NIN number" placeholder='e.g 1234 1234 123'/>
                                         <div className="mt-6">
                                           <Button fullWidth = {true}>Next</Button>
                                         </div>
@@ -489,7 +428,7 @@ const RegisterIdentity = () => {
                                       onSubmit={handleSubmit(onSubmitHandler)}
                                     >
                                       <div>
-                                        <TextField name="VIN" type="phone" label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
+                                        <TextField name="number" type="phone" label = "Voter’s card number" placeholder='e.g 1234 1234 123'/>
                                         <TextField name="firstName" type="text" label = "First name" placeholder='Bukola'/>
                                         <TextField name="lastName" type="text" label = "Last name" placeholder='Saka'/>
                                         <TextField name="DOB" type="phone" label = "Date of birth" placeholder='e.g DD-MM-YYYY'/>
@@ -497,16 +436,6 @@ const RegisterIdentity = () => {
                                           <TextField name="state" variant = "short" type="text" label = "State" placeholder='Lagos'/>
                                           <TextField name="lga" variant = "short" type="text" label = "LGA" placeholder='Eti-Osa'/>
                                         </div>
-                                        {/* <LoadingButton 
-                                          loading={store.requestLoading}
-                                          variant="outlined"
-                                          onClick={(e)=>{
-                                            e.preventDefault();
-                                            verifyVC()
-                                          }}
-                                        >
-                                          verify Voter’s Card
-                                        </LoadingButton> */}
                                         <div className="mt-6">
                                           <Button fullWidth = {true}>Next</Button>
                                         </div>
@@ -519,18 +448,8 @@ const RegisterIdentity = () => {
                                       onSubmit={handleSubmit(onSubmitHandler)}
                                     >
                                       <div>
-                                        <TextField name="cardNumber" label = "Card number" placeholder='e.g 1234 1234 123'/>
+                                        <TextField name="number" label = "Card number" placeholder='e.g 1234 1234 123'/>
                                         <TextField name="DOB" label = "Date of birth" placeholder='DD-MM-YY'/>
-                                        {/* <LoadingButton 
-                                          loading={store.requestLoading}
-                                          variant="outlined"
-                                          onClick={(e)=>{
-                                            e.preventDefault();
-                                            verifyDL()
-                                          }}
-                                        >
-                                          verify Voter’s Card
-                                        </LoadingButton> */}
                                       <div className="mt-6">
                                           <Button fullWidth = {true}>Next</Button>
                                         </div>
@@ -539,7 +458,6 @@ const RegisterIdentity = () => {
                                   </FormProvider>
                                 ) : ( <></>)
                               }
-                              
                           </div>
                         
                     </div>
