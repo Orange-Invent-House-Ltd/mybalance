@@ -4,6 +4,7 @@ import logo from "../../assets/Icons/logo.svg";
 import facebook from "../../assets/Icons/Facebook.svg";
 import twitter from "../../assets/Icons/Twitter.svg";
 import linkedin from "../../assets/Icons/LinkedIn.svg";
+import Instagram from '../../assets/Icons/Instagram.svg'
 
 const Footer = () => {
   return (
@@ -23,7 +24,7 @@ const Footer = () => {
               </p>
               <ul className="gap-y-3 capitalize flex flex-col font-medium  text-[#6D6D6D]">
                 {items.map(({ name, link }) => (
-                  <a href={link}>{name}</a>
+                  <a href={link} target="_blank">{name}</a>
                 ))}
               </ul>
             </div>
@@ -33,9 +34,10 @@ const Footer = () => {
       <div className="px-[5%] bg-white py-7 gap-5 md:py-12 flex-wrap-reverse flex justify-between">
         <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
         <div className="flex items-center gap-5">
-          <a href="https://www.facebook.com/themybalanceapp" target="_blank"><img src={facebook} alt="Facebook" /></a>
           <a href="https://twitter.com/mybalance_app" target="_blank"><img src={twitter} alt="Twitter" /></a>
           <a href="" target="_blank"><img src={linkedin} alt="LinkedIn" /></a>
+          <a href="https://www.facebook.com/themybalanceapp" target="_blank"><img src={facebook} alt="Facebook" /></a>
+          <a href="https://www.instagram.com/mybalance_app" target="_blank"><img src={Instagram} alt="Instagram" /></a>
         </div>
       </div>
     </div>
@@ -65,7 +67,7 @@ const footerData = [
     items: [
       {
         name: "about us",
-        link: "/",
+        link: "/about-us",
       },
       {
         name: "careers",
@@ -77,7 +79,7 @@ const footerData = [
       },
       {
         name: "contact",
-        link: "/",
+        link: "/contact",
       },
     ],
   },
@@ -86,7 +88,7 @@ const footerData = [
     items: [
       {
         name: "twitter",
-        link: "/",
+        link: "https://twitter.com/mybalance_app",
       },
       {
         name: "linkedIn",
@@ -94,8 +96,13 @@ const footerData = [
       },
       {
         name: "facebook",
-        link: "/",
+        link: "https://www.facebook.com/themybalanceapp",
       },
+      {
+        name: "instagram",
+        link: "https://www.instagram.com/mybalance_app",
+      },
+      
       
     ],
   },

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import facebook from '../../../assets/Icons/Facebook.svg'
 import twitter from '../../../assets/Icons/Twitter.svg'
 import linkedin from '../../../assets/Icons/LinkedIn.svg'
+import Instagram from '../../../assets/Icons/Instagram.svg'
 
 // otp index
 let currentOTPIndex:number = 0;
@@ -168,9 +169,10 @@ const RegVerification = () => {
         <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
           <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
           <div className="flex items-center gap-3">
-            <img src={facebook} alt="" />
-            <img src={twitter} alt="" />
-            <img src={linkedin} alt="" />
+          <a href="https://twitter.com/mybalance_app" target="_blank"><img src={twitter} alt="Twitter" /></a>
+          <a href="" target="_blank"><img src={linkedin} alt="LinkedIn" /></a>
+          <a href="https://www.facebook.com/themybalanceapp" target="_blank"><img src={facebook} alt="Facebook" /></a>
+          <a href="https://www.instagram.com/mybalance_app" target="_blank"><img src={Instagram} alt="Instagram" /></a>
           </div>
         </div>
       </div>
