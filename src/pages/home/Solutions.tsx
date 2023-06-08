@@ -3,6 +3,7 @@ import Footer from "../../components/home/Footer";
 import Header from "../../components/home/Header";
 import HeroSection from '../../components/reuseable/HeroSection';
 import { Button } from '../../components/reuseable/Button';
+import { Link } from 'react-router-dom';
 import lightcard from '../../assets/images/solution_frame.png'
 import darkcard from '../../assets/images/solution_frame_dark.png'
 import shirt50 from '../../assets/images/shirt_50.png'
@@ -28,7 +29,7 @@ const Solutions = () => {
               <p>For E-commerce, Small Scale Businesses and Individual Sellers,
                 MyBalance helps E-Commerces, Small and Medium Scale businesses or Online Vendors, secure and guarantee transaction success by eradicating the menace of “what I ordered versus what I got” issues which has been affecting trust and confidence in online transactions.
               </p>
-              <div className='w-[244px] mt-6 mb-8 md:mb-0'><Button fullWidth>Sign up now</Button></div>
+              <div className='w-[244px] mt-6 mb-8 md:mb-0'><a href='/buyer/register'><Button fullWidth>Sign up now</Button></a> </div>
             </div>
             <div className="flex justify-center">
               <div className="relative">
