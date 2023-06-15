@@ -6,6 +6,7 @@ interface ITextField extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: any;
   helperText?: any;
+  disabled?: boolean;
   variant?: "long" | "short";
 }
 

@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-// Zod - A typescript-first schema validation library.
-import { object, string, TypeOf } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { authApi } from "../../api/authApi";
@@ -17,6 +14,7 @@ import check from "../../assets/Icons/check.svg"
 import facebook from '../../assets/Icons/Facebook.svg'
 import twitter from '../../assets/Icons/Twitter.svg'
 import linkedin from '../../assets/Icons/LinkedIn.svg'
+import Instagram from '../../assets/Icons/Instagram.svg'
 
 
 // otp index
@@ -266,15 +264,16 @@ const EmailVerification = () => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
         <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
           <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
           <div className="flex items-center gap-3">
-            <img src={facebook} alt="" />
-            <img src={twitter} alt="" />
-            <img src={linkedin} alt="" />
+          <a href="https://twitter.com/mybalance_app" target="_blank" aria-label="twitter"><img src={twitter} alt="Twitter" /></a>
+            <a href="" target="_blank" aria-label="linkedin"><img src={linkedin} alt="LinkedIn" /></a>
+            <a href="https://www.facebook.com/themybalanceapp" target="_blank" aria-label="facebook"><img src={facebook} alt="Facebook" /></a>
+            <a href="https://www.instagram.com/mybalance_app" target="_blank" aria-label="instagram"><img src={Instagram} alt="Instagram" /></a>
           </div>
         </div>
       </div>
