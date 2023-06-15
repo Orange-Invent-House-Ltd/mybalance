@@ -23,8 +23,8 @@ const Footer = () => {
                 {title}
               </p>
               <ul className="gap-y-3 capitalize flex flex-col font-medium  text-[#6D6D6D]">
-                {items.map(({ name, link }) => (
-                  <a href={link} target="_blank">{name}</a>
+                {items.map(({ name, link, target }) => (
+                  <a href={link} target={target}>{name}</a>
                 ))}
               </ul>
             </div>
@@ -50,16 +50,19 @@ const footerData = [
       {
         name: "vendors and buyers",
         link: "/",
+        target: "_self"
       },
       {
         name: "companies & merchants",
         link: "/",
+        target: "_self"
       },
       {
         name: "governments & contractors",
         link: "/",
+        target: "_self"
       },
-     
+    
     ],
   },
   {
@@ -68,18 +71,22 @@ const footerData = [
       {
         name: "about us",
         link: "/about-us",
+        target: "_self"
       },
       {
         name: "careers",
         link: "/",
+        target: "_self"
       },
       {
         name: "news",
         link: "/",
+        target: "_self"
       },
       {
         name: "contact",
         link: "/contact",
+        target: "_self"
       },
     ],
   },
@@ -89,18 +96,22 @@ const footerData = [
       {
         name: "twitter",
         link: "https://twitter.com/mybalance_app",
+        target: '_blank'
       },
       {
         name: "linkedIn",
         link: "/",
+        target: '_blank'
       },
       {
         name: "facebook",
         link: "https://www.facebook.com/themybalanceapp",
+        target: '_blank'
       },
       {
         name: "instagram",
         link: "https://www.instagram.com/mybalance_app",
+        target: '_blank'
       },
       
       
@@ -112,16 +123,19 @@ const footerData = [
       {
         name: "terms",
         link: "/t&c",
+        target: "_self"
       },
       {
         name: "privacy",
         link: "/privacy",
+        target: "_self"
       },
       {
         name: "cookies",
         link: "/",
+        target: "_self"
       },
-     
+    
     ],
   },
 ];

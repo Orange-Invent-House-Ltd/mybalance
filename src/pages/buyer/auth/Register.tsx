@@ -193,7 +193,7 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold cursor-pointer'>Log in here</a></p>
+            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold cursor-pointer'>Log in here</a></p>
           </div>
         </div>
         <div className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">

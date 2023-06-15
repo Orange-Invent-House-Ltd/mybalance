@@ -16,6 +16,7 @@ import logo from '../../assets/Icons/logo.svg'
 import facebook from '../../assets/Icons/Facebook.svg'
 import twitter from '../../assets/Icons/Twitter.svg'
 import linkedin from '../../assets/Icons/LinkedIn.svg'
+import Instagram from '../../assets/Icons/Instagram.svg'
 
 //type definition with error messages for the form input
 const loginSchema = object({
@@ -81,36 +82,6 @@ const Login = () => {
         error.toString();
       //Form submition error notifications
       toast.error(resMessage, {
-        position: "top-right",
-      });
-    }
-  };
-
-  const resendVerifyEmail = async (userEmail:any) => {
-    try {
-      const response = await authApi.post(
-        'auth/resend-otp',
-        {
-          email: userEmail
-        }
-      );
-      //Form submition success notifications
-      toast.success(response.data.message as string, {
-        toastId: 'success1',
-        position: "top-right",
-      });
-      store.setTempId(response.data.data?.tempId);
-    } catch (error:any) {
-      console.error(error);
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      //Form submition error notifications
-      toast.error(resMessage, {
-        toastId: 'error1',
         position: "top-right",
       });
     }
@@ -228,8 +199,8 @@ const Login = () => {
               <span className='text-[#121212] font-bold cursor-pointer'
                 onClick={e=>{
                   e.preventDefault();
-                  navigate('/email-verification')
-                  resendVerifyEmail(userEmail)
+                  navigate('/get-verification-link')
+                  // resendVerifyEmail(userEmail)
                 }}
               > Verify Email</span></p>
           </div>
@@ -237,9 +208,10 @@ const Login = () => {
         <div className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
           <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
           <div className="flex items-center gap-3">
-            <img src={facebook} alt="" />
-            <img src={twitter} alt="" />
-            <img src={linkedin} alt="" />
+            <a href="https://twitter.com/mybalance_app" target="_blank" aria-label="twitter"><img src={twitter} alt="Twitter" /></a>
+            <a href="" target="_blank" aria-label="linkedin"><img src={linkedin} alt="LinkedIn" /></a>
+            <a href="https://www.facebook.com/themybalanceapp" target="_blank" aria-label="facebook"><img src={facebook} alt="Facebook" /></a>
+            <a href="https://www.instagram.com/mybalance_app" target="_blank" aria-label="instagram"><img src={Instagram} alt="Instagram" /></a>
           </div>
         </div>
       </div>
