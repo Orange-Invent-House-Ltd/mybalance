@@ -7,10 +7,11 @@ type FormInputProps = {
   name: string;
   type?: string;
   placeholder?: string;
+  disabled?: boolean;
   variant?: "short" | "medium" |"long";
 };
 
-const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeholder, variant="long"}) => {
+const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeholder, disabled, variant="long"}) => {
   const {
     register,
     formState: { errors },
@@ -25,6 +26,7 @@ const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeh
       </label>
       <input
         type={type}
+        disabled={disabled}
         placeholder= {placeholder}
         className={clsx(
           "block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
@@ -34,6 +36,7 @@ const FormInput: React.FC<FormInputProps> = ({label, name, type = 'text', placeh
             "w-[165px]":
             variant== "short",
             "border-[#DA1E28] focus:border-[#DA1E28]": errors[name],
+            'disabled disabled:opacity-75 hover:cursor-not-allowed' : disabled
           }
         )}
         {...register(name)}

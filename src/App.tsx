@@ -17,6 +17,7 @@ import Solutions from "./pages/home/Solutions";
 import PasswordReset from "./pages/auth/PasswordReset";
 import TermsAndCondition from "./pages/home/TermsAndCondition";
 import Privacy from "./pages/home/Privacy";
+import GetVerificationLink from "./pages/auth/GetVerificationLink";
 import AuthLayout from "./layout/AuthLayout";
 
 const App: React.FC = () => {
@@ -35,6 +36,10 @@ const App: React.FC = () => {
           <Route path="/email-verification" element={<EmailVerification />} />
         </Route>
         {/* <Route path="/buyer/register" element={<Register />} /> */}
+        <Route
+          path="/get-verification-link"
+          element={<GetVerificationLink />}
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/forgot-password/email-verification"

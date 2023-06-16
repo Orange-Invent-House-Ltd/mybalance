@@ -29,17 +29,22 @@ const Header = ({Heading, Text}:HeaderProps) => {
         </div>
       </div>
       <img src={bell} alt="notification bell" className="hidden md:flex ml-auto mr-4"/>
-      <div className="w-[343px] md:w-[270px]">
+      <div className="hidden md:flex w-[343px] md:w-[270px]">
         <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>Create One-time MyBalance Link</Button>
+      </div>
+      {/* Create MyBalance link - mobile view */}
+      <div className="md:hidden mt-4 p-2 flex gap-2 justify-between items-center border border-[#FFF2E8]">
+        <p className="font-semibold text-sm">Create your one-time MyBalance link.</p>
+        <div className='w-[150px]'><Button fullWidth onClick={() => setIsVerify(true)}>Create link</Button></div> 
       </div>
       {isVerify && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex justify-end z-50">
           <div className= "w-[400px] bg-white pl-[16px] pr-[34px] overflow-y-scroll">
-            <div className="flex gap-4 items-center mt-10 mb-4">
-              <img src={back} alt="back" onClick={() => setIsVerify(false)}/>
-              <h6 className="text-[23px] font-medium">Create an Escrow Link</h6>
+            <div className="flex items-start gap-4 mt-10 mb-4">
+              <img src={back} alt="back" onClick={() => setIsVerify(false)} className='mt-2 cursor-pointer'/>
+              <h6 className="text-[23px] font-medium">Create One-Time MyBalance Link</h6>
             </div>
-            <p className="text-[16px] text-[#303030] font-normal mb-8">Create your one-time escrow link and share with your prospective customers.</p>
+            <p className="text-[16px] text-[#303030] font-normal mb-8">The Item(s) Information should be filled by your prospective buyers/customers.</p>
             <h1 className="text-[#EDEDED] text-lg font-medium">
               ITEM(S) INFORMATION
             </h1>

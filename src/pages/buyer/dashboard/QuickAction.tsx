@@ -81,7 +81,7 @@ const QuickAction = () => {
                 data-toggle="tab"
                 href="#link2"
                 role="tablist"
-              >Lock money</a>
+              >Unlock money</a>
             </li>
             <li className="-mb-px last:mr-0 flex-auto text-center">
               <a
@@ -98,23 +98,6 @@ const QuickAction = () => {
                 data-toggle="tab"
                 href="#link3"
                 role="tablist"
-              >Unlock money</a>
-            </li>
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold uppercase p-3  block leading-normal " +
-                  (openTab === 4
-                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)] focus:bg-[#FFF2E8]"
-                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D] hover:bg-[#FFF2E8]")
-                }
-                onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(4);
-                }}
-                data-toggle="tab"
-                href="#link4"
-                role="tablist"
               >Withdraw money</a>
             </li>
           </ul>
@@ -123,6 +106,7 @@ const QuickAction = () => {
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                   {/* Inner Tabs ***********************************************/}
+                  {/* Deposit Money ***********************************************/}
                   <div className="flex flex-wrap ">
                     <div className="">
                       <ul
@@ -171,38 +155,21 @@ const QuickAction = () => {
                               {/* BanK Card Contents ************************ */}
                               <div className="mb-4 flex flex-col gap-4 ">
                                 <TextField 
-                                  placeholder="********************"
-                                  label="Card number"
-                                />
-                                <div className="flex gap-4">
-                                  <TextField 
-                                    placeholder="-- / -- / ----"
-                                    label="Expiry date"
-                                  />
-                                  <TextField 
-                                    placeholder="***"
-                                    label="CVV"
-                                  />
-                                </div>
-                                <TextField 
                                   placeholder="e.g 10,000"
                                   label="Enter amount to deposit"
+                                  name="amount"
                                 />
-                                <TextField 
-                                  placeholder="****"
-                                  label="Enter your 4-digit PIN"
-                                  value={pin}
-                                  onChange={handlePin} 
-                                />
-                                <Button disabled={ pin? false : true}>Pay now</Button>
+                                <Button disabled={ pin? false : true}>Continue</Button>
                               </div>
                             </div>
                             <div className={openTabs === 2 ? "block" : "hidden"} id="link2">
-                              <div className="pt-16 border border-[#FFF2E8] rounded">
-                                <p className="pl-6 text-base font-normal">Your account number</p>
-                                <h4 className="pl-6 my-4 text-[32px] font-bold">1234567890</h4>
-                                <p className="pl-6 text-base font-normal">Access Bank</p>
-                                <div className="mt-6 py-4 bg-[#FFF2E8] text-center cursor-pointer"><img src={copy} alt="copy" className="w-[20px] inline"/> Copy to clipboard</div>
+                              <div className="mb-4 flex flex-col gap-4 ">
+                                  <TextField 
+                                    placeholder="e.g 10,000"
+                                    label="Enter amount to deposit"
+                                    name="amount"
+                                  />
+                                  <Button disabled={ pin? false : true}>Continue</Button>
                               </div>
                             </div>
                           </div>
@@ -212,31 +179,6 @@ const QuickAction = () => {
                   </div>
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  {/* Lock Money Tab ***************************************** */}
-                  <p className="w-[344px] text-base font-normal">Locked amount shows you a list of amount you have locked over a period of time.</p>
-                  <div onClick={()=>setEditLocked(true)}>
-                    {lockDatas.map(({date, heading, text}:any, key:any)=>(
-                    <LockMoneyBox 
-                      date={date}
-                      heading={heading}
-                      text={text}
-                      key={key}
-                    />
-                    ))}
-                  </div>
-                  { editLocked && 
-                    <EditLockedAmount
-                      setEditLocked = {setEditLocked}
-                    />
-                  }
-                  <div className="w-[343px] mt-6 mb-16"><Button fullWidth onClick={()=> setLock(true)}>Lock new amount</Button></div>
-                  { lock &&(
-                    <LockNewAmount 
-                      setLock = {setLock}
-                    />
-                  )}
-                </div>
-                <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {/* Unlock Money Tab ***************************************** */}
                   <p className="max-w-[449px] text-base font-normal">Click on the card with the information of the item you want to unlock and click on the unlock button. That’s it.</p>
                   <div onClick={()=>setUnlock(true)}>
@@ -255,7 +197,7 @@ const QuickAction = () => {
                     />
                   }
                 </div>
-                <div className={openTab === 4 ? "block" : "hidden"} id="link4">
+                <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {/* Withdraw Money Tab ***************************************** */}
                   <p className="max-w-[449px] text-base font-normal">In a case of a dispute with a seller, you can choose to withdraw your money into your bank account.</p>
                   <h1 className='mt-8 text-[#EDEDED] text-lg font-medium'>SENDER ADDITIONAL INFORMATION</h1>

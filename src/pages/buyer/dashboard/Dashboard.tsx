@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useStore from "../../../store";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,17 +8,25 @@ import { IUserResponse } from "../../../api/types";
 import DashboardLockedBox from "../../../components/reuseable/DashboardLockedBox";
 import DashboardQuickBox from "../../../components/reuseable/DashboardQuickBox";
 import plus from "../../../assets/Icons/plus.svg";
-import lock from "../../../assets/Icons/lock.svg";
+import share from "../../../assets/Icons/share.svg";
 import unlock from "../../../assets/Icons/unlock.svg";
 import download from "../../../assets/Icons/download.svg";
 import bell from "../../../assets/Icons/notification.svg";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
+import TextField from "../../../components/reuseable/TextField1";
+import back from "../../../assets/Icons/back.svg";
 
 const Dashboard = () => {
+  const [isVerify, setIsVerify] = useState(false);
+  const [value, setValue] = useState("");
   const store = useStore();
   const navigate = useNavigate();
   const user = store.authUser;
   const profile = store.userProfile;
+
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+  };
 
   const getUser = async () => {
     try {
@@ -40,6 +48,7 @@ const Dashboard = () => {
         error.message ||
         error.toString();
       toast.error(resMessage, {
+        toastId: "error1",
         position: "top-right",
       });
       // navigate('/login')
@@ -52,15 +61,85 @@ const Dashboard = () => {
 
   return (
     <div className="mb-16">
-      <div className="md:flex justify-between mb-8">
+      <div className="md:flex justify-between items-center mb-8">
         <div>
           <h6 className="h6">Welcome {user?.name}</h6>
           <p className="max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px] ">
             Your last login was on {profile?.lastLoginDate}
           </p>
         </div>
-
-        <img src={bell} alt="notification bell" className="hidden md:flex" />
+        <img
+          src={bell}
+          alt="notification bell"
+          className="hidden md:flex ml-auto mr-4"
+        />
+        <div className="hidden md:flex w-[343px] md:w-[270px]">
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => setIsVerify(true)}
+          >
+            Create MyBalance Link
+          </Button>
+        </div>
+        {isVerify && (
+          <div className="fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex justify-end z-50">
+            <div className="w-[400px] bg-white pl-[16px] pr-[34px] overflow-y-scroll">
+              <div className="flex gap-4 items-center mt-10 mb-4">
+                <img src={back} alt="back" onClick={() => setIsVerify(false)} />
+                <h6 className="text-[23px] font-medium">
+                  Create MyBalance Link
+                </h6>
+              </div>
+              <p className="text-[16px] text-[#303030] font-normal mb-8">
+                Create your MyBalance escrow information and share with
+                everyone.
+              </p>
+              <h1 className="text-[#EDEDED] text-lg font-medium">
+                ITEM(S) INFORMATION
+              </h1>
+              <div className="mt-6 flex flex-col gap-4">
+                <TextField label="Purpose of escrow" placeholder="e.g 20,000" />
+                <TextField label="Type of item(s)" placeholder="****" />
+                <TextField
+                  label="Number of item(s)"
+                  placeholder="give a description"
+                />
+                <TextField label="Amount" placeholder="give a description" />
+                <TextField
+                  label="Delivery timeline"
+                  placeholder="Select number of days"
+                />
+              </div>
+              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                VENDOR ACCOUNT INFORMATION
+              </h1>
+              <div className="mt-6 flex flex-col gap-4">
+                <TextField label="Bank Name" placeholder="Access Bank" />
+                <TextField
+                  label="Enter Account number"
+                  placeholder="1234567890"
+                />
+                <TextField label="Account Name" placeholder="e.g JMusty Feet" />
+                <TextField
+                  label="Email Address"
+                  placeholder="e.g JMustyfeet@gmail.com"
+                  value={value}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mt-6 mb-16">
+                <Button
+                  disabled={value ? false : true}
+                  fullWidth
+                  onClick={() => setIsVerify(false)}
+                >
+                  Share escrow link
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-3 mt-16">
@@ -72,6 +151,11 @@ const Dashboard = () => {
         </div>
         <DashboardLockedBox Text="Locked amount" Amount="₦30,000.00" />
         <DashboardLockedBox Text="Unlocked amount" Amount="₦0.00" />
+      </div>
+      {/* Create MyBalance link - mobile view */}
+      <div className="md:hidden mt-4 p-2 flex justify-between items-center border border-[#FFF2E8]">
+        <p className="font-semibold text-sm">Create your MyBalance link.</p>
+        <Button onClick={() => setIsVerify(true)}>Create link</Button>
       </div>
       <div className="md:flex justify-between flex-row-reverse">
         <div>
@@ -110,23 +194,23 @@ const Dashboard = () => {
             </Link>
             <Link to="/buyer/quick-action" className="mr-4">
               <DashboardQuickBox
-                icon={lock}
-                text="Lock money"
-                subtext="Tap on this to lock your money in your wallet"
-              />
-            </Link>
-            <Link to="/buyer/quick-action" className="mr-4">
-              <DashboardQuickBox
                 icon={unlock}
                 text="Unlock money"
                 subtext="Tap on this to release the money in your wallet"
               />
             </Link>
-            <Link to="/buyer/quick-action">
+            <Link to="/buyer/quick-action" className="mb-4 mr-4">
               <DashboardQuickBox
                 icon={download}
                 text="Withdraw money"
                 subtext="Tap on this to release the money in your wallet"
+              />
+            </Link>
+            <Link to="/buyer/quick-action">
+              <DashboardQuickBox
+                icon={share}
+                text="Share link"
+                subtext="Tap on this to lock your money in your wallet"
               />
             </Link>
           </div>

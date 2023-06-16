@@ -10,15 +10,16 @@ import useStore from "../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Button } from "../../components/reuseable/Button";
 import { LoadingButton } from "../../components/reuseable/LoadingButton";
-import logo from "../../assets/Icons/logo.svg";
-import mphone from "../../assets/images/m-phone.png";
-import phone from "../../assets/images/R-phone.png";
-import check from "../../assets/Icons/check.svg";
-import facebook from "../../assets/Icons/Facebook.svg";
-import twitter from "../../assets/Icons/Twitter.svg";
-import linkedin from "../../assets/Icons/LinkedIn.svg";
+import logo from "../../assets/Icons/logo.svg"
+import mphone from "../../assets/images/m-phone.png"
+import phone from "../../assets/images/R-phone.png"
+import check from "../../assets/Icons/check.svg"
+import facebook from '../../assets/Icons/Facebook.svg'
+import twitter from '../../assets/Icons/Twitter.svg'
+import linkedin from '../../assets/Icons/LinkedIn.svg'
 import { useVerifyEmail } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
+
 
 // otp index
 let currentOTPIndex: number = 0;
