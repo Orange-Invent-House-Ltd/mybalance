@@ -17,9 +17,9 @@ import Solutions from "./pages/home/Solutions";
 import PasswordReset from "./pages/auth/PasswordReset";
 import TermsAndCondition from "./pages/home/TermsAndCondition";
 import Privacy from "./pages/home/Privacy";
+import AuthLayout from "./layout/AuthLayout";
 
-
-const App: React.FC = () => { 
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -28,18 +28,28 @@ const App: React.FC = () => {
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/how-we-work" element={<HowWeWork />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/t&c" element={<TermsAndCondition/>} />
-        <Route path="/privacy" element={<Privacy/>} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/buyer/register" element={<Register />} />
-        <Route path="/email-verification" element={<EmailVerification />} />
-        <Route path="/forgot-password" element={<ForgotPassword/>} />
-        <Route path="/forgot-password/email-verification" element={<ForgotPasswordVerification/>} />
-        <Route path="/reset-password" element={<SetNewPassword/>} />
-        <Route path="/reset-password/:verificationCode" element={<SetNewPassword/>} />
-        <Route path="/reset-password/password-reset" element={<PasswordReset/>} />
-        <Route path="/share-escrow-link" element={<ShareEscrowLink/>} />
+        <Route path="/t&c" element={<TermsAndCondition />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/email-verification" element={<EmailVerification />} />
+        </Route>
+        {/* <Route path="/buyer/register" element={<Register />} /> */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/forgot-password/email-verification"
+          element={<ForgotPasswordVerification />}
+        />
+        <Route path="/reset-password" element={<SetNewPassword />} />
+        <Route
+          path="/reset-password/:verificationCode"
+          element={<SetNewPassword />}
+        />
+        <Route
+          path="/reset-password/password-reset"
+          element={<PasswordReset />}
+        />
+        <Route path="/share-escrow-link" element={<ShareEscrowLink />} />
         <Route path="/buyer/*" element={<Buyer />} />
         <Route path="/seller/*" element={<Seller />} />
         <Route path="*" element={<PageNotFound />} />

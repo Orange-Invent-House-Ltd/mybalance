@@ -13,7 +13,6 @@
        font-style: normal;
 }
 
-
 /**
 * This is a variable font
 * You can controll variable axes as shown below:
@@ -212,4 +211,9 @@ html,body{
 .spin-button-none::-webkit-outer-spin-button,
 .spin-button-none::-webkit-inner-spin-button{
   appearance: none;
+}
+
+
+:root{
+  --toastify-color-success:#FD7E14
 }
