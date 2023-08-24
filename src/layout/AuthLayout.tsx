@@ -8,17 +8,10 @@ import twitter from "../assets/Icons/Twitter.svg";
 import linkedin from "../assets/Icons/LinkedIn.svg";
 import Instagram from "../assets/Icons/Instagram.svg";
 import { useUser } from "../hooks/queries";
+import LoadingLogo from "../components/reuseable/LoadingLogo";
 
 const AuthLayout = () => {
-  const { data, isLoading, isError } = useUser();
-  const userType = localStorage.getItem("userType");
-  console.log(isLoading);
-  if (isLoading) <div>loading.......................</div>;
 
-  if (userType === "buyer") <Navigate to="/buyer/dashboard" />;
-  if (userType === "seller") <Navigate to="/seller/dashboard" />;
-  if (data) <Navigate to="/seller/dashboard" />;
- 
   return (
     <div className=" md:flex justify-center flex-row-reverse">
       {/* mobile header */}
@@ -28,11 +21,7 @@ const AuthLayout = () => {
         </Link>
       </header>
       {/* mobile phone Image */}
-      <img
-        src={mphone}
-        alt="Image of a phone"
-        className="md:hidden w-[100%]  "
-      />
+      <img src={mphone} alt="Image of a phone" className="hidden w-[100%]  " />
       {/* Desktop Image */}
 
       <img
@@ -49,7 +38,7 @@ const AuthLayout = () => {
           </Link>
         </header>
 
-        <div className="  w-full max-w-[383px] mx-auto my-6 ">
+        <div className="  w-full max-w-[354px] mx-auto my-6 ">
           <Outlet />
         </div>
         <footer className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">

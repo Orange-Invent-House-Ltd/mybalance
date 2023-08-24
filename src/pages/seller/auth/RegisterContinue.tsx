@@ -147,164 +147,118 @@ const RegisterContinue = () => {
   };
 
   return (
-    <div className=" md:flex justify-center flex-row-reverse">
-      {/* mobile header */}
-      <header className="md:hidden ml-[5%] mb-4 mt-[5%] ">
-        <Link to="/">
-          <img src={logo} alt="my-balance" />
-        </Link>
-      </header>
-      <div className="md:w-[48%] lg:w-[50%]">
-        <img
-          src={phoneImage}
-          alt="Image of a phone"
-          className="hidden md:flex"
-        />
-      </div>
-      {/* mobile phone Image */}
-      <img
-        src={mphone}
-        alt="Image of a phone"
-        className="md:hidden w-[100%] "
-      />
-
-      <div className="md:w-[52%] lg:w-[65%]">
-        {/* Desktop header */}
-        <header className="hidden md:flex ml-[5%] mt-[5%]">
-          <Link to="/">
-            <img src={logo} alt="my-balance" />
-          </Link>
-        </header>
-
-        <div className="w-[343px] mx-auto my-6 ">
-          {/* tabs */}
-          <div className="flex flex-wrap">
-            <div className="w-full">
-              <ul
-                className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+    <div className="relative ">
+      {/* tabs */}
+      <div className="flex flex-wrap">
+        <div className="w-full">
+          <ul
+            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+            role="tablist"
+          >
+            {/* customer tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-xs font-bold uppercase py-3 block leading-normal " +
+                  (openTab === 1
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                data-toggle="tab"
+                href="#link1"
                 role="tablist"
               >
-                {/* customer tab */}
-                <li className="-mb-px last:mr-0 flex-auto text-center">
-                  <a
-                    className={
-                      "text-xs font-bold uppercase py-3 block leading-normal " +
-                      (openTab === 1
-                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                    }
-                    onClick={(e) => {
-                      e.preventDefault();
-                    }}
-                    data-toggle="tab"
-                    href="#link1"
-                    role="tablist"
-                  >
-                    Create as a customer
-                  </a>
-                </li>
-                {/* seller tab */}
-                <li className="-mb-px last:mr-0 flex-auto text-center">
-                  <a
-                    className={
-                      "text-xs font-bold uppercase py-3  block leading-normal " +
-                      (openTab === 2
-                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                    }
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpenTab(2);
-                    }}
-                    data-toggle="tab"
-                    href="#link2"
-                    role="tablist"
-                  >
-                    Create as a seller
-                  </a>
-                </li>
-              </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-                <div className="px-4 py-5 flex-auto">
-                  <div className="tab-content tab-space">
-                    {/* create account as seller */}
-                    <div
-                      className={openTab === 2 ? "block" : "hidden"}
-                      id="link2"
-                    >
-                      <FormProvider {...methods}>
-                        <form onSubmit={handleSubmit(registerUser)}>
-                          <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
-                            Create your account now
-                          </h6>
-                          <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-                            Create your account in seconds and enjoy the full
-                            features of MyBalance.
-                          </p>
-                          <div className="grid gap-y-3.5">
-                            <TextField
-                              name="email"
-                              label="Email"
-                              placeholder="e.g tmusty@gmail.com"
-                            />
-                            <TextField
-                              name="password"
-                              label="Add password"
-                              type="password"
-                              placeholder="************"
-                            />
-                            <TextField
-                              name="bankName"
-                              label="Bank name"
-                              placeholder="e.g UBA"
-                            />
-                            <TextField
-                              name="accountNumber"
-                              label="Bank account number"
-                              type="phone"
-                              placeholder="e.g 0000000000"
-                            />
-                            <TextField
-                              name="accountName"
-                              label="Account name"
-                              placeholder=""
-                            />
-                            <div className="hidden">
-                              <TextField
-                                name="bankCode"
-                                label="bankCode"
-                                placeholder=""
-                              />
-                            </div>
-                            <Button fullWidth>Next</Button>
-                          </div>
-                        </form>
-                      </FormProvider>
-                    </div>
-                  </div>
+                Create as a customer
+              </a>
+            </li>
+            {/* seller tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-xs font-bold uppercase py-3  block leading-normal " +
+                  (openTab === 2
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                href="#link2"
+                role="tablist"
+              >
+                Create as a seller
+              </a>
+            </li>
+          </ul>
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
+            <div className="px- py-5 flex-auto">
+              <div className="tab-content tab-space">
+                {/* create account as seller */}
+                <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                  <FormProvider {...methods}>
+                    <form onSubmit={handleSubmit(registerUser)}>
+                      <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
+                        Create your account now
+                      </h6>
+                      <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
+                        Create your account in seconds and enjoy the full
+                        features of MyBalance.
+                      </p>
+                      <div className="grid gap-y-3.5">
+                        <TextField
+                          name="email"
+                          label="Email"
+                          placeholder="e.g tmusty@gmail.com"
+                        />
+                        <TextField
+                          name="password"
+                          label="Add password"
+                          type="password"
+                          placeholder="************"
+                        />
+                        <TextField
+                          name="bankName"
+                          label="Bank name"
+                          placeholder="e.g UBA"
+                        />
+                        <TextField
+                          name="accountNumber"
+                          label="Bank account number"
+                          type="phone"
+                          placeholder="e.g 0000000000"
+                        />
+                        <TextField
+                          name="accountName"
+                          label="Account name"
+                          placeholder=""
+                        />
+                        <div className="hidden">
+                          <TextField
+                            name="bankCode"
+                            label="bankCode"
+                            placeholder=""
+                          />
+                        </div>
+                        <Button fullWidth>Next</Button>
+                      </div>
+                    </form>
+                  </FormProvider>
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
-        <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
-          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
-          <div className="flex items-center gap-3">
-            <a href="https://twitter.com/mybalance_app" target="_blank">
-              <img src={twitter} alt="Twitter" />
-            </a>
-            <a href="" target="_blank">
-              <img src={linkedin} alt="LinkedIn" />
-            </a>
-            <a href="https://www.facebook.com/themybalanceapp" target="_blank">
-              <img src={facebook} alt="Facebook" />
-            </a>
-            <a href="https://www.instagram.com/mybalance_app" target="_blank">
-              <img src={Instagram} alt="Instagram" />
-            </a>
-          </div>
-        </div>
+        <p className="text-sm font-normal mb-7 w-fit mx-auto">
+          Existing user?{" "}
+          <a href="/login" className="text-[#121212] font-bold">
+            Log in here
+          </a>
+        </p>
       </div>
     </div>
   );

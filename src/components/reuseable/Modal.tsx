@@ -1,7 +1,8 @@
 import React from "react";
 import warningIcon from "../../assets/Icons/warningIcon.svg";
 import useStore from "../../store";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Modal = ({
   setLogoutModal,
@@ -10,13 +11,15 @@ const Modal = ({
 }) => {
   const store = useStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     // Call an API to log out the user
-    store.setAuthToken("");
-    store.setAuthEmail("");
+  
+    localStorage.clear();
+    queryClient.invalidateQueries({ queryKey: ["user"] });
     //navigate to email verification page after submition
-    navigate('/login')
+    navigate("/login");
   };
 
   return (
@@ -34,7 +37,10 @@ const Modal = ({
           >
             cancel
           </button>
-          <button onClick={handleLogout} className=" rounded-md py-3 px-14 capitalize text-white bg-[#D92D20] text-lg font-medium ">
+          <button
+            onClick={handleLogout}
+            className=" rounded-md py-3 px-14 capitalize text-white bg-[#D92D20] text-lg font-medium "
+          >
             logout
           </button>
         </div>

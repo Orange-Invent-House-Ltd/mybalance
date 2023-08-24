@@ -15,6 +15,7 @@ import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
+import TransactionStatus from "./dashboard/TransactionStatus";
 
 const Index = () => {
   return (
@@ -31,6 +32,7 @@ const Index = () => {
         <Route path="customer-support" element={<CustomerSupport />} />
         <Route path="quick-action/lock" element={<LockNewAmount />} />
       </Route>
+        <Route path="payment-callback" element={<TransactionStatus />} />
       <Route path="" element={<AuthLayout />}>
         
       <Route path="/register" element={<Register />} />

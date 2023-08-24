@@ -15,7 +15,7 @@ const ChatBubble:FC<IChatBubble> = ({user}) => {
         <p className="text-[#6D6D6D] text-sm ">Friday 2:21pm</p>
       </div>
       <div
-        className={clsx("bg-[#F2F4F7] shadow rounded-md   py-2 px-4 ", {
+        className={clsx(" shadow rounded-md   py-2 px-4 ", {
           "bg-[#F2F4F7] rounded-tl-none text-black": user,
           "bg-[#B1580E] rounded-tr-none  text-white": !user,
         })}

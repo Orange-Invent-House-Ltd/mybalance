@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Modal from "../components/reuseable/Modal";
 import logo from "../assets/Icons/logo.svg";
 import { useState } from "react";
@@ -6,9 +6,11 @@ import { Link, NavLink } from "react-router-dom";
 import handburger from "../assets/Icons/handburger.svg";
 import closeIcon from "../assets/Icons/close.svg";
 import sidebarDatas from "./sidebarDatas";
-import twitter from '../assets/Icons/Twitter.svg'
-import linkedin from '../assets/Icons/LinkedIn.svg'
-import  facebook from '../assets/Icons/Facebook.svg'
+import twitter from "../assets/Icons/Twitter.svg";
+import linkedin from "../assets/Icons/LinkedIn.svg";
+import facebook from "../assets/Icons/Facebook.svg";
+import { useUser } from "../hooks/queries";
+import LoadingLogo from "../components/reuseable/LoadingLogo";
 
 const BuyerDashboardLayout = () => {
   const [logoutModal, setLogoutModal] = useState(false);
@@ -17,6 +19,24 @@ const BuyerDashboardLayout = () => {
   const showSidebar = () => {
     setSidebar(!sidebar);
   };
+  const { data, isLoading, isError, status } = useUser();
+  // if (!localStorage.getItem("session_token")) {
+  //   return <Navigate to="/login" />;
+  // }
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LoadingLogo />
+      </div>
+    );
+  }
+
+  if (data?.userType === "SELLER") {
+    return <Navigate to="/seller/dashboard" />;
+  }
+  if (isError) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
@@ -24,7 +44,9 @@ const BuyerDashboardLayout = () => {
       <div className="md:flex">
         {/* mobile navbar */}
         <div className="md:hidden bg-white sticky top-0 left-0 z-50 py-[5%] px-5 flex justify-between items-center mb-10">
-        <Link to='/buyer/dashboard'><img src={logo} alt="My Balance Logo" className="cursor-pointer"/></Link>
+          <Link to="/buyer/dashboard">
+            <img src={logo} alt="My Balance Logo" className="cursor-pointer" />
+          </Link>
           <div>
             <div>
               <NavLink to="#">
@@ -67,10 +89,13 @@ const BuyerDashboardLayout = () => {
                 ))}
               </ul>
               <div
-                onClick={() =>setLogoutModal(true)}
+                onClick={() => setLogoutModal(true)}
                 className="mt-[20px] pl-4 text-[#DA1E28] hover:bg-white focus:bg-white"
               >
-                <div className="flex gap-4 py-2" onClick={() =>setSidebar(false)}>
+                <div
+                  className="flex gap-4 py-2"
+                  onClick={() => setSidebar(false)}
+                >
                   <svg
                     className="w-6 h-6 stroke-current"
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,9 +123,15 @@ const BuyerDashboardLayout = () => {
           </div>
         </div>
         {/* desktop navbar */}
-        <div className="hidden md:block w-[287px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
-          <header className="h-[150px] flex justify-center items-center">
-            <Link to='/buyer/dashboard'><img src={logo} alt="My Balance Logo" className="cursor-pointer"/></Link>
+        <div className="hidden overflow-auto md:block w-full max-w-[287px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
+          <header className="mt-[70px] mb-[65px] flex justify-center items-center">
+            <Link to="/buyer/dashboard">
+              <img
+                src={logo}
+                alt="My Balance Logo"
+                className="cursor-pointer"
+              />
+            </Link>
           </header>
           <nav>
             <ul className="flex flex-col gap-2">
@@ -108,7 +139,7 @@ const BuyerDashboardLayout = () => {
                 <li key={index} className="hover:bg-white hover:text-black">
                   <NavLink
                     to={item.path}
-                    className="flex items-center gap-4 pl-4 py-2"
+                    className="flex items-center gap-4 pl-4 py-[10px]"
                   >
                     {item.icon}
                     <span>{item.title}</span>
@@ -155,7 +186,9 @@ const BuyerDashboardLayout = () => {
               <img src={linkedin} alt="LinkedIn" />
               <img src={facebook} alt="Facebook" />
             </div>
-            <p className='text-[#121212] text-base font-medium mt-4'>© 2022 MyBalance. All rights reserved.</p>
+            <p className="text-[#121212] text-base font-medium mt-4">
+              © 2022 MyBalance. All rights reserved.
+            </p>
           </div>
         </main>
       </div>

@@ -61,44 +61,42 @@ const Register = () => {
           >
             {/* customer tab */}
             <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
+              <Link
                 className={
-                  "text-xs font-bold uppercase py-3 block leading-normal " +
+                  "text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
                   (openTab === 1
-                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                    ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
                 }
                 onClick={(e) => {
                   e.preventDefault();
                   setOpenTab(1);
                 }}
                 data-toggle="tab"
-                href="#link1"
+                to="#link1"
                 role="tablist"
               >
                 Create as a customer
-              </a>
+              </Link>
             </li>
             {/* seller tab */}
             <li className="-mb-px last:mr-0 flex-auto text-center">
-              <Link to="/seller/register">
-                <a
-                  className={
-                    "text-xs font-bold uppercase py-3  block leading-normal " +
-                    (openTab === 2
-                      ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                      : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                  }
-                  // onClick={e => {
-                  //   e.preventDefault();
-                  //   setOpenTab(2);
-                  // }}
-                  data-toggle="tab"
-                  href="#link2"
-                  role="tablist"
-                >
-                  Create as a seller
-                </a>
+              <Link
+                to="/seller/register"
+                className={
+                  "text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
+                  (openTab === 2
+                    ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
+                }
+                onClick={(e) => {
+                  // e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                role="tablist"
+              >
+                Create as a seller
               </Link>
             </li>
           </ul>
@@ -154,12 +152,12 @@ const Register = () => {
         </div>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
           Existing user?{" "}
-          <a
-            href="/buyer/login"
+          <Link
+            to="/login"
             className="text-[#121212] font-bold cursor-pointer"
           >
             Log in here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

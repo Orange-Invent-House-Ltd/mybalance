@@ -9,7 +9,7 @@ import TextField from "../../components/reuseable/TextField";
 import { useLogin } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 import { Button } from "../../components/reuseable/Button";
-import { useUser } from "../../hooks/queries";
+
 
 //type definition with error messages for the form input
 const loginSchema = object({
@@ -26,19 +26,15 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const Login = () => {
-  // tabs
-  const [openTab, setOpenTab] = useState(1);
-  const { mutate, isLoading } = useLogin();
-  const { data } = useUser();
-  console.log(data);
 
-  const store = useStore();
-  const navigate = useNavigate();
+  const { mutate, isLoading } = useLogin();
+
+ 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
-  const userEmail = store.authEmail;
+
 
   //useForm() destructuring or methods destructuring . Here methods = useForm()
   const { handleSubmit } = methods;
@@ -47,90 +43,19 @@ const Login = () => {
     mutate(data);
   };
 
-  // const resendVerifyEmail = async (userEmail: any) => {
-  //   try {
-  //     const response = await publicApi.post("auth/resend-otp", {
-  //       email: userEmail,
-  //     });
-  //     //Form submition success notifications
-  //     toast.success(response.data.message as string, {
-  //       toastId: "success1",
-  //       position: "top-right",
-  //     });
-  //     store.setTempId(response.data.data?.tempId);
-  //   } catch (error: any) {
-  //     console.error(error);
-  //     const resMessage =
-  //       (error.response &&
-  //         error.response.data &&
-  //         error.response.data.message) ||
-  //       error.message ||
-  //       error.toString();
-  //     //Form submition error notifications
-  //     toast.error(resMessage, {
-  //       toastId: "error1",
-  //       position: "top-right",
-  //     });
-  //   }
-  // };
+ 
   return (
     <div className="relative ">
       {isLoading && <LoadingOverlay />}
       {/* tabs */}
       <div className="flex flex-wrap">
         <div className="w-full">
-          <ul
-            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
-            role="tablist"
-          >
-            {/* customer tab */}
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
-                  (openTab === 1
-                    ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
-                    : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenTab(1);
-                }}
-                data-toggle="tab"
-                href="#link1"
-                role="tablist"
-              >
-                Login as a customer
-              </a>
-            </li>
-            {/* seller tab */}
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <Link to="/seller/register">
-                <a
-                  className={
-                    "text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
-                    (openTab === 2
-                      ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
-                      : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
-                  }
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenTab(2);
-                  }}
-                  data-toggle="tab"
-                  href="#link2"
-                  role="tablist"
-                >
-                  Login as a seller
-                </a>
-              </Link>
-            </li>
-          </ul>
+        
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-            <div className="px- py-5 flex-auto">
+            <div className="px-2 py-5 flex-auto">
               <div className="tab-content tab-space">
                 {/* Login as customer */}
-                <div className={openTab === 1 ? "block" : "block"} id="link1">
+                <div >
                   <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(loginUser)}>
                       <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
@@ -171,11 +96,7 @@ const Login = () => {
                     </form>{" "}
                   </FormProvider>
                 </div>
-                {/* Login as seller */}
-                <div
-                  className={openTab === 2 ? "block" : "hidden"}
-                  id="link2"
-                ></div>
+              
               </div>
             </div>
           </div>
@@ -191,17 +112,14 @@ const Login = () => {
         </p>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
           Have not verify your email?
-          <span
+          <Link
+            to="/email-verification"
             className="text-[#121212] font-bold cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/email-verification");
-              // resendVerifyEmail(userEmail);
-            }}
+          
           >
             {" "}
             Verify Email
-          </span>
+          </Link>
         </p>
       </div>
     </div>

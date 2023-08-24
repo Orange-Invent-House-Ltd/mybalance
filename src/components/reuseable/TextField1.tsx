@@ -1,45 +1,51 @@
 import clsx from "clsx";
-import React from "react";
 import { InputHTMLAttributes } from "react";
+import {
+  UseControllerProps,
+  useController,
+} from "react-hook-form";
 
 interface ITextField extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  error?: any;
-  helperText?: any;
+
   disabled?: boolean;
   variant?: "long" | "short";
 }
+const TextField = ({
+  label,
+  variant,
+  ...props
+}: UseControllerProps<any> & ITextField) => {
+  const { field, fieldState } = useController(props);
 
-const TextField: React.FC<ITextField> = (props) => {
   return (
     <div className="w-full">
       <p
         className={clsx("text-sm mb-[6px] capitalize", {
-          "text-[#DA1E28]": props.error,
+          "text-[#DA1E28]": fieldState.invalid,
         })}
       >
-        {props.label}
+        {label}
       </p>
 
       <input
+        {...field}
         {...props}
-        name="text"
         className={clsx(
           "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373]",
           {
-            "w-[165px]":
-            props.variant== "short",
-            "border-[#DA1E28] focus:border-[#DA1E28]": props.error,
+            "w-[165px]": variant === "short",
+            "border-[#DA1E28] focus:border-[#DA1E28]": fieldState.invalid,
           }
         )}
       />
 
       <p
         className={clsx("text-sm mt-[6px]", {
-          "text-[#DA1E28]": props.error,
+          "text-[#DA1E28]": fieldState.invalid,
         })}
       >
-        {props.helperText}
+        {fieldState.error?.message}
       </p>
     </div>
   );

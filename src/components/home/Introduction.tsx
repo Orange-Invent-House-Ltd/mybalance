@@ -41,7 +41,7 @@ const Introduction: FC = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#FFF2E8] relative lg:w-[803px]">
+      <div className="bg-[#FFF2E8] md:h-screen relative lg:w-[803px]">
         <img src={bg} alt="square background shape" />
         <img
           className="w-[285px] sm:w-[560px] lg:w-[560px] absolute left-[90px] top-[40px] sm:left-[134px] lg:"

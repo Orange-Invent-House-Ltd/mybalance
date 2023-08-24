@@ -3,33 +3,35 @@ import React, { useEffect, useRef, useState } from "react";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { publicApi } from "../../api/axios";
 import { GenericResponse } from "../../api/types";
 import useStore from "../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Button } from "../../components/reuseable/Button";
 import { LoadingButton } from "../../components/reuseable/LoadingButton";
-import logo from "../../assets/Icons/logo.svg"
-import mphone from "../../assets/images/m-phone.png"
-import phone from "../../assets/images/R-phone.png"
-import check from "../../assets/Icons/check.svg"
-import facebook from '../../assets/Icons/Facebook.svg'
-import twitter from '../../assets/Icons/Twitter.svg'
-import linkedin from '../../assets/Icons/LinkedIn.svg'
-import { useVerifyEmail } from "../../hooks/mutations";
+import logo from "../../assets/Icons/logo.svg";
+import mphone from "../../assets/images/m-phone.png";
+import phone from "../../assets/images/R-phone.png";
+import check from "../../assets/Icons/check.svg";
+import facebook from "../../assets/Icons/Facebook.svg";
+import twitter from "../../assets/Icons/Twitter.svg";
+import linkedin from "../../assets/Icons/LinkedIn.svg";
+import { useResendOtp, useVerifyEmail } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
-
 
 // otp index
 let currentOTPIndex: number = 0;
 
 const EmailVerification = () => {
   const { mutate, isLoading, isSuccess } = useVerifyEmail();
+  const { mutate:resendMutate, isLoading: resendLoading } = useResendOtp();
   const store = useStore();
   const navigate = useNavigate();
   const userEmail = store.authEmail;
 
+  const tempId = localStorage.getItem("tempId");
+  const email = localStorage.getItem("email");
   // otp state
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0);
@@ -48,7 +50,6 @@ const EmailVerification = () => {
     const { value } = target;
     // the spread operator help to get all the input value
     const newOTP = [...otp];
-    console.log(otp);
     // get the last value of the input
     newOTP[currentOTPIndex] = value.substring(value.length - 1);
 
@@ -85,8 +86,12 @@ const EmailVerification = () => {
       otp
     );
     const stringOtp = otp.join("").toString();
+    console.log(
+      "🚀 ~ file: EmailVerification.tsx:87 ~ verifyEmail ~ stringOtp:",
+      stringOtp
+    );
     if (stringOtp.length < 6) return;
-    mutate({ otp: stringOtp, tempId: "2222" });
+    mutate({ otp: stringOtp, tempId: tempId! });
   };
 
   // const resendVerifyEmail = async (userEmail:any) => {
@@ -118,9 +123,12 @@ const EmailVerification = () => {
   //     });
   //   }
   // };
+  if (!tempId || !email) {
+    return <Navigate to="/get-verification-link" />;
+  }
   return (
     <div className="relative">
-      {isLoading && <LoadingOverlay />}
+      {(isLoading || resendLoading) && <LoadingOverlay />}
       {/* tabs */}
       <div className="flex flex-wrap px-[3%]">
         <div className="w-full">
@@ -178,7 +186,7 @@ const EmailVerification = () => {
                 >
                   <h6 className="h6">Check your email</h6>
                   <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-                    We sent a verification link to {userEmail}
+                    We sent a verification link to {email}
                   </p>
                   <div className="grid gap-y-3.5">
                     <form>
@@ -217,7 +225,7 @@ const EmailVerification = () => {
                           className="font-semibold cursor-pointer"
                           onClick={(e) => {
                             e.preventDefault();
-                            // resendVerifyEmail(userEmail);
+                           resendMutate({email:email!})
                           }}
                         >
                           {" "}

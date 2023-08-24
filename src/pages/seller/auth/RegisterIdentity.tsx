@@ -333,254 +333,208 @@ const RegisterIdentity = () => {
   };
 
   return (
-    <div className=" md:flex justify-center flex-row-reverse">
-      {/* mobile header */}
-      <header className="md:hidden ml-[5%] mb-4 mt-[5%] ">
-        <Link to="/">
-          <img src={logo} alt="my-balance" />
-        </Link>
-      </header>
-      <div className="md:w-[48%] lg:w-[35%]">
-        <img
-          src={phoneImage}
-          alt="Image of a phone"
-          className="hidden md:flex"
-        />
-      </div>
-      {/* mobile phone Image */}
-      <img
-        src={mphone}
-        alt="Image of a phone"
-        className="md:hidden w-[100%] "
-      />
-
-      <div className="md:w-[52%] lg:w-[65%]">
-        {/* Desktop header */}
-        <header className="hidden md:flex ml-[5%] mt-[5%]">
-          <Link to="/">
-            <img src={logo} alt="my-balance" />
-          </Link>
-        </header>
-
-        <div className="w-[343px] mx-auto my-6 ">
-          {/* tabs */}
-          <div className="flex flex-wrap">
-            <div className="w-full">
-              <ul
-                className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+    <div className="relative ">
+      {/* tabs */}
+      <div className="flex flex-wrap">
+        <div className="w-full">
+          <ul
+            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+            role="tablist"
+          >
+            {/* customer tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-xs font-bold uppercase py-3 block leading-normal " +
+                  (openTab === 1
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                href="#link1"
                 role="tablist"
               >
-                {/* customer tab */}
-                <li className="-mb-px last:mr-0 flex-auto text-center">
-                  <a
-                    className={
-                      "text-xs font-bold uppercase py-3 block leading-normal " +
-                      (openTab === 1
-                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                    }
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpenTab(2);
-                    }}
-                    data-toggle="tab"
-                    href="#link1"
-                    role="tablist"
-                  >
-                    Create as a customer
-                  </a>
-                </li>
-                {/* seller tab */}
-                <li className="-mb-px last:mr-0 flex-auto text-center">
-                  <a
-                    className={
-                      "text-xs font-bold uppercase py-3  block leading-normal " +
-                      (openTab === 2
-                        ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                        : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                    }
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpenTab(2);
-                    }}
-                    data-toggle="tab"
-                    href="#link2"
-                    role="tablist"
-                  >
-                    Create as a seller
-                  </a>
-                </li>
-              </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-                <div className="px-4 py-5 flex-auto">
-                  <div className="tab-content tab-space">
-                    {/* create account as seller */}
-                    <div
-                      className={openTab === 2 ? "block" : "hidden"}
-                      id="link2"
+                Create as a customer
+              </a>
+            </li>
+            {/* seller tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-xs font-bold uppercase py-3  block leading-normal " +
+                  (openTab === 2
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                href="#link2"
+                role="tablist"
+              >
+                Create as a seller
+              </a>
+            </li>
+          </ul>
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
+            <div className="px- py-5 flex-auto">
+              <div className="tab-content tab-space">
+                {/* create account as seller */}
+                <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                  <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
+                    We need your identity
+                  </h6>
+                  <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
+                    Enter your NIN, Int’l passport, Driver’s license or Voter’s
+                    card number below.
+                  </p>
+                  <div className="grid gap-y-3.5">
+                    <label
+                      htmlFor="ID"
+                      className="text-sm mb-[6px] capitalize block"
                     >
-                      <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
-                        We need your identity
-                      </h6>
-                      <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-                        Enter your NIN, Int’l passport, Driver’s license or
-                        Voter’s card number below.
-                      </p>
-                      <div className="grid gap-y-3.5">
-                        <label
-                          htmlFor="ID"
-                          className="text-sm mb-[6px] capitalize block"
-                        >
-                          Means of ID
-                        </label>
-                        <select
-                          name="ids"
-                          id="ids"
-                          onChange={handleSelectChange}
-                          className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6"
-                        >
-                          <option value="select">Select</option>
-                          <option value="IP">International Passport</option>
-                          <option value="NIN">NIN</option>
-                          <option value="VC">Voter’s Card</option>
-                          <option value="DL">Driver’s License</option>
-                        </select>
-                        {selectedValue === "IP" ? (
-                          <FormProvider {...methods}>
-                            <form onSubmit={handleSubmit(onSubmitHandler)}>
-                              <div>
-                                <TextField
-                                  name="number"
-                                  label="Passport number"
-                                  placeholder="1234 1234 123"
-                                />
-                                <TextField
-                                  name="lastName"
-                                  label="Last name"
-                                  placeholder="Saka"
-                                />
-                                {/* <TextField name="name" label = "name" placeholder=''/> */}
-                                <div className="mt-6">
-                                  <Button fullWidth={true}>Next</Button>
-                                </div>
-                              </div>
-                            </form>
-                          </FormProvider>
-                        ) : selectedValue === "NIN" ? (
-                          <FormProvider {...methods}>
-                            <form onSubmit={handleSubmit(onSubmitHandler)}>
-                              <div>
-                                <TextField
-                                  name="number"
-                                  type="phone"
-                                  label="NIN number"
-                                  placeholder="e.g 1234 1234 123"
-                                />
-                                <div className="mt-6">
-                                  <Button fullWidth={true}>Next</Button>
-                                </div>
-                              </div>
-                            </form>
-                          </FormProvider>
-                        ) : selectedValue === "VC" ? (
-                          <FormProvider {...methods}>
-                            <form onSubmit={handleSubmit(onSubmitHandler)}>
-                              <div>
-                                <TextField
-                                  name="number"
-                                  type="phone"
-                                  label="Voter’s card number"
-                                  placeholder="e.g 1234 1234 123"
-                                />
-                                <TextField
-                                  name="firstName"
-                                  type="text"
-                                  label="First name"
-                                  placeholder="Bukola"
-                                />
-                                <TextField
-                                  name="lastName"
-                                  type="text"
-                                  label="Last name"
-                                  placeholder="Saka"
-                                />
-                                <TextField
-                                  name="DOB"
-                                  type="phone"
-                                  label="Date of birth"
-                                  placeholder="e.g DD-MM-YYYY"
-                                />
-                                <div className="flex justify-center gap-4">
-                                  <TextField
-                                    name="state"
-                                    variant="short"
-                                    type="text"
-                                    label="State"
-                                    placeholder="Lagos"
-                                  />
-                                  <TextField
-                                    name="lga"
-                                    variant="short"
-                                    type="text"
-                                    label="LGA"
-                                    placeholder="Eti-Osa"
-                                  />
-                                </div>
-                                <div className="mt-6">
-                                  <Button fullWidth={true}>Next</Button>
-                                </div>
-                              </div>
-                            </form>
-                          </FormProvider>
-                        ) : selectedValue === "DL" ? (
-                          <FormProvider {...methods}>
-                            <form onSubmit={handleSubmit(onSubmitHandler)}>
-                              <div>
-                                <TextField
-                                  name="number"
-                                  label="Card number"
-                                  placeholder="e.g 1234 1234 123"
-                                />
-                                <TextField
-                                  name="DOB"
-                                  label="Date of birth"
-                                  placeholder="DD-MM-YY"
-                                />
-                                <div className="mt-6">
-                                  <Button fullWidth={true}>Next</Button>
-                                </div>
-                              </div>
-                            </form>
-                          </FormProvider>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    </div>
+                      Means of ID
+                    </label>
+                    <select
+                      name="ids"
+                      id="ids"
+                      onChange={handleSelectChange}
+                      className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6"
+                    >
+                      <option value="select">Select</option>
+                      <option value="IP">International Passport</option>
+                      <option value="NIN">NIN</option>
+                      <option value="VC">Voter’s Card</option>
+                      <option value="DL">Driver’s License</option>
+                    </select>
+                    {selectedValue === "IP" ? (
+                      <FormProvider {...methods}>
+                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                          <div>
+                            <TextField
+                              name="number"
+                              label="Passport number"
+                              placeholder="1234 1234 123"
+                            />
+                            <TextField
+                              name="lastName"
+                              label="Last name"
+                              placeholder="Saka"
+                            />
+                            {/* <TextField name="name" label = "name" placeholder=''/> */}
+                            <div className="mt-6">
+                              <Button fullWidth={true}>Next</Button>
+                            </div>
+                          </div>
+                        </form>
+                      </FormProvider>
+                    ) : selectedValue === "NIN" ? (
+                      <FormProvider {...methods}>
+                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                          <div>
+                            <TextField
+                              name="number"
+                              type="phone"
+                              label="NIN number"
+                              placeholder="e.g 1234 1234 123"
+                            />
+                            <div className="mt-6">
+                              <Button fullWidth={true}>Next</Button>
+                            </div>
+                          </div>
+                        </form>
+                      </FormProvider>
+                    ) : selectedValue === "VC" ? (
+                      <FormProvider {...methods}>
+                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                          <div>
+                            <TextField
+                              name="number"
+                              type="phone"
+                              label="Voter’s card number"
+                              placeholder="e.g 1234 1234 123"
+                            />
+                            <TextField
+                              name="firstName"
+                              type="text"
+                              label="First name"
+                              placeholder="Bukola"
+                            />
+                            <TextField
+                              name="lastName"
+                              type="text"
+                              label="Last name"
+                              placeholder="Saka"
+                            />
+                            <TextField
+                              name="DOB"
+                              type="phone"
+                              label="Date of birth"
+                              placeholder="e.g DD-MM-YYYY"
+                            />
+                            <div className="flex justify-center gap-4">
+                              <TextField
+                                name="state"
+                                variant="short"
+                                type="text"
+                                label="State"
+                                placeholder="Lagos"
+                              />
+                              <TextField
+                                name="lga"
+                                variant="short"
+                                type="text"
+                                label="LGA"
+                                placeholder="Eti-Osa"
+                              />
+                            </div>
+                            <div className="mt-6">
+                              <Button fullWidth={true}>Next</Button>
+                            </div>
+                          </div>
+                        </form>
+                      </FormProvider>
+                    ) : selectedValue === "DL" ? (
+                      <FormProvider {...methods}>
+                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                          <div>
+                            <TextField
+                              name="number"
+                              label="Card number"
+                              placeholder="e.g 1234 1234 123"
+                            />
+                            <TextField
+                              name="DOB"
+                              label="Date of birth"
+                              placeholder="DD-MM-YY"
+                            />
+                            <div className="mt-6">
+                              <Button fullWidth={true}>Next</Button>
+                            </div>
+                          </div>
+                        </form>
+                      </FormProvider>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/login" className='text-[#121212] font-bold'>Log in here</a></p>
           </div>
         </div>
-        <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
-          <p className="font-medium">© 2022 My Balance. All rights reserved.</p>
-          <div className="flex items-center gap-3">
-            <a href="https://twitter.com/mybalance_app" target="_blank">
-              <img src={twitter} alt="Twitter" />
-            </a>
-            <a href="" target="_blank">
-              <img src={linkedin} alt="LinkedIn" />
-            </a>
-            <a href="https://www.facebook.com/themybalanceapp" target="_blank">
-              <img src={facebook} alt="Facebook" />
-            </a>
-            <a href="https://www.instagram.com/mybalance_app" target="_blank">
-              <img src={Instagram} alt="Instagram" />
-            </a>
-          </div>
-        </div>
+        <p className="text-sm font-normal mb-7 w-fit mx-auto">
+          Existing user?{" "}
+          <a href="/login" className="text-[#121212] font-bold">
+            Log in here
+          </a>
+        </p>
       </div>
     </div>
   );

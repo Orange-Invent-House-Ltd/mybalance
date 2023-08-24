@@ -4,12 +4,12 @@ import lockicon from "../../assets/Icons/lock.svg"
 
 
 
-const LockMoneyBox = ({date, heading, text, key}:any) => {
+const LockMoneyBox = ({date, heading, text}:{date:string,heading:string,text:string}) => {
 
   return (
     
       
-        <div key ={key} className='px-6 py-2 rounded border shadow shadow-[#E4E4E4] border-white mt-6'>
+        <div  className='px-7 w-full py-3 rounded border shadow-lg shadow-[#E4E4E4] border-white mt-6'>
           <div className='flex items-center gap-3 cursor-pointer'>
             <img src={lockicon} alt="lock" className="w-[20px]"/>
             <p className='text-[10px] text-[#B7B7B7] font-normal'>{date}</p>

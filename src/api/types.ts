@@ -1,8 +1,8 @@
 export interface IUser {
   email?: string;
   email_verified?: boolean;
-  name?:string;
-  phone?:string;
+  name?: string;
+  phone?: string;
   isVerified?: boolean;
   id?: string;
   isBuyer?: boolean;
@@ -13,14 +13,25 @@ export interface IUser {
   password?: string;
   bankName?: string;
   accountNumber?: string;
-  accountName ?: string;
+  accountName?: string;
   bankCode?: string;
+  lastLoginDate: string;
+ 
 }
 export interface IUserProfile {
   id: string;
-  bankAccount : {};
+  bankAccount: {};
   lastLoginDate: string;
-  lockedAmount: number
+  lockedAmount: number;
+  unlockedAmount: number;
+  walletBalance: number;
+  userId: string;
+  userType: string;
+  avatar: string;
+  profileLink: string;
+  bankAccountId: string;
+  kycId: string;
+  fullName: string;
 }
 
 export interface GenericResponse {

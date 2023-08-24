@@ -1,8 +1,11 @@
 import React from "react";
 import { Button } from "../../../components/reuseable/Button";
 import TextField from "../../../components/reuseable/TextField1";
+import { useForm } from "react-hook-form";
 
 const Profile = () => {
+  const { handleSubmit, control } =
+    useForm();
   return (
     <div>
       <header className="mb-16">
@@ -18,11 +21,32 @@ const Profile = () => {
           </div>
           <p>Tap to change photo</p>
         </div>
-        <form className="space-y-5  w-[350px]" >
-          <TextField label="full name" />
-          <TextField label="email" />
-          <TextField label="phone" />
-          <TextField label="password" />
+        <form className="space-y-5  w-[350px]">
+          <TextField
+            control={control}
+            label="full name"
+            name="amount"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            label="email"
+            name="amount"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            label="phone"
+            name="amount"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            label="password"
+            name="amount"
+            rules={{ required: "this field is required" }}
+          />
+        
           <Button fullWidth>update profile</Button>
         </form>
       </div>
