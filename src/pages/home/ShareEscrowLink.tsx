@@ -4,21 +4,42 @@ import { Button } from "../../components/reuseable/Button";
 import TextField from "../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
 import { useTransactionInfo } from "../../hooks/queries";
+import { useSearchParams } from "react-router-dom";
+import { useRespondTransaction } from "../../hooks/mutations";
 
 const ShareEscrowLink = () => {
- const {data,isLoading,isError,isSuccess}= useTransactionInfo()
+  const [searchParams] = useSearchParams();
+
+  const {
+    data,
+    isLoading: transactionLoading,
+    isError,
+    isSuccess,
+  } = useTransactionInfo("735e3q2np7h1");
+
+  // searchParams.get("ref")
+
+  const { mutate, isLoading } = useRespondTransaction();
+  console.log(
+    "🚀 ~ file: ShareEscrowLink.tsx:15 ~ ShareEscrowLink ~ data:",
+    data
+  );
   const { handleSubmit, control, reset } = useForm();
   useEffect(() => {
-    // you can do async server request and fill up form
     if (isSuccess) {
-     
       reset({
-        firstName: "bill",
-        lastName: "luo",
+        purpose: data.data.escrowMetadata.purpose,
+        type: data.data.escrowMetadata.itemType,
+        itemQuantity: data.data.escrowMetadata.itemQuantity,
+        amount: data.data.amount,
+        timeline: data.data.escrowMetadata.deliveryDate,
+        bankName: "",
+        accNum: "",
+        email: data.data.escrowMetadata.partnerEmail,
+        number: data.data.escrowMetadata.partnerEmail,
       });
-   }
-   
-  }, [reset]);
+    }
+  }, [reset, isSuccess]);
   return (
     <div className="px-[5%]">
       <Header />
@@ -31,24 +52,27 @@ const ShareEscrowLink = () => {
           <div className="flex flex-col gap-4">
             <TextField
               control={control}
-              name=""
+              name="purpose"
               rules={{ required: "this field is required" }}
               label="Purpose of escrow"
               placeholder="e.g 20,000"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="type"
               rules={{ required: "this field is required" }}
               label="Type of item(s)"
               placeholder="****"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="itemQuantity"
               rules={{ required: "this field is required" }}
               label="Number of item(s)"
               placeholder="give a description"
+              readOnly
             />
             <TextField
               control={control}
@@ -56,13 +80,16 @@ const ShareEscrowLink = () => {
               rules={{ required: "this field is required" }}
               label="Amount"
               placeholder="give a description"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="timeline"
+              type="date"
               rules={{ required: "this field is required" }}
               label="Delivery timeline"
               placeholder="Select number of days"
+              readOnly
             />
           </div>
           <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
@@ -71,42 +98,74 @@ const ShareEscrowLink = () => {
           <div className="mt-6 flex flex-col gap-4">
             <TextField
               control={control}
-              name="amount"
+              name="bankName"
               rules={{ required: "this field is required" }}
               label="Bank Name"
+              readOnly
               placeholder="Access Bank"
             />
             <TextField
               control={control}
-              name="amount"
+              name="accNum"
               rules={{ required: "this field is required" }}
               label="Enter Account number"
               placeholder="1234567890"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="accName"
               rules={{ required: "this field is required" }}
               label="Account Name"
               placeholder="e.g JMusty Feet"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="email"
               rules={{ required: "this field is required" }}
               label="Email"
               placeholder="e.g JMustyfeet@gmail.com"
+              readOnly
             />
             <TextField
               control={control}
-              name="amount"
+              name="number"
               rules={{ required: "this field is required" }}
               label="Phone number"
               placeholder="090123456789"
+              readOnly
             />
           </div>
-          <div className="mt-6 mb-16">
-            <Button fullWidth> Pay now </Button>
+
+          <div className="mt-6 space-y-3 mb-16">
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={(e) => {
+                e.preventDefault();
+                mutate({
+                  ref: "735e3q2np7h1",
+                  status: "REJECTED ",
+                });
+              }}
+            >
+              {" "}
+              reject information{" "}
+            </Button>
+            <Button
+              fullWidth
+              onClick={(e) => {
+                e.preventDefault();
+                mutate({
+                  ref: "735e3q2np7h1",
+                  status: "APPROVED ",
+                });
+              }}
+            >
+              {" "}
+              accept information{" "}
+            </Button>
           </div>
         </form>
       </div>

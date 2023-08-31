@@ -24,11 +24,11 @@ export const Button = (props: IButton) => {
             variant === "contained" && disabled,
           "border border-primary-normal text-primary-normal hover:bg-primary-normal/10 ":
             variant === "outlined",
-          "border border-black hover:bg-primary-normal/10 ":
+          "border border-slate-300 hover:bg-slate-300/10 ":
             variant === "black-outlined",
           "border-primary-light text-primary-light cursor-not-allowed hover:bg-white ":
             variant === "outlined" && disabled,
-          "bg-[#039855]  text-white hover:bg-[#04b766] ":
+          "!bg-[#039855]  text-white hover:!bg-[#04b766] ":
             variant === "contained" && success,
         }
       )}

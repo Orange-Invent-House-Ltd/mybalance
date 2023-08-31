@@ -5,7 +5,6 @@ import TextField from "../../../components/reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
 import copy from "../../../assets/Icons/copy.svg";
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
-import check from "../../../assets/Icons/check.svg";
 import LockNewAmount from "./LockNewAmount";
 import EditLockedAmount from "../../../components/buyers/EditLockedAmount";
 import lockDatas from "../../../util/lockDatas";
@@ -18,12 +17,13 @@ import {
 } from "../../../hooks/mutations";
 import { useForm } from "react-hook-form";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import { useBanks, useUser } from "../../../hooks/queries";
+import { useBanks, useLockedFunds, useUser } from "../../../hooks/queries";
 import { useTabStore } from "../../../store";
 import { toast } from "react-toastify";
+import loading from "../../../assets/Icons/loadingSpinner.svg";
+import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 
 const QuickAction = () => {
-  const { data: banks, isLoading: bankIsLoading } = useBanks();
   const [openTab, setOpenTab] = useState(1);
   const [openTabs, setOpenTabs] = useState(1);
   //lock
@@ -34,7 +34,6 @@ const QuickAction = () => {
   const [pin, setPin] = useState("");
   // withdraw
   const [value, setValue] = useState("");
-  const [isWithdraw, setIsWithdraw] = useState(false);
 
   const handlePin = (e: any) => {
     setPin(e.target.value);
@@ -50,23 +49,14 @@ const QuickAction = () => {
 
   const { handleSubmit: handleSubmitDeposit, control: controlDeposit } =
     useForm();
-  const { handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
-    useForm();
+
   const { mutate: depositMutate, isLoading: depositLoading } =
     useDepositMoney();
-  const {
-    mutate: withdrawMutate,
-    isLoading: withdrawLoading,
-    isSuccess: withdrawSuccess,
-  } = useWithdraw();
-  const {
-    mutate: withdrawFeeMutate,
-    isLoading: withdrawFeeLoading,
-    data: withdrawFeeData,
-  } = useWithdrawFee();
+
   const { defaultTab } = useTabStore();
 
   const { data: user } = useUser();
+  const { data: lockedFunds, isLoading: lockedFundsLoading } = useLockedFunds();
 
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -81,13 +71,17 @@ const QuickAction = () => {
       LookupMutate({ bankCode: "035", accountNumber: accNum });
     }
   }, [accNum, code]);
-  useEffect(() => {
-    if (withdrawSuccess) {
-      setIsWithdraw(true);
-    }
-  }, []);
+
   return (
-    <div>
+    <>
+      {/* <div className="w-screen h-screen flex items-center justify-center  absolute top-0 left-00 z-[900] bg-black/20 ">
+        <img
+          src={loading}
+          className="animate-spin mx-auto "
+          alt="loading spinner"
+        />
+        <p className="text-center">Loading! Please wait ...</p>
+      </div> */}
       <Header
         Heading="Quick Actions"
         Text="You can either deposit, lock, unlock and/or withdraw your money here."
@@ -140,152 +134,33 @@ const QuickAction = () => {
               Click on the card with the information of the item you want to
               unlock and click on the unlock button. That’s it.
             </p>
-            <div onClick={() => setUnlock(true)}>
-              {lockDatas.map(({ date, heading, text }: any, key: any) => (
-                <LockMoneyBox
-                  date={date}
-                  heading={heading}
-                  text={text}
-                  key={key}
-                />
+            <div>
+              {lockedFunds?.data?.results?.map((data: any) => (
+                <div
+                  onClick={() => {
+                    setUnlock(true);
+
+                    localStorage.setItem(
+                      "unlockAmountData",
+                      JSON.stringify(data)
+                    );
+                  }}
+                  key={data.id}
+                >
+                  <LockMoneyBox
+                    date={new Date(data.createdAt).toLocaleString()}
+                    heading={data.meta.title}
+                    text={data.meta.description}
+                  />
+                </div>
               ))}
             </div>
             {unlock && <UnlockAmount setUnlock={setUnlock} />}
           </Tabs.Content>
-          <Tabs.Content className="" value="withdrawMoney">
-            <form
-              onSubmit={handleSubmitWithdraw((data) => {
-                delete data.accountName;
-                delete data.accountNumber;
-                withdrawMutate({
-                  ...data,
-                  accountNumber: accNum,
-                  bankCode: "035",
-                });
-                
-              })}
-              className="relative"
-            >
-              {withdrawLoading && <LoadingOverlay />}
-
-              <p className="max-w-[449px] text-base font-normal">
-                In a case of a dispute with a seller, you can choose to withdraw
-                your money into your bank account.
-              </p>
-              <h1 className="mt-8 text-[#EDEDED] text-lg font-medium">
-                SENDER ADDITIONAL INFORMATION
-              </h1>
-              <div>
-                <TextField
-                  control={controlWithdraw}
-                  rules={{ required: "this field is required" }}
-                  label="How much are you withdrawing?"
-                  placeholder="e.g 20,000"
-                  name={"amount"}
-                  type="number"
-                />
-
-                <TextField
-                  control={controlWithdraw}
-                  rules={{ required: "this field is required" }}
-                  name={"description"}
-                  label="Reason for withdrawing (description)"
-                />
-              </div>
-              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
-                RECEIVER ACCOUNT INFORMATION
-              </h1>
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="w-full mb-3 ">
-                  <label htmlFor={"selectBank"} className="block">
-                    select bank
-                  </label>
-                  <select
-                    className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                    // {...register(name)}
-                  >
-                    {banks?.data?.map((bank: any) => (
-                      <option key={bank.slug} value={bank.slug}>
-                        {bank.name}
-                      </option>
-                    ))}
-                    {bankIsLoading && <option value="">loading...</option>}
-                  </select>
-                  {/* {errors[name] && (
-                        <span className="text-red-500 text-xs pt-1 block">
-                          {errors[name]?.message as string}
-                        </span>
-                      )} */}
-                </div>
-                <TextField
-                  control={controlWithdraw}
-                  label="Enter account number"
-                  placeholder="e.g 4758593837"
-                  name={"accountNumber"}
-                  value={accNum}
-                  onChange={(e) => {
-                    setAccNum(e.target.value);
-                  }}
-                />
-                <div className="relative">
-                  {LookupIsLoading && <LoadingOverlay />}
-                  <TextField
-                    readOnly={true}
-                    control={controlWithdraw}
-                    name={"accountName"}
-                    label="Account Name"
-                    value={LookupData?.data.accountName}
-                    placeholder="e.g JMusty Feet"
-                  />
-                </div>
-                {/* <TextField
-                control={controlWithdraw}
-                rules={{ required: "this field is required" }}
-                label="Phone number"
-                placeholder="+234 8345687945"
-                value={value}
-                name={"text"}
-              /> */}
-              </div>
-              <div className="mt-6 mb-16">
-                <Button
-                  // disabled={value ? false : true}
-                  fullWidth
-                  type="submit"
-                >
-                  Withdraw amount
-                </Button>
-              </div>
-              {isWithdraw && (
-                <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1">
-                  <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col items-center">
-                    <img
-                      className="p-4 bg-[#ECFDF3] rounded-[50%]"
-                      src={check}
-                      alt="check"
-                    />
-                    <h6 className="h6">[Amount] Withdrawn!👍🏾</h6>
-                    <p className="mt-4 text-center text-base font-normal leading-[21.6px]">
-                      Weldone! You have successfully withdrawn [amount]. You
-                      should receive a credit alert in seconds.
-                    </p>
-                    <div className=" mt-4 w-[300px]">
-                      <Button
-                        disabled={false}
-                        fullWidth={true}
-                        onClick={() => setIsWithdraw(false)}
-                      >
-                        Return to dashboard
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </form>
-          </Tabs.Content>
+          <WithdrawMoney />
         </div>
       </Tabs.Root>
-    </div>
+    </>
   );
 };
 

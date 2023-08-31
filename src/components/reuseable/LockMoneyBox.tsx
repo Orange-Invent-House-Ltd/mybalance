@@ -4,7 +4,7 @@ import lockicon from "../../assets/Icons/lock.svg"
 
 
 
-const LockMoneyBox = ({date, heading, text}:{date:string,heading:string,text:string}) => {
+const LockMoneyBox = ({date, heading, text}:{date:any,heading:string,text:string}) => {
 
   return (
     

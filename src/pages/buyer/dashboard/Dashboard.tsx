@@ -77,7 +77,7 @@ const Dashboard = () => {
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
     search: "",
-    size : 5,
+    size: 2,
   });
 
   useEffect(() => {
@@ -134,7 +134,6 @@ const Dashboard = () => {
               onSubmit={handleSubmit(onSubmit)}
               className="w-[400px] bg-white pl-[16px] relative pr-[34px] overflow-y-scroll"
             >
-              {createEscrowIsLoading && lockFundsLoading && <LoadingOverlay />}
               <div className="flex gap-4 items-center mt-10 mb-4">
                 <img src={back} alt="back" onClick={() => setIsVerify(false)} />
                 <h6 className="text-[23px] font-medium">
@@ -248,7 +247,7 @@ const Dashboard = () => {
               </div>
               <div className="mt-6 mb-16">
                 <Button
-                  // disabled={value ? false : true}
+                  disabled={createEscrowIsLoading || lockFundsLoading}
                   fullWidth
                   // onClick={() => {
                   //   setIsVerify(false);
@@ -257,7 +256,9 @@ const Dashboard = () => {
                   // }}
                   type="submit"
                 >
-                  pay now
+                  {createEscrowIsLoading || lockFundsLoading
+                    ? "loading..."
+                    : " pay now"}
                 </Button>
               </div>
             </form>

@@ -22,12 +22,14 @@ import AuthLayout from "./layout/AuthLayout";
 import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
 import PaymentSucessfull from "./pages/home/PaymentSucessfull";
+import Test from "./pages/buyer/dashboard/test";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Test itemsPerPage={4} />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/how-we-work" element={<HowWeWork />} />

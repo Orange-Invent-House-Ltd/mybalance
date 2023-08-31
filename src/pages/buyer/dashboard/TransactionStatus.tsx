@@ -68,7 +68,7 @@ const TransactionStatus = () => {
             </div>
           </div>
           <div
-            onClick={() => navigate(-"buyer/quick-action")}
+            onClick={() => navigate("buyer/quick-action")}
             className="Frame34643 p-[0px] flex-col justify-start items-start gap-[12px] flex"
           >
             <div className="ModalActions w-[352px] p-[0px] justify-start items-start gap-[12px] inline-flex">

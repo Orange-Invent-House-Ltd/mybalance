@@ -87,10 +87,22 @@ export const lockFunds = async (transactionReference: string) => {
   });
   return res.data;
 };
+export const unLockFunds = async (transactionReference: string) => {
+  const res = await privateApi.post("/transaction/unlock-funds", {
+    transactionReference,
+  });
+  return res.data;
+};
+export const getLockedFunds = async () => {
+  const res = await privateApi.get("/transaction/locked-escrows");
+  return res.data;
+};
 export const getTransactionInfo = async (transactionReference: any) => {
-  const res = await privateApi.get(
-    `/transaction/lock-funds/${transactionReference}`
-  );
+  const res = await privateApi.get(`/transaction/link/${transactionReference}`);
+  return res.data;
+};
+export const respondTransaction = async ({ ref, status }: any) => {
+  const res = await privateApi.patch(`/transaction/link/${ref}`, { status });
   return res.data;
 };
 export const getUser = async (): Promise<IUserProfile> => {
