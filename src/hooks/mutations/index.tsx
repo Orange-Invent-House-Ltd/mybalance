@@ -11,6 +11,8 @@ import {
   registerSeller,
   resendOtp,
   resetPassword,
+  respondTransaction,
+  unLockFunds,
   verifyEmail,
   withdraw,
 } from "../../api";
@@ -169,9 +171,27 @@ export const useLockFunds = () => {
       console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
       const amt = localStorage.getItem("escrowAmt");
       queryClient.invalidateQueries(["transactions"]);
+      queryClient.invalidateQueries(["user"]);
       navigate(
         `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
       );
+    },
+    onError: (error: any) => {
+      toast.error("an error occurred");
+    },
+  });
+};
+export const useUnLockFunds = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: unLockFunds,
+    onSuccess: (data) => {
+     
+      queryClient.invalidateQueries(["transactions"]);
+      queryClient.invalidateQueries(["user"]);
+      
     },
     onError: (error: any) => {
       toast.error("an error occurred");
@@ -200,12 +220,23 @@ export const useWithdrawFee = () => {
 };
 export const useWithdraw = () => {
   const queryClient = useQueryClient();
+  // queryClient.invalidateQueries(["transactions"]);
 
   return useMutation({
     mutationFn: withdraw,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(["transactions"]);
+    onSuccess: (data) => {},
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
     },
+  });
+};
+export const useRespondTransaction = () => {
+  const queryClient = useQueryClient();
+  // queryClient.invalidateQueries(["transactions"]);
+
+  return useMutation({
+    mutationFn: respondTransaction,
+    onSuccess: (data) => {},
     onError: (error: any) => {
       toast.error(error.response.data.message);
     },
