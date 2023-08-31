@@ -14,9 +14,12 @@ html,body {
        font-display: swap;
        font-style: normal;
 }
+
+
 .tab{
   @apply text-lg font-medium capitalize rounded-t-md p-3 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14]
 }
+
 /**
 * This is a variable font
 * You can controll variable axes as shown below:
@@ -209,6 +212,9 @@ html,body{
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  /* .tab{
+    @apply text-lg font-medium capitalize rounded-t-md p-3 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14]
+  } */
 }
 
 /* no increase and decrease arrow in input type number for verification code boxes */
@@ -216,7 +222,6 @@ html,body{
 .spin-button-none::-webkit-inner-spin-button{
   appearance: none;
 }
-
 
 :root{
   --toastify-color-success:#FD7E14

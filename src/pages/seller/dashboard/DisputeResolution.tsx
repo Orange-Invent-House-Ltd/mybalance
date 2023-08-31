@@ -16,10 +16,10 @@ const DisputeResolution = () => {
       </header>
       <form className="max-w-[720px]  space-y-8  ">
         <div className="flex gap-5 w-full flex-col lg:flex-row ">
-          <TextField label="Reference code/ Transaction ID" />
-          <TextField label="priority" />
+          <TextField label="Reference code/ Transaction ID" name="ref_id"/>
+          <TextField label="priority" name="priority"/>
         </div>
-        <TextField label="Reason for filing your dispute" />
+        <TextField label="Reason for filing your dispute" name="reason"/>
 
         <MultilineTextField label="Type in the box below" />
 

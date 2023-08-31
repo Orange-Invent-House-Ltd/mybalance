@@ -48,13 +48,15 @@ const Notifications = () => {
               SENDER ADDITIONAL INFORMATION
             </h1>
             <div className="mt-6 flex flex-col gap-4">
-              <TextField label="Amount locked" value={datas[0].amount} />
+              <TextField label="Amount locked" name="amount" value={datas[0].amount} />
               <TextField
                 label="Reason for locking (description)"
+                name="reason"
                 value="Purchase of apple series 2"
               />
               <TextField
                 label="Timeline"
+                name="timeline"
                 value="3 days"
               />
             </div>
@@ -62,11 +64,12 @@ const Notifications = () => {
               RECEIVER ACCOUNT INFORMATION
             </h1>
             <div className="mt-6 flex flex-col gap-4">
-              <TextField label="Bank" value="UBA" />
-              <TextField label="Account name" value="MUSTY FEET"/>
-              <TextField label="Account number" value="1234567890"/>
+              <TextField label="Bank" name="bank" value="UBA" />
+              <TextField label="Account name" name="account_name" value="MUSTY FEET"/>
+              <TextField label="Account number" name="account_number" value="1234567890"/>
               <TextField
                 label="Email address"
+                name="email"
                 value="Mustyfeet@gmail.com"
                 onChange={handleChange}
               />

@@ -140,7 +140,7 @@ const RegisterContinue = () => {
   };
 
   const registerUser = (data: SignupInput) => {
-    store.setAuthUser({ ...store.authUser, ...data });
+    store.setAuthUser({ ...store.authUser, ...data }); 
     store.setAuthEmail(data.email);
     //navigate to next page
     navigate("identity");

@@ -24,13 +24,15 @@ const LockNewAmount = ({setLock}:any) => {
           SENDER ADDITIONAL INFORMATION
         </h1>
         <div className="mt-6 flex flex-col gap-4">
-          <TextField label="How much are you locking?" placeholder="e.g 20,000" />
+          <TextField label="How much are you locking?" name="amount" placeholder="e.g 20,000" />
           <TextField
             label="Reason for locking (description)"
+            name="reason"
             placeholder="****"
           />
           <TextField
             label="How long will you be locking it for?"
+            name="duration"
             placeholder="give a description"
           />
         </div>
@@ -38,11 +40,12 @@ const LockNewAmount = ({setLock}:any) => {
           RECEIVER ACCOUNT INFORMATION
         </h1>
         <div className="mt-6 flex flex-col gap-4">
-          <TextField label="Select bank" placeholder="e.g UBA" />
-          <TextField label="Select account name" placeholder="e.g John Buz" />
-          <TextField label="Enter account number" placeholder="e.g 4758593837" />
+          <TextField label="Select bank" name="bank" placeholder="e.g UBA" />
+          <TextField label="Select account name" name="account_name" placeholder="e.g John Buz" />
+          <TextField label="Enter account number" name="account_number" placeholder="e.g 4758593837" />
           <TextField
             label="Phone number"
+            name="phone"
             placeholder="+234 8345687945"
             value={value}
             onChange={handleChange}
