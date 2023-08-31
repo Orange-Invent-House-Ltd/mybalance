@@ -171,6 +171,7 @@ export const useLockFunds = () => {
       console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
       const amt = localStorage.getItem("escrowAmt");
       queryClient.invalidateQueries(["transactions"]);
+      queryClient.invalidateQueries(["lockedFunds"]);
       queryClient.invalidateQueries(["user"]);
       navigate(
         `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
@@ -188,10 +189,9 @@ export const useUnLockFunds = () => {
   return useMutation({
     mutationFn: unLockFunds,
     onSuccess: (data) => {
-     
       queryClient.invalidateQueries(["transactions"]);
       queryClient.invalidateQueries(["user"]);
-      
+      queryClient.invalidateQueries(["lockedFunds"]);
     },
     onError: (error: any) => {
       toast.error("an error occurred");

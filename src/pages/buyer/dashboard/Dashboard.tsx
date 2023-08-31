@@ -101,7 +101,7 @@ const Dashboard = () => {
         <div>
           <h6 className="text-[23px]  items-center gap-2 flex font-medium mb-4 ">
             <span>Welcome</span>
-            <span className="font-semibold  flex-1">
+            <span className="font-semibold capitalize  flex-1">
               {user?.fullName || <Skeleton width={100} />}
             </span>
           </h6>
@@ -129,11 +129,15 @@ const Dashboard = () => {
           </Button>
         </div>
         {isVerify && (
-          <div className="fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex justify-end z-50">
+          <div className="fixed top-0 left-0 right-0 bottom-0  bg-black-rgba flex justify-end z-50">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-[400px] bg-white pl-[16px] relative pr-[34px] overflow-y-scroll"
+              className="w-[400px] min-h-fit relative bg-white pl-[16px] overflow-y-scroll pr-[34px] "
             >
+              {(createEscrowIsLoading || lockFundsLoading) && (
+                <LoadingOverlay />
+              )}
+
               <div className="flex gap-4 items-center mt-10 mb-4">
                 <img src={back} alt="back" onClick={() => setIsVerify(false)} />
                 <h6 className="text-[23px] font-medium">
@@ -256,9 +260,7 @@ const Dashboard = () => {
                   // }}
                   type="submit"
                 >
-                  {createEscrowIsLoading || lockFundsLoading
-                    ? "loading..."
-                    : " pay now"}
+                  pay now
                 </Button>
               </div>
             </form>

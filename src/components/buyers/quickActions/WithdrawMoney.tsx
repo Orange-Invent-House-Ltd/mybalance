@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import TextField from "../../reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
 import check from "../../../assets/Icons/check.svg";
+import waves from "../../../assets/Icons/waves.svg";
+import loading from "../../../assets/Icons/loadingSpinner.svg";
+
 import { useForm } from "react-hook-form";
 import {
   useLookUpBank,
@@ -103,7 +106,7 @@ const WithdrawMoney = () => {
         })}
         className="relative"
       >
-        {(withdrawLoading || pusherLoading) && <LoadingOverlay />}
+        {withdrawLoading && <LoadingOverlay />}
 
         <p className="max-w-[449px] text-base font-normal">
           In a case of a dispute with a seller, you can choose to withdraw your
@@ -217,9 +220,24 @@ const WithdrawMoney = () => {
             </div>
           </div>
         )}
-        {/* <div className=" fixed top-0 left-0 right-0 bottom-0 bg-white flex items-center justify-center z-1">
-          
-        </div> */}
+        {pusherLoading && (
+          <div className=" fixed top-0 left-0 right-0  bottom-0 bg-white flex items-center justify-center z-1">
+            <div className="w-screen h-screen flex items-center justify-center">
+              <div className="text-center space-y-2 my-auto">
+                <img
+                  src={loading}
+                  className="animate-spin mx-auto "
+                  alt="loading spinner"
+                />
+                <h1 className="font-medium ">
+                  Transaction in progress... Please wait.
+                </h1>
+              </div>
+
+              <img src={waves} className="absolute bottom-0 w-full" alt="" />
+            </div>
+          </div>
+        )}
       </form>
     </Tabs.Content>
   );

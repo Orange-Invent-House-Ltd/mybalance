@@ -4,6 +4,8 @@ import Header from "../../../components/reuseable/Header";
 import TextField from "../../../components/reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
 import copy from "../../../assets/Icons/copy.svg";
+import check from "../../../assets/Icons/check.svg";
+
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
 import LockNewAmount from "./LockNewAmount";
 import EditLockedAmount from "../../../components/buyers/EditLockedAmount";
@@ -26,6 +28,8 @@ import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney
 const QuickAction = () => {
   const [openTab, setOpenTab] = useState(1);
   const [openTabs, setOpenTabs] = useState(1);
+  const [successModal, setSuccessModal] = useState(false);
+
   //lock
   const [lock, setLock] = useState(false);
   const [editLocked, setEditLocked] = useState(false);
@@ -155,7 +159,46 @@ const QuickAction = () => {
                 </div>
               ))}
             </div>
-            {unlock && <UnlockAmount setUnlock={setUnlock} />}
+            {unlock && (
+              <UnlockAmount
+                setSuccessModal={setSuccessModal}
+                setUnlock={setUnlock}
+              />
+            )}
+            {successModal && (
+              <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1  ">
+                <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col ">
+                  <div className="flex items-center w-fit rounded-full bg-[#ECFDF3] justify-center">
+                    <img className="   " src={check} alt="check" />
+                  </div>
+
+                  <h6 className="font-semibold text-lg">
+                    New Amount Unlocked! 👍🏾
+                  </h6>
+                  <p className="mt-2   text-base font-normal leading-[21.6px]">
+                    Weldone! You have successfully unlocked [amount]. It will
+                    reflect in your unlocked amount on your dashboard.
+                  </p>
+                  <div className="w-full space-y-2 mt-2">
+                    <Button
+                      fullWidth={true}
+                      success
+                      variant="black-outlined"
+                      onClick={() => setSuccessModal(false)}
+                    >
+                      Unlock another amount
+                    </Button>
+                    <Button
+                      fullWidth={true}
+                      onClick={() => navigate("/buyer/dashboard")}
+                      success
+                    >
+                      Return to dashboard
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </Tabs.Content>
           <WithdrawMoney />
         </div>

@@ -1,5 +1,3 @@
-
-
 type historyprops = {
   header: string;
   text: string;
@@ -20,12 +18,12 @@ const HistoryBox = ({ header, text, price, subtext, status }: historyprops) => {
           className={
             status == "PENDING"
               ? "status_style bg-[#FFF2F1] text-[#DA1E28]"
-              : status == "SUCCESSFUL"
+              : status == "SUCCESSFUL" || "FUFILLED"
               ? "status_style bg-[#ECFDF3]  text-[#027A48]"
               : "status_style bg-[#ECFDF3] text-[#FDB022] "
           }
         >
-          <p>{status.toLowerCase()} </p>
+          <p className="capitalize" >{status.toLowerCase()}</p>
         </div>
         <p className="text-lg font-bold text-right">{price}</p>
         <p className="text-[#B7B7B7] text-[10px] font-normal text-right">

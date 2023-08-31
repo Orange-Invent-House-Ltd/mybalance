@@ -5,13 +5,15 @@ import { Button } from "../reuseable/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useUnLockFunds } from "../../hooks/mutations";
-import check from "../../assets/Icons/check.svg";
 import loadingImg from "../../assets/Icons/loadingSpinner.svg";
 import Spinner from "../reuseable/Spinner";
 
-const UnlockAmount = ({ setUnlock, description, timeline, amount }: any) => {
+const UnlockAmount = ({
+  setUnlock,
+  setSuccessModal,
+ 
+}: any) => {
   const [value, setValue] = useState("");
-  const [successModal, setSuccessModal] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: any) => {
@@ -24,7 +26,6 @@ const UnlockAmount = ({ setUnlock, description, timeline, amount }: any) => {
   useEffect(() => {
     // you can do async server request and fill up form
     if (data) {
-      console.log("🚀 ~ file: UnlockAmount.tsx:21 ~ useEffect ~ data:", data);
       reset({
         purpose: data?.meta?.title,
         type: data?.escrowMetadata.itemType,
@@ -155,7 +156,7 @@ const UnlockAmount = ({ setUnlock, description, timeline, amount }: any) => {
             </Link>
             <Button
               onClick={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 mutate(data?.reference);
               }}
               fullWidth
@@ -165,38 +166,6 @@ const UnlockAmount = ({ setUnlock, description, timeline, amount }: any) => {
           </div>
         </form>
       </div>
-      {successModal && (
-        <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1  ">
-          <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col ">
-            <div className="flex items-center w-fit rounded-full bg-[#ECFDF3] justify-center">
-              <img className="   " src={check} alt="check" />
-            </div>
-
-            <h6 className="font-semibold text-lg">New Amount Unlocked! 👍🏾</h6>
-            <p className="mt-2   text-base font-normal leading-[21.6px]">
-              Weldone! You have successfully unlocked [amount]. It will reflect
-              in your unlocked amount on your dashboard.
-            </p>
-            <div className="w-full space-y-2 mt-2">
-              <Button
-                fullWidth={true}
-                success
-                variant="black-outlined"
-                onClick={() => setSuccessModal(false)}
-              >
-                Unlock another amount
-              </Button>
-              <Button
-                fullWidth={true}
-                onClick={() => navigate("/buyer/dashboard")}
-                success
-              >
-                Return to dashboard
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

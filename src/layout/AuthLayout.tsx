@@ -38,7 +38,7 @@ const AuthLayout = () => {
           </Link>
         </header>
 
-        <div className="  w-full max-w-[354px] mx-auto my-6 ">
+        <div className="  w-full max-w-[354px] px-5 sm:px-0 mx-auto my-6 ">
           <Outlet />
         </div>
         <footer className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">

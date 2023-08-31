@@ -6,18 +6,17 @@ import { useForm } from "react-hook-form";
 import { useTransactionInfo } from "../../hooks/queries";
 import { useSearchParams } from "react-router-dom";
 import { useRespondTransaction } from "../../hooks/mutations";
+import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
-
+  const ref = searchParams.get("ref");
   const {
     data,
     isLoading: transactionLoading,
     isError,
     isSuccess,
-  } = useTransactionInfo("735e3q2np7h1");
-
-  // searchParams.get("ref")
+  } = useTransactionInfo(ref);
 
   const { mutate, isLoading } = useRespondTransaction();
   console.log(
@@ -43,13 +42,14 @@ const ShareEscrowLink = () => {
   return (
     <div className="px-[5%]">
       <Header />
-      <div className="w-fit mx-auto mt-[50px]">
+      <div className="w-fit mx-auto relative mt-[50px]">
+        {isLoading && <LoadingOverlay />}
         <h6 className="h6">TMusty Shared an Escrow Link With You</h6>
         <form action="">
           <h1 className="text-[#EDEDED] text-lg font-medium mb-2 ">
             ITEM(S) INFORMATION
           </h1>
-          <div className="flex flex-col gap-4">
+          <div className="flex  flex-col gap-4">
             <TextField
               control={control}
               name="purpose"
@@ -145,7 +145,7 @@ const ShareEscrowLink = () => {
               onClick={(e) => {
                 e.preventDefault();
                 mutate({
-                  ref: "735e3q2np7h1",
+                  ref: ref,
                   status: "REJECTED ",
                 });
               }}
@@ -158,7 +158,7 @@ const ShareEscrowLink = () => {
               onClick={(e) => {
                 e.preventDefault();
                 mutate({
-                  ref: "735e3q2np7h1",
+                  ref: ref,
                   status: "APPROVED ",
                 });
               }}

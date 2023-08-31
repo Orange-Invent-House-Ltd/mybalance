@@ -52,7 +52,7 @@ const Login = () => {
         <div className="w-full">
         
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-            <div className="px-2 py-5 flex-auto">
+            <div className=" py-5 flex-auto">
               <div className="tab-content tab-space">
                 {/* Login as customer */}
                 <div >
