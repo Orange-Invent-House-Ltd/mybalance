@@ -15,9 +15,9 @@ export interface IUser {
   accountNumber?: string;
   accountName?: string;
   bankCode?: string;
-  lastLoginDate: string;
- 
+  lastLoginDate?: string;
 }
+
 export interface IUserProfile {
   id: string;
   bankAccount: {};

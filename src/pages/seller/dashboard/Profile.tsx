@@ -19,13 +19,13 @@ const Profile = () => {
           <p>Tap to change photo</p>
         </div>
         <form className="space-y-5  w-[350px]">
-          <TextField label="business name" />
-          <TextField label="describe your service" />
-          <TextField label="address" />
-          <TextField label="phone" />
-          <TextField label="bank name" />
-          <TextField label="bank account number" />
-          <TextField label="valid id number" />
+          <TextField label="business name" name='business_name'/>
+          <TextField label="describe your service" name='description'/>
+          <TextField label="address" name='address'/>
+          <TextField label="phone" name='phone'/>
+          <TextField label="bank name" name='bank_name'/>
+          <TextField label="bank account number" name='account_number'/>
+          <TextField label="valid id number" name='id'/>
           <Button fullWidth>update profile</Button>
         </form>
       </div>

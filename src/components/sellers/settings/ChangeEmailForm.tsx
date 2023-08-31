@@ -12,11 +12,12 @@ const ChangeEmailForm = () => {
         Use the form below to change your email address.
       </p>
       <form className="space-y-4">
-        <TextField placeholder="sanya@gmail.com" label={"old email"} />
-        <TextField placeholder="abayomi@gmail.com" label={"new email"} />
-        <TextField placeholder="abayomi@gmail.com" label={"retype email"} />
+        <TextField name="email" placeholder="sanya@gmail.com" label={"old email"} />
+        <TextField name="new_email" placeholder="abayomi@gmail.com" label={"new email"} />
+        <TextField name="new_email" placeholder="abayomi@gmail.com" label={"retype email"} />
         <TextField
           placeholder="123456"
+          name="new_email"
           label={"enter email verification code"}
           type='number'
         />

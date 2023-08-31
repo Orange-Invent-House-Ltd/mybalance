@@ -12,10 +12,10 @@ const ChangePasswordForm = () => {
         Use the form below to change your password.
       </p>
       <form className="space-y-4">
-        <TextField label={"old password"} />
-        <TextField label={"new password"} />
-        <TextField label={"retype password"} />
-        <TextField label={"enter email verification code"} />
+        <TextField label={"old password"} name="password"/>
+        <TextField label={"new password"} name="new_password"/>
+        <TextField label={"retype password"} name="new_password"/>
+        <TextField label={"enter email verification code"} name="verification"/>
         <Button fullWidth>update password</Button>
       </form>
     </div>

@@ -7,7 +7,6 @@ import {
 
 interface ITextField extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-
   disabled?: boolean;
   variant?: "long" | "short";
 }

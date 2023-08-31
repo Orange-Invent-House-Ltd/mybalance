@@ -22,7 +22,7 @@ import AuthLayout from "./layout/AuthLayout";
 import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
 import PaymentSucessfull from "./pages/home/PaymentSucessfull";
-import Test from "./pages/buyer/dashboard/test";
+import Test from './pages/buyer/dashboard/Test'
 const App: React.FC = () => {
   return (
     <BrowserRouter>

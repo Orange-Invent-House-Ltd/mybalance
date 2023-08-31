@@ -49,21 +49,25 @@ const Header = ({Heading, Text}:HeaderProps) => {
               ITEM(S) INFORMATION
             </h1>
             <div className="mt-6 flex flex-col gap-4">
-              <TextField label="Purpose of escrow" placeholder="e.g 20,000" />
+              <TextField label="Purpose of escrow" name="purpose" placeholder="e.g 20,000" />
               <TextField
                 label="Type of item(s)"
+                name="item_type"
                 placeholder="****"
               />
               <TextField
                 label="Number of item(s)"
+                name="quantity"
                 placeholder="give a description"
               />
               <TextField
                 label="Amount"
+                name="amount"
                 placeholder="give a description"
               />
               <TextField
                 label="Delivery timeline"
+                name="timeline"
                 placeholder="Select number of days"
               />
             </div>
@@ -71,12 +75,13 @@ const Header = ({Heading, Text}:HeaderProps) => {
               VENDOR ACCOUNT INFORMATION
             </h1>
             <div className="mt-6 flex flex-col gap-4">
-              <TextField label="Bank Name" placeholder="Access Bank" />
-              <TextField label="Enter Account number" placeholder="1234567890"/>
-              <TextField label="Account Name" placeholder="e.g JMusty Feet"/>
-              <TextField label="Email" placeholder="e.g JMustyfeet@gmail.com"/>
+              <TextField label="Bank Name" name="bank_name" placeholder="Access Bank" />
+              <TextField label="Enter Account number" name="account_number" placeholder="1234567890"/>
+              <TextField label="Account Name" name="account_name" placeholder="e.g JMusty Feet"/>
+              <TextField label="Email" name="email" placeholder="e.g JMustyfeet@gmail.com"/>
               <TextField
                 label="Phone number"
+                name="phone_number"
                 placeholder="090123456789"
                 value={value}
                 onChange={handleChange}
