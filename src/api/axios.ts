@@ -41,4 +41,4 @@ privateApi.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-// // publicApi.defaults.headers.common["Content-Type"] = "application/json";
+// publicApi.defaults.headers.common["Content-Type"] = "application/json";

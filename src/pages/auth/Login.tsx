@@ -29,12 +29,9 @@ const Login = () => {
 
   const { mutate, isLoading } = useLogin();
 
- 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
-
-
 
   //useForm() destructuring or methods destructuring . Here methods = useForm()
   const { handleSubmit } = methods;
@@ -43,7 +40,6 @@ const Login = () => {
     mutate(data);
   };
 
- 
   return (
     <div className="relative ">
       {isLoading && <LoadingOverlay />}

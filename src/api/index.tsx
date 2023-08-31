@@ -93,7 +93,6 @@ export const getTransactionInfo = async (transactionReference: any) => {
   );
   return res.data;
 };
-
 export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;
