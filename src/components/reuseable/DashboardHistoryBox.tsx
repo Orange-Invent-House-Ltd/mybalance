@@ -28,9 +28,9 @@ const DashboardHistoryBox = ({
       <div className={status == "SUCCESSFUL" ? "text-[#B7B7B7]" : ""}>
         <div
           className={
-            status == "PENDING"
+            status === "PENDING"
               ? "status_style bg-[#FFF2F1] text-[#DA1E28]"
-              : status == "SUCCESSFUL" || "FUFILLED" || "RESOLVED"
+              : status === "SUCCESSFUL" || "FUFILLED" || "RESOLVED"
               ? "status_style bg-[#ECFDF3]  text-[#027A48]"
               : "status_style bg-[#FFFCF2] text-[#FDB022] "
           }
