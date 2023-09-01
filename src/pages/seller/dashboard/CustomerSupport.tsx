@@ -1,8 +1,11 @@
+import { useForm } from "react-hook-form";
 import { Button } from "../../../components/reuseable/Button";
 import ChatBubble from "../../../components/reuseable/ChatBubble";
 import MultilineTextField from "../../../components/reuseable/MultilineTextField";
 
 const CustomerSupport = () => {
+  const { handleSubmit, control } = useForm();
+
   return (
     <div >
       <header className="mb-16">
@@ -33,7 +36,12 @@ const CustomerSupport = () => {
           <ChatBubble user={false} />
         </div>
         <div>
-          <MultilineTextField label="Type in the box below" />
+          <MultilineTextField
+           control={control}
+            name="description"
+            rules={{ required: "this field is required" }}
+            label="Type in the box below"
+            label="Type in the box below" />
           <div className="w-[343px] ml-auto">
             <Button fullWidth>send chat</Button>
           </div>
