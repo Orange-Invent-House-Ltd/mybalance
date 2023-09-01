@@ -1,14 +1,17 @@
-import clsx from 'clsx';
-import React, { TextareaHTMLAttributes } from 'react'
-import { UseControllerProps, useController } from 'react-hook-form';
+import clsx from "clsx";
+import React, { TextareaHTMLAttributes } from "react";
+import { UseControllerProps, useController } from "react-hook-form";
 interface IMultilineTextField
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
   error?: boolean;
-  helperText?:string
+  helperText?: string;
 }
-const MultilineTextField = ({label,...props}: UseControllerProps<any> &  IMultilineTextField) => {
-   const { field, fieldState } = useController(props);
+const MultilineTextField = ({
+  label,
+  ...props
+}: UseControllerProps<any> & IMultilineTextField) => {
+  const { field, fieldState } = useController(props);
   return (
     <div className="w-full">
       <p
@@ -39,4 +42,4 @@ const MultilineTextField = ({label,...props}: UseControllerProps<any> &  IMultil
   );
 };
 
-export default MultilineTextField
+export default MultilineTextField;

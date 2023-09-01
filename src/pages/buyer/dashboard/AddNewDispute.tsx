@@ -49,11 +49,12 @@ const AddNewDispute = () => {
           rules={{ required: "this field is required" }}
         />
         <MultilineTextField
+          control={control}
           name="description"
           rules={{ required: "this field is required" }}
           label="Type in the box below"
         />
-        <SelectField />
+        {/* <SelectField /> */}
         <div className="flex justify-end">
           <div className="w-[350px]">
             <Button disabled={isLoading} fullWidth>
