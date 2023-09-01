@@ -105,6 +105,14 @@ export const respondTransaction = async ({ ref, status }: any) => {
   const res = await privateApi.patch(`/transaction/link/${ref}`, { status });
   return res.data;
 };
+export const createDispute = async (data:any) => {
+  const res = await privateApi.post(`/dispute`, data);
+  return res.data;
+};
+export const getDisputes = async () => {
+  const res = await privateApi.get(`/dispute`);
+  return res.data.data;
+};
 export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;

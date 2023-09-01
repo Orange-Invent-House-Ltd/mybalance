@@ -32,12 +32,11 @@ const Index = () => {
         <Route path="customer-support" element={<CustomerSupport />} />
         <Route path="quick-action/lock" element={<LockNewAmount />} />
       </Route>
-        <Route path="payment-callback" element={<TransactionStatus />} />
+      <Route path="payment-callback" element={<TransactionStatus />} />
       <Route path="" element={<AuthLayout />}>
-        
-      <Route path="/register" element={<Register />} />
-        </Route>
-      <Route path="*" element={<PageNotFound/>}/>
+        <Route path="/register" element={<Register />} />
+      </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

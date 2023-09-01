@@ -1,11 +1,15 @@
 import React from "react";
+import DisputeCard from "../../../components/buyers/disputeResolution/DisputeCard";
 import { Button } from "../../../components/reuseable/Button";
-import MultilineTextField from "../../../components/reuseable/MultilineTextField";
-import TextField from "../../../components/reuseable/TextField1";
-import { useForm } from "react-hook-form";
+import Modal from "../../../components/reuseable/Modal";
+import { useNavigate } from "react-router-dom";
+import { useDisputes } from "../../../hooks/queries";
+import Skeleton from "react-loading-skeleton";
 
 const DisputeResolution = () => {
-   const { handleSubmit, control } = useForm();
+  const navigate = useNavigate();
+  const { data, isLoading } = useDisputes();
+  console.log("🚀 ~ file: DisputeResolution.tsx:12 ~ DisputeResolution ~ data:", data)
   return (
     <div>
       <header className="mb-16">
@@ -16,38 +20,39 @@ const DisputeResolution = () => {
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
-      <form className="max-w-[720px] space-y-8  ">
-        <div className="flex gap-5 w-full flex-col lg:flex-row ">
-          <TextField
-            control={control}
-            label="Reference code/ Transaction ID"
-            name="amount"
-            rules={{ required: "this field is required" }}
-          />
-          <TextField
-            control={control}
-            label="priority"
-            name="amount"
-            rules={{ required: "this field is required" }}
-          />
-        </div>
-        <TextField
-          control={control}
-          label="Reason for filing your dispute"
-          name="amount"
-          rules={{ required: "this field is required" }}
-        />
+      <div>
+        {isLoading && (
+          <div className="flex flex-col gap-3">
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+          </div>
+        )}
+        <div className="space-y-10">
+          {data?.results?.map(
+            ({ reason, description, createdAt, status }: any) => (
+              <DisputeCard
+                reason={reason}
+                description={description}
+                time={createdAt}
+                status={status}
+              />
+            )
+          )}
 
-        <MultilineTextField label="Type in the box below" />
-
-        <div className="flex justify-end">
-          <div className="w-[350px]">
-            <Button disabled fullWidth>
-              submit
+          <div className="max-w-[343px]">
+            <Button
+              fullWidth
+              onClick={() => {
+                navigate("add");
+              }}
+            >
+              Add new dispute
             </Button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

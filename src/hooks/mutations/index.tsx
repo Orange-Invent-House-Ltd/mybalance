@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   LookUpBank,
+  createDispute,
   createEscrow,
   depositMoney,
   forgotPassword,
@@ -220,7 +221,6 @@ export const useWithdrawFee = () => {
 };
 export const useWithdraw = () => {
   const queryClient = useQueryClient();
-  // queryClient.invalidateQueries(["transactions"]);
 
   return useMutation({
     mutationFn: withdraw,
@@ -232,11 +232,24 @@ export const useWithdraw = () => {
 };
 export const useRespondTransaction = () => {
   const queryClient = useQueryClient();
-  // queryClient.invalidateQueries(["transactions"]);
 
   return useMutation({
     mutationFn: respondTransaction,
     onSuccess: (data) => {},
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+};
+export const useCreateDispute = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createDispute,
+    onSuccess: (data) => {
+      toast.success("Dispute Created Successfully");
+      queryClient.invalidateQueries(["disputes"]);
+    },
     onError: (error: any) => {
       toast.error(error.response.data.message);
     },

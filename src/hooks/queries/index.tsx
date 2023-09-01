@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   getBanks,
+  getDisputes,
   getLockedFunds,
   getTransactionInfo,
   getTransactions,
@@ -45,5 +46,11 @@ export const useLockedFunds = () => {
   return useQuery({
     queryKey: ["lockedFunds"],
     queryFn: getLockedFunds
+  });
+};
+export const useDisputes = () => {
+  return useQuery({
+    queryKey: ["disputes"],
+    queryFn: getDisputes,
   });
 };

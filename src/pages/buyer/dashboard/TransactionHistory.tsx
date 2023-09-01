@@ -10,10 +10,7 @@ import ReactPaginate from "react-paginate";
 const TransactionHistory = () => {
   const [page, setPage] = useState(1);
   const { isLoading, data } = useTransactions({ search: "", page, size: 10 });
-  console.log(
-    "🚀 ~ file: TransactionHistory.tsx:11 ~ TransactionHistory ~ data:",
-    data
-  );
+
   const handlePageChange = useCallback(({ selected }: any) => {
     setPage(selected + 1); // Pages usually start from 1, not 0
   }, []);
