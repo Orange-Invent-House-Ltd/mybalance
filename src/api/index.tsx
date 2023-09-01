@@ -106,7 +106,7 @@ export const respondTransaction = async ({ ref, status }: any) => {
   return res.data;
 };
 export const createDispute = async (data:any) => {
-  const res = await privateApi.post(`/dispute`, data);
+  const res = await privateApi.post(`/dispute/`, data);
   return res.data;
 };
 export const getDisputes = async () => {

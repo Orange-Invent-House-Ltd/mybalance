@@ -6,14 +6,20 @@ type historyprops = {
   status: string;
 };
 
-const DashboardHistoryBox = ({ header, text, price, subtext, status }: historyprops) => {
+const DashboardHistoryBox = ({
+  header,
+  text,
+  price,
+  subtext,
+  status,
+}: historyprops) => {
   return (
     <div className="my-4 flex justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white max-w-[676px]  px-[40px] py-[20px]">
       <div
         className={
           status === "SUCCESSFUL" || "FUFILLED" || "RESOLVED"
             ? "text-[#B7B7B7]"
-            : ""
+            : "text-black"
         }
       >
         <p className="text-lg font-medium">{header}</p>

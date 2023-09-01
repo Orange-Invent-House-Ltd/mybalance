@@ -251,7 +251,7 @@ export const useCreateDispute = () => {
       queryClient.invalidateQueries(["disputes"]);
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.errors.transaction[0]);
     },
   });
 };
