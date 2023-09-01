@@ -41,7 +41,7 @@ const CustomerSupport = () => {
             name="description"
             rules={{ required: "this field is required" }}
             label="Type in the box below"
-            label="Type in the box below" />
+           />
           <div className="w-[343px] ml-auto">
             <Button fullWidth>send chat</Button>
           </div>
