@@ -24,8 +24,10 @@ import { useTabStore } from "../../../store";
 import { toast } from "react-toastify";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
+import { useNavigate } from "react-router-dom";
 
 const QuickAction = () => {
+  const navigate = useNavigate()
   const [openTab, setOpenTab] = useState(1);
   const [openTabs, setOpenTabs] = useState(1);
   const [successModal, setSuccessModal] = useState(false);
