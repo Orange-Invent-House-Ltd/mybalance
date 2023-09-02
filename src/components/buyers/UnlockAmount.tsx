@@ -8,11 +8,7 @@ import { useUnLockFunds } from "../../hooks/mutations";
 import loadingImg from "../../assets/Icons/loadingSpinner.svg";
 import Spinner from "../reuseable/Spinner";
 
-const UnlockAmount = ({
-  setUnlock,
-  setSuccessModal,
- 
-}: any) => {
+const UnlockAmount = ({ setUnlock, setSuccessModal }: any) => {
   const [value, setValue] = useState("");
   const navigate = useNavigate();
 
@@ -21,7 +17,7 @@ const UnlockAmount = ({
   };
   const { handleSubmit, control, reset } = useForm();
   const { isLoading, isSuccess, mutate, data: fundsData } = useUnLockFunds();
-  let data = localStorage.getItem("unlockAmountData") as any;
+  let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
   useEffect(() => {
     // you can do async server request and fill up form
@@ -145,15 +141,15 @@ const UnlockAmount = ({
             />
           </div>
           <div className="flex flex-col gap-6 mt-6 mb-16">
-            <Link to="/buyer/dispute-resolution">
+           
               <Button
-                onClick={() => navigate("/buyer/dispute-resolution")}
+                onClick={() => navigate("/buyer/dispute-resolution/add")}
                 fullWidth
                 variant="outlined"
               >
                 Report a dispute
               </Button>
-            </Link>
+          
             <Button
               onClick={(e) => {
                 e.preventDefault();

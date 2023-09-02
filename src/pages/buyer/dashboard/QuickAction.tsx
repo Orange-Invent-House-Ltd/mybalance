@@ -147,7 +147,7 @@ const QuickAction = () => {
                     setUnlock(true);
 
                     localStorage.setItem(
-                      "unlockAmountData",
+                      "transactionInfo",
                       JSON.stringify(data)
                     );
                   }}

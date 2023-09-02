@@ -3,17 +3,25 @@ import { Button } from "../../../components/reuseable/Button";
 import MultilineTextField from "../../../components/reuseable/MultilineTextField";
 import TextField from "../../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
-import SelectField from "../../../components/reuseable/SelectField";
 import { useCreateDispute } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 
 const AddNewDispute = () => {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, reset, register } = useForm();
   const { mutate, isLoading } = useCreateDispute();
   const onSubmit = (data: any) => {
-    mutate(data);
+    // mutate(data);
+    console.log(data);
   };
- 
+  let data = localStorage.getItem("transactionInfo") as any;
+  data = JSON.parse(data);
+  useEffect(() => {
+    if (data) {
+      reset({
+        transaction: data.id,
+      });
+    }
+  }, [reset]);
   return (
     <div>
       <header className="mb-16">
@@ -29,19 +37,32 @@ const AddNewDispute = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {isLoading && <LoadingOverlay />}
-        <div className="flex gap-5 w-full flex-col lg:flex-row ">
+        <div className="flex gap-5 w-full items-center flex-col lg:flex-row ">
           <TextField
             control={control}
             label="Reference code/ Transaction ID"
             name="transaction"
             rules={{ required: "this field is required" }}
           />
-          <TextField
-            control={control}
-            label="priority"
-            name="priority"
-            rules={{ required: "this field is required" }}
-          />
+      
+          <div className="w-full mb-3 ">
+            <label
+              htmlFor={"selectBank"}
+              className="text-sm mb-[6px] capitalize block"
+            >
+              select bank
+            </label>
+            <select
+              className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#B7B7B7] "
+              {...register("priority", {
+                required: "this field is required",
+              })}
+            >
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
         </div>
         <TextField
           control={control}
@@ -55,7 +76,7 @@ const AddNewDispute = () => {
           rules={{ required: "this field is required" }}
           label="Type in the box below"
         />
-        {/* <SelectField /> */}
+      
         <div className="flex justify-end">
           <div className="w-[350px]">
             <Button disabled={isLoading} fullWidth>

@@ -9,7 +9,6 @@ import Skeleton from "react-loading-skeleton";
 const DisputeResolution = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useDisputes();
-  console.log("🚀 ~ file: DisputeResolution.tsx:12 ~ DisputeResolution ~ data:", data)
   return (
     <div>
       <header className="mb-16">
