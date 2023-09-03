@@ -10,8 +10,7 @@ const AddNewDispute = () => {
   const { handleSubmit, control, reset, register } = useForm();
   const { mutate, isLoading } = useCreateDispute();
   const onSubmit = (data: any) => {
-    // mutate(data);
-    console.log(data);
+    mutate(data);
   };
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
