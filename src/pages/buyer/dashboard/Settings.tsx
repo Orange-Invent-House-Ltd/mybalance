@@ -12,7 +12,7 @@ const Settings = () => {
         </p>
       </header>
       <div className="flex gap-20 flex-wrap">
-              <ChangeEmailForm />
+              {/* <ChangeEmailForm /> */}
               <ChangePasswordForm/>
       </div>
     </div>

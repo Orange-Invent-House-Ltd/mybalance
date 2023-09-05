@@ -84,7 +84,7 @@ const Login = () => {
                             </label>
                           </div>
                           <Link to="/forgot-password" className="font-medium">
-                            Forget password
+                            Forgot password
                           </Link>
                         </div>
                         <Button fullWidth> Login</Button>

@@ -20,9 +20,9 @@ const BuyerDashboardLayout = () => {
     setSidebar(!sidebar);
   };
   const { data, isLoading, isError, status } = useUser();
-  // if (!localStorage.getItem("session_token")) {
-  //   return <Navigate to="/login" />;
-  // }
+  if (!localStorage.getItem("session_token")) {
+    return <Navigate to="/login" />;
+  }
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -122,6 +122,7 @@ const BuyerDashboardLayout = () => {
             </nav>
           </div>
         </div>
+
         {/* desktop navbar */}
         <div className="hidden overflow-auto md:block w-full max-w-[287px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
           <header className="mt-[70px] mb-[65px] flex justify-center items-center">
