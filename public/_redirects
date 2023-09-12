@@ -1,2 +1,2 @@
-/v1/auth/login/* http://ec2-3-86-147-94.compute-1.amazonaws.com/v1/auth/login/:splat 200!
+/v1/* http://ec2-3-86-147-94.compute-1.amazonaws.com/v1/:splat 200!
 /*    /index.html  200
