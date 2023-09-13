@@ -33,7 +33,7 @@ export const useTransactions = ({
 export const useBanks = () => {
   return useQuery({
     queryKey: ["banks"],
-    queryFn: getBanks,
+    queryFn: getBanks
   });
 };
 export const useTransactionInfo = (ref:any) => {

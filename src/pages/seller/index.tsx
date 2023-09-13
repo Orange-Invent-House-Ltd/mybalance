@@ -29,15 +29,15 @@ const Index = () => {
       </Route>
       <Route path="/" element={<AuthLayout />}>
         <Route path="/register" element={<Register />} />
-      <Route path="/register/continue" element={<RegisterContinue />} />
-      <Route
-        path="/register/continue/identity"
-        element={<RegisterIdentity />}
-      />
-      <Route
-        path="/register/continue/identity/verification"
-        element={<RegVerification />}
-      />
+        <Route path="/register/continue" element={<RegisterContinue />} />
+        <Route
+          path="/register/continue/identity"
+          element={<RegisterIdentity />}
+        />
+        <Route
+          path="/register/continue/identity/verification"
+          element={<RegVerification />}
+        />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

@@ -21,7 +21,7 @@ const AuthLayout = () => {
         </Link>
       </header>
       {/* mobile phone Image */}
-      <img src={mphone} alt="Image of a phone" className="hidden w-[100%]  " />
+      <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%]  " />
       {/* Desktop Image */}
 
       <img
