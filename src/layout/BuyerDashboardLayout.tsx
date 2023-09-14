@@ -11,7 +11,6 @@ import linkedin from "../assets/Icons/LinkedIn.svg";
 import facebook from "../assets/Icons/Facebook.svg";
 import { useUser } from "../hooks/queries";
 import LoadingLogo from "../components/reuseable/LoadingLogo";
-
 const BuyerDashboardLayout = () => {
   const [logoutModal, setLogoutModal] = useState(false);
 
@@ -40,7 +39,8 @@ const BuyerDashboardLayout = () => {
 
   return (
     <div>
-      {logoutModal && <Modal setLogoutModal={setLogoutModal} />}
+      <Modal logoutModal={logoutModal} setLogoutModal={setLogoutModal} />
+
       <div className="md:flex">
         {/* mobile navbar */}
         <div className="md:hidden bg-white sticky top-0 left-0 z-50 py-[5%] px-5 flex justify-between items-center mb-10">

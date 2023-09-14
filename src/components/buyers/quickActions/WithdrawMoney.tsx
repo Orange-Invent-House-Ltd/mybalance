@@ -4,6 +4,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import check from "../../../assets/Icons/check.svg";
 import waves from "../../../assets/Icons/waves.svg";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import { useForm } from "react-hook-form";
 import {
@@ -196,48 +197,58 @@ const WithdrawMoney = () => {
             Withdraw amount
           </Button>
         </div>
-        {isWithdraw && (
-          <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1">
-            <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col items-center">
-              <img
-                className="p-4 bg-[#ECFDF3] rounded-[50%]"
-                src={check}
-                alt="check"
-              />
-              <h6 className="h6">{modalMessageTitle} 👍🏾</h6>
-              <p className="mt-4 text-center text-base font-normal leading-[21.6px]">
-                {modalMessageDescription}
-              </p>
-              <div className=" mt-4 w-[300px]">
-                <Button
-                  //   disabled={LookupIsLoading}
-                  fullWidth={true}
-                  onClick={() => setIsWithdraw(false)}
-                >
-                  Return to dashboard
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-        {pusherLoading && (
-          <div className=" fixed top-0 left-0 right-0  bottom-0 bg-white flex items-center justify-center z-1">
-            <div className="w-screen h-screen flex items-center justify-center">
-              <div className="text-center space-y-2 my-auto">
-                <img
-                  src={loading}
-                  className="animate-spin mx-auto "
-                  alt="loading spinner"
-                />
-                <h1 className="font-medium ">
-                  Transaction in progress... Please wait.
-                </h1>
-              </div>
 
-              <img src={waves} className="absolute bottom-0 w-full" alt="" />
+        <AlertDialog.Root open={isWithdraw}>
+          <AlertDialog.Portal className=" ">
+            <AlertDialog.Overlay className="bg-[#3a3a3a]/50  fixed inset-0" />
+
+            <AlertDialog.Content className=" h-full   fixed top-0 left-0 z-50 w-full  animate-jump">
+              <div className="   w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
+                <img
+                  className="p-4 bg-[#ECFDF3] rounded-[50%]"
+                  src={check}
+                  alt="check"
+                />
+                <h6 className="h6">{modalMessageTitle} 👍🏾</h6>
+                <p className="mt-4 text-center text-base font-normal leading-[21.6px]">
+                  {modalMessageDescription}
+                </p>
+                <div className=" mt-4 w-[300px]">
+                  <Button
+                    //   disabled={LookupIsLoading}
+                    fullWidth={true}
+                    onClick={() => setIsWithdraw(false)}
+                  >
+                    Return to dashboard
+                  </Button>
+                </div>
+              </div>
+            </AlertDialog.Content>
+          </AlertDialog.Portal>
+        </AlertDialog.Root>
+
+        <AlertDialog.Root open={pusherLoading}>
+          <AlertDialog.Overlay />
+
+          <AlertDialog.Content className="   fixed top-0 left-0 z-50 w-full h-full ">
+            <div className=" fixed top-0 left-0 right-0  bottom-0 bg-white flex items-center justify-center z-40">
+              <div className="w-screen h-screen flex items-center justify-center">
+                <div className="text-center space-y-2 my-auto">
+                  <img
+                    src={loading}
+                    className="animate-spin mx-auto "
+                    alt="loading spinner"
+                  />
+                  <h1 className="font-medium ">
+                    Transaction in progress... Please wait.
+                  </h1>
+                </div>
+
+                <img src={waves} className="absolute bottom-0 w-full" alt="" />
+              </div>
             </div>
-          </div>
-        )}
+          </AlertDialog.Content>
+        </AlertDialog.Root>
       </form>
     </Tabs.Content>
   );

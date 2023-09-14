@@ -76,7 +76,6 @@ const Dashboard = () => {
   };
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
-    search: "",
     size: 2,
   });
 
@@ -129,10 +128,10 @@ const Dashboard = () => {
           </Button>
         </div>
         {isVerify && (
-          <div className="fixed top-0 left-0 right-0 bottom-0  bg-black-rgba flex justify-end z-50">
+          <div className="fixed top-0 left-0 right-0 bottom-0   bg-black-rgba flex justify-end z-50">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-[400px] min-h-fit relative bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+              className="w-[400px] min-h-fit relative animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
             >
               {(createEscrowIsLoading || lockFundsLoading) && (
                 <LoadingOverlay />
@@ -383,7 +382,7 @@ const Dashboard = () => {
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history
           </h6>
-          {transactionData?.data?.results?.map(
+          {transactionData?.data?.map(
             ({ amount, status, createdAt, meta, id }: any) => (
               <DashboardHistoryBox
                 key={id}

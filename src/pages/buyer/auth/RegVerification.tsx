@@ -1,3 +1,4 @@
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import React, { useEffect, useRef, useState } from "react";
 // Zod - A typescript-first schema validation library.
 import { object, string, TypeOf } from "zod";
@@ -226,39 +227,48 @@ const RegVerification = () => {
                           </LoadingButton>
                         </form>
                       </div>
-                      {isVerify && (
-                        <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1">
-                          <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col items-center">
-                            <img
-                              className="p-4 bg-[#ECFDF3] rounded-[50%]"
-                              src={check}
-                              alt="check"
-                            />
-                            <h6 className="h6">ACCOUNT CREATED! 👍🏾</h6>
-                            <p className="mt-4 text-center text-base font-normal leading-[21.6px]">
-                              Weldone! You have successfully created an account
-                              with MyBalance. Let’s get you started.
-                            </p>
-                            <div className=" mt-4 w-[300px]">
-                              <Link to="/buyer/dashboard">
-                                <Button
-                                  disabled={false}
-                                  fullWidth={true}
-                                  onClick={() => setIsVerify(false)}
-                                >
-                                  Continue
-                                </Button>
-                              </Link>
+
+                      <AlertDialog.Root open={isVerify}>
+                        <AlertDialog.Portal>
+                          <AlertDialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0" />
+                          <AlertDialog.Content className="animate-jump   fixed top-0 left-0 z-50 w-full h-full  ">
+                            <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col items-center">
+                              <img
+                                className="p-4 bg-[#ECFDF3] rounded-[50%]"
+                                src={check}
+                                alt="check"
+                              />
+                              <h6 className="h6">ACCOUNT CREATED! 👍🏾</h6>
+                              <p className="mt-4 text-center text-base font-normal leading-[21.6px]">
+                                Weldone! You have successfully created an
+                                account with MyBalance. Let’s get you started.
+                              </p>
+                              <div className=" mt-4 w-[300px]">
+                                <Link to="/buyer/dashboard">
+                                  <Button
+                                    disabled={false}
+                                    fullWidth={true}
+                                    onClick={() => setIsVerify(false)}
+                                  >
+                                    Continue
+                                  </Button>
+                                </Link>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      )}
+                          </AlertDialog.Content>
+                        </AlertDialog.Portal>
+                      </AlertDialog.Root>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <p className='text-sm font-normal mb-7 w-fit mx-auto'>Existing user? <a href="/buyer/login" className='text-[#121212] font-bold'>Log in here</a></p>
+            <p className="text-sm font-normal mb-7 w-fit mx-auto">
+              Existing user?{" "}
+              <a href="/buyer/login" className="text-[#121212] font-bold">
+                Log in here
+              </a>
+            </p>
           </div>
         </div>
         <div className="px-[5%] w-fit mx-auto mb-16 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">

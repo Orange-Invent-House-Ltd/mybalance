@@ -42,7 +42,7 @@ export const depositMoney = async (data: string) => {
   return res.data;
 };
 export const getBanks = async () => {
-  const res = await privateApi.get("/shared/banks");
+  const res = await publicApi.get("/shared/banks");
   return res.data;
 };
 export const LookUpBank = async (data: any) => {
@@ -50,17 +50,17 @@ export const LookUpBank = async (data: any) => {
   return res.data;
 };
 export const getTransactions = async ({
-  search,
+  type,
   page,
   size,
 }: {
-  search?: string;
+  type?: string;
   page?: number;
   size?: number;
 }) => {
   const res = await privateApi.get(`/transaction/`, {
     params: {
-      search,
+      type,
       page,
       size,
     },
@@ -105,13 +105,21 @@ export const respondTransaction = async ({ ref, status }: any) => {
   const res = await privateApi.patch(`/transaction/link/${ref}`, { status });
   return res.data;
 };
-export const createDispute = async (data:any) => {
+export const createDispute = async (data: any) => {
   const res = await privateApi.post(`/dispute/`, data);
   return res.data;
 };
 export const getDisputes = async () => {
   const res = await privateApi.get(`/dispute`);
-  return res.data.data;
+  return res.data;
+};
+export const editProfile = async (data: any) => {
+  const res = await privateApi.put(`/auth/profile/edit`, data);
+  return res.data;
+};
+export const uploadAvatar = async (data: any) => {
+  const res = await privateApi.post(`/auth/profile/upload`, data);
+  return res.data;
 };
 export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");

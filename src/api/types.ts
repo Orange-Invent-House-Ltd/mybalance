@@ -32,21 +32,24 @@ export interface IUserProfile {
   bankAccountId: string;
   kycId: string;
   fullName: string;
+  email: string;
+  phoneNumber: string;
+  withdrawnAmount: string;
 }
 
 export interface GenericResponse {
   message: string;
   email: string;
   data: {
-    tempId : string;
+    tempId: string;
     token: string;
-    accountName:string;
+    accountName: string;
     lastName: string;
     surname: string;
     firstName: string;
     firstname: string;
     user: IUser;
-  } 
+  };
 }
 export interface IUserResponse {
   status: string;
@@ -56,7 +59,7 @@ export interface IUserResponse {
 export interface ILoginResponse {
   status: string;
   token: string;
-  expires_in:number;
+  expires_in: number;
   user: IUser;
 }
 

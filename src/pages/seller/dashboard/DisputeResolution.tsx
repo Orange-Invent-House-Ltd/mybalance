@@ -1,11 +1,20 @@
-import React from 'react'
-import { Button } from '../../../components/reuseable/Button';
-import MultilineTextField from '../../../components/reuseable/MultilineTextField';
-import TextField from '../../../components/reuseable/TextField1';
-import { useForm } from 'react-hook-form';
+import React, { useCallback, useState } from "react";
+import DisputeCard from "../../../components/buyers/disputeResolution/DisputeCard";
+import { Button } from "../../../components/reuseable/Button";
+import { useNavigate } from "react-router-dom";
+import { useDisputes } from "../../../hooks/queries";
+import Skeleton from "react-loading-skeleton";
+import EmptyTrans from "../../../components/reuseable/EmptyTrans";
+import ReactPaginate from "react-paginate";
 
 const DisputeResolution = () => {
-  const { handleSubmit, control } = useForm();
+  const navigate = useNavigate();
+  const { data, isLoading } = useDisputes();
+  const [page, setPage] = useState<number>(1);
+
+  const handlePageChange = useCallback(({ selected }: any) => {
+    setPage(selected + 1);
+  }, []);
 
   return (
     <div>
@@ -17,29 +26,60 @@ const DisputeResolution = () => {
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
-      <form className="max-w-[720px]  space-y-8  ">
-        <div className="flex gap-5 w-full flex-col lg:flex-row ">
-          <TextField label="Reference code/ Transaction ID" name="ref_id"/>
-          <TextField label="priority" name="priority"/>
-        </div>
-        <TextField label="Reason for filing your dispute" name="reason"/>
-
-        <MultilineTextField
-          control={control}
-            name="description"
-            rules={{ required: "this field is required" }}
-            label="Type in the box below" />
-
-        <div className="flex justify-end">
-          <div className="w-[350px]">
-            <Button disabled fullWidth>
-              submit
+      <div>
+        {isLoading && (
+          <div className="flex flex-col gap-3">
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+            <Skeleton width={676} height={100} />
+          </div>
+        )}
+        <div className="space-y-10">
+          {data?.data?.map(
+            ({ reason, description, createdAt, status }: any) => (
+              <DisputeCard
+                key={createdAt}
+                reason={reason}
+                description={description}
+                time={createdAt}
+                status={status}
+              />
+            )
+          )}
+          {data?.data.length === 0 && <EmptyTrans />}
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            // initialPage={data?.meta?.currentPage - 1}
+            initialPage={data?.meta?.currentPage - 1 || 0}
+            onPageChange={handlePageChange} // Use the handlePageChange function
+            pageRangeDisplayed={5}
+            pageCount={data?.meta?.totalPages}
+            previousLabel="Previous"
+            renderOnZeroPageCount={null}
+            pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
+            previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
+            nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
+            containerClassName="flex gap-3 ml-10 items-center "
+            // Adjust for 0-based page numbering
+            activeClassName="bg-[#FD7E14] text-white"
+            breakClassName="page-item"
+          />
+          <div className="max-w-[343px]">
+            <Button
+              fullWidth
+              onClick={() => {
+                navigate("add");
+              }}
+            >
+              Add new dispute
             </Button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
-}
+};
 
-export default DisputeResolution
+export default DisputeResolution;

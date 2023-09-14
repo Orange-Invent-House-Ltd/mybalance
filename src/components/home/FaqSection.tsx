@@ -12,7 +12,7 @@ const FaqSection = () => {
           {" "}
           Frequently asked questions about MyBalance{" "}
         </p>
-        <div className="divide-y-2 mt-[64px] ">
+        <div className="divide-y divide-[#999999] mt-[64px] ">
           <Accordion
             content="My Balance is a digital escrow platform that gives payment security and assurance to parties involved in a transaction by giving them the power to control the transaction process in a transparent manner."
             title="What is MyBalance?"

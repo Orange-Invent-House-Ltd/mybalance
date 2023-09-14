@@ -5,6 +5,7 @@ import TextField from "../../../components/reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
 import copy from "../../../assets/Icons/copy.svg";
 import check from "../../../assets/Icons/check.svg";
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
 import LockNewAmount from "./LockNewAmount";
@@ -25,9 +26,11 @@ import { toast } from "react-toastify";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 import { useNavigate } from "react-router-dom";
+import EmptyMoney from "../../../components/reuseable/EmptyMoney";
+import Skeleton from "react-loading-skeleton";
 
 const QuickAction = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [openTab, setOpenTab] = useState(1);
   const [openTabs, setOpenTabs] = useState(1);
   const [successModal, setSuccessModal] = useState(false);
@@ -141,7 +144,7 @@ const QuickAction = () => {
               unlock and click on the unlock button. That’s it.
             </p>
             <div>
-              {lockedFunds?.data?.results?.map((data: any) => (
+              {lockedFunds?.data?.map((data: any) => (
                 <div
                   onClick={() => {
                     setUnlock(true);
@@ -160,16 +163,28 @@ const QuickAction = () => {
                   />
                 </div>
               ))}
+              {lockedFunds?.data.length === 0 && <EmptyMoney />}
             </div>
             {unlock && (
               <UnlockAmount
                 setSuccessModal={setSuccessModal}
                 setUnlock={setUnlock}
+                unlock={unlock}
               />
             )}
+            {lockedFundsLoading && (
+              <div className="flex flex-col gap-3 w-full max-w-[676px]">
+                <Skeleton className="w-full h-[100px] " />
+                <Skeleton className="w-full h-[100px] " />
+                <Skeleton className="w-full h-[100px] " />
+                <Skeleton className="w-full h-[100px] " />
+                <Skeleton className="w-full h-[100px] " />
+                <Skeleton className="w-full h-[100px] " />
+              </div>
+            )}
             {successModal && (
-              <div className=" fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-1  ">
-                <div className="w-[400px] bg-white p-[20px] rounded-[5px] flex flex-col ">
+              <div className=" fixed  top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-50  ">
+                <div className="w-[400px] animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">
                   <div className="flex items-center w-fit rounded-full bg-[#ECFDF3] justify-center">
                     <img className="   " src={check} alt="check" />
                   </div>

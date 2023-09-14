@@ -56,14 +56,14 @@ const Register = () => {
       <div className="flex flex-wrap">
         <div className="w-full">
           <ul
-            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+            className="flex mb-0 text-sm list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
           >
             {/* customer tab */}
             <li className="-mb-px last:mr-0 flex-auto text-center">
               <Link
                 className={
-                  "text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
+                  "lg:text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
                   (openTab === 1
                     ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
                     : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
@@ -84,7 +84,7 @@ const Register = () => {
               <Link
                 to="/seller/register"
                 className={
-                  "text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
+                  "lg:text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
                   (openTab === 2
                     ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
                     : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
@@ -152,10 +152,7 @@ const Register = () => {
         </div>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
           Existing user?{" "}
-          <Link
-            to="/login"
-            className="text-[#121212] font-bold cursor-pointer"
-          >
+          <Link to="/login" className="text-[#121212] font-bold cursor-pointer">
             Log in here
           </Link>
         </p>

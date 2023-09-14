@@ -4,6 +4,7 @@ import {
   createDispute,
   createEscrow,
   depositMoney,
+  editProfile,
   forgotPassword,
   getWithdrawFee,
   lockFunds,
@@ -14,6 +15,7 @@ import {
   resetPassword,
   respondTransaction,
   unLockFunds,
+  uploadAvatar,
   verifyEmail,
   withdraw,
 } from "../../api";
@@ -224,12 +226,15 @@ export const useWithdraw = () => {
 
   return useMutation({
     mutationFn: withdraw,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["user"]);
+    },
     onError: (error: any) => {
       toast.error(error.response.data.message);
     },
   });
 };
+
 export const useRespondTransaction = () => {
   const queryClient = useQueryClient();
 
@@ -252,6 +257,34 @@ export const useCreateDispute = () => {
     },
     onError: (error: any) => {
       toast.error(error.response.data.errors.transaction[0]);
+    },
+  });
+};
+export const useEditProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: editProfile,
+    onSuccess: (data) => {
+      toast.success("Profile Edited Successfully");
+      queryClient.invalidateQueries(["user"]);
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+};
+export const useUploadAvatar = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: uploadAvatar,
+    onSuccess: (data) => {
+      toast.success("photo updated Successfully");
+      queryClient.invalidateQueries(["user"]);
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
     },
   });
 };

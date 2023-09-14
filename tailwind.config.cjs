@@ -14,18 +14,19 @@ module.exports = {
         },
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
-        'black-rgba': 'rgba(58, 58, 58, 0.6)',
-        greyBg: 'rgba(237, 237, 237, 0.16)',
+        "black-rgba": "rgba(58, 58, 58, 0.6)",
+        greyBg: "rgba(237, 237, 237, 0.16)",
         headingColor: "#121212",
         tertiary: "#B1580E",
       },
-      backgroundImage:{
-        'benefit': "url('./src/assets/images/bg-pix.png')",
+      backgroundImage: {
+        benefit: "url('./src/assets/images/bg-pix.png')",
       },
       boxShadow: {
-        '3xl': '0px 9.40171px 9.40171px -4.70085px rgba(0, 0, 0, 0.04), 0px 18.8034px 23.5043px -4.70085px rgba(0, 0, 0, 0.1)',
-      }
+        "3xl":
+          "0px 9.40171px 9.40171px -4.70085px rgba(0, 0, 0, 0.04), 0px 18.8034px 23.5043px -4.70085px rgba(0, 0, 0, 0.1)",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animated")],
 };

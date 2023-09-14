@@ -19,10 +19,7 @@ const ShareEscrowLink = () => {
   } = useTransactionInfo(ref);
 
   const { mutate, isLoading } = useRespondTransaction();
-  console.log(
-    "🚀 ~ file: ShareEscrowLink.tsx:15 ~ ShareEscrowLink ~ data:",
-    data
-  );
+
   const { handleSubmit, control, reset } = useForm();
   useEffect(() => {
     if (isSuccess) {

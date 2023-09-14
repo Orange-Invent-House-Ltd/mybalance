@@ -14,6 +14,7 @@ import TransactionHistory from "./dashboard/TransactionHistory";
 import RegisterContinue from "./auth/RegisterContinue";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
+import AddNewDispute from "./dashboard/AddNewDispute";
 
 const Index = () => {
   return (
@@ -25,19 +26,21 @@ const Index = () => {
         <Route path="customer-support" element={<CustomerSupport />} />
         <Route path="settings" element={<Settings />} />
         <Route path="dispute-resolution" element={<DisputeResolution />} />
+        <Route path="dispute-resolution/add" element={<AddNewDispute />} />
+
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/" element={<AuthLayout />}>
         <Route path="/register" element={<Register />} />
-      <Route path="/register/continue" element={<RegisterContinue />} />
-      <Route
-        path="/register/continue/identity"
-        element={<RegisterIdentity />}
-      />
-      <Route
-        path="/register/continue/identity/verification"
-        element={<RegVerification />}
-      />
+        <Route path="/register/continue" element={<RegisterContinue />} />
+        <Route
+          path="/register/continue/identity"
+          element={<RegisterIdentity />}
+        />
+        <Route
+          path="/register/continue/identity/verification"
+          element={<RegVerification />}
+        />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

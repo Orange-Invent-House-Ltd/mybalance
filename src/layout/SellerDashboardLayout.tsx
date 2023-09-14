@@ -27,24 +27,24 @@ const SellerDashboardLayout = () => {
   // if (!localStorage.getItem("session_token")) {
   //   return <Navigate to="/login" />;
   // }
-  if (isLoading) {
-    return (
-      <div className="w-screen h-screen flex justify-center items-center">
-        <LoadingLogo />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-screen h-screen flex justify-center items-center">
+  //       <LoadingLogo />
+  //     </div>
+  //   );
+  // }
 
-  if (data?.userType === "BUYER") {
-    return <Navigate to="/buyer/dashboard" />;
-  }
+  // if (data?.userType === "BUYER") {
+  //   return <Navigate to="/buyer/dashboard" />;
+  // }
   // if (isError) {
   //   return <Navigate to="/login" />;
   // }
 
   return (
     <div>
-      {logoutModal && <Modal setLogoutModal={setLogoutModal} />}
+      <Modal logoutModal={logoutModal} setLogoutModal={setLogoutModal} />
       <div className="md:flex">
         {/* mobile navbar */}
         <div className="md:hidden bg-white sticky top-0 left-0 z-50 py-[5%] px-5 flex justify-between items-center mb-10">

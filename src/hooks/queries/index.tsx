@@ -16,17 +16,17 @@ export const useUser = () => {
 };
 export const useTransactions = ({
   page,
-  search,
+  type,
   size,
 }: {
-  search?: string;
+  type?: string;
   page?: number;
   size?: number;
 }) => {
   return useQuery({
-    queryFn: () => getTransactions({ search, page, size }),
+    queryFn: () => getTransactions({ type, page, size }),
 
-    queryKey: ["transactions", page, search, size],
+    queryKey: ["transactions", page, type, size],
     keepPreviousData: true,
   });
 };

@@ -18,6 +18,7 @@ import facebook from "../../../assets/Icons/Facebook.svg";
 import twitter from "../../../assets/Icons/Twitter.svg";
 import linkedin from "../../../assets/Icons/LinkedIn.svg";
 import Instagram from "../../../assets/Icons/Instagram.svg";
+import { useBanks } from "../../../hooks/queries";
 
 //type definition with error messages for the form input
 const registerSchema = object({
@@ -59,10 +60,10 @@ const RegisterContinue = () => {
   }, []);
 
   // get user bank code from bank name once bank number input filed  === 10 digits
+  const userAccountNumber = watch("accountNumber");
   useEffect(() => {
-    const userAccountNumber = watch("accountNumber");
     let userBankCode = "";
-    if (userAccountNumber.length === 10) {
+    if (userAccountNumber?.length === 10) {
       console.log(userAccountNumber);
       // get user bank code
       const bankName = getValues("bankName");
@@ -140,61 +141,24 @@ const RegisterContinue = () => {
   };
 
   const registerUser = (data: SignupInput) => {
-    store.setAuthUser({ ...store.authUser, ...data }); 
+    store.setAuthUser({ ...store.authUser, ...data });
     store.setAuthEmail(data.email);
     //navigate to next page
     navigate("identity");
   };
+  const [code, setCode] = useState("");
+  useEffect(() => {
+    if (userAccountNumber?.length === 10) {
+      // LookupMutate({ bankCode: code, accountNumber: accNum });
+      LookupMutate({ bankCode: "035", accountNumber: userAccountNumber });
+    }
+  }, [userAccountNumber, code]);
 
   return (
     <div className="relative ">
       {/* tabs */}
       <div className="flex flex-wrap">
         <div className="w-full">
-          <ul
-            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
-            role="tablist"
-          >
-            {/* customer tab */}
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold uppercase py-3 block leading-normal " +
-                  (openTab === 1
-                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                data-toggle="tab"
-                href="#link1"
-                role="tablist"
-              >
-                Create as a customer
-              </a>
-            </li>
-            {/* seller tab */}
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold uppercase py-3  block leading-normal " +
-                  (openTab === 2
-                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
-                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenTab(2);
-                }}
-                data-toggle="tab"
-                href="#link2"
-                role="tablist"
-              >
-                Create as a seller
-              </a>
-            </li>
-          </ul>
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
             <div className="px- py-5 flex-auto">
               <div className="tab-content tab-space">
@@ -221,11 +185,7 @@ const RegisterContinue = () => {
                           type="password"
                           placeholder="************"
                         />
-                        <TextField
-                          name="bankName"
-                          label="Bank name"
-                          placeholder="e.g UBA"
-                        />
+
                         <TextField
                           name="accountNumber"
                           label="Bank account number"
@@ -237,6 +197,16 @@ const RegisterContinue = () => {
                           label="Account name"
                           placeholder=""
                         />
+                        <div className="relative">
+                          {LookupIsLoading && <LoadingOverlay />}
+                          <TextField
+                            disabled={true}
+                            name={"accountName"}
+                            label="Account Name"
+                            value={LookupData?.data.accountName}
+                            placeholder="e.g JMusty Feet"
+                          />
+                        </div>
                         <div className="hidden">
                           <TextField
                             name="bankCode"

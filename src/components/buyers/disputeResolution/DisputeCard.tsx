@@ -6,9 +6,7 @@ const DisputeCard = ({ reason, description, time, status }: any) => {
       <div className={status === "RESOLVED" ? "text-[#B7B7B7]" : ""}>
         <div className="flex items-center justify-between  ">
           <h1 className="text-lg font-medium">{reason}</h1>
-          <div className="bg-[#ECFDF3] py-[2px] px-[8px] font-medium rounded-2xl  text-sm text-[#027A48] capitalize">
-            resolved
-          </div>
+
           <div
             className={
               status == "PENDING" || "REJECTED"
