@@ -9,9 +9,8 @@ import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { publicApi } from "../../../api/axios";
 import { GenericResponse } from "../../../api/types";
 import { BankResponse } from "../../../api/types";
-import logo from "../../../assets/Icons/logo.svg";
-import phoneImage from "../../../assets/images/R-phone.png";
-import mphone from "../../../assets/images/m-phone.png";
+import { useLookUpBank } from "../../../hooks/mutations";
+import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { Button } from "../../../components/reuseable/Button";
 import TextField from "../../../components/reuseable/TextField";
 import facebook from "../../../assets/Icons/Facebook.svg";
@@ -45,7 +44,6 @@ const RegisterContinue = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [banksAndCodes, setBanksAndCodes] = useState([]);
-  // const [userBankCode, setuserBankCode] = useState("")
 
   const store = useStore();
   const navigate = useNavigate();
@@ -55,53 +53,24 @@ const RegisterContinue = () => {
 
   const { handleSubmit, setValue, getValues, watch } = methods;
 
-  useEffect(() => {
-    getBankCode();
-  }, []);
+  const [code, setCode] = useState("");
+  const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const {
+    data: LookupData,
+    mutate: LookupMutate,
+    isLoading: LookupIsLoading,
+  } = useLookUpBank();
 
-  // get user bank code from bank name once bank number input filed  === 10 digits
-  const userAccountNumber = watch("accountNumber");
+  // get user bank name once bank number input filed  === 10 digits
   useEffect(() => {
-    let userBankCode = "";
-    if (userAccountNumber?.length === 10) {
-      console.log(userAccountNumber);
-      // get user bank code
-      const bankName = getValues("bankName");
-      console.log(bankName);
-      banksAndCodes.map((bankAndCode: any, key) => {
-        bankAndCode.name === bankName ? (userBankCode = bankAndCode.code) : "";
-      });
-      console.log(userBankCode);
-      getAccountName(userBankCode, userAccountNumber);
+    const userAccountNumber = watch("accountNumber");
+    if (userAccountNumber.length === 10) {
+      // LookupMutate({ bankCode: code, accountNumber: userAccountNumber});
+      // setValue("accountName", LookupData?.data.accountName);
+      // console.log(userAccountNumber);
+      getAccountName(code, userAccountNumber);
     }
   }, [watch("accountNumber")]);
-
-  // get all bankcode.
-  const getBankCode = async () => {
-    try {
-      const response = await publicApi.get<BankResponse>(`/shared/banks`);
-      setBanksAndCodes(response.data?.data);
-      //Form submition success notifications
-      // toast.success(response.data.status as string, {
-      //   toastId: 'success1',
-      //   position: "top-right",
-      // });
-    } catch (error: any) {
-      console.log(error);
-      store.setRequestLoading(false);
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      //Form submition error notifications
-      toast.error(resMessage, {
-        toastId: "error1",
-        position: "top-right",
-      });
-    }
-  };
 
   // get the user's account name.
   const getAccountName = async (
@@ -109,6 +78,7 @@ const RegisterContinue = () => {
     userAccountNumber: string
   ) => {
     try {
+      store.setRequestLoading(true);
       const response = await publicApi.post<GenericResponse>(
         `shared/lookup/nuban`,
         {
@@ -118,11 +88,7 @@ const RegisterContinue = () => {
       );
       setValue("accountName", response.data.data?.accountName);
       setValue("bankCode", userBankCode);
-      //Form submition success notifications
-      // toast.success(response.data.status as string, {
-      //   toastId: 'success1',
-      //   position: "top-right",
-      // });
+      store.setRequestLoading(false);
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
@@ -146,13 +112,13 @@ const RegisterContinue = () => {
     //navigate to next page
     navigate("identity");
   };
-  const [code, setCode] = useState("");
-  useEffect(() => {
-    if (userAccountNumber?.length === 10) {
-      // LookupMutate({ bankCode: code, accountNumber: accNum });
-      LookupMutate({ bankCode: "035", accountNumber: userAccountNumber });
-    }
-  }, [userAccountNumber, code]);
+  // const [code, setCode] = useState("");
+  // useEffect(() => {
+  //   if (userAccountNumber?.length === 10) {
+  //     // LookupMutate({ bankCode: code, accountNumber: accNum });
+  //     LookupMutate({ bankCode: "035", accountNumber: userAccountNumber });
+  //   }
+  // }, [userAccountNumber, code]);
 
   return (
     <div className="relative ">
@@ -185,33 +151,40 @@ const RegisterContinue = () => {
                           type="password"
                           placeholder="************"
                         />
-
+                        <div className="w-full mb-3 ">
+                          <label htmlFor={"selectBank"} className="block">
+                            select bank
+                          </label>
+                          <select
+                            className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
+                            value={code}
+                            onChange={(e) => {
+                              setCode(e.target.value);
+                            }}
+                          >
+                            {banks?.data?.map((bank: any) => (
+                              <option key={bank.slug} value={bank.code}>
+                                {bank.name}
+                              </option>
+                            ))}
+                            {bankIsLoading && (
+                              <option value="">loading...</option>
+                            )}
+                          </select>
+                        </div>
                         <TextField
                           name="accountNumber"
                           label="Bank account number"
                           type="phone"
                           placeholder="e.g 0000000000"
                         />
-                        <TextField
-                          name="accountName"
-                          label="Account name"
-                          placeholder=""
-                        />
                         <div className="relative">
-                          {LookupIsLoading && <LoadingOverlay />}
+                          {store.requestLoading && <LoadingOverlay />}
                           <TextField
-                            disabled={true}
-                            name={"accountName"}
-                            label="Account Name"
-                            value={LookupData?.data.accountName}
-                            placeholder="e.g JMusty Feet"
-                          />
-                        </div>
-                        <div className="hidden">
-                          <TextField
-                            name="bankCode"
-                            label="bankCode"
+                            name="accountName"
+                            label="Account name"
                             placeholder=""
+                            disabled
                           />
                         </div>
                         <Button fullWidth>Next</Button>
