@@ -15,29 +15,25 @@ import LoadingLogo from "../components/reuseable/LoadingLogo";
 const SellerDashboardLayout = () => {
   const [logoutModal, setLogoutModal] = useState(false);
   const { data, isLoading, isError } = useUser();
-  console.log(
-    "🚀 ~ file: SellerDashboardLayout.tsx:18 ~ SellerDashboardLayout ~ data:",
-    data
-  );
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => {
     setSidebar(!sidebar);
   };
-  // if (!localStorage.getItem("session_token")) {
-  //   return <Navigate to="/login" />;
-  // }
-  // if (isLoading) {
-  //   return (
-  //     <div className="w-screen h-screen flex justify-center items-center">
-  //       <LoadingLogo />
-  //     </div>
-  //   );
-  // }
+  if (!localStorage.getItem("session_token")) {
+    return <Navigate to="/login" />;
+  }
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LoadingLogo />
+      </div>
+    );
+  }
 
-  // if (data?.userType === "BUYER") {
-  //   return <Navigate to="/buyer/dashboard" />;
-  // }
+  if (data?.userType === "BUYER") {
+    return <Navigate to="/buyer/dashboard" />;
+  }
   // if (isError) {
   //   return <Navigate to="/login" />;
   // }
