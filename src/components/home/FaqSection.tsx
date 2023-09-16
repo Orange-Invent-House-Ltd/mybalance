@@ -38,10 +38,6 @@ const FaqSection = () => {
             title="Who pays for the transaction charges?"
           />
           <Accordion
-            content="A buyer who wants to purchase a product from a vendor and a vendor who wants to sell products to buyers via a shareable payment link."
-            title="Who can use MyBalance?"
-          />
-          <Accordion
             content="It is possible for disputes to arise during a transaction which is why when creating an escrow, users are asked to select dispute resolution options ( Users resolution or My Balance resolution). While a transaction is in dispute, the funds stay in My Balance until a resolution is reached."
             title="How are transaction disputes resolved?"
           />

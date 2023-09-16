@@ -30,7 +30,7 @@ const FormInput: React.FC<FormInputProps> = ({
     <div className="mb-3">
       <label
         htmlFor={name}
-        className={clsx("text-sm mb-[6px] capitalize", {
+        className={clsx("block text-sm mb-[6px] capitalize", {
           "text-[#DA1E28]": errors[name],
         })}
       >
@@ -42,8 +42,9 @@ const FormInput: React.FC<FormInputProps> = ({
         placeholder={placeholder}
         defaultValue={value}
         className={clsx(
-          "block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ",
+          "block border border-[#B7B7B7] rounded-md p-2 outline-none focus:border-[#747373] ",
           {
+            "w-[343px]": variant == "long",
             "w-[319px]": variant == "medium",
             "w-[165px]": variant == "short",
             "border-[#DA1E28] focus:border-[#DA1E28]": errors[name],

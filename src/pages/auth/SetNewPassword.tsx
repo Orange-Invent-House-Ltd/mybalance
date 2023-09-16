@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useState, useEffect } from "react";
 // Zod - A typescript-first schema validation library.
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,8 @@ import key from "../../assets/Icons/key.svg";
 import TextField from "../../components/reuseable/TextField";
 import { useResetPassword } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
+import eye from '../../assets/Icons/eye.svg'
+import hide from '../../assets/Icons/hide.svg'
 
 //type definition with error messages for the form input
 const ResetPasswordSchema = object({
@@ -34,6 +36,8 @@ const ResetPasswordSchema = object({
 export type ResetPasswordInput = TypeOf<typeof ResetPasswordSchema>;
 
 const SetNewPassword = () => {
+  const [passwordShown, setPasswordShown] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const { verificationCode } = useParams();
   const { mutate, isLoading } = useResetPassword();
   const store = useStore();
@@ -69,18 +73,25 @@ const SetNewPassword = () => {
       </p>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(resetUserPassword)}>
-          <TextField
-            name="password"
-            label="New password"
-            placeholder="******"
-            type="password"
-          />
-          <TextField
-            name="confirmPassword"
-            label="Retype new password"
-            placeholder="******"
-            type="password"
-          />{" "}
+          <div className="flex">
+            <TextField
+              name="password"
+              label="New password"
+              placeholder="******"
+              type={showPassword? 'text' : 'password'}
+            />
+            <img src={showPassword ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
+          </div>
+          <div className="flex">
+            <TextField
+              name="confirmPassword"
+              label="Retype new password"
+              placeholder="******"
+              type={passwordShown? 'text' : 'password'}
+            />
+            <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+          </div>
+          {" "}
           <br />
           <div className="hidden">
             <TextField name="hash" label="hash" />

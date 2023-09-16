@@ -18,6 +18,8 @@ import twitter from "../../../assets/Icons/Twitter.svg";
 import linkedin from "../../../assets/Icons/LinkedIn.svg";
 import Instagram from "../../../assets/Icons/Instagram.svg";
 import { useBanks } from "../../../hooks/queries";
+import eye from '../../../assets/Icons/eye.svg'
+import hide from '../../../assets/Icons/hide.svg'
 
 //type definition with error messages for the form input
 const registerSchema = object({
@@ -41,6 +43,7 @@ const registerSchema = object({
 export type SignupInput = TypeOf<typeof registerSchema>;
 
 const RegisterContinue = () => {
+  const [passwordShown, setPasswordShown] = useState(false)
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [banksAndCodes, setBanksAndCodes] = useState([]);
@@ -145,18 +148,21 @@ const RegisterContinue = () => {
                           label="Email"
                           placeholder="e.g tmusty@gmail.com"
                         />
-                        <TextField
-                          name="password"
-                          label="Add password"
-                          type="password"
-                          placeholder="************"
-                        />
+                        <div className="flex">
+                          <TextField
+                            name="password"
+                            label="Add password"
+                            placeholder="************"
+                            type={passwordShown ? 'text' : 'password'}
+                          />
+                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                        </div>
                         <div className="w-full mb-3 ">
                           <label htmlFor={"selectBank"} className="block">
                             select bank
                           </label>
                           <select
-                            className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
+                            className="block border border-[#B7B7B7] w-[343px] rounded-md p-2 outline-none focus:border-[#747373] "
                             value={code}
                             onChange={(e) => {
                               setCode(e.target.value);

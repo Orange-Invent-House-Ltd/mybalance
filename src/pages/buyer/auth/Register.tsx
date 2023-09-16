@@ -9,6 +9,8 @@ import TextField from "../../../components/reuseable/TextField";
 import { useRegisterBuyer } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { Button } from "../../../components/reuseable/Button";
+import eye from '../../../assets/Icons/eye.svg'
+import hide from '../../../assets/Icons/hide.svg'
 
 //type definition with error messages for the form input
 const registerSchema = object({
@@ -36,6 +38,7 @@ const registerSchema = object({
 export type SignupInput = TypeOf<typeof registerSchema>;
 
 const Register = () => {
+  const [passwordShown, setPasswordShown] = useState(false)
   // tabs
   const { mutate, isLoading } = useRegisterBuyer();
   const [openTab, setOpenTab] = useState(1);
@@ -130,12 +133,15 @@ const Register = () => {
                           label="Phone"
                           placeholder="+234 000 0000 000"
                         />
-                        <TextField
-                          name="password"
-                          label="Password"
-                          type="password"
-                          placeholder="************"
-                        />
+                        <div className="flex">
+                          <TextField
+                            name="password"
+                            label="Password"
+                            placeholder="************"
+                            type={passwordShown ? 'text' : 'password'}
+                          />
+                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                        </div>
                         <Button> Next</Button>
                       </div>
                     </form>
