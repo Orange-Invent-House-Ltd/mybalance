@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
@@ -9,6 +9,8 @@ import TextField from "../../components/reuseable/TextField";
 import { useLogin } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 import { Button } from "../../components/reuseable/Button";
+import eye from '../../assets/Icons/eye.svg'
+import hide from '../../assets/Icons/hide.svg'
 
 
 //type definition with error messages for the form input
@@ -26,7 +28,7 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const Login = () => {
-
+  const [passwordShown, setPasswordShown] = useState(false)
   const { mutate, isLoading } = useLogin();
 
   const methods = useForm<LoginInput>({
@@ -67,12 +69,15 @@ const Login = () => {
                           label="Email"
                           placeholder="e.g al.bert@gmail.com"
                         />
-                        <TextField
-                          name="password"
-                          label="Password"
-                          type="password"
-                          placeholder="************"
-                        />
+                        <div className="flex">
+                          <TextField
+                            name="password"
+                            label="Password"
+                            placeholder="************"
+                            type={passwordShown ? 'text' : 'password'}
+                          />
+                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                        </div>
                         <div className="flex items-center justify-between py-5">
                           <div className="flex items-center cursor-pointer gap-2">
                             <input type="checkbox" name="" id="rememberMe" />
