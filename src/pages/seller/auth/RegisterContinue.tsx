@@ -148,7 +148,7 @@ const RegisterContinue = () => {
                           label="Email"
                           placeholder="e.g tmusty@gmail.com"
                         />
-                        <div className="flex">
+                        {/* <div className="flex">
                           <TextField
                             name="password"
                             label="Add password"
@@ -156,7 +156,7 @@ const RegisterContinue = () => {
                             type={passwordShown ? 'text' : 'password'}
                           />
                           <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
-                        </div>
+                        </div> */}
                         <div className="w-full mb-3 ">
                           <label htmlFor={"selectBank"} className="block">
                             select bank
