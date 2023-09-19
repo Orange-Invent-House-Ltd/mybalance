@@ -34,9 +34,9 @@ const SellerDashboardLayout = () => {
   if (data?.userType === "BUYER") {
     return <Navigate to="/buyer/dashboard" />;
   }
-  // if (isError) {
-  //   return <Navigate to="/login" />;
-  // }
+  if (isError) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>

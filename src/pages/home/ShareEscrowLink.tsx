@@ -3,14 +3,17 @@ import Header from "../../components/home/Header";
 import { Button } from "../../components/reuseable/Button";
 import TextField from "../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
-import { useTransactionInfo } from "../../hooks/queries";
-import { useSearchParams } from "react-router-dom";
+import { useTransactionInfo, useUser } from "../../hooks/queries";
+import { Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRespondTransaction } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
+import LoadingLogo from "../../components/reuseable/LoadingLogo";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");
+  const { data: user, isLoading: userLoading } = useUser();
+
   const {
     data,
     isLoading: transactionLoading,
@@ -21,6 +24,7 @@ const ShareEscrowLink = () => {
   const { mutate, isLoading } = useRespondTransaction();
 
   const { handleSubmit, control, reset } = useForm();
+  const location = useLocation();
   useEffect(() => {
     if (isSuccess) {
       reset({
@@ -36,6 +40,16 @@ const ShareEscrowLink = () => {
       });
     }
   }, [reset, isSuccess]);
+  if (userLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LoadingLogo />
+      </div>
+    );
+  }
+  if (!user) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
   return (
     <div className="px-[5%]">
       <Header />
@@ -143,7 +157,7 @@ const ShareEscrowLink = () => {
                 e.preventDefault();
                 mutate({
                   ref: ref,
-                  status: "REJECTED ",
+                  status: "REJECTED",
                 });
               }}
             >
@@ -156,7 +170,7 @@ const ShareEscrowLink = () => {
                 e.preventDefault();
                 mutate({
                   ref: ref,
-                  status: "APPROVED ",
+                  status: "APPROVED",
                 });
               }}
             >

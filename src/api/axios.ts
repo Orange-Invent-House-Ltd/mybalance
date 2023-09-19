@@ -1,8 +1,9 @@
 import axios from "axios";
 //create an Axios instance with a config to prevent us from repeating these options in every request
 // const BASE_URL = "http://ec2-3-86-147-94.compute-1.amazonaws.com/v1";
-const BASE_URL = "https://mybalanceapp.netlify.app/v1"
-
+const BASE_URL = "http://54.210.80.44/v1";
+// http://52.22.94.75/docs
+// http://54.210.80.44/docs
 export const publicApi = axios.create({
   baseURL: BASE_URL,
 });
@@ -37,7 +38,11 @@ privateApi.interceptors.response.use(
       // Handle error refreshing refresh token
       // Log the user out and redirect to login page
       // Example:
-      window.location.href = "/login";
+      const pathname = window.location.pathname;
+      if (pathname === "/share-escrow-link") {
+        return;
+      }
+      if (window.location) window.location.href = "/login";
     }
     return Promise.reject(error);
   }

@@ -20,22 +20,29 @@ import {
   withdraw,
 } from "../../api";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       localStorage.setItem("session_token", data.data.token);
       if (data.data.user.isBuyer) {
         localStorage.setItem("userType", "buyer");
-        navigate("/buyer/dashboard");
-      } else {
+      }
+      if (data.data.user.isSeller) {
         localStorage.setItem("userType", "seller");
-        navigate("/seller/dashboard");
       }
       toast.success(data.message);
+
+      if (location.state?.from) {
+        navigate(location.state.from);
+        return;
+      }
+
+      navigate("/buyer/dashboard");
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);
@@ -237,10 +244,14 @@ export const useWithdraw = () => {
 
 export const useRespondTransaction = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: respondTransaction,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      navigate("/buyer/dashboard");
+      toast.success(data.message);
+    },
     onError: (error: any) => {
       toast.error(error.response.data.message);
     },

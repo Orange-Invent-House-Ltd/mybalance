@@ -17,7 +17,7 @@ const Modal = ({
 
   const handleLogout = () => {
     localStorage.clear();
-    // queryClient.invalidateQueries({ queryKey: ["user"] });
+    queryClient.invalidateQueries({ queryKey: ["user"] });
     navigate("/login");
   };
 

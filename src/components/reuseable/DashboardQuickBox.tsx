@@ -1,19 +1,23 @@
-import React from 'react'
+import React from "react";
 
 type quickprops = {
-  icon:any;
+  icon: any;
   text: string;
-  subtext: string
-}
+  subtext: string;
+  disabled?: boolean;
+};
 
-const QuickBox = ({icon, text, subtext}:quickprops) => {
+const QuickBox = ({ icon, text, subtext, disabled }: quickprops) => {
   return (
-    <div className="flex flex-col justify-center items-center mr-4 px-2 last:mr-0 border rounded border-[#FECA9F] w-[154px] h-[100px]">
+    <button disabled={disabled} className="flex flex-col justify-center relative overflow-hidden items-center mr-4 px-2 last:mr-0 border rounded border-[#FECA9F] w-[154px] h-[100px]">
+      {disabled && (
+        <div className="w-full h-full absolute top-0 bg-white/50 left-0"></div>
+      )}
       <img src={icon} alt="" className="w-[30px]" />
       <p className="text-base">{text}</p>
       <p className="md:hidden text-center text-[10px] font-normal">{subtext}</p>
-    </div>
+    </button>
   );
-}
+};
 
-export default QuickBox
+export default QuickBox;

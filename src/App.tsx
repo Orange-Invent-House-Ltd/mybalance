@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes, ScrollRestoration } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  ScrollRestoration,
+} from "react-router-dom";
 import Seller from "./pages/seller/index";
 import Buyer from "./pages/buyer/index";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -22,7 +28,7 @@ import AuthLayout from "./layout/AuthLayout";
 import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
 import PaymentSucessfull from "./pages/home/PaymentSucessfull";
-import Test from './pages/buyer/dashboard/Test'
+import Test from "./pages/buyer/dashboard/Test";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
