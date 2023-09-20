@@ -51,7 +51,7 @@ const Profile = () => {
               <img
                 src={previewURL || user?.avatar}
                 alt=""
-                className="w-[60px] cursor-pointer h-[60px] object-cover rounded-full"
+                className="w-[60px] bg-gray-200 cursor-pointer h-[60px] object-cover rounded-full"
               />
             ) : (
               <div className="w-[60px] cursor-pointer h-[60px] bg-[#CDD2FD] border-2 border-[#9BA6FA] text-2xl text-white rounded-full  flex items-center justify-center uppercase font-bold">

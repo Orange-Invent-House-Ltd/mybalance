@@ -30,9 +30,9 @@ const Dashboard = () => {
         />
       </div>
       <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
-        <Link to="escrow-link">
-          <button className="bg-[#9A4D0C] w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">
-            Share my escrow link
+        <Link to="/seller/withdraw">
+          <button className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">
+           withdraw funds
           </button>
         </Link>
         <Link to="/seller/dispute-resolution">

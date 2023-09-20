@@ -5,7 +5,8 @@ import TextField from "../reuseable/TextField1";
 import back from "../../assets/Icons/back.svg";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
-import { useBanks } from "../../hooks/queries";
+import { useBanks, useUser } from "../../hooks/queries";
+import Skeleton from "react-loading-skeleton";
 
 type HeaderProps = {
   Heading: string;
@@ -16,6 +17,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
   const [value, setValue] = useState("");
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const { data: user } = useUser();
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
@@ -29,16 +31,35 @@ const Header = ({ Heading, Text }: HeaderProps) => {
     //   bankAccountNumber: accNum,
     // });
   };
+  const words = user?.fullName.split(" ");
+  const firstLetter = words?.[0][0]; // Get the first letter of the first word
+  const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between mb-8">
       <div className="flex gap-4">
-        <div className="w-[60px] h-[60px] bg-[#FFF2E8] border-2 border-[#FECA9F] text-2xl text-[#9A4D0C] rounded-full  flex items-center justify-center uppercase font-bold">
-          TM
+        <div>
+          {user?.avatar ? (
+            <img
+              src={user?.avatar}
+              alt=""
+              className="w-[60px] cursor-pointer h-[60px] object-cover rounded-full"
+            />
+          ) : (
+            <div className="w-[60px] cursor-pointer h-[60px] bg-[#FFF2E8] border-2 border-[#FECA9F] text-2xl text-[#9A4D0C] rounded-full  flex items-center justify-center uppercase font-bold">
+              {firstLetter}
+              {secondLetter}
+            </div>
+          )}
         </div>
         <div>
-          <h6 className="h6">{Heading}</h6>
-          <p className="max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px] ">
-            {Text}
+          <h6 className="h6">{user?.fullName || <Skeleton width={100} />}</h6>
+          <p className="max-w-[478px] text-[#303030] capitalize font-normal text-sm leading-[18.9px] ">
+            your last login was in{" "}
+            {user && user.lastLoginDate ? (
+              new Date(user.lastLoginDate).toLocaleString()
+            ) : (
+              <Skeleton width={100} />
+            )}
           </p>
         </div>
       </div>

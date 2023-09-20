@@ -15,6 +15,7 @@ import RegisterContinue from "./auth/RegisterContinue";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
 import AddNewDispute from "./dashboard/AddNewDispute";
+import Withdraw from "./dashboard/Withdraw";
 
 const Index = () => {
   return (
@@ -27,6 +28,7 @@ const Index = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="dispute-resolution" element={<DisputeResolution />} />
         <Route path="dispute-resolution/add" element={<AddNewDispute />} />
+        <Route path="withdraw" element={<Withdraw />} />
 
         <Route path="profile" element={<Profile />} />
       </Route>
