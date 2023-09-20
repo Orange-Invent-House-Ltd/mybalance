@@ -1,2 +1,2 @@
-/v1/* https://apimybalancelb-5852593.us-east-1.elb.amazonaws.com/v1/:splat 200!
+/v1/* http://ec2-54-198-231-236.compute-1.amazonaws.com/v1/:splat 200!
 /*    /index.html  200
