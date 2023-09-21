@@ -12,7 +12,7 @@ const { mutate, isLoading } = useForgotPassword();
   
 
   return (
-    <div className="relative">
+    <div className="relative mb-20">
       {isLoading && <LoadingOverlay />}
 
       <img src={key} alt="password" className="mx-auto" />

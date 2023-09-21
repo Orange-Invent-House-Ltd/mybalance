@@ -30,7 +30,7 @@ const FaqSection = () => {
             title="How are transaction disputes resolved?"
           />{" "}
           <Accordion
-            content="After a buyer is satisfied with product delivered, they go on to unlck the funds which the seller is notified of. The seller is then required to input a unique code before being able to withdraw the funds."
+            content="After a buyer is satisfied with the product delivered, they go on to unlock the funds which the seller is notified of. The seller is then required to input a unique code before being able to withdraw the funds."
             title="When are funds released?"
           />
           <Accordion
@@ -40,10 +40,6 @@ const FaqSection = () => {
           <Accordion
             content="It is possible for disputes to arise during a transaction which is why when creating an escrow, users are asked to select dispute resolution options ( Users resolution or My Balance resolution). While a transaction is in dispute, the funds stay in My Balance until a resolution is reached."
             title="How are transaction disputes resolved?"
-          />
-          <Accordion
-            content="After a buyer is satisfied with the product delivered, they go on to unlock the funds which the seller is notified of. The seller is then required to input a unique code before being able to withdraw the funds."
-            title="When are funds released?"
           />
         </div>
       </div>

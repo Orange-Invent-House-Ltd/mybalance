@@ -62,7 +62,7 @@ const SetNewPassword = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative mb-20">
       {isLoading && <LoadingOverlay />}
       <img src={key} alt="password" className="mx-auto" />
       <h6 className="mt-12 text-[#121212] text-center font-medium text-[23px] leading-[31.05px]">

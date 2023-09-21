@@ -23,7 +23,7 @@ const Solutions = () => {
           text='MyBalance is the world’s most secure escrow service provider platform safeguarding all parties involved.'
         />
         <div className='py-20 px-[5%] mb-16'>
-          <div className='md:flex justify-between gap-10'>
+          <div id='b&s' className='md:flex justify-between gap-10'>
             <div className='max-w-[426px]'>
               <h3 className='h3700'>Buyers & Sellers</h3>
               <p>For E-commerce, Small Scale Businesses and Individual Sellers,
@@ -43,7 +43,7 @@ const Solutions = () => {
             </div>
           </div>
 
-          <div className='md:flex justify-between gap-10 mt-[100px]'>
+          <div id='c&m' className='md:flex justify-between gap-10 mt-[100px]'>
             <div className="flex justify-center">
               <div className="relative">
                 <img className="" src={lightcard} alt="someone with credit card" />
@@ -61,7 +61,7 @@ const Solutions = () => {
             </div>
           </div>
 
-          <div className='md:flex justify-between gap-10 mt-[100px]'>
+          <div id='g&c' className='md:flex justify-between gap-10 mt-[100px]'>
             <div className='max-w-[500px]'>
               <h3 className='h3700'>Government & Contractors</h3>
               <p className='max-w-[426px]'>For Government Parastatals and their Contractors

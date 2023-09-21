@@ -18,7 +18,7 @@ const AboutComponent:FC = () => {
         <NavLink to='about-us'><div className="mx-auto lg:mx-0 max-w-[244px]"><Button fullWidth={true}> learn more</Button></div></NavLink>
       </div>
       <div className="flex justify-center mt-6">
-        <div className="relative">
+        <div className="relative mt-9 md:mt-0">
           <img className="absolute" src={card} alt="someone with credit card" />
           <img className="mt-[25px] ml-[40px] lg:ml-[20px]" src={rectangle} alt="background rectangle shape" />
         </div>

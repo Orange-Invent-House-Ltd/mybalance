@@ -36,19 +36,18 @@ const GetVerificationLink = () => {
   const methods = useForm<GetVerificationInput>({
     resolver: zodResolver(GetVerificationSchema),
   });
-  const {mutate,isLoading} = useResendOtp()
+  const { mutate, isLoading } = useResendOtp();
 
   //useForm() destructuring or methods destructuring . Here methods = useForm()
   const { handleSubmit } = methods;
 
   const resendVerifyEmail = async (data: GetVerificationInput) => {
     mutate(data);
-   
   };
 
   return (
-    <div className="relative ">
-      {isLoading && <LoadingOverlay/>}
+    <div className="relative mb-20">
+      {isLoading && <LoadingOverlay />}
       <h1 className="text-headingColor md:text-center text-[23px] md:text-[32px] mb-4 font-medium md:font-bold">
         Get Verification Link
       </h1>
@@ -58,10 +57,7 @@ const GetVerificationLink = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(resendVerifyEmail)}>
           <TextField name="email" label="Email" />
-          <Button  fullWidth>
-            {" "}
-            Get verification link
-          </Button>
+          <Button fullWidth> Get verification link</Button>
         </form>
       </FormProvider>
     </div>

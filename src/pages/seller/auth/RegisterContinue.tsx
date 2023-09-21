@@ -162,7 +162,7 @@ const RegisterContinue = () => {
                             select bank
                           </label>
                           <select
-                            className="block border border-[#B7B7B7] w-[343px] rounded-md p-2 outline-none focus:border-[#747373] "
+                            className="block border border-[#B7B7B7] w-[316px] md:w-[343px] rounded-md p-2 outline-none focus:border-[#747373] "
                             value={code}
                             onChange={(e) => {
                               setCode(e.target.value);

@@ -225,7 +225,7 @@ const EmailVerification = () => {
                           className="font-semibold cursor-pointer"
                           onClick={(e) => {
                             e.preventDefault();
-                           resendMutate({email:email!})
+                            resendMutate({email:email!})
                           }}
                         >
                           {" "}
