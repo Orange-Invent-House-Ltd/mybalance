@@ -63,15 +63,9 @@ const Header = ({ Heading, Text }: HeaderProps) => {
           </p>
         </div>
       </div>
-      <img
-        src={bell}
-        alt="notification bell"
-        className="hidden md:flex ml-auto mr-4"
-      />
-      <div className="hidden md:flex w-[343px] md:w-[270px]">
-        <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
-          Create One-time MyBalance Link
-        </Button>
+      <img src={bell} alt="notification bell" className="hidden md:flex ml-auto mr-4"/>
+      <div className="hidden md:flex w-[343px] md:w-[300px]">
+        <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>Create One-time MyBalance Link</Button>
       </div>
       {/* Create MyBalance link - mobile view */}
       <div className="md:hidden mt-4 p-2 flex gap-2 justify-between items-center border border-[#FFF2E8]">

@@ -85,7 +85,7 @@ const Login = () => {
                               htmlFor="rememberMe"
                               className="cursor-pointer"
                             >
-                              remember me
+                            Remember me
                             </label>
                           </div>
                           <Link to="/forgot-password" className="font-medium">
@@ -112,14 +112,14 @@ const Login = () => {
           </Link>
         </p>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
-          Have not verify your email?
+          Can’t verify my email? 
           <Link
             to="/email-verification"
             className="text-[#121212] font-bold cursor-pointer"
           
           >
             {" "}
-            Verify Email
+            Verify now
           </Link>
         </p>
       </div>

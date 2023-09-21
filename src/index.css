@@ -148,8 +148,8 @@ body {
 .para {
   @apply leading-[21.6px] text-base font-normal;
 }
-.h3 {
-  @apply text-headingColor text-[36px] mb-6 font-black;
+.h3{
+  @apply text-headingColor text-[22px] md:text-[36px] mb-1 md:mb-6 font-black;
 }
 .h3700 {
   @apply text-headingColor text-[36px] mb-6 font-bold;

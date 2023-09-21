@@ -42,6 +42,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  // console.log(user?.walletBalance === 0.00`)
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,
@@ -510,7 +511,7 @@ const Dashboard = () => {
               className="mr-4"
             >
               <DashboardQuickBox
-                disabled={user?.walletBalance === 0}
+                disabled={user?.walletBalance === '0.00'}
                 icon={unlock}
                 text="Unlock money"
                 subtext="Tap on this to release the money in your wallet"
@@ -524,7 +525,7 @@ const Dashboard = () => {
               className="mb-4 mr-4"
             >
               <DashboardQuickBox
-                disabled={user?.walletBalance === 0}
+                disabled={user?.walletBalance === '0.00'}
                 icon={download}
                 text="Withdraw money"
                 subtext="Tap on this to release the money in your wallet"
@@ -532,7 +533,7 @@ const Dashboard = () => {
             </Link>
             <Link to="/share-escrow-link">
               <DashboardQuickBox
-                disabled={user?.walletBalance === 0}
+                disabled={user?.walletBalance === '0.00'}
                 icon={share}
                 text="Share link"
                 subtext="Tap on this to lock your money in your wallet"
@@ -554,7 +555,7 @@ const Dashboard = () => {
               />
             )
           )}
-          {!transactionData?.data && <EmptyTrans />}
+          {transactionData?.data.length === 0 && <EmptyTrans />}
 
           <div className="w-[343px] mt-5 ">
             <Link to="/buyer/transaction-history">

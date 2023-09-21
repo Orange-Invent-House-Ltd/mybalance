@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import logo from "../../assets/Icons/logo.svg";
 import facebook from "../../assets/Icons/Facebook.svg";
 import twitter from "../../assets/Icons/Twitter.svg";
@@ -14,7 +14,7 @@ const Footer = () => {
           <Link to="/">
             <img src={logo} className="mb-[43px]" />
           </Link>
-          <p className="w-[258px] font-normal ">
+          <p className="w-full md:w-[258px] font-normal ">
             MyBalance offers escrow services for businesses, organizations and
             government parastatals with our world’s most secure payment method.
           </p>
@@ -62,17 +62,17 @@ const footerData = [
     items: [
       {
         name: "vendors and buyers",
-        link: "/",
+        link: "/solutions",
         target: "_self"
       },
       {
         name: "companies & merchants",
-        link: "/",
+        link: "/solutions",
         target: "_self"
       },
       {
         name: "governments & contractors",
-        link: "/",
+        link: "/solutions",
         target: "_self"
       },
     

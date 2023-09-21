@@ -24,7 +24,7 @@ export interface IUserProfile {
   lastLoginDate: string;
   lockedAmount: number;
   unlockedAmount: number;
-  walletBalance: number;
+  walletBalance: number | string;
   userId: string;
   userType: string;
   avatar: string;

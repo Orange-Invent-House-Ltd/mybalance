@@ -36,7 +36,7 @@ const Contact = () => {
           menu="Contact Us"
           text="Our headquarters is located in Lagos, Nigeria. Feel free to reach out using the information below."
         />
-        <div className="py-20 px-[5%] mb-16">
+        <div className="pt-20 px-[5%] mb-6">
           <div className="text-center">
             <span className="text-primary-normal">Contact us</span>
             <h3 className="h3">Get in touch</h3>
@@ -45,7 +45,7 @@ const Contact = () => {
             </p>
           </div>
           <ContactSection />
-          <div className="flex gap-12">
+          <div className="md:flex gap-12">
             <div>
               <h3 className="h3 text-center md:text-left">
                 Do You Have a Message For Us?
@@ -95,11 +95,15 @@ const Contact = () => {
                 </form>
               </FormProvider>
             </div>
-            <div>
+            <div className="w-full hidden md:block">
               <img src={contactImg} alt="contact" />
             </div>
           </div>
         </div>
+      </div>
+      {/* mobile image */}
+      <div className="md:hidden mx-auto mb-16">
+        <img src={contactImg} alt="contact" />
       </div>
       <div>
         <iframe
