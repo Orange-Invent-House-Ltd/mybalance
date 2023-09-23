@@ -11,7 +11,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      // retry: false,
+      retry: false,
       staleTime: 1000 * 60 * 5,
     },
   },
@@ -21,6 +21,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
-    <ToastContainer  />
+    <ToastContainer />
   </React.StrictMode>
 );

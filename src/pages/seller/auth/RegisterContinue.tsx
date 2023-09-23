@@ -18,8 +18,8 @@ import twitter from "../../../assets/Icons/Twitter.svg";
 import linkedin from "../../../assets/Icons/LinkedIn.svg";
 import Instagram from "../../../assets/Icons/Instagram.svg";
 import { useBanks } from "../../../hooks/queries";
-import eye from '../../../assets/Icons/eye.svg'
-import hide from '../../../assets/Icons/hide.svg'
+import eye from "../../../assets/Icons/eye.svg";
+import hide from "../../../assets/Icons/hide.svg";
 
 //type definition with error messages for the form input
 const registerSchema = object({
@@ -43,7 +43,7 @@ const registerSchema = object({
 export type SignupInput = TypeOf<typeof registerSchema>;
 
 const RegisterContinue = () => {
-  const [passwordShown, setPasswordShown] = useState(false)
+  const [passwordShown, setPasswordShown] = useState(false);
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [banksAndCodes, setBanksAndCodes] = useState([]);
