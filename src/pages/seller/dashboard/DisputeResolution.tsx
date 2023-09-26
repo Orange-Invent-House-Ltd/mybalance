@@ -42,7 +42,7 @@ const DisputeResolution = () => {
                 key={createdAt}
                 reason={reason}
                 description={description}
-                time={createdAt}
+                time={new Date(createdAt).toLocaleString()}
                 status={status}
               />
             )
