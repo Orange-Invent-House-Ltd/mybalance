@@ -32,7 +32,7 @@ const Dashboard = () => {
       <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
         <Link to="/seller/withdraw">
           <button className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">
-           withdraw funds
+            withdraw funds
           </button>
         </Link>
         <Link to="/seller/dispute-resolution">
@@ -42,18 +42,9 @@ const Dashboard = () => {
         </Link>
       </div>
       <h6 className="h6 mt-10">Transaction history</h6>
-      {transactionData?.data?.map(
-        ({ amount, status, createdAt, meta, id }: any) => (
-          <DashboardHistoryBox
-            key={id}
-            header={meta.title}
-            text={meta.description}
-            status={status}
-            price={formatToNairaCurrency(amount)}
-            subtext={new Date(createdAt).toLocaleString()}
-          />
-        )
-      )}
+      {transactionData?.data?.map((transaction: any) => (
+        <DashboardHistoryBox key={transaction.id} {...transaction} />
+      ))}
       <div className="w-[343px]">
         <Link to="/seller/transaction-history">
           <Button fullWidth variant="outlined">

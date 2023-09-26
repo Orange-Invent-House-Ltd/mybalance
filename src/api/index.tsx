@@ -101,8 +101,11 @@ export const getTransactionInfo = async (transactionReference: any) => {
   const res = await privateApi.get(`/transaction/link/${transactionReference}`);
   return res.data;
 };
-export const respondTransaction = async ({ ref, status }: any) => {
-  const res = await privateApi.patch(`/transaction/link/${ref}`, { status });
+export const respondTransaction = async ({ ref, status, rejectedReason }: any) => {
+  const res = await privateApi.patch(`/transaction/link/${ref}`, {
+    status,
+    rejectedReason,
+  });
   return res.data;
 };
 export const createDispute = async (data: any) => {
@@ -124,4 +127,11 @@ export const uploadAvatar = async (data: any) => {
 export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;
+};
+export const fundEscrow = async ({ transactionReference, amountToCharge }:any) => {
+  const res = await privateApi.post("/transaction/fund-escrow", {
+    transactionReference,
+    amountToCharge,
+  });
+  return res.data;
 };

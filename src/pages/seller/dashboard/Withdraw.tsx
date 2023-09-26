@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import TextField from "../../../components/reuseable/TextField1";
-import * as Tabs from "@radix-ui/react-tabs";
 import check from "../../../assets/Icons/check.svg";
 import waves from "../../../assets/Icons/waves.svg";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
@@ -28,7 +27,7 @@ const Withdraw = () => {
   const { handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
     useForm();
   const subscribeToChannel = (txReference: any) => {
-    const pusher = new Pusher("9121686402a8e63845f3", {
+    const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
     });
 
@@ -188,11 +187,7 @@ const Withdraw = () => {
               /> */}
       </div>
       <div className="mt-6 mb-16">
-        <Button
-          // disabled={value ? false : true}
-          fullWidth
-          type="submit"
-        >
+        <Button disabled={LookupIsLoading} fullWidth type="submit">
           Withdraw amount
         </Button>
       </div>

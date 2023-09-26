@@ -25,6 +25,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import {
   useCreateEscrow,
   useDepositMoney,
+  useFundEscrow,
   useLockFunds,
   useLookUpBank,
 } from "../../../hooks/mutations";
@@ -42,7 +43,6 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
-  // console.log(user?.walletBalance === 0.00`)
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,
@@ -53,7 +53,21 @@ const Dashboard = () => {
     data: lockFundsData,
     mutate: lockFundsMutate,
     isLoading: lockFundsLoading,
+    error,
+    isError
   } = useLockFunds();
+  useEffect(() => {
+   
+    if (
+     
+      lockFundsData?.errors?.message === "Insufficient funds in wallet."
+    ) {
+      setOpen(true)
+      setIsVerify(false);
+    }
+    
+  }, [lockFundsData])
+  const {data:fundEscrowData,mutate:fundEscrowMutate,isLoading:fundEscrowIsLoading} = useFundEscrow()
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -87,14 +101,12 @@ const Dashboard = () => {
   }, [depositSuccess]);
   useEffect(() => {
     if (createEscrowIsSuccessful) {
-      console.log("initiated");
       lockFundsMutate(createEscrowData.data.reference);
     }
   }, [createEscrowIsSuccessful]);
   useEffect(() => {
     if (accNum.length === 10) {
-      // LookupMutate({ bankCode: code, accountNumber: accNum });
-      LookupMutate({ bankCode: "035", accountNumber: accNum });
+      LookupMutate({ bankCode: code, accountNumber: accNum });
     }
   }, [accNum, code]);
   return (
@@ -543,18 +555,9 @@ const Dashboard = () => {
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history
           </h6>
-          {transactionData?.data?.map(
-            ({ amount, status, createdAt, meta, id }: any) => (
-              <DashboardHistoryBox
-                key={id}
-                header={meta.title}
-                text={meta.description}
-                status={status}
-                price={formatToNairaCurrency(amount)}
-                subtext={new Date(createdAt).toLocaleString()}
-              />
-            )
-          )}
+          {transactionData?.data?.map((transaction: any) => (
+            <DashboardHistoryBox {...transaction} />
+          ))}
           {transactionData?.data.length === 0 && <EmptyTrans />}
 
           <div className="w-[343px] mt-5 ">
@@ -577,18 +580,24 @@ const Dashboard = () => {
             </AlertDialog.Title>
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
-                Please top up your wallet with ₦5,700 to complete this
-                transaction, as the charges are inclusive.
+                {`
+                Please top up your wallet with ₦${lockFundsData?.errors?.deficit} to complete this
+                transaction, as the charges are inclusive.`}
               </p>
             </AlertDialog.Description>
 
             <Button
               fullWidth
               onClick={() => {
-                depositMutate("5700");
+                const transactionReference =
+                  localStorage.getItem("transactionRef");
+                fundEscrowMutate({
+                  transactionReference,
+                  amountToCharge: lockFundsData?.errors?.deficit,
+                });
               }}
             >
-              {depositLoading ? "loading..." : " top up my wallet"}
+              {fundEscrowIsLoading ? "loading..." : " top up my wallet"}
             </Button>
           </AlertDialog.Content>
         </AlertDialog.Portal>

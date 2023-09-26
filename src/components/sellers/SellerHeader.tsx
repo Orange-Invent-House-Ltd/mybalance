@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import bell from "../../assets/Icons/notification.svg";
 import { Button } from "../reuseable/Button";
 import TextField from "../reuseable/TextField1";
@@ -7,6 +7,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { useBanks, useUser } from "../../hooks/queries";
 import Skeleton from "react-loading-skeleton";
+import LoadingOverlay from "../reuseable/LoadingOverlay";
+import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
 
 type HeaderProps = {
   Heading: string;
@@ -14,23 +16,37 @@ type HeaderProps = {
 };
 const Header = ({ Heading, Text }: HeaderProps) => {
   const [isVerify, setIsVerify] = useState(false);
+  const [code, setCode] = useState("");
   const [value, setValue] = useState("");
+  const [accNum, setAccNum] = useState("");
+
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   const { data: user } = useUser();
-
+  const {
+    data: LookupData,
+    mutate: LookupMutate,
+    isLoading: LookupIsLoading,
+  } = useLookUpBank();
+  const { mutate: createEscrowMutate, isLoading: createEscrowIsLoading } =
+    useCreateEscrow();
   const handleChange = (e: any) => {
     setValue(e.target.value);
   };
   const onSubmit = (data: any) => {
     delete data?.accountName;
     delete data?.accountNumber;
-    // createEscrowMutate({
-    //   ...data,
-    //   bankCode: "035",
-    //   bankAccountNumber: accNum,
-    // });
+    createEscrowMutate({
+      ...data,
+      bankCode: code,
+      bankAccountNumber: accNum,
+    });
   };
+  useEffect(() => {
+    if (accNum.length === 10) {
+      LookupMutate({ bankCode: code, accountNumber: accNum });
+    }
+  }, [accNum, code]);
   const words = user?.fullName.split(" ");
   const firstLetter = words?.[0][0]; // Get the first letter of the first word
   const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
@@ -63,9 +79,15 @@ const Header = ({ Heading, Text }: HeaderProps) => {
           </p>
         </div>
       </div>
-      <img src={bell} alt="notification bell" className="hidden md:flex ml-auto mr-4"/>
+      <img
+        src={bell}
+        alt="notification bell"
+        className="hidden md:flex ml-auto mr-4"
+      />
       <div className="hidden md:flex w-[343px] md:w-[300px]">
-        <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>Create One-time MyBalance Link</Button>
+        <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
+          Create One-time MyBalance Link
+        </Button>
       </div>
       {/* Create MyBalance link - mobile view */}
       <div className="md:hidden mt-4 p-2 flex gap-2 justify-between items-center border border-[#FFF2E8]">
@@ -177,16 +199,13 @@ const Header = ({ Heading, Text }: HeaderProps) => {
             className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
           />
 
-          <Dialog.Content>
-            {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
+          <Dialog.Content className="relative" >
+            {createEscrowIsLoading && <LoadingOverlay />}
+
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
             >
-              {/* {(createEscrowIsLoading || lockFundsLoading) && (
-                <LoadingOverlay />
-              )} */}
-
               <div className="flex gap-4 items-center mt-10 mb-4">
                 <img src={back} alt="back" onClick={() => setIsVerify(false)} />
                 <h6 className="text-[23px] font-medium">
@@ -250,10 +269,10 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   </label>
                   <select
                     className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                    // value={code}
-                    // onChange={(e) => {
-                    //   setCode(e.target.value);
-                    // }}
+                    value={code}
+                    onChange={(e) => {
+                      setCode(e.target.value);
+                    }}
                   >
                     {banks?.data?.map((bank: any) => (
                       <option key={bank.slug} value={bank.code}>
@@ -268,19 +287,19 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   label="Enter Account number"
                   placeholder="1234567890"
                   name={"accountNumber"}
-                  // onChange={(e) => {
-                  //   setAccNum(e.target.value);
-                  // }}
-                  // value={accNum}
+                  onChange={(e) => {
+                    setAccNum(e.target.value);
+                  }}
+                  value={accNum}
                 />
                 <div className="relative">
-                  {/* {LookupIsLoading && <LoadingOverlay />} */}
+                  {LookupIsLoading && <LoadingOverlay />}
                   <TextField
                     readOnly={true}
                     control={control}
                     name={"accountName"}
                     label="Account Name"
-                    // value={LookupData?.data.accountName}
+                    value={LookupData?.data.accountName}
                     placeholder="e.g JMusty Feet"
                   />
                 </div>
@@ -309,7 +328,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   // }}
                   type="submit"
                 >
-                  pay now
+                  Share Escrow Link
                 </Button>
               </div>
             </form>

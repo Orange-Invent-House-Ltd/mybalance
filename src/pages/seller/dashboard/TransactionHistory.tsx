@@ -34,15 +34,8 @@ const TransactionHistory = () => {
             <Skeleton className="w-full h-[100px] " />
           </div>
         )}
-        {data?.data?.map(({ amount, status, createdAt, meta, id }: any) => (
-          <DashboardHistoryBox
-            key={id}
-            header={meta.title}
-            text={meta.description}
-            status={status}
-            price={formatToNairaCurrency(amount)}
-            subtext={new Date(createdAt).toLocaleString()}
-          />
+        {data?.data?.map((transaction: any) => (
+          <DashboardHistoryBox {...transaction} />
         ))}
         {data?.data.length === 0 && <EmptyTrans />}
       </div>

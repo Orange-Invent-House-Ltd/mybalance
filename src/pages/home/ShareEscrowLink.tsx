@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/home/Header";
 import { Button } from "../../components/reuseable/Button";
 import TextField from "../../components/reuseable/TextField1";
@@ -8,12 +8,14 @@ import { Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRespondTransaction } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 import LoadingLogo from "../../components/reuseable/LoadingLogo";
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import { toast } from "react-toastify";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");
   const { data: user, isLoading: userLoading } = useUser();
-
+  const [selectedReason, setSelectedReason] = useState("");
   const {
     data,
     isLoading: transactionLoading,
@@ -22,7 +24,7 @@ const ShareEscrowLink = () => {
   } = useTransactionInfo(ref);
 
   const { mutate, isLoading } = useRespondTransaction();
-
+  const [modal, setModal] = useState(true);
   const { handleSubmit, control, reset } = useForm();
   const location = useLocation();
   useEffect(() => {
@@ -40,6 +42,28 @@ const ShareEscrowLink = () => {
       });
     }
   }, [reset, isSuccess]);
+  const rejectedReason = [
+    {
+      title: "wrong amount",
+      value: "WRONG_AMOUNT",
+    },
+    {
+      title: "wrong description",
+      value: "WRONG_DESCRIPTION",
+    },
+    {
+      title: "wrong choice of item(s)",
+      value: "WRONG_ITEM_CHOICE",
+    },
+    {
+      title: "wrong quantity",
+      value: "WRONG_QUANTITY",
+    },
+    {
+      title: "wrong delivery data",
+      value: "WRONG_DELIVERY_DATA",
+    },
+  ];
   if (userLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -50,16 +74,85 @@ const ShareEscrowLink = () => {
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
+
   return (
     <div className="px-[5%]">
+      <AlertDialog.Root open={modal}>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50 " />
+          <AlertDialog.Content className="animate-jump   fixed top-0 left-0 z-50 w-full h-full  ">
+            <div className="w-full max-w-[380px] py-2 px-8  rounded-lg absolute bg-white  top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 ">
+              <div className="mt-6 text-center">
+                <h1 className="text-2xl font-medium text-center">
+                  Reason For Rejecting
+                </h1>
+                <p className="text-lg font-normal text-[#3A3A3A]">
+                  Select your reason for <br /> rejecting this transaction.
+                </p>
+              </div>{" "}
+              <div className="space-y-4 my-6">
+                {rejectedReason.map(({ title, value }) => {
+                  return (
+                    <div className="flex gap-5  capitalize">
+                      <input
+                        checked={selectedReason === value}
+                        onChange={() => setSelectedReason(value)}
+                        type="checkbox"
+                        className="accent-primary-normal cursor-pointer  text-white"
+                        id={value}
+                      />
+                      <label className="cursor-pointer" htmlFor={value}>
+                        {title}
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex gap-3 flex-col">
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setModal(false);
+                  }}
+                  disabled={isLoading}
+                >
+                  cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (selectedReason) {
+                      mutate({
+                        ref: ref,
+                        status: "REJECTED",
+
+                        rejectedReason: selectedReason, // Pass the selected reason to the API
+                      });
+                    } else {
+                      toast.error("you have to select a reason for rejection");
+
+                      // Handle the case where no reason is selected
+                    }
+                  }}
+                >
+                  {isLoading ? "Loading...." : " reject information"}
+                </Button>
+              </div>
+            </div>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
       <Header />
+
       <div className="w-fit mx-auto relative mt-[50px]">
         {isLoading && <LoadingOverlay />}
-        <h6 className="h6">TMusty Shared an Escrow Link With You</h6>
+        <h1 className="h6">TMusty Shared an Escrow Link With You</h1>
+        <h1 className="h6">TMusty Shared an Escrow Link With You</h1>
+
         <form action="">
           <h1 className="text-[#EDEDED] text-lg font-medium mb-2 ">
             ITEM(S) INFORMATION
           </h1>
+
           <div className="flex  flex-col gap-4">
             <TextField
               control={control}
@@ -155,10 +248,12 @@ const ShareEscrowLink = () => {
               variant="outlined"
               onClick={(e) => {
                 e.preventDefault();
-                mutate({
-                  ref: ref,
-                  status: "REJECTED",
-                });
+                // mutate({
+                //   ref: ref,
+                //   status: "REJECTED",
+                // });
+
+                setModal(true);
               }}
             >
               {" "}

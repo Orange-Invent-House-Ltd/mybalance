@@ -28,7 +28,7 @@ const WithdrawMoney = () => {
   const { handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
     useForm();
   const subscribeToChannel = (txReference: any) => {
-    const pusher = new Pusher("9121686402a8e63845f3", {
+    const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
     });
 

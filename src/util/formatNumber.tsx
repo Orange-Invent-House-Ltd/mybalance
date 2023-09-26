@@ -5,4 +5,5 @@ const formatToNairaCurrency = (amount: any) => {
    }).format(amount);
   return format;
 };
+
 export default formatToNairaCurrency

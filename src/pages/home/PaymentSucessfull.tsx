@@ -7,11 +7,13 @@ import whatsappIcon from "../../assets/Icons/copyWhatsappIcon.svg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import formatToNairaCurrency from "../../util/formatNumber";
 import { toast } from "react-toastify";
+import { useUser } from "../../hooks/queries";
 
 const PaymentSucessfull = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const linkValue = `https://www.mybalanceapp.com/share-escrow-link?ref=${searchParams.get(
+  const { data: user } = useUser();
+  const linkValue = `http://localhost:5173/share-escrow-link?ref=${searchParams.get(
     "ref"
   )}`;
 
@@ -19,17 +21,28 @@ const PaymentSucessfull = () => {
     <div className="flex flex-col-reverse md:flex-row w-screen h-screen">
       <div className="flex-[0.6] text-center md:text-left p-5 lg:p-0 flex items-center justify-center">
         <div className="max-w-lg">
-          <img src={successIcon} className="mx-auto md:mx-0" alt="" />
-          <h2 className="text-5xl font-bold">Payment Successful!</h2>
-          <p className=" text-lg mt-2">
-            <strong>Great news! </strong>
-            Your recent transaction of{" "}
-            <strong>
-              {formatToNairaCurrency(searchParams.get("amt"))}
-            </strong>{" "}
-            has been successfully processed. Feel free to share this with your
-            vendor.
-          </p>
+          <img src={successIcon} className="mx-auto" alt="" />
+          <h2 className="text-5xl font-bold">
+            {user?.userType === "BUYER"
+              ? "Payment Successful!"
+              : "Share Escrow Link"}
+          </h2>{" "}
+          {user?.userType === "BUYER" ? (
+            <p className=" text-lg mt-2">
+              <strong>Great news! </strong>
+              Your recent transaction of{" "}
+              <strong>
+                {formatToNairaCurrency(searchParams.get("amt"))}
+              </strong>{" "}
+              has been successfully processed. Feel free to share this with your
+              vendor
+            </p>
+          ) : (
+            <p className=" text-lg  mt-2">
+              you can share your one time escrow link to customer all over
+              social media
+            </p>
+          )}
           <div className="shadow-md text-center  mt-9 rounded-md p-6">
             <p className=" font-medium  mb-4">Share to:</p>
             <div className=" flex rounded-full mb-10 overflow-hidden  bg-[#FFF2E8]">
