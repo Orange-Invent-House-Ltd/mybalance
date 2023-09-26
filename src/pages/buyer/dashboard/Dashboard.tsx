@@ -57,9 +57,7 @@ const Dashboard = () => {
     isError
   } = useLockFunds();
   useEffect(() => {
-   
     if (
-     
       lockFundsData?.errors?.message === "Insufficient funds in wallet."
     ) {
       setOpen(true)
@@ -300,7 +298,7 @@ const Dashboard = () => {
         </Dialog.Root>
       </div>
 
-      <div className="flex   gap-3 mt-16  ">
+      <div className="sm:flex gap-3 mt-16  ">
         <div className="border whitespace-nowrap border-[#9A4D0C]  overflow-hidden relative rounded w-full flex-[0.4] h-[125px] p-6 ">
           <div className="w-[163px] h-[163px]  bg-[#FFF2E8]  rounded-full  top-[-19px] left-[-96px] z-[-10] absolute "></div>
           <div className="w-[66px] h-[66px]  bg-[#FECA9F]  rounded-full  top-[-19px] left-[364px] z-[-10] absolute "></div>

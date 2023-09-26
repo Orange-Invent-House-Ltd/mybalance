@@ -35,9 +35,9 @@ const Dashboard = () => {
             withdraw funds
           </button>
         </Link>
-        <Link to="/seller/dispute-resolution">
+        <Link to="/seller/transaction-history">
           <button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">
-            Raise a dispute
+            Transaction History
           </button>
         </Link>
       </div>

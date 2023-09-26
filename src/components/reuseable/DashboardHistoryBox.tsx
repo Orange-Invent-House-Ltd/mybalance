@@ -50,7 +50,7 @@ const DashboardHistoryBox = (data: any) => {
           localStorage.setItem("transactionInfo", JSON.stringify(data));
           console.log("🚀 ~ file: DashboardHistoryBox.tsx:29 ~ data:", data);
         }}
-        className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white max-w-[676px]  px-[40px] py-[20px]"
+        className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white max-w-[676px] px-6 md:px-[40px] py-[20px]"
       >
         <div
           className={clsx("", {
