@@ -66,16 +66,7 @@ const DisputeResolution = () => {
             activeClassName="bg-[#FD7E14] text-white"
             breakClassName="page-item"
           />
-          <div className="max-w-[343px]">
-            <Button
-              fullWidth
-              onClick={() => {
-                navigate("add");
-              }}
-            >
-              Add new dispute
-            </Button>
-          </div>
+         
         </div>
       </div>
     </div>

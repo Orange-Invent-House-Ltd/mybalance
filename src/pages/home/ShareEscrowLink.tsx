@@ -22,6 +22,7 @@ const ShareEscrowLink = () => {
     isError,
     isSuccess,
   } = useTransactionInfo(ref);
+    console.log("🚀 ~ file: ShareEscrowLink.tsx:25 ~ ShareEscrowLink ~ data:", data)
 
   const { mutate, isLoading } = useRespondTransaction();
   const [modal, setModal] = useState(true);

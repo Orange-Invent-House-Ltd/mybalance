@@ -142,144 +142,7 @@ const Dashboard = () => {
             Create MyBalance Link
           </Button>
         </div>
-        {/* {isVerify && (
-          <div className="fixed top-0 left-0 right-0 bottom-0   bg-black-rgba flex justify-end z-50">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="w-[400px] min-h-fit relative animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
-            >
-              {(createEscrowIsLoading || lockFundsLoading) && (
-                <LoadingOverlay />
-              )}
-
-              <div className="flex gap-4 items-center mt-10 mb-4">
-                <img src={back} alt="back" onClick={() => setIsVerify(false)} />
-                <h6 className="text-[23px] font-medium">
-                  Create MyBalance Link
-                </h6>
-              </div>
-              <p className="text-[16px] text-[#303030] font-normal mb-8">
-                Create your MyBalance escrow information and share with
-                everyone.
-              </p>
-              <h1 className="text-[#EDEDED] text-lg font-medium">
-                ITEM(S) INFORMATION
-              </h1>
-              <div className="mt-6 flex flex-col gap-4">
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"purpose"}
-                  label="Purpose of creating  escrow"
-                  placeholder="e.g 20,000"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"itemType"}
-                  label="Type of item(s)"
-                  placeholder="****"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"itemQuantity"}
-                  label="Number of item(s)"
-                  placeholder="give a description"
-                  type="number"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"amount"}
-                  label="Amount"
-                  placeholder="give a description"
-                  type="number"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"deliveryDate"}
-                  label="Delivery timeline"
-                  placeholder="Select number of days"
-                  type="date"
-                />
-              </div>
-              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
-                VENDOR ACCOUNT INFORMATION
-              </h1>
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="w-full mb-3 ">
-                  <label htmlFor={"selectBank"} className="block">
-                    select bank
-                  </label>
-                  <select
-                    className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                    value={code}
-                    onChange={(e) => {
-                      setCode(e.target.value);
-                    }}
-                  >
-                    {banks?.data?.map((bank: any) => (
-                      <option key={bank.slug} value={bank.code}>
-                        {bank.name}
-                      </option>
-                    ))}
-                    {bankIsLoading && <option value="">loading...</option>}
-                  </select>
-                </div>
-                <TextField
-                  control={control}
-                  label="Enter Account number"
-                  placeholder="1234567890"
-                  name={"accountNumber"}
-                  onChange={(e) => {
-                    setAccNum(e.target.value);
-                  }}
-                  value={accNum}
-                />
-                <div className="relative">
-                  {LookupIsLoading && <LoadingOverlay />}
-                  <TextField
-                    readOnly={true}
-                    control={control}
-                    name={"accountName"}
-                    label="Account Name"
-                    value={LookupData?.data.accountName}
-                    placeholder="e.g JMusty Feet"
-                  />
-                </div>
-                <TextField
-                  control={control}
-                  rules={{
-                    required: "this field is required",
-                    pattern: {
-                      message: "requires a valid email",
-                      value: /\S+@\S+\.\S+/,
-                    },
-                  }}
-                  name={"partnerEmail"}
-                  label="Email Address"
-                  placeholder="e.g JMustyfeet@gmail.com"
-                />
-              </div>
-              <div className="mt-6 mb-16">
-                <Button
-                  disabled={createEscrowIsLoading || lockFundsLoading}
-                  fullWidth
-                  // onClick={() => {
-                  //   setIsVerify(false);
-
-                  //   // setOpen(true);
-                  // }}
-                  type="submit"
-                >
-                  pay now
-                </Button>
-              </div>
-            </form>
-          </div>
-        )} */}
+      
         <Dialog.Root open={isVerify}>
           <Dialog.Portal className="">
             <Dialog.Overlay
@@ -593,7 +456,7 @@ const Dashboard = () => {
                   localStorage.getItem("transactionRef");
                 fundEscrowMutate({
                   transactionReference,
-                  amountToCharge: lockFundsData?.errors?.deficit,
+                  amountToCharge: 3125,
                 });
               }}
             >
