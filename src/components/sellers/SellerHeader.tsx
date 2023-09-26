@@ -258,6 +258,19 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   placeholder="Select number of days"
                   type="date"
                 />
+                <TextField
+                  control={control}
+                  rules={{
+                    required: "this field is required",
+                    pattern: {
+                      message: "requires a valid email",
+                      value: /\S+@\S+\.\S+/,
+                    },
+                  }}
+                  name={"partnerEmail"}
+                  label="Buyer’s email address"
+                  placeholder="e.g tommy@gmail.com"
+                />
               </div>
               <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
                 VENDOR ACCOUNT INFORMATION
@@ -312,7 +325,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                       value: /\S+@\S+\.\S+/,
                     },
                   }}
-                  name={"partnerEmail"}
+                  name={"sellerEmail"}
                   label="Email Address"
                   placeholder="e.g JMustyfeet@gmail.com"
                 />

@@ -25,7 +25,7 @@ const ShareEscrowLink = () => {
     console.log("🚀 ~ file: ShareEscrowLink.tsx:25 ~ ShareEscrowLink ~ data:", data)
 
   const { mutate, isLoading } = useRespondTransaction();
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const { handleSubmit, control, reset } = useForm();
   const location = useLocation();
   useEffect(() => {
@@ -73,7 +73,7 @@ const ShareEscrowLink = () => {
     );
   }
   if (!user) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{from: location}} />;
   }
 
   return (
