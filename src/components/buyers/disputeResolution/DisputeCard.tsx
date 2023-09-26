@@ -22,7 +22,7 @@ const DisputeCard = ({ reason, description, time, status }: any) => {
         <div className="flex gap-2 items-center justify-between mt-[6px]">
           <h4 className="text-sm">{description}</h4>
           <h6 className=" text-[#B7B7B7]  text-xs ">
-            {new Date(time).toString()}
+            {new Date(time).toLocaleString()}
           </h6>
         </div>
       </div>
