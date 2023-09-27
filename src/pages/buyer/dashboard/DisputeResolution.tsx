@@ -66,7 +66,6 @@ const DisputeResolution = () => {
             activeClassName="bg-[#FD7E14] text-white"
             breakClassName="page-item"
           />
-         
         </div>
       </div>
     </div>

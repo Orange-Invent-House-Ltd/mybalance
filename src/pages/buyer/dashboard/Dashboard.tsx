@@ -454,7 +454,7 @@ const Dashboard = () => {
                   localStorage.getItem("transactionRef");
                 fundEscrowMutate({
                   transactionReference,
-                  amountToCharge: 3125,
+                  amountToCharge: lockFundsData?.errors?.deficit,
                 });
               }}
             >
