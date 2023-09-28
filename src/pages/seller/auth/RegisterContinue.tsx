@@ -128,6 +128,51 @@ const RegisterContinue = () => {
       {/* tabs */}
       <div className="flex flex-wrap">
         <div className="w-full">
+        <ul
+            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+            role="tablist"
+          >
+            {/* customer tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-base lg:text-lg font-bold py-3 block leading-normal " +
+                  (openTab === 1
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                href="#link1"
+                role="tablist"
+              >
+                Create as a customer
+              </a>
+            </li>
+            {/* seller tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-base lg:text-lg font-bold py-3  block leading-normal " +
+                  (openTab === 2
+                    ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                href="#link2"
+                role="tablist"
+              >
+                Create as a seller
+              </a>
+            </li>
+          </ul>
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
             <div className="px- py-5 flex-auto">
               <div className="tab-content tab-space">

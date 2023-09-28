@@ -30,7 +30,7 @@ export type LoginInput = TypeOf<typeof loginSchema>;
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const { mutate, isLoading } = useLogin();
-
+  const [openTab, setOpenTab] = useState(1);
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
@@ -45,15 +45,59 @@ const Login = () => {
   return (
     <div className="relative ">
       {isLoading && <LoadingOverlay />}
-      {/* tabs */}
       <div className="flex flex-wrap">
+        {/* tabs */}
         <div className="w-full">
-        
+          <ul
+            className="flex mb-0 text-sm list-none flex-wrap pt-3 pb-4 flex-row"
+            role="tablist"
+          >
+            {/* customer tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <Link
+                className={
+                  "text-base lg:text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
+                  (openTab === 1
+                    ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(1);
+                }}
+                data-toggle="tab"
+                to="#link1"
+                role="tablist"
+              >
+                Login as a customer
+              </Link>
+            </li>
+            {/* seller tab */}
+            <li className="-mb-px last:mr-0 flex-auto text-center">
+              <Link
+                className={
+                  "text-base lg:text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
+                  (openTab === 2
+                    ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
+                    : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenTab(2);
+                }}
+                data-toggle="tab"
+                to="#link2"
+                role="tablist"
+              >
+                Login as a seller
+              </Link>
+            </li>
+          </ul>
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
             <div className=" py-5 flex-auto">
               <div className="tab-content tab-space">
                 {/* Login as customer */}
-                <div >
+                <div className={openTab === 1 ? "block" : "block"} id="link1">
                   <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(loginUser)}>
                       <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
@@ -96,6 +140,10 @@ const Login = () => {
                       </div>
                     </form>{" "}
                   </FormProvider>
+                </div>
+                {/* Login as customer */}
+                <div className={openTab === 2 ? "hidden" : "hidden"} id="link1">
+                  content 2 is here
                 </div>
               
               </div>
