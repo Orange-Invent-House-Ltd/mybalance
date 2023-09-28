@@ -20,7 +20,7 @@ export interface IUser {
 
 export interface IUserProfile {
   id: string;
-  bankAccount: {};
+  bankAccount: any;
   lastLoginDate: string;
   lockedAmount: number;
   unlockedAmount: number;

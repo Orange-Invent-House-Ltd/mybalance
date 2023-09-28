@@ -17,7 +17,7 @@ privateApi.interceptors.request.use(
       return config;
     }
     if (sessionToken) {
-      if (config.headers) {
+    if (config.headers) {
         config.headers.Authorization = `Bearer ${sessionToken}`;
       }
     }

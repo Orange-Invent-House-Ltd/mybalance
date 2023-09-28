@@ -5,9 +5,12 @@ import SellerDashboardBox from "../../../components/reuseable/SellerDashboardBox
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
+import { useState } from "react";
+import Withdraw from "../../../components/sellers/Withdraw";
 
 const Dashboard = () => {
   const { data: user, isError } = useUser();
+  const [withdrawModal,setWithdrawModal] = useState(false)
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
 
@@ -15,6 +18,7 @@ const Dashboard = () => {
   });
   return (
     <div className="mb-16">
+      <Withdraw open={withdrawModal} setOpen={setWithdrawModal}  />
       <SellerHeader
         Heading="Welcome TMusty!"
         Text="Your last login was on 01/12/2022 10:00:34 AM"
@@ -30,11 +34,13 @@ const Dashboard = () => {
         />
       </div>
       <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
-        <Link to="/seller/withdraw">
-          <button className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">
+       
+        <button onClick={() => {
+          setWithdrawModal(true)
+          }} className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]">
             withdraw funds
           </button>
-        </Link>
+      
         <Link to="/seller/transaction-history">
           <button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">
             Transaction History

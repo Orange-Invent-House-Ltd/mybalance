@@ -264,7 +264,7 @@ export const useRespondTransaction = () => {
   return useMutation({
     mutationFn: respondTransaction,
     onSuccess: (data) => {
-      navigate("/buyer/dashboard");
+      // navigate("/buyer/dashboard");
       toast.success(data.message);
     },
     onError: (error: any) => {

@@ -48,14 +48,16 @@ const Header = ({ Heading, Text }: HeaderProps) => {
     }
   }, [accNum, code]);
   const words = user?.fullName.split(" ");
-  const firstLetter = words?.[0][0]; // Get the first letter of the first word
+  const firstLetter = words?.[0][0];
   const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
   useEffect(() => {
     reset({
       accountNumber: user?.bankAccount.accountNumber,
       accountName: user?.bankAccount.accountName,
     });
-  })
+    setCode(user?.bankAccount?.bankCode);
+    setAccNum(user?.bankAccount.accountNumber);
+  }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between mb-8">
       <div className="flex gap-4">
@@ -106,7 +108,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
           </Button>
         </div>
       </div>
-      
+
       <Dialog.Root open={isVerify}>
         <Dialog.Portal className="">
           <Dialog.Overlay
@@ -114,7 +116,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
             className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
           />
 
-          <Dialog.Content className="relative" >
+          <Dialog.Content className="relative">
             {createEscrowIsLoading && <LoadingOverlay />}
 
             <form
@@ -197,13 +199,11 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   </label>
                   <select
                     className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                   disabled
+                    disabled
                   >
-                
-                      <option  >
-                      {user?.bankAccount?.bankName }
-                      </option>
-                   
+                    <option value={code}>
+                      {user?.bankAccount?.bankName}
+                    </option>
                   </select>
                 </div>
                 <TextField
@@ -211,16 +211,14 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   label="Enter Account number"
                   placeholder="1234567890"
                   name={"accountNumber"}
-                
+                  value={accNum}
                 />
                 <div className="relative">
-              
                   <TextField
                     readOnly={true}
                     control={control}
                     name={"accountName"}
                     label="Account Name"
-                    
                     placeholder="e.g JMusty Feet"
                   />
                 </div>

@@ -143,7 +143,7 @@ const WithdrawMoney = () => {
             </label>
             <select
               className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-              // {...register(name)}
+        
             >
               {banks?.data?.map((bank: any) => (
                 <option key={bank.slug} value={bank.slug}>

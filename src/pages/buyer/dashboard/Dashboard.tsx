@@ -140,7 +140,7 @@ const Dashboard = () => {
             Create MyBalance Link
           </Button>
         </div>
-      
+
         <Dialog.Root open={isVerify}>
           <Dialog.Portal className="">
             <Dialog.Overlay
@@ -154,10 +154,12 @@ const Dashboard = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
               >
-                {(createEscrowIsLoading || lockFundsLoading) && (
-                  <LoadingOverlay />
-                )}
+                <div className="relative" >
 
+             
+                  {(createEscrowIsLoading || lockFundsLoading) && (
+                    <LoadingOverlay />
+                  )}
                 <div className="flex gap-4 items-center mt-10 mb-4">
                   <img
                     src={back}
@@ -290,7 +292,7 @@ const Dashboard = () => {
                   >
                     pay now
                   </Button>
-                </div>
+                </div>   </div>
               </form>
               {/* </div> */}
             </Dialog.Content>
@@ -452,10 +454,17 @@ const Dashboard = () => {
               onClick={() => {
                 const transactionReference =
                   localStorage.getItem("transactionRef");
-                fundEscrowMutate({
-                  transactionReference,
-                  amountToCharge: lockFundsData?.errors?.deficit,
-                });
+                fundEscrowMutate(
+                  {
+                    transactionReference,
+                    amountToCharge: lockFundsData?.errors?.deficit,
+                  },
+                  {
+                    onSuccess: (data) => {
+                      window.open(data?.data?.link, "_blank");
+                    },
+                  }
+                );
               }}
             >
               {fundEscrowIsLoading ? "loading..." : " top up my wallet"}

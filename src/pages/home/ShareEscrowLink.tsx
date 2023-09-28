@@ -4,27 +4,53 @@ import { Button } from "../../components/reuseable/Button";
 import TextField from "../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
 import { useTransactionInfo, useUser } from "../../hooks/queries";
-import { Navigate, useLocation, useSearchParams } from "react-router-dom";
-import { useRespondTransaction } from "../../hooks/mutations";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import {
+  useFundEscrow,
+  useLockFunds,
+  useRespondTransaction,
+} from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 import LoadingLogo from "../../components/reuseable/LoadingLogo";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { toast } from "react-toastify";
+import wallet from "../../assets/Icons/alertWallet.svg";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");
   const { data: user, isLoading: userLoading } = useUser();
   const [selectedReason, setSelectedReason] = useState("");
+  const [fundEscrow, setFundEscrow] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
+  const {
+    data: fundEscrowData,
+    mutate: fundEscrowMutate,
+    isLoading: fundEscrowIsLoading,
+  } = useFundEscrow();
+
   const {
     data,
     isLoading: transactionLoading,
     isError,
     isSuccess,
   } = useTransactionInfo(ref);
-    console.log("🚀 ~ file: ShareEscrowLink.tsx:25 ~ ShareEscrowLink ~ data:", data)
+  console.log(
+    "🚀 ~ file: ShareEscrowLink.tsx:25 ~ ShareEscrowLink ~ data:",
+    data
+  );
 
-  const { mutate, isLoading } = useRespondTransaction();
+  const {
+    mutate,
+    isLoading,
+    isSuccess: respondSuccessful,
+  } = useRespondTransaction();
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const { handleSubmit, control, reset } = useForm();
   const location = useLocation();
@@ -43,6 +69,20 @@ const ShareEscrowLink = () => {
       });
     }
   }, [reset, isSuccess]);
+  const {
+    data: lockFundsData,
+    mutate: lockFundsMutate,
+    isLoading: lockFundsLoading,
+  } = useLockFunds();
+  useEffect(() => {
+    if (lockFundsData?.errors?.message === "Insufficient funds in wallet.") {
+      setFundEscrow(true);
+    }
+    if (lockFundsData?.status === true) {
+     navigate('/buyer/dashboard')
+    }
+  }, [lockFundsData]);
+
   const rejectedReason = [
     {
       title: "wrong amount",
@@ -73,7 +113,7 @@ const ShareEscrowLink = () => {
     );
   }
   if (!user) {
-    return <Navigate to="/login" replace state={{from: location}} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return (
@@ -125,7 +165,6 @@ const ShareEscrowLink = () => {
                       mutate({
                         ref: ref,
                         status: "REJECTED",
-
                         rejectedReason: selectedReason, // Pass the selected reason to the API
                       });
                     } else {
@@ -233,14 +272,6 @@ const ShareEscrowLink = () => {
               placeholder="e.g JMustyfeet@gmail.com"
               readOnly
             />
-            <TextField
-              control={control}
-              name="number"
-              rules={{ required: "this field is required" }}
-              label="Phone number"
-              placeholder="090123456789"
-              readOnly
-            />
           </div>
 
           <div className="mt-6 space-y-3 mb-16">
@@ -249,10 +280,6 @@ const ShareEscrowLink = () => {
               variant="outlined"
               onClick={(e) => {
                 e.preventDefault();
-                // mutate({
-                //   ref: ref,
-                //   status: "REJECTED",
-                // });
 
                 setModal(true);
               }}
@@ -264,10 +291,21 @@ const ShareEscrowLink = () => {
               fullWidth
               onClick={(e) => {
                 e.preventDefault();
-                mutate({
-                  ref: ref,
-                  status: "APPROVED",
-                });
+                mutate(
+                  {
+                    ref: ref,
+                    status: "APPROVED",
+                  },
+                  {
+                    onSuccess: () => {
+                      if (data.data.escrowMetadata.author === "SELLER") {
+                        setOpenPay(true);
+                      } else {
+                        navigate("/seller/dashboard");
+                      }
+                    },
+                  }
+                );
               }}
             >
               {" "}
@@ -276,6 +314,70 @@ const ShareEscrowLink = () => {
           </div>
         </form>
       </div>
+      <AlertDialog.Root open={fundEscrow} onOpenChange={setFundEscrow}>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="bg-black/10 backdrop-blur  z-50 fixed inset-0" />
+          <AlertDialog.Content className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] ">
+            <img src={wallet} className="mb-[20px]" alt="" />
+            <AlertDialog.Title className=" text-[18px] font-medium">
+              Insufficient Balance!
+            </AlertDialog.Title>
+            <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
+              <p>
+                {`
+                Please top up your wallet with ₦${lockFundsData?.errors?.deficit} to complete this
+                transaction, as the charges are inclusive.`}
+              </p>
+            </AlertDialog.Description>
+
+            <Button
+              fullWidth
+              onClick={() => {
+                fundEscrowMutate(
+                  {
+                    transactionReference:ref,
+                    amountToCharge: 4650,
+                  }, {
+                    onSuccess: (data) => {
+                       window.open(data?.data?.link, "_blank");
+                    }
+                  }
+                );
+              }}
+            >
+              {fundEscrowIsLoading ? "loading..." : " top up my wallet"}
+            </Button>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
+      <AlertDialog.Root open={openPay} onOpenChange={setOpenPay}>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="bg-black/10 backdrop-blur  z-50 fixed inset-0" />
+          <AlertDialog.Content className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] ">
+            <AlertDialog.Title className=" text-[18px] font-medium">
+              Pay Amount
+            </AlertDialog.Title>
+            <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
+              <img src={wallet} className="mb-[20px]" alt="" />
+
+              <p>Please click on pay to lock fund</p>
+            </AlertDialog.Description>
+
+            <Button
+              fullWidth
+              onClick={() => {
+                lockFundsMutate(ref || "", {
+                  onSettled: () => {
+                    setOpenPay(false);
+                  },
+                });
+              }}
+            >
+              {lockFundsLoading ? "loading..." : " Pay now"}
+            </Button>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
     </div>
   );
 };
