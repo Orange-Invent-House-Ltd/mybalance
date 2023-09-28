@@ -66,7 +66,7 @@ const Register = () => {
             <li className="-mb-px last:mr-0 flex-auto text-center">
               <Link
                 className={
-                  "lg:text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
+                  "text-base lg:text-lg font-medium capitalize py-3 block border-b-[2.5px] leading-normal " +
                   (openTab === 1
                     ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
                     : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")
@@ -87,7 +87,7 @@ const Register = () => {
               <Link
                 to="/seller/register"
                 className={
-                  "lg:text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
+                  "text-base lg:text-lg font-medium capitalize py-3 border-b-[2.5px] block leading-normal " +
                   (openTab === 2
                     ? "text-[rgb(154,77,12)]  border-[rgb(154,77,12)]"
                     : "text-[#6D6D6D]  pb-[13px border-[#4f4f4f66]")

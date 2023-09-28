@@ -143,7 +143,7 @@ const RegVerification = () => {
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
-                      "text-xs font-bold uppercase py-3 block leading-normal " +
+                      "text-base lg:text-lg font-bold uppercase py-3 block leading-normal " +
                       (activeTab === 1
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
@@ -163,7 +163,7 @@ const RegVerification = () => {
                 <li className="-mb-px last:mr-0 flex-auto text-center">
                   <a
                     className={
-                      "text-xs font-bold uppercase py-3  block leading-normal " +
+                      "text-base lg:text-lg font-bold uppercase py-3  block leading-normal " +
                       (activeTab === 2
                         ? "text-[rgb(154,77,12)] border-b-2 border-[rgb(154,77,12)]"
                         : "text-[#6D6D6D] border-b pb-[13px] border-[#6D6D6D]")
