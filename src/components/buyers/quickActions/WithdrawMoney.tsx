@@ -116,70 +116,68 @@ const WithdrawMoney = () => {
         <h1 className="mt-8 text-[#EDEDED] text-lg font-medium">
           SENDER ADDITIONAL INFORMATION
         </h1>
-        <div>
-          <TextField
-            control={controlWithdraw}
-            rules={{ required: "this field is required" }}
-            label="How much are you withdrawing?"
-            placeholder="e.g 20,000"
-            name={"amount"}
-            type="number"
-          />
+        <div className="max-w-[359px] w-full ">
+          <div>
+            <TextField
+              control={controlWithdraw}
+              rules={{ required: "this field is required" }}
+              label="How much are you withdrawing?"
+              placeholder="e.g 20,000"
+              name={"amount"}
+              type="number"
+            />
 
-          <TextField
-            control={controlWithdraw}
-            rules={{ required: "this field is required" }}
-            name={"description"}
-            label="Reason for withdrawing (description)"
-          />
-        </div>
-        <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
-          RECEIVER ACCOUNT INFORMATION
-        </h1>
-        <div className="mt-6 flex flex-col gap-4">
-          <div className="w-full mb-3 ">
-            <label htmlFor={"selectBank"} className="block">
-              select bank
-            </label>
-            <select
-              className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-        
-            >
-              {banks?.data?.map((bank: any) => (
-                <option key={bank.slug} value={bank.slug}>
-                  {bank.name}
-                </option>
-              ))}
-              {bankIsLoading && <option value="">loading...</option>}
-            </select>
-            {/* {errors[name] && (
+            <TextField
+              control={controlWithdraw}
+              rules={{ required: "this field is required" }}
+              name={"description"}
+              label="Reason for withdrawing (description)"
+            />
+          </div>
+          <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+            RECEIVER ACCOUNT INFORMATION
+          </h1>
+          <div className="mt-6 flex flex-col gap-4">
+            <div className="w-full mb-3 ">
+              <label htmlFor={"selectBank"} className="block">
+                select bank
+              </label>
+              <select className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ">
+                {banks?.data?.map((bank: any) => (
+                  <option key={bank.slug} value={bank.slug}>
+                    {bank.name}
+                  </option>
+                ))}
+                {bankIsLoading && <option value="">loading...</option>}
+              </select>
+              {/* {errors[name] && (
                         <span className="text-red-500 text-xs pt-1 block">
                           {errors[name]?.message as string}
                         </span>
                       )} */}
-          </div>
-          <TextField
-            control={controlWithdraw}
-            label="Enter account number"
-            placeholder="e.g 4758593837"
-            name={"accountNumber"}
-            value={accNum}
-            onChange={(e) => {
-              setAccNum(e.target.value);
-            }}
-          />
-          <div className="relative">
-            {LookupIsLoading && <LoadingOverlay />}
+            </div>
             <TextField
-              readOnly={true}
               control={controlWithdraw}
-              name={"accountName"}
-              label="Account Name"
-              value={LookupData?.data.accountName}
-              placeholder="e.g JMusty Feet"
+              label="Enter account number"
+              placeholder="e.g 4758593837"
+              name={"accountNumber"}
+              value={accNum}
+              onChange={(e) => {
+                setAccNum(e.target.value);
+              }}
             />
-          </div>
-          {/* <TextField
+            <div className="relative">
+              {LookupIsLoading && <LoadingOverlay />}
+              <TextField
+                readOnly={true}
+                control={controlWithdraw}
+                name={"accountName"}
+                label="Account Name"
+                value={LookupData?.data.accountName}
+                placeholder="e.g JMusty Feet"
+              />
+            </div>
+            {/* <TextField
                 control={controlWithdraw}
                 rules={{ required: "this field is required" }}
                 label="Phone number"
@@ -187,17 +185,17 @@ const WithdrawMoney = () => {
                 value={value}
                 name={"text"}
               /> */}
+          </div>
+          <div className="mt-6 mb-16">
+            <Button
+              // disabled={value ? false : true}
+              fullWidth
+              type="submit"
+            >
+              Withdraw amount
+            </Button>
+          </div>
         </div>
-        <div className="mt-6 mb-16">
-          <Button
-            // disabled={value ? false : true}
-            fullWidth
-            type="submit"
-          >
-            Withdraw amount
-          </Button>
-        </div>
-
         <AlertDialog.Root open={isWithdraw}>
           <AlertDialog.Portal className=" ">
             <AlertDialog.Overlay className="bg-[#3a3a3a]/50  fixed inset-0" />

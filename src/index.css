@@ -17,7 +17,7 @@ body {
 }
 
 .tab {
-  @apply text-lg font-medium capitalize rounded-t-md p-3 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14];
+  @apply text-lg font-medium capitalize rounded-t-md p-3 px-4 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14];
 }
 
 /**

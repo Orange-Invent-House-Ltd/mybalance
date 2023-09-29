@@ -50,17 +50,17 @@ export const LookUpBank = async (data: any) => {
   return res.data;
 };
 export const getTransactions = async ({
-  type,
+  search,
   page,
   size,
 }: {
-  type?: string;
+  search?: string;
   page?: number;
   size?: number;
 }) => {
   const res = await privateApi.get(`/transaction/`, {
     params: {
-      type,
+      search,
       page,
       size,
     },

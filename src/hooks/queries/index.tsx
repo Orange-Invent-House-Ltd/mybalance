@@ -24,10 +24,10 @@ export const useTransactions = ({
   size?: number;
 }) => {
   return useQuery({
-    queryFn: () => getTransactions({ type, page, size }),
+    queryFn: () => getTransactions({ search:type, page, size }),
 
     queryKey: ["transactions", page, type, size],
-    keepPreviousData: true,
+   
   });
 };
 export const useBanks = () => {

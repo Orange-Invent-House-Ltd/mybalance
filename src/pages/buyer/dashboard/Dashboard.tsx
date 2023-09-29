@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import useStore, { useTabStore } from "../../../store";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { publicApi } from "../../../api/axios";
 import { Button } from "../../../components/reuseable/Button";
-import { IUserResponse } from "../../../api/types";
 import DashboardLockedBox from "../../../components/reuseable/DashboardLockedBox";
 import DashboardQuickBox from "../../../components/reuseable/DashboardQuickBox";
 import plus from "../../../assets/Icons/plus.svg";
@@ -54,18 +52,19 @@ const Dashboard = () => {
     mutate: lockFundsMutate,
     isLoading: lockFundsLoading,
     error,
-    isError
+    isError,
   } = useLockFunds();
   useEffect(() => {
-    if (
-      lockFundsData?.errors?.message === "Insufficient funds in wallet."
-    ) {
-      setOpen(true)
+    if (lockFundsData?.errors?.message === "Insufficient funds in wallet.") {
+      setOpen(true);
       setIsVerify(false);
     }
-    
-  }, [lockFundsData])
-  const {data:fundEscrowData,mutate:fundEscrowMutate,isLoading:fundEscrowIsLoading} = useFundEscrow()
+  }, [lockFundsData]);
+  const {
+    data: fundEscrowData,
+    mutate: fundEscrowMutate,
+    isLoading: fundEscrowIsLoading,
+  } = useFundEscrow();
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -154,145 +153,144 @@ const Dashboard = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
               >
-                <div className="relative" >
-
-             
+                <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
                     <LoadingOverlay />
                   )}
-                <div className="flex gap-4 items-center mt-10 mb-4">
-                  <img
-                    src={back}
-                    alt="back"
-                    onClick={() => setIsVerify(false)}
-                  />
-                  <h6 className="text-[23px] font-medium">
-                    Create MyBalance Link
-                  </h6>
-                </div>
-                <p className="text-[16px] text-[#303030] font-normal mb-8">
-                  Create your MyBalance escrow information and share with
-                  everyone.
-                </p>
-                <h1 className="text-[#EDEDED] text-lg font-medium">
-                  ITEM(S) INFORMATION
-                </h1>
-                <div className="mt-6 flex flex-col gap-4">
-                  <TextField
-                    control={control}
-                    rules={{ required: "this field is required" }}
-                    name={"purpose"}
-                    label="Purpose of creating  escrow"
-                    placeholder="e.g 20,000"
-                  />
-                  <TextField
-                    control={control}
-                    rules={{ required: "this field is required" }}
-                    name={"itemType"}
-                    label="Type of item(s)"
-                    placeholder="****"
-                  />
-                  <TextField
-                    control={control}
-                    rules={{ required: "this field is required" }}
-                    name={"itemQuantity"}
-                    label="Number of item(s)"
-                    placeholder="give a description"
-                    type="number"
-                  />
-                  <TextField
-                    control={control}
-                    rules={{ required: "this field is required" }}
-                    name={"amount"}
-                    label="Amount"
-                    placeholder="give a description"
-                    type="number"
-                  />
-                  <TextField
-                    control={control}
-                    rules={{ required: "this field is required" }}
-                    name={"deliveryDate"}
-                    label="Delivery timeline"
-                    placeholder="Select number of days"
-                    type="date"
-                  />
-                </div>
-                <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
-                  VENDOR ACCOUNT INFORMATION
-                </h1>
-                <div className="mt-6 flex flex-col gap-4">
-                  <div className="w-full mb-3 ">
-                    <label htmlFor={"selectBank"} className="block">
-                      select bank
-                    </label>
-                    <select
-                      className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                      value={code}
-                      onChange={(e) => {
-                        setCode(e.target.value);
-                      }}
-                    >
-                      {banks?.data?.map((bank: any) => (
-                        <option key={bank.slug} value={bank.code}>
-                          {bank.name}
-                        </option>
-                      ))}
-                      {bankIsLoading && <option value="">loading...</option>}
-                    </select>
+                  <div className="flex gap-4 items-center mt-10 mb-4">
+                    <img
+                      src={back}
+                      alt="back"
+                      onClick={() => setIsVerify(false)}
+                    />
+                    <h6 className="text-[23px] font-medium">
+                      Create MyBalance Link
+                    </h6>
                   </div>
-                  <TextField
-                    control={control}
-                    label="Enter Account number"
-                    placeholder="1234567890"
-                    name={"accountNumber"}
-                    onChange={(e) => {
-                      setAccNum(e.target.value);
-                    }}
-                    value={accNum}
-                  />
-                  <div className="relative">
-                    {LookupIsLoading && <LoadingOverlay />}
+                  <p className="text-[16px] text-[#303030] font-normal mb-8">
+                    Create your MyBalance escrow information and share with
+                    everyone.
+                  </p>
+                  <h1 className="text-[#EDEDED] text-lg font-medium">
+                    ITEM(S) INFORMATION
+                  </h1>
+                  <div className="mt-6 flex flex-col gap-4">
                     <TextField
-                      readOnly={true}
                       control={control}
-                      name={"accountName"}
-                      label="Account Name"
-                      value={LookupData?.data.accountName}
-                      placeholder="e.g JMusty Feet"
+                      rules={{ required: "this field is required" }}
+                      name={"purpose"}
+                      label="Purpose of creating  escrow"
+                      placeholder="e.g 20,000"
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: "this field is required" }}
+                      name={"itemType"}
+                      label="Type of item(s)"
+                      placeholder="****"
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: "this field is required" }}
+                      name={"itemQuantity"}
+                      label="Number of item(s)"
+                      placeholder="give a description"
+                      type="number"
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: "this field is required" }}
+                      name={"amount"}
+                      label="Amount"
+                      placeholder="give a description"
+                      type="number"
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: "this field is required" }}
+                      name={"deliveryDate"}
+                      label="Delivery timeline"
+                      placeholder="Select number of days"
+                      type="date"
                     />
                   </div>
-                  <TextField
-                    control={control}
-                    rules={{
-                      required: "this field is required",
-                      pattern: {
-                        message: "requires a valid email",
-                        value: /\S+@\S+\.\S+/,
-                      },
-                    }}
-                    name={"partnerEmail"}
-                    label="Email Address"
-                    placeholder="e.g JMustyfeet@gmail.com"
-                  />
-                </div>
-                <div className="mt-6 mb-16">
-                  <Button
-                    disabled={
-                      createEscrowIsLoading ||
-                      lockFundsLoading ||
-                      LookupIsLoading
-                    }
-                    fullWidth
-                    // onClick={() => {
-                    //   setIsVerify(false);
+                  <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                    VENDOR ACCOUNT INFORMATION
+                  </h1>
+                  <div className="mt-6 flex flex-col gap-4">
+                    <div className="w-full mb-3 ">
+                      <label htmlFor={"selectBank"} className="block">
+                        select bank
+                      </label>
+                      <select
+                        className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
+                        value={code}
+                        onChange={(e) => {
+                          setCode(e.target.value);
+                        }}
+                      >
+                        {banks?.data?.map((bank: any) => (
+                          <option key={bank.slug} value={bank.code}>
+                            {bank.name}
+                          </option>
+                        ))}
+                        {bankIsLoading && <option value="">loading...</option>}
+                      </select>
+                    </div>
+                    <TextField
+                      control={control}
+                      label="Enter Account number"
+                      placeholder="1234567890"
+                      name={"accountNumber"}
+                      onChange={(e) => {
+                        setAccNum(e.target.value);
+                      }}
+                      value={accNum}
+                    />
+                    <div className="relative">
+                      {LookupIsLoading && <LoadingOverlay />}
+                      <TextField
+                        readOnly={true}
+                        control={control}
+                        name={"accountName"}
+                        label="Account Name"
+                        value={LookupData?.data.accountName}
+                        placeholder="e.g JMusty Feet"
+                      />
+                    </div>
+                    <TextField
+                      control={control}
+                      rules={{
+                        required: "this field is required",
+                        pattern: {
+                          message: "requires a valid email",
+                          value: /\S+@\S+\.\S+/,
+                        },
+                      }}
+                      name={"partnerEmail"}
+                      label="Email Address"
+                      placeholder="e.g JMustyfeet@gmail.com"
+                    />
+                  </div>
+                  <div className="mt-6 mb-16">
+                    <Button
+                      disabled={
+                        createEscrowIsLoading ||
+                        lockFundsLoading ||
+                        LookupIsLoading
+                      }
+                      fullWidth
+                      // onClick={() => {
+                      //   setIsVerify(false);
 
-                    //   // setOpen(true);
-                    // }}
-                    type="submit"
-                  >
-                    pay now
-                  </Button>
-                </div>   </div>
+                      //   // setOpen(true);
+                      // }}
+                      type="submit"
+                    >
+                      pay now
+                    </Button>
+                  </div>{" "}
+                </div>
               </form>
               {/* </div> */}
             </Dialog.Content>
@@ -418,8 +416,14 @@ const Dashboard = () => {
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history
           </h6>
+          {isLoading && (
+            <div className="flex flex-col gap-3 w-full max-w-[676px]">
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
+            </div>
+          )}
           {transactionData?.data?.map((transaction: any) => (
-            <DashboardHistoryBox {...transaction} />
+            <DashboardHistoryBox key={transaction.id} {...transaction} />
           ))}
           {transactionData?.data.length === 0 && <EmptyTrans />}
 
@@ -435,7 +439,7 @@ const Dashboard = () => {
 
       <AlertDialog.Root open={open} onOpenChange={setOpen}>
         <AlertDialog.Portal>
-          <AlertDialog.Overlay className="bg-black/10 backdrop-blur  fixed inset-0" />
+          <AlertDialog.Overlay className="bg-black/10 backdrop-blur z-50 fixed inset-0" />
           <AlertDialog.Content className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] ">
             <img src={wallet} className="mb-[20px]" alt="" />
             <AlertDialog.Title className=" text-[18px] font-medium">

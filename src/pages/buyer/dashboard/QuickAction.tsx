@@ -96,9 +96,9 @@ const QuickAction = () => {
         Text="You can either deposit, lock, unlock and/or withdraw your money here."
       />
       {/* tabs ************************************************************* */}
-      <Tabs.Root className="max-w-[460px] " defaultValue={defaultTab}>
+      <Tabs.Root defaultValue={defaultTab}>
         <Tabs.List
-          className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+          className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
           aria-label="Manage your account"
         >
           <Tabs.Trigger className="tab " value="depositMoney">
@@ -113,7 +113,7 @@ const QuickAction = () => {
         </Tabs.List>
 
         <div className="mt-10 ">
-          <Tabs.Content className="w-[350px]" value="depositMoney">
+          <Tabs.Content className="w-full max-w-[350px]" value="depositMoney">
             <div className="relative">
               {depositLoading && <LoadingOverlay />}
 
@@ -138,12 +138,12 @@ const QuickAction = () => {
               </form>
             </div>
           </Tabs.Content>
-          <Tabs.Content className="" value="unlockMoney">
-            <p className="max-w-[449px] text-base font-normal">
+          <Tabs.Content className="w-full max-w-[449px]" value="unlockMoney">
+            <p className=" text-base font-normal">
               Click on the card with the information of the item you want to
               unlock and click on the unlock button. That’s it.
             </p>
-            <div>
+            <div className=" " >
               {lockedFunds?.data?.map((data: any) => (
                 <div
                   onClick={() => {
