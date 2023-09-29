@@ -110,9 +110,9 @@ const Dashboard = () => {
     <div className=" overflow-hidden ">
       <div className="md:flex justify-between items-center ">
         <div>
-          <h6 className="text-[23px]  items-center gap-2 flex font-medium mb-4 ">
-            <span>Welcome</span>
-            <span className="font-semibold capitalize  flex-1">
+          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-4 ">
+            <span className="text-[#6D6D6D]">Welcome</span>
+            <span className=" font-semibold capitalize flex-1">
               {user?.fullName || <Skeleton width={100} />}
             </span>
           </h6>
@@ -298,10 +298,10 @@ const Dashboard = () => {
         </Dialog.Root>
       </div>
 
-      <div className="sm:flex gap-3 mt-16  ">
-        <div className="border whitespace-nowrap border-[#9A4D0C]  overflow-hidden relative rounded w-full flex-[0.4] h-[125px] p-6 ">
-          <div className="w-[163px] h-[163px]  bg-[#FFF2E8]  rounded-full  top-[-19px] left-[-96px] z-[-10] absolute "></div>
-          <div className="w-[66px] h-[66px]  bg-[#FECA9F]  rounded-full  top-[-19px] left-[364px] z-[-10] absolute "></div>
+      <div className="flex gap-3 mt-16 w-full overflow-x-auto no-scrollbar">
+        <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
+          <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
+          <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
 
           <p className="mb-2 font-base font-normal leading-[21.6px]">
             Available balance in escrow
@@ -331,7 +331,7 @@ const Dashboard = () => {
             style={{
               boxShadow: " 0px 9px 100px 0px rgba(60, 60, 60, 0.25)",
             }}
-            className="border border-#B7B7B7 max-w-[297px] rounded-[10px] mt-16 px-4 py-6"
+            className="border border-#B7B7B7 w-[full] md:max-w-[297px] rounded-[10px] mt-16 px-4 py-6"
           >
             <h6 className="text-2xl font-bold  text-[#6D6D6D] ">Our charges</h6>
             <p className="text-sm mt-2 text-[#6D6D6D]">
@@ -362,13 +362,13 @@ const Dashboard = () => {
           <h6 className="  mb-6 text-[#6D6D6D] font-bold text-[23px] ">
             Quick actions
           </h6>
-          <div className="flex flex-wrap mb-4">
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
             <Link
               onClick={() => {
                 setTab("depositMoney");
               }}
               to="/buyer/quick-action"
-              className="mb-4 mr-4"
+              // className="mb-4 mr-4"
             >
               <DashboardQuickBox
                 icon={plus}
@@ -381,7 +381,7 @@ const Dashboard = () => {
                 setTab("unlockMoney");
               }}
               to="/buyer/quick-action"
-              className="mr-4"
+              // className="sm:mr-4"
             >
               <DashboardQuickBox
                 disabled={user?.walletBalance === "0.00"}
@@ -395,7 +395,7 @@ const Dashboard = () => {
                 setTab("withdrawMoney");
               }}
               to="/buyer/quick-action"
-              className="mb-4 mr-4"
+              // className="mb-4 mr-4"
             >
               <DashboardQuickBox
                 disabled={user?.walletBalance === "0.00"}
@@ -427,7 +427,7 @@ const Dashboard = () => {
           ))}
           {transactionData?.data.length === 0 && <EmptyTrans />}
 
-          <div className="w-[343px] mt-5 ">
+          <div className="max-w-[343px] mt-5 ">
             <Link to="/buyer/transaction-history">
               <Button fullWidth variant="outlined">
                 View all transactions
