@@ -52,14 +52,9 @@ const Dashboard = () => {
     mutate: lockFundsMutate,
     isLoading: lockFundsLoading,
     error,
-    isError,
+    isError: lockFundsIsError,
   } = useLockFunds();
-  useEffect(() => {
-    if (lockFundsData?.errors?.message === "Insufficient funds in wallet.") {
-      setOpen(true);
-      setIsVerify(false);
-    }
-  }, [lockFundsData]);
+
   const {
     data: fundEscrowData,
     mutate: fundEscrowMutate,
@@ -98,7 +93,17 @@ const Dashboard = () => {
   }, [depositSuccess]);
   useEffect(() => {
     if (createEscrowIsSuccessful) {
-      lockFundsMutate(createEscrowData.data.reference);
+      lockFundsMutate(createEscrowData.data.reference, {
+        onError: (data) => {
+          if (
+            data?.response?.data?.errors?.message ===
+            "Insufficient funds in wallet."
+          ) {
+            setOpen(true);
+            setIsVerify(false);
+          }
+        },
+      });
     }
   }, [createEscrowIsSuccessful]);
   useEffect(() => {
@@ -448,7 +453,7 @@ const Dashboard = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 {`
-                Please top up your wallet with ₦${lockFundsData?.errors?.deficit} to complete this
+                Please top up your wallet with ₦${error?.response?.data?.errors?.deficit} to complete this
                 transaction, as the charges are inclusive.`}
               </p>
             </AlertDialog.Description>
@@ -461,7 +466,7 @@ const Dashboard = () => {
                 fundEscrowMutate(
                   {
                     transactionReference,
-                    amountToCharge: lockFundsData?.errors?.deficit,
+                    amountToCharge: error?.response?.data?.errors?.deficit,
                   },
                   {
                     onSuccess: (data) => {

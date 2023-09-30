@@ -17,32 +17,42 @@ import formatToNairaCurrency from "../../util/formatNumber";
 // };
 
 const DashboardHistoryBox = (data: any) => {
- 
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    // you can do async server request and fill up form
     if (data) {
       reset({
-        purpose: data?.meta?.title,
+        purpose: data?.escrowMetadata?.purpose,
         type: data?.escrowMetadata?.itemType,
-        // number: data.escrowMetadata.itemQuantity,
-        amt: data?.lockedAmount?.amount,
-        time: new Date(data?.escrowMetadata?.createdAt),
-        // bankNumber: "",
+        number: data?.escrowMetadata?.itemQuantity,
+        amt: data?.lockedAmount?.amount || data?.amount,
+        email: data?.escrowMetadata?.partnerEmail,
+        time: data?.escrowMetadata?.deliveryDate,
+        accName: data?.escrowMetadata?.meta?.accountName,
+        accNum: data?.escrowMetadata?.meta?.accountNumber,
+        bankName: data?.escrowMetadata?.meta?.bankName,
         // accNum: "",
         // accName: "",
         // email: data?.escrowMetadata?.partnerEmail,
       });
     }
-  }, [reset]);
+  }, [reset, data]);
   return (
     <>
       <div
         onClick={() => {
+          if (
+            data.type !== "ESCROW" &&
+            data.status !== "SUCCESSFUL" &&
+            data.status !== "FUFILLED" &&
+            data.status !== "APPROVED" &&
+            data.status !== "RESOLVED"
+          ) {
+            return;
+          }
           setOpen(true);
           localStorage.setItem("transactionInfo", JSON.stringify(data));
           console.log("🚀 ~ file: DashboardHistoryBox.tsx:29 ~ data:", data);
@@ -197,6 +207,13 @@ const DashboardHistoryBox = (data: any) => {
                   />
                 </div>
                 <div className="flex flex-col gap-6 mt-6 mb-16">
+                  <Button
+                    onClick={() => navigate("/buyer/dispute-resolution/add")}
+                    fullWidth
+                    variant="outlined"
+                  >
+                    copy escrow link
+                  </Button>
                   <Button
                     onClick={() => navigate("/buyer/dispute-resolution/add")}
                     fullWidth
