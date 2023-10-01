@@ -65,9 +65,14 @@ const PaymentSucessfull = () => {
               </button>
             </div>
             <div className="flex mx-auto w-fit  items-center mb-10 gap-10">
-              <button className="">
+              <a
+                href={`mailto:?subject=Check%20Out%20This%20Link&body=Here%20is%20the%20link:%20https://www.mybalanceapp.com/share-escrow-link?ref=${searchParams.get(
+                  "ref"
+                )}`}
+                className=""
+              >
                 <img src={emailIcon} className="mx-auto" alt="" />
-              </button>
+              </a>
               <a
                 href={`whatsapp://send?text=https://www.mybalanceapp.com/share-escrow-link?ref=${searchParams.get(
                   "ref"

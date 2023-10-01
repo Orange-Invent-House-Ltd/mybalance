@@ -38,14 +38,14 @@ export const useBanks = () => {
 };
 export const useTransactionInfo = (ref:any) => {
   return useQuery({
-    queryKey: ["transactionInfo"],
+    queryKey: ["transactionInfo",ref],
     queryFn: () => getTransactionInfo(ref),
   });
 };
-export const useLockedFunds = () => {
+export const useLockedFunds = (page:number) => {
   return useQuery({
-    queryKey: ["lockedFunds"],
-    queryFn: getLockedFunds
+    queryKey: ["lockedFunds",page],
+    queryFn: ()=>getLockedFunds(page)
   });
 };
 export const useDisputes = () => {

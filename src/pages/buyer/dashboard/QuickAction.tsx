@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "../../../components/reuseable/Button";
 import Header from "../../../components/reuseable/Header";
 import TextField from "../../../components/reuseable/TextField1";
@@ -28,6 +28,7 @@ import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney
 import { useNavigate } from "react-router-dom";
 import EmptyMoney from "../../../components/reuseable/EmptyMoney";
 import Skeleton from "react-loading-skeleton";
+import ReactPaginate from "react-paginate";
 
 const QuickAction = () => {
   const navigate = useNavigate();
@@ -63,9 +64,11 @@ const QuickAction = () => {
     useDepositMoney();
 
   const { defaultTab } = useTabStore();
+  const [page, setPage] = useState<number>(1);
 
   const { data: user } = useUser();
-  const { data: lockedFunds, isLoading: lockedFundsLoading } = useLockedFunds();
+  const { data: lockedFunds, isLoading: lockedFundsLoading } = useLockedFunds(page);
+  console.log("🚀 ~ file: QuickAction.tsx:69 ~ QuickAction ~ lockedFunds:", lockedFunds)
 
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -80,6 +83,9 @@ const QuickAction = () => {
       LookupMutate({ bankCode: "035", accountNumber: accNum });
     }
   }, [accNum, code]);
+    const handlePageChange = useCallback(({ selected }: any) => {
+      setPage(selected + 1);
+    }, []);
 
   return (
     <>
@@ -143,7 +149,7 @@ const QuickAction = () => {
               Click on the card with the information of the item you want to
               unlock and click on the unlock button. That’s it.
             </p>
-            <div className=" " >
+            <div className=" ">
               {lockedFunds?.data?.map((data: any) => (
                 <div
                   onClick={() => {
@@ -163,6 +169,24 @@ const QuickAction = () => {
                   />
                 </div>
               ))}
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next"
+                // initialPage={data?.meta?.currentPage - 1}
+                initialPage={lockedFunds?.meta?.currentPage - 1 || 0}
+                onPageChange={handlePageChange} // Use the handlePageChange function
+                pageRangeDisplayed={5}
+                pageCount={lockedFunds?.meta?.totalPages}
+                previousLabel="Previous"
+                renderOnZeroPageCount={null}
+                pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
+                previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
+                nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
+                containerClassName="flex gap-3 ml-10 items-center "
+                // Adjust for 0-based page numbering
+                activeClassName="bg-[#FD7E14] text-white"
+                breakClassName="page-item"
+              />
               {lockedFunds?.data.length === 0 && <EmptyMoney />}
             </div>
             {unlock && (

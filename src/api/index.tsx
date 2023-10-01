@@ -93,8 +93,14 @@ export const unLockFunds = async (transactionReference: string) => {
   });
   return res.data;
 };
-export const getLockedFunds = async () => {
-  const res = await privateApi.get("/transaction/locked-escrows");
+export const getLockedFunds = async (page:number) => {
+  const res = await privateApi.get("/transaction/locked-escrows", {
+    params: {
+      
+      page,
+     
+    },
+  });
   return res.data;
 };
 export const getTransactionInfo = async (transactionReference: any) => {

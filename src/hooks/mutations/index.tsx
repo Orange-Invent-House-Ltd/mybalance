@@ -190,21 +190,18 @@ export const useLockFunds = () => {
     mutationFn: lockFunds,
     onSuccess: (data) => {
       console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
-      if (data.success === true) {
+     
         localStorage.removeItem("transactionRef");
-        const amt = localStorage.getItem("escrowAmt");
+       
         queryClient.invalidateQueries(["transactions"]);
         queryClient.invalidateQueries(["lockedFunds"]);
         queryClient.invalidateQueries(["user"]);
         navigate(
-          `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
+          `/Payment-successful?amt=${data.data.amount}&ref=${data.data.transactionReference}`
         );
-      }
+      
     },
-    onError: (error: any) => {
-      console.log("🚀 ~ file: index.tsx:200 ~ useLockFunds ~ error:", error)
-      toast.error("an error occurred");
-    },
+    onError: (error: any) => {},
   });
 };
 export const useUnLockFunds = () => {
@@ -316,14 +313,14 @@ export const useUploadAvatar = () => {
 };
 export const useFundEscrow = () => {
   const queryClient = useQueryClient();
-const navigate = useNavigate()
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: fundEscrow,
     onSuccess: (data) => {
-    console.log("🚀 ~ file: index.tsx:323 ~ useFundEscrow ~ data:", data)
-    //  navigate(
-    //    `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
-    //  );
+      console.log("🚀 ~ file: index.tsx:323 ~ useFundEscrow ~ data:", data);
+      //  navigate(
+      //    `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
+      //  );
       queryClient.invalidateQueries(["user"]);
     },
     onError: (error: any) => {

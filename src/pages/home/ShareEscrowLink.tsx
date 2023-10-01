@@ -73,15 +73,9 @@ const ShareEscrowLink = () => {
     data: lockFundsData,
     mutate: lockFundsMutate,
     isLoading: lockFundsLoading,
+    error,
   } = useLockFunds();
-  useEffect(() => {
-    if (lockFundsData?.errors?.message === "Insufficient funds in wallet.") {
-      setFundEscrow(true);
-    }
-    if (lockFundsData?.status === true) {
-     navigate('/buyer/dashboard')
-    }
-  }, [lockFundsData]);
+  const deficit = error?.response?.data?.errors?.deficit;
 
   const rejectedReason = [
     {
@@ -325,7 +319,7 @@ const ShareEscrowLink = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 {`
-                Please top up your wallet with ₦${lockFundsData?.errors?.deficit} to complete this
+                Please top up your wallet with ₦${deficit} to complete this
                 transaction, as the charges are inclusive.`}
               </p>
             </AlertDialog.Description>
@@ -335,12 +329,13 @@ const ShareEscrowLink = () => {
               onClick={() => {
                 fundEscrowMutate(
                   {
-                    transactionReference:ref,
-                    amountToCharge: 4650,
-                  }, {
+                    transactionReference: ref,
+                    amountToCharge: deficit,
+                  },
+                  {
                     onSuccess: (data) => {
-                       window.open(data?.data?.link, "_blank");
-                    }
+                      window.open(data?.data?.link, "_blank");
+                    },
                   }
                 );
               }}
@@ -369,6 +364,17 @@ const ShareEscrowLink = () => {
                 lockFundsMutate(ref || "", {
                   onSettled: () => {
                     setOpenPay(false);
+                  },
+                  onError: (data) => {
+                    if (
+                      data?.response?.data?.errors?.message ===
+                      "Insufficient funds in wallet."
+                    ) {
+                      setFundEscrow(true);
+                    }
+                  },
+                  onSuccess: () => {
+                    navigate("/buyer/dashboard");
                   },
                 });
               }}

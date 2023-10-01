@@ -54,6 +54,7 @@ const Dashboard = () => {
     error,
     isError: lockFundsIsError,
   } = useLockFunds();
+  const deficit = error?.response?.data?.errors?.deficit;
 
   const {
     data: fundEscrowData,
@@ -453,7 +454,7 @@ const Dashboard = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 {`
-                Please top up your wallet with ₦${error?.response?.data?.errors?.deficit} to complete this
+                Please top up your wallet with ${ formatToNairaCurrency(deficit)} to complete this
                 transaction, as the charges are inclusive.`}
               </p>
             </AlertDialog.Description>
@@ -466,7 +467,7 @@ const Dashboard = () => {
                 fundEscrowMutate(
                   {
                     transactionReference,
-                    amountToCharge: error?.response?.data?.errors?.deficit,
+                    amountToCharge: deficit,
                   },
                   {
                     onSuccess: (data) => {
