@@ -116,113 +116,118 @@ const Header = ({ Heading, Text }: HeaderProps) => {
             className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
           />
 
-          <Dialog.Content className="relative">
-            {createEscrowIsLoading && <LoadingOverlay />}
+          <Dialog.Content>
+            <div className="relative">
+              {createEscrowIsLoading && <LoadingOverlay />}
 
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
-            >
-              <div className="flex gap-4 items-center mt-10 mb-4">
-                <img src={back} alt="back" onClick={() => setIsVerify(false)} />
-                <h6 className="text-[23px] font-medium">
-                  Create MyBalance Link
-                </h6>
-              </div>
-              <p className="text-[16px] text-[#303030] font-normal mb-8">
-                Create your MyBalance escrow information and share with
-                everyone.
-              </p>
-              <h1 className="text-[#EDEDED] text-lg font-medium">
-                ITEM(S) INFORMATION
-              </h1>
-              <div className="mt-6 flex flex-col gap-4">
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"purpose"}
-                  label="Purpose of creating  escrow"
-                  placeholder="e.g 20,000"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"itemType"}
-                  label="Type of item(s)"
-                  placeholder="****"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"itemQuantity"}
-                  label="Number of item(s)"
-                  placeholder="give a description"
-                  type="number"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"amount"}
-                  label="Amount"
-                  placeholder="give a description"
-                  type="number"
-                />
-                <TextField
-                  control={control}
-                  rules={{ required: "this field is required" }}
-                  name={"deliveryDate"}
-                  label="Delivery timeline"
-                  placeholder="Select number of days"
-                  type="date"
-                />
-                <TextField
-                  control={control}
-                  rules={{
-                    required: "this field is required",
-                    pattern: {
-                      message: "requires a valid email",
-                      value: /\S+@\S+\.\S+/,
-                    },
-                  }}
-                  name={"partnerEmail"}
-                  label="Buyer’s email address"
-                  placeholder="e.g tommy@gmail.com"
-                />
-              </div>
-              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
-                VENDOR ACCOUNT INFORMATION
-              </h1>
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="w-full mb-3 ">
-                  <label htmlFor={"selectBank"} className="block">
-                    select bank
-                  </label>
-                  <select
-                    className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                    disabled
-                  >
-                    <option value={code}>
-                      {user?.bankAccount?.bankName}
-                    </option>
-                  </select>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+              >
+                <div className="flex gap-4 items-center mt-10 mb-4">
+                  <img
+                    src={back}
+                    alt="back"
+                    onClick={() => setIsVerify(false)}
+                  />
+                  <h6 className="text-[23px] font-medium">
+                    Create MyBalance Link
+                  </h6>
                 </div>
-                <TextField
-                  control={control}
-                  label="Enter Account number"
-                  placeholder="1234567890"
-                  name={"accountNumber"}
-                  value={accNum}
-                />
-                <div className="relative">
+                <p className="text-[16px] text-[#303030] font-normal mb-8">
+                  Create your MyBalance escrow information and share with
+                  everyone.
+                </p>
+                <h1 className="text-[#EDEDED] text-lg font-medium">
+                  ITEM(S) INFORMATION
+                </h1>
+                <div className="mt-6 flex flex-col gap-4">
                   <TextField
-                    readOnly={true}
                     control={control}
-                    name={"accountName"}
-                    label="Account Name"
-                    placeholder="e.g JMusty Feet"
+                    rules={{ required: "this field is required" }}
+                    name={"purpose"}
+                    label="Purpose of creating  escrow"
+                    placeholder="e.g 20,000"
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: "this field is required" }}
+                    name={"itemType"}
+                    label="Type of item(s)"
+                    placeholder="****"
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: "this field is required" }}
+                    name={"itemQuantity"}
+                    label="Number of item(s)"
+                    placeholder="give a description"
+                    type="number"
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: "this field is required" }}
+                    name={"amount"}
+                    label="Amount"
+                    placeholder="give a description"
+                    type="number"
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: "this field is required" }}
+                    name={"deliveryDate"}
+                    label="Delivery timeline"
+                    placeholder="Select number of days"
+                    type="date"
+                  />
+                  <TextField
+                    control={control}
+                    rules={{
+                      required: "this field is required",
+                      pattern: {
+                        message: "requires a valid email",
+                        value: /\S+@\S+\.\S+/,
+                      },
+                    }}
+                    name={"partnerEmail"}
+                    label="Buyer’s email address"
+                    placeholder="e.g tommy@gmail.com"
                   />
                 </div>
-                {/* <TextField
+                <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                  VENDOR ACCOUNT INFORMATION
+                </h1>
+                <div className="mt-6 flex flex-col gap-4">
+                  <div className="w-full mb-3 ">
+                    <label htmlFor={"selectBank"} className="block">
+                      select bank
+                    </label>
+                    <select
+                      className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
+                      disabled
+                    >
+                      <option value={code}>
+                        {user?.bankAccount?.bankName}
+                      </option>
+                    </select>
+                  </div>
+                  <TextField
+                    control={control}
+                    label="Enter Account number"
+                    placeholder="1234567890"
+                    name={"accountNumber"}
+                    value={accNum}
+                  />
+                  <div className="relative">
+                    <TextField
+                      readOnly={true}
+                      control={control}
+                      name={"accountName"}
+                      label="Account Name"
+                      placeholder="e.g JMusty Feet"
+                    />
+                  </div>
+                  {/* <TextField
                   control={control}
                   rules={{
                     required: "this field is required",
@@ -235,22 +240,24 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   label="Email Address"
                   placeholder="e.g JMustyfeet@gmail.com"
                 /> */}
-              </div>
-              <div className="mt-6 mb-16">
-                <Button
-                  // disabled={createEscrowIsLoading || lockFundsLoading}
-                  fullWidth
-                  // onClick={() => {
-                  //   setIsVerify(false);
+                </div>
+                <div className="mt-6 mb-16">
+                  <Button
+                    // disabled={createEscrowIsLoading || lockFundsLoading}
+                    fullWidth
+                    // onClick={() => {
+                    //   setIsVerify(false);
 
-                  //   // setOpen(true);
-                  // }}
-                  type="submit"
-                >
-                  Share Escrow Link
-                </Button>
-              </div>
-            </form>
+                    //   // setOpen(true);
+                    // }}
+                    type="submit"
+                  >
+                    Share Escrow Link
+                  </Button>
+                </div>
+              </form>
+            </div>
+
             {/* </div> */}
           </Dialog.Content>
         </Dialog.Portal>

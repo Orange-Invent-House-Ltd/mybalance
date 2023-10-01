@@ -453,9 +453,9 @@ const Dashboard = () => {
             </AlertDialog.Title>
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
-                {`
-                Please top up your wallet with ${ formatToNairaCurrency(deficit)} to complete this
-                transaction, as the charges are inclusive.`}
+                Please top up your wallet with{" "}
+                <strong>{formatToNairaCurrency(deficit)}</strong> to complete
+                this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>
 

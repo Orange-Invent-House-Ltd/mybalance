@@ -20,6 +20,7 @@ import LoadingLogo from "../../components/reuseable/LoadingLogo";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { toast } from "react-toastify";
 import wallet from "../../assets/Icons/alertWallet.svg";
+import formatToNairaCurrency from "../../util/formatNumber";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
@@ -318,9 +319,9 @@ const ShareEscrowLink = () => {
             </AlertDialog.Title>
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
-                {`
-                Please top up your wallet with ₦${deficit} to complete this
-                transaction, as the charges are inclusive.`}
+                Please top up your wallet with{" "}
+                <strong>{formatToNairaCurrency(deficit)}</strong> to complete
+                this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>
 
@@ -350,12 +351,15 @@ const ShareEscrowLink = () => {
           <AlertDialog.Overlay className="bg-black/10 backdrop-blur  z-50 fixed inset-0" />
           <AlertDialog.Content className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] ">
             <AlertDialog.Title className=" text-[18px] font-medium">
+              <img src={wallet} className="mb-[20px]" alt="" />
               Pay Amount
             </AlertDialog.Title>
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
-              <img src={wallet} className="mb-[20px]" alt="" />
-
-              <p>Please click on pay to lock fund</p>
+              <p>
+                You are about to lock{" "}
+                <strong>{formatToNairaCurrency(data?.data?.amount)}</strong> for
+                this transaction, as the charges are inclusive.
+              </p>
             </AlertDialog.Description>
 
             <Button
