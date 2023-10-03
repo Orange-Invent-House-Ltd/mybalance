@@ -4,18 +4,41 @@ import notS from "../../../assets/Icons/notS.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePaymentRedirect } from "../../../hooks/queries";
+import LoadingLogo from "../../../components/reuseable/LoadingLogo";
 const TransactionStatus = () => {
   const [failed] = useState(false);
   const [searchParams] = useSearchParams();
+  console.log(
+    "🚀 ~ file: TransactionStatus.tsx:11 ~ TransactionStatus ~ searchParams:",
+    searchParams
+  );
   const navigate = useNavigate();
+  const status = searchParams.get("status");
+  const tx_ref = searchParams.get("tx_ref");
+  const transaction_id = searchParams.get("transaction_id");
+  const { data, isLoading } = usePaymentRedirect({
+    status,
+    tx_ref,
+    transaction_id,
+  });
 
   const queryClient = useQueryClient();
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["user"] });
   });
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LoadingLogo />
+      </div>
+    );
+  }
+ 
+
   return (
     <div className="flex items-center justify-center h-screen ">
-      {searchParams.get("status") === "successful" ? (
+      {data?.success === true ? (
         <div>
           <div className="w-[400px] h-[359px] p-6 bg-white rounded-xl shadow flex-col justify-start items-center gap-8 inline-flex">
             <div className="self-stretch h-[235px] p-[0px] flex-col justify-start items-start gap-[20px] flex">
@@ -33,7 +56,7 @@ const TransactionStatus = () => {
               </div>
             </div>
             <div
-              onClick={() => navigate(-"buyer/quick-action")}
+              onClick={() => navigate("/buyer/dashboard")}
               className="p-[0px] flex-col justify-start items-start gap-[12px] flex"
             >
               <div className="w-[352px] p-[0px] justify-start items-start gap-[12px] inline-flex">
@@ -68,7 +91,7 @@ const TransactionStatus = () => {
             </div>
           </div>
           <div
-            onClick={() => navigate("buyer/quick-action")}
+            onClick={() => navigate("/buyer/quick-action")}
             className="Frame34643 p-[0px] flex-col justify-start items-start gap-[12px] flex"
           >
             <div className="ModalActions w-[352px] p-[0px] justify-start items-start gap-[12px] inline-flex">

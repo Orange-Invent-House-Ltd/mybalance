@@ -93,12 +93,10 @@ export const unLockFunds = async (transactionReference: string) => {
   });
   return res.data;
 };
-export const getLockedFunds = async (page:number) => {
+export const getLockedFunds = async (page: number) => {
   const res = await privateApi.get("/transaction/locked-escrows", {
     params: {
-      
       page,
-     
     },
   });
   return res.data;
@@ -107,7 +105,11 @@ export const getTransactionInfo = async (transactionReference: any) => {
   const res = await privateApi.get(`/transaction/link/${transactionReference}`);
   return res.data;
 };
-export const respondTransaction = async ({ ref, status, rejectedReason }: any) => {
+export const respondTransaction = async ({
+  ref,
+  status,
+  rejectedReason,
+}: any) => {
   const res = await privateApi.patch(`/transaction/link/${ref}`, {
     status,
     rejectedReason,
@@ -134,7 +136,41 @@ export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;
 };
-export const fundEscrow = async ({ transactionReference, amountToCharge }:any) => {
+export const getPaymentRedirect = async ({
+  status,
+  tx_ref,
+  transaction_id,
+}: any) => {
+  const res = await privateApi.get("/shared/payment-redirect", {
+    params: {
+      status,
+      tx_ref,
+      transaction_id,
+    },
+  });
+  return res.data;
+};
+export const getEscrowPaymentRedirect = async ({
+  status,
+  tx_ref,
+  transaction_id,
+}: any) => {
+  if (status && tx_ref && transaction_id) {
+    const res = await privateApi.get("/shared/escrow-payment-redirect", {
+      params: {
+        status,
+        tx_ref,
+        transaction_id,
+      },
+    });
+    return res.data;
+  }
+  return null;
+};
+export const fundEscrow = async ({
+  transactionReference,
+  amountToCharge,
+}: any) => {
   const res = await privateApi.post("/transaction/fund-escrow", {
     transactionReference,
     amountToCharge,
