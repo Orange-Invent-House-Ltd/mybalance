@@ -105,7 +105,7 @@ const DashboardHistoryBox = (data: any) => {
           />
 
           <Dialog.Content>
-            <div className="w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll">
+            <div className="w-[393px]  h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll">
               <div className="flex gap-4 items-center pt-10 mb-8">
                 <img
                   onClick={() => setOpen(false)}
@@ -202,7 +202,7 @@ const DashboardHistoryBox = (data: any) => {
                     readOnly
                   />
                 </div>
-                <div className="flex flex-col gap-6 mt-6 mb-16">
+                <div className="flex flex-col gap-6 mt-6 mb-5">
                   {data?.escrowMetadata?.author === user?.userType && (
                     <Button
                       onClick={() => {
@@ -219,7 +219,11 @@ const DashboardHistoryBox = (data: any) => {
                     </Button>
                   )}
                   <Button
-                    onClick={() => navigate("/buyer/dispute-resolution/add")}
+                    onClick={() =>
+                      navigate(
+                        `/${user?.userType.toLowerCase()}/dispute-resolution/add`
+                      )
+                    }
                     fullWidth
                   >
                     Report a dispute
