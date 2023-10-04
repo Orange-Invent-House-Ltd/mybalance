@@ -201,9 +201,10 @@ const RegisterIdentity = () => {
         }
       );
       //Form submition success notifications
-      const firstName = response.data?.data.firstname;
-      const lastName = response.data?.data.surname;
-      const name = firstName + " " + lastName;
+      const firstName = response.data.data.meta?.firstName;
+      const middleName = response.data.data.meta?.middleName;
+      const lastName = response.data.data.meta?.lastName;
+      const name = firstName + " " + middleName + " " + lastName;
       console.log(name);
       setValue("name", name);
       toast.success(response.data.message as string, {
