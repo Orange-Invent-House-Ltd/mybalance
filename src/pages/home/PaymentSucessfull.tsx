@@ -12,7 +12,6 @@ import LoadingLogo from "../../components/reuseable/LoadingLogo";
 
 const PaymentSucessfull = () => {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const { data: user, isLoading: userLoading } = useUser();
 
   const status = searchParams.get("status");
@@ -33,7 +32,7 @@ const PaymentSucessfull = () => {
     searchParams.get("amt") || formatToNairaCurrency(data?.data?.amount)
   );
 
-  const linkValue = `http://localhost:5173/share-escrow-link?ref=${ref}`;
+  const linkValue = `https://www.mybalanceapp.com/share-escrow-link/share-escrow-link?ref=${ref}`;
   if (isLoading || userLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">

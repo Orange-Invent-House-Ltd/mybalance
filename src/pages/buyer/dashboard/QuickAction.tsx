@@ -67,8 +67,12 @@ const QuickAction = () => {
   const [page, setPage] = useState<number>(1);
 
   const { data: user } = useUser();
-  const { data: lockedFunds, isLoading: lockedFundsLoading } = useLockedFunds(page);
-  console.log("🚀 ~ file: QuickAction.tsx:69 ~ QuickAction ~ lockedFunds:", lockedFunds)
+  const { data: lockedFunds, isLoading: lockedFundsLoading } =
+    useLockedFunds(page);
+  console.log(
+    "🚀 ~ file: QuickAction.tsx:69 ~ QuickAction ~ lockedFunds:",
+    lockedFunds
+  );
 
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -83,9 +87,9 @@ const QuickAction = () => {
       LookupMutate({ bankCode: "035", accountNumber: accNum });
     }
   }, [accNum, code]);
-    const handlePageChange = useCallback(({ selected }: any) => {
-      setPage(selected + 1);
-    }, []);
+  const handlePageChange = useCallback(({ selected }: any) => {
+    setPage(selected + 1);
+  }, []);
 
   return (
     <>
@@ -169,6 +173,7 @@ const QuickAction = () => {
                   />
                 </div>
               ))}
+              {lockedFunds?.data.length === 0 && <EmptyMoney />}
               <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next"
@@ -182,12 +187,11 @@ const QuickAction = () => {
                 pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
                 previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
                 nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-                containerClassName="flex gap-3 ml-10 items-center "
+                containerClassName="flex gap-3 mt-10 ml-10 items-center "
                 // Adjust for 0-based page numbering
                 activeClassName="bg-[#FD7E14] text-white"
                 breakClassName="page-item"
               />
-              {lockedFunds?.data.length === 0 && <EmptyMoney />}
             </div>
             {unlock && (
               <UnlockAmount
