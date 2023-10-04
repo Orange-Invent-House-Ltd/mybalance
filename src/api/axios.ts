@@ -1,7 +1,11 @@
 import axios from "axios";
 //create an Axios instance with a config to prevent us from repeating these options in every request
+<<<<<<< HEAD
 // const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+=======
+const BASE_URL = import.meta.env.VITE_BASE_URL_LIVE;
+>>>>>>> ad06c634cc6c8b6683d61aec06dd3a6e44a0baf0
 
 export const publicApi = axios.create({
   baseURL: BASE_URL,

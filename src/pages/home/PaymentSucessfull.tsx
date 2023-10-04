@@ -7,16 +7,40 @@ import whatsappIcon from "../../assets/Icons/copyWhatsappIcon.svg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import formatToNairaCurrency from "../../util/formatNumber";
 import { toast } from "react-toastify";
-import { useUser } from "../../hooks/queries";
+import { useEscrowPaymentRedirect, useUser } from "../../hooks/queries";
+import LoadingLogo from "../../components/reuseable/LoadingLogo";
 
 const PaymentSucessfull = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { data: user } = useUser();
-  const linkValue = `http://localhost:5173/share-escrow-link?ref=${searchParams.get(
-    "ref"
-  )}`;
+  const { data: user, isLoading: userLoading } = useUser();
 
+  const status = searchParams.get("status");
+  const tx_ref = searchParams.get("tx_ref");
+  const transaction_id = searchParams.get("transaction_id");
+
+  const { data, isLoading } = useEscrowPaymentRedirect({
+    status,
+    tx_ref,
+    transaction_id,
+  });
+  console.log(
+    "🚀 ~ file: PaymentSucessfull.tsx:27 ~ PaymentSucessfull ~ data:",
+    data
+  );
+  const ref = searchParams.get("ref") || data?.data?.transactionReference;
+  const amount = formatToNairaCurrency(
+    searchParams.get("amt") || formatToNairaCurrency(data?.data?.amount)
+  );
+
+  const linkValue = `http://localhost:5173/share-escrow-link?ref=${ref}`;
+  if (isLoading || userLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LoadingLogo />
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col-reverse md:flex-row w-screen h-screen">
       <div className="flex-[0.6] text-center md:text-left p-5 lg:p-0 flex items-center justify-center">
@@ -30,12 +54,8 @@ const PaymentSucessfull = () => {
           {user?.userType === "BUYER" ? (
             <p className=" text-lg mt-2">
               <strong>Great news! </strong>
-              Your recent transaction of{" "}
-              <strong>
-                {formatToNairaCurrency(searchParams.get("amt"))}
-              </strong>{" "}
-              has been successfully processed. Feel free to share this with your
-              vendor
+              Your recent transaction of <strong>{amount}</strong> has been
+              successfully processed. Feel free to share this with your vendor
             </p>
           ) : (
             <p className=" text-lg  mt-2">

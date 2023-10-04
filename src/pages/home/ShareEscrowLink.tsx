@@ -61,12 +61,12 @@ const ShareEscrowLink = () => {
         purpose: data.data.escrowMetadata.purpose,
         type: data.data.escrowMetadata.itemType,
         itemQuantity: data.data.escrowMetadata.itemQuantity,
-        amount: data.data.amount,
-        timeline: data.data.escrowMetadata.deliveryDate,
-        bankName: "",
-        accNum: "",
+        amount: formatToNairaCurrency(data.data?.amount),
+        timeline: data.data.escrowMetadata?.deliveryDate,
+        bankName: data.data?.escrowMetadata.meta?.bankName,
+        accNum: data.data?.escrowMetadata.meta?.accountNumber,
+        accName: data.data?.escrowMetadata.meta?.accountName,
         email: data.data.escrowMetadata.partnerEmail,
-        number: data.data.escrowMetadata.partnerEmail,
       });
     }
   }, [reset, isSuccess]);
@@ -100,7 +100,7 @@ const ShareEscrowLink = () => {
       value: "WRONG_DELIVERY_DATA",
     },
   ];
-  if (userLoading) {
+  if (userLoading || transactionLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <LoadingLogo />
@@ -177,11 +177,14 @@ const ShareEscrowLink = () => {
         </AlertDialog.Portal>
       </AlertDialog.Root>
       <Header />
-
-      <div className="w-fit mx-auto relative mt-[50px]">
+      <h1 className="h6 mt-[100px] text-center">
+        <span className="capitalize">
+          {data.data.escrowMetadata.authorName}
+        </span>{" "}
+        Shared an Escrow Link With You
+      </h1>
+      <div className="w-fit mx-auto relative  ">
         {isLoading && <LoadingOverlay />}
-        <h1 className="h6">TMusty Shared an Escrow Link With You</h1>
-        <h1 className="h6">TMusty Shared an Escrow Link With You</h1>
 
         <form action="">
           <h1 className="text-[#EDEDED] text-lg font-medium mb-2 ">

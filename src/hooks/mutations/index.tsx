@@ -151,7 +151,7 @@ export const useDepositMoney = () => {
   return useMutation({
     mutationFn: depositMoney,
     onSuccess: (data) => {
-      window.open(data.data.link, "_blank");
+      window.open(data.data.link);
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);
