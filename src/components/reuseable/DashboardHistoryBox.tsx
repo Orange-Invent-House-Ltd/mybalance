@@ -6,7 +6,10 @@ import * as Dialog from "@radix-ui/react-dialog";
 import back from "../../assets/Icons/back.svg";
 import TextField from "./TextField1";
 import { Button } from "./Button";
+import { toast } from "react-toastify";
+
 import formatToNairaCurrency from "../../util/formatNumber";
+import { useUser } from "../../hooks/queries";
 
 // type historyprops = {
 //   header: string;
@@ -19,6 +22,7 @@ import formatToNairaCurrency from "../../util/formatNumber";
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
+  const { data: user } = useUser();
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
@@ -28,13 +32,12 @@ const DashboardHistoryBox = (data: any) => {
         purpose: data?.escrowMetadata?.purpose,
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
-        amt: data?.lockedAmount?.amount || data?.amount,
+        amt: formatToNairaCurrency(data?.amount),
         email: data?.escrowMetadata?.partnerEmail,
         time: data?.escrowMetadata?.deliveryDate,
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,
         bankName: data?.escrowMetadata?.meta?.bankName,
-        
       });
     }
   }, [reset, data]);
@@ -42,12 +45,11 @@ const DashboardHistoryBox = (data: any) => {
     <>
       <div
         onClick={() => {
-          if (data.type !== "ESCROW" && data.status !== "SUCCESSFUL") {
-            return;
+          if (data.type === "ESCROW" && data.status === "SUCCESSFUL") {
+            setOpen(true);
+            localStorage.setItem("transactionInfo", JSON.stringify(data));
+            console.log("🚀 ~ file: DashboardHistoryBox.tsx:29 ~ data:", data);
           }
-          setOpen(true);
-          localStorage.setItem("transactionInfo", JSON.stringify(data));
-          console.log("🚀 ~ file: DashboardHistoryBox.tsx:29 ~ data:", data);
         }}
         className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
       >
@@ -80,7 +82,8 @@ const DashboardHistoryBox = (data: any) => {
                 data.status === "APPROVED" ||
                 data.status === "RESOLVED",
               " bg-[#FFF2F1] text-[#DA1E28]": data.status === "PENDING",
-              " bg-[#EDEDED] text-[#373737]": data.status === "REJECTED",
+              " bg-[#EDEDED] text-[#373737]":
+                data.status === "REJECTED" || data.status === "FAILED",
               " bg-[#FFFCF2] text-[#FDB022]": data.status === "PENDING",
             })}
           >
@@ -151,7 +154,6 @@ const DashboardHistoryBox = (data: any) => {
                     label="amount"
                     placeholder="amount"
                     readOnly
-                    type="number"
                   />
                   <TextField
                     control={control}
@@ -201,13 +203,21 @@ const DashboardHistoryBox = (data: any) => {
                   />
                 </div>
                 <div className="flex flex-col gap-6 mt-6 mb-16">
-                  <Button
-                    onClick={() => navigate("/buyer/dispute-resolution/add")}
-                    fullWidth
-                    variant="outlined"
-                  >
-                    copy escrow link
-                  </Button>
+                  {data?.escrowMetadata?.author === user?.userType && (
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `https://www.mybalanceapp.com/share-escrow-link/share-escrow-link?ref=${data?.reference}`
+                        );
+                        toast.success("link has been copied to clipboard");
+                      }}
+                      fullWidth
+                      variant="outlined"
+                      type="button"
+                    >
+                      copy escrow link
+                    </Button>
+                  )}
                   <Button
                     onClick={() => navigate("/buyer/dispute-resolution/add")}
                     fullWidth
