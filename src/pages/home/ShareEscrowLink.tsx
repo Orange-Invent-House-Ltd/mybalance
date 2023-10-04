@@ -61,11 +61,11 @@ const ShareEscrowLink = () => {
         purpose: data.data.escrowMetadata.purpose,
         type: data.data.escrowMetadata.itemType,
         itemQuantity: data.data.escrowMetadata.itemQuantity,
-        amount: formatToNairaCurrency(data.data.amount),
-        timeline: data.data.escrowMetadata.deliveryDate,
-        bankName: data.data.escrowMetadata.meta.bankName,
-        accNum: data.data.escrowMetadata.meta.accountNumber,
-        accName: data.data.escrowMetadata.meta.accountName,
+        amount: formatToNairaCurrency(data.data?.amount),
+        timeline: data.data.escrowMetadata?.deliveryDate,
+        bankName: data.data?.escrowMetadata.meta?.bankName,
+        accNum: data.data?.escrowMetadata.meta?.accountNumber,
+        accName: data.data?.escrowMetadata.meta?.accountName,
         email: data.data.escrowMetadata.partnerEmail,
       });
     }

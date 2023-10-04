@@ -34,9 +34,7 @@ const DashboardHistoryBox = (data: any) => {
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,
         bankName: data?.escrowMetadata?.meta?.bankName,
-        // accNum: "",
-        // accName: "",
-        // email: data?.escrowMetadata?.partnerEmail,
+        
       });
     }
   }, [reset, data]);
@@ -44,13 +42,7 @@ const DashboardHistoryBox = (data: any) => {
     <>
       <div
         onClick={() => {
-          if (
-            data.type !== "ESCROW" &&
-            data.status !== "SUCCESSFUL" &&
-            data.status !== "FUFILLED" &&
-            data.status !== "APPROVED" &&
-            data.status !== "RESOLVED"
-          ) {
+          if (data.type !== "ESCROW" && data.status !== "SUCCESSFUL") {
             return;
           }
           setOpen(true);
@@ -118,7 +110,9 @@ const DashboardHistoryBox = (data: any) => {
                   alt="back"
                   className=" cursor-pointer"
                 />
-                <h6 className="text-[23px] font-medium">Unlock Amount </h6>
+                <h6 className="text-[23px] font-medium">
+                  View Transaction Details{" "}
+                </h6>
               </div>
               <form action="">
                 <h1 className="text-[#EDEDED] text-lg font-medium">

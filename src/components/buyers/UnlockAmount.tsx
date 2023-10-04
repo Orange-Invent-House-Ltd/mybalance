@@ -8,6 +8,7 @@ import { useUnLockFunds } from "../../hooks/mutations";
 import loadingImg from "../../assets/Icons/loadingSpinner.svg";
 import Spinner from "../reuseable/Spinner";
 import * as Dialog from "@radix-ui/react-dialog";
+import formatToNairaCurrency from "../../util/formatNumber";
 const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
   const [value, setValue] = useState("");
   const navigate = useNavigate();
@@ -26,12 +27,12 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
         purpose: data?.meta?.title,
         type: data?.escrowMetadata.itemType,
         number: data.escrowMetadata.itemQuantity,
-        amt: data?.lockedAmount?.amount,
-        time: new Date(data.escrowMetadata.createdAt),
-        bankNumber: "",
-        accNum: "",
-        accName: "",
-        email: data.escrowMetadata.partnerEmail,
+        amt: formatToNairaCurrency(data?.lockedAmount?.amount || data?.amount),
+        time: new Date(data?.escrowMetadata?.createdAt),
+        bankName: data?.escrowMetadata.meta?.bankName,
+        accNum: data?.escrowMetadata.meta?.accountNumber,
+        accName: data?.escrowMetadata.meta?.accountName,
+        email: data?.escrowMetadata.partnerEmail,
       });
     }
   }, [reset]);
@@ -98,7 +99,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   label="amount"
                   placeholder="amount"
                   readOnly
-                  type="number"
+              
                 />
                 <TextField
                   control={control}
