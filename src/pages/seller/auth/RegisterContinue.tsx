@@ -182,6 +182,10 @@ const RegisterContinue = () => {
                           label="Email"
                           placeholder="e.g tmusty@gmail.com"
                         />
+                        <div className="w-[343px] text-[13px] mt-[-20px]">
+                          <span className="text-neutral-600 font-bold leading-tight">NOTE:</span>
+                          <span className="text-neutral-500 font-normal "> Use the email address that was shared with the buyer IF ANY.</span>
+                        </div>
                         <div className="flex">
                           <TextField
                             name="password"

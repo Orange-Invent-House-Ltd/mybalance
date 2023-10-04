@@ -138,7 +138,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                   Create your MyBalance escrow information and share with
                   everyone.
                 </p>
-                <h1 className="text-[#EDEDED] text-lg font-medium">
+                <h1 className="text-[#303030] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
@@ -147,21 +147,21 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                     rules={{ required: "this field is required" }}
                     name={"purpose"}
                     label="Purpose of creating  escrow"
-                    placeholder="e.g 20,000"
+                    placeholder="Purchase of sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
                     name={"itemType"}
                     label="Type of item(s)"
-                    placeholder="****"
+                    placeholder="Gucci sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
                     name={"itemQuantity"}
                     label="Number of item(s)"
-                    placeholder="give a description"
+                    placeholder="1"
                     type="number"
                   />
                   <TextField
@@ -169,7 +169,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                     rules={{ required: "this field is required" }}
                     name={"amount"}
                     label="Amount"
-                    placeholder="give a description"
+                    placeholder="20,000"
                     type="number"
                   />
                   <TextField
@@ -177,7 +177,6 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                     rules={{ required: "this field is required" }}
                     name={"deliveryDate"}
                     label="Delivery timeline"
-                    placeholder="Select number of days"
                     type="date"
                   />
                   <TextField
@@ -194,7 +193,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                     placeholder="e.g tommy@gmail.com"
                   />
                 </div>
-                <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                <h1 className="mt-6 text-[#303030] text-lg font-medium">
                   VENDOR ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
@@ -224,7 +223,7 @@ const Header = ({ Heading, Text }: HeaderProps) => {
                       control={control}
                       name={"accountName"}
                       label="Account Name"
-                      placeholder="e.g JMusty Feet"
+                      placeholder="JMusty Feet"
                     />
                   </div>
                   {/* <TextField

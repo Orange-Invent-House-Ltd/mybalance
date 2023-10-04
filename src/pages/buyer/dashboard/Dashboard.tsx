@@ -177,7 +177,7 @@ const Dashboard = () => {
                     Create your MyBalance escrow information and share with
                     everyone.
                   </p>
-                  <h1 className="text-[#EDEDED] text-lg font-medium">
+                  <h1 className="text-[#393737] text-lg font-medium">
                     ITEM(S) INFORMATION
                   </h1>
                   <div className="mt-6 flex flex-col gap-4">
@@ -186,14 +186,14 @@ const Dashboard = () => {
                       rules={{ required: "this field is required" }}
                       name={"purpose"}
                       label="Purpose of creating  escrow"
-                      placeholder="e.g 20,000"
+                      placeholder="Purchase of sneakers"
                     />
                     <TextField
                       control={control}
                       rules={{ required: "this field is required" }}
                       name={"itemType"}
                       label="Type of item(s)"
-                      placeholder="****"
+                      placeholder="Gucci sneakers"
                     />
                     <TextField
                       control={control}
@@ -201,14 +201,14 @@ const Dashboard = () => {
                       name={"itemQuantity"}
                       label="Number of item(s)"
                       placeholder="give a description"
-                      type="number"
+                      type="1"
                     />
                     <TextField
                       control={control}
                       rules={{ required: "this field is required" }}
                       name={"amount"}
                       label="Amount"
-                      placeholder="give a description"
+                      placeholder="20,000"
                       type="number"
                     />
                     <TextField
@@ -216,11 +216,10 @@ const Dashboard = () => {
                       rules={{ required: "this field is required" }}
                       name={"deliveryDate"}
                       label="Delivery timeline"
-                      placeholder="Select number of days"
                       type="date"
                     />
                   </div>
-                  <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                  <h1 className="mt-6 text-[#303030] text-lg font-medium">
                     VENDOR ACCOUNT INFORMATION
                   </h1>
                   <div className="mt-6 flex flex-col gap-4">
@@ -261,7 +260,7 @@ const Dashboard = () => {
                         name={"accountName"}
                         label="Account Name"
                         value={LookupData?.data.accountName}
-                        placeholder="e.g JMusty Feet"
+                        placeholder="JMusty Feet"
                       />
                     </div>
                     <TextField
@@ -275,7 +274,7 @@ const Dashboard = () => {
                       }}
                       name={"partnerEmail"}
                       label="Email Address"
-                      placeholder="e.g JMustyfeet@gmail.com"
+                      placeholder="JMustyfeet@gmail.com"
                     />
                   </div>
                   <div className="mt-6 mb-16">
