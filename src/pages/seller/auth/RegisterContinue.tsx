@@ -108,6 +108,7 @@ const RegisterContinue = () => {
     console.log(data)
     store.setAuthUser({ ...store.authUser, ...data });
     store.setAuthEmail(data.email);
+    localStorage.setItem('email', data.email);
     //navigate to next page
     navigate("identity");
   };
