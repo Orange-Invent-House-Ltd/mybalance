@@ -12,6 +12,7 @@ const TransactionHistory = () => {
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
 
+
   const { isLoading, data } = useTransactions({
     page,
     size: 10,
@@ -34,21 +35,21 @@ const TransactionHistory = () => {
         <div className="relative max-w-[676px]">
           <div className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row">
             <button
-              className="tab"
+              className="tab "
               data-state={activeButton === "" ? "active" : "inactive"}
               onClick={() => setActiveButton("")}
             >
               All Transaction
             </button>
             <button
-              className="tab"
+              className="tab "
               data-state={activeButton === "DEPOSIT" ? "active" : "inactive"}
               onClick={() => setActiveButton("DEPOSIT")}
             >
               Deposits
             </button>
             <button
-              className="tab"
+              className="tab "
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}
               onClick={() => setActiveButton("ESCROW")}
             >

@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/t&c" element={<TermsAndCondition />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/Payment-successful" element={<PaymentSucessfull />} />
+        <Route path="/payment-successful" element={<PaymentSucessfull />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/email-verification" element={<EmailVerification />} />

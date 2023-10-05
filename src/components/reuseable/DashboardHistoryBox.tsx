@@ -45,21 +45,18 @@ const DashboardHistoryBox = (data: any) => {
     <>
       <div
         onClick={() => {
-          if (data.type === "ESCROW" && data.status === "SUCCESSFUL") {
+          if (data?.type === "ESCROW" && data?.status === "SUCCESSFUL") {
             setOpen(true);
             localStorage.setItem("transactionInfo", JSON.stringify(data));
-            console.log("🚀 ~ file: DashboardHistoryBox.tsx:29 ~ data:", data);
           }
         }}
         className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
       >
         <div
           className={clsx("", {
-            "text-[#B7B7B7]":
-              data.status === "SUCCESSFUL" ||
-              data.status === "FUFILLED" ||
-              data.status === "APPROVED" ||
-              data.status === "RESOLVED",
+            "text-[#B7B7B7]": !(
+              data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
+            ),
           })}
         >
           <p className="text-lg font-medium">{data.meta.title}</p>
@@ -67,11 +64,9 @@ const DashboardHistoryBox = (data: any) => {
         </div>
         <div
           className={clsx("", {
-            "text-[#B7B7B7]":
-              data.status === "SUCCESSFUL" ||
-              data.status === "FUFILLED" ||
-              data.status === "APPROVED" ||
-              data.status === "RESOLVED",
+            "text-[#B7B7B7]": !(
+              data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
+            ),
           })}
         >
           <div
@@ -83,8 +78,10 @@ const DashboardHistoryBox = (data: any) => {
                 data.status === "RESOLVED",
               " bg-[#FFF2F1] text-[#DA1E28]": data.status === "PENDING",
               " bg-[#EDEDED] text-[#373737]":
-                data.status === "REJECTED" || data.status === "FAILED",
-              " bg-[#FFFCF2] text-[#FDB022]": data.status === "PENDING",
+                data.status === "REJECTED" ||
+                data.status === "FAILED" ||
+                data.status === "CANCELLED",
+              " bg-[#FFFCF2] text-[#FDB022]": data.status === "PAUSED",
             })}
           >
             <p className="capitalize">{data.status.toLowerCase()}</p>
@@ -203,21 +200,6 @@ const DashboardHistoryBox = (data: any) => {
                   />
                 </div>
                 <div className="flex flex-col gap-6 mt-6 mb-5">
-                  {data?.escrowMetadata?.author === user?.userType && (
-                    <Button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          `https://www.mybalanceapp.com/share-escrow-link/share-escrow-link?ref=${data?.reference}`
-                        );
-                        toast.success("link has been copied to clipboard");
-                      }}
-                      fullWidth
-                      variant="outlined"
-                      type="button"
-                    >
-                      copy escrow link
-                    </Button>
-                  )}
                   <Button
                     onClick={() =>
                       navigate(
@@ -225,9 +207,24 @@ const DashboardHistoryBox = (data: any) => {
                       )
                     }
                     fullWidth
+                    variant="outlined"
                   >
-                    Report a dispute
+                    Raise a dispute
                   </Button>
+                  {data?.escrowMetadata?.author === user?.userType && (
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `https://www.mybalanceapp.com/share-escrow-link?ref=${data?.reference}`
+                        );
+                        toast.success("link has been copied to clipboard");
+                      }}
+                      fullWidth
+                      type="button"
+                    >
+                      copy escrow link
+                    </Button>
+                  )}
                 </div>
               </form>
             </div>
