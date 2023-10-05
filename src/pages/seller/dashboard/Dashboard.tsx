@@ -22,8 +22,7 @@ const Dashboard = () => {
     <div className="mb-16">
       <Withdraw open={withdrawModal} setOpen={setWithdrawModal} />
       <SellerHeader
-        Heading="Welcome TMusty!"
-        Text="Your last login was on 01/12/2022 10:00:34 AM"
+      
       />
       <div className="flex justify-center gap-2 mt-16 max-w-[710px]">
         <SellerDashboardBox
