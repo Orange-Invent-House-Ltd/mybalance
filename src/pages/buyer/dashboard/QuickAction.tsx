@@ -174,6 +174,24 @@ const QuickAction = () => {
                 </div>
               ))}
               {lockedFunds?.data.length === 0 && <EmptyMoney />}
+
+              {unlock && (
+                <UnlockAmount
+                  setSuccessModal={setSuccessModal}
+                  setUnlock={setUnlock}
+                  unlock={unlock}
+                />
+              )}
+              {lockedFundsLoading && (
+                <div className="flex flex-col gap-3 w-full max-w-[676px]">
+                  <Skeleton className="w-full h-[100px] " />
+                  <Skeleton className="w-full h-[100px] " />
+                  <Skeleton className="w-full h-[100px] " />
+                  <Skeleton className="w-full h-[100px] " />
+                  <Skeleton className="w-full h-[100px] " />
+                 
+                </div>
+              )}
               <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next"
@@ -193,23 +211,6 @@ const QuickAction = () => {
                 breakClassName="page-item"
               />
             </div>
-            {unlock && (
-              <UnlockAmount
-                setSuccessModal={setSuccessModal}
-                setUnlock={setUnlock}
-                unlock={unlock}
-              />
-            )}
-            {lockedFundsLoading && (
-              <div className="flex flex-col gap-3 w-full max-w-[676px]">
-                <Skeleton className="w-full h-[100px] " />
-                <Skeleton className="w-full h-[100px] " />
-                <Skeleton className="w-full h-[100px] " />
-                <Skeleton className="w-full h-[100px] " />
-                <Skeleton className="w-full h-[100px] " />
-                <Skeleton className="w-full h-[100px] " />
-              </div>
-            )}
             {successModal && (
               <div className=" fixed  top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-50  ">
                 <div className="w-[400px] animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">

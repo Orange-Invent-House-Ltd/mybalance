@@ -27,7 +27,7 @@ import GetVerificationLink from "./pages/auth/GetVerificationLink";
 import AuthLayout from "./layout/AuthLayout";
 import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
-import PaymentSucessfull from "./pages/home/PaymentSucessfull";
+import EscrowPayment from "./pages/home/EscrowPayment";
 import Test from "./pages/buyer/dashboard/Test";
 const App: React.FC = () => {
   return (
@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/t&c" element={<TermsAndCondition />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/payment-successful" element={<PaymentSucessfull />} />
+        <Route path="/escrow-payment" element={<EscrowPayment />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/email-verification" element={<EmailVerification />} />
