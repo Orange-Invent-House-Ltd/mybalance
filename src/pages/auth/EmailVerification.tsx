@@ -123,7 +123,7 @@ const EmailVerification = () => {
   //     });
   //   }
   // };
-  if (!email) {
+  if (!tempId || !email) {
     return <Navigate to="/get-verification-link" />;
   }
   return (
