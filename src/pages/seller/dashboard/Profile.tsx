@@ -92,20 +92,52 @@ const Profile = () => {
           {isLoading && <LoadingOverlay />}
           <TextField
             control={control}
-            label="full name"
-            name="name"
+            placeholder="eg. musty feet"
+            label="eg. musty feet"
+            name="businessName"
             rules={{ required: "this field is required" }}
           />
-          {/* <TextField
-            control={control}
-            label="email"
-            name="email"
-            rules={{ required: "this field is required" }}
-          /> */}
           <TextField
             control={control}
-            label="phone"
+            placeholder="sales of sneakers, footwear etc"
+            label="Describe your service"
+            name="service"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            label="Address"
+            placeholder="Ikeja, lagos"
+            name="address"
+            rules={{ required: "this field is required" }}
+          />
+
+          <TextField
+            control={control}
+            placeholder="09088776565"
+            label="Phone"
             name="phone"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            placeholder="e.g UBA"
+            label="Bank name"
+            name="bankName"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            placeholder="e.g 000000000"
+            label="Bank account number"
+            name="accNumber"
+            rules={{ required: "this field is required" }}
+          />
+          <TextField
+            control={control}
+            placeholder="e.g 000000000"
+            label="Valid ID number"
+            name="validId"
             rules={{ required: "this field is required" }}
           />
 
