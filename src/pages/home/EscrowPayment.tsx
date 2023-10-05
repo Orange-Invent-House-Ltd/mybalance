@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useEscrowPaymentRedirect, useUser } from "../../hooks/queries";
 import LoadingLogo from "../../components/reuseable/LoadingLogo";
 
-const PaymentSucessfull = () => {
+const EscrowPayment = () => {
   const [searchParams] = useSearchParams();
   const { data: user, isLoading: userLoading } = useUser();
 
@@ -24,7 +24,7 @@ const PaymentSucessfull = () => {
     transaction_id,
   });
   console.log(
-    "🚀 ~ file: PaymentSucessfull.tsx:27 ~ PaymentSucessfull ~ data:",
+    "🚀 ~ file: EscrowPayment.tsx:27 ~ EscrowPayment ~ data:",
     data
   );
   const ref = searchParams.get("ref") || data?.data?.transactionReference;
@@ -116,4 +116,4 @@ const PaymentSucessfull = () => {
   );
 };
 
-export default PaymentSucessfull;
+export default EscrowPayment;
