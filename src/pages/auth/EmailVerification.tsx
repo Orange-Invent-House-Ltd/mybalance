@@ -123,7 +123,7 @@ const EmailVerification = () => {
   //     });
   //   }
   // };
-  if (!tempId || !email) {
+  if (!email) {
     return <Navigate to="/get-verification-link" />;
   }
   return (
@@ -211,7 +211,7 @@ const EmailVerification = () => {
                       </div>
                       <Button
                         fullWidth
-                        // disabled={otp.length >=6}
+                        // disabled={otp.length < 6 }
                         onClick={(e) => {
                           e.preventDefault();
                           verifyEmail(otp);
