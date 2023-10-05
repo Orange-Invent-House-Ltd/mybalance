@@ -32,7 +32,7 @@ const PaymentSucessfull = () => {
     searchParams.get("amt") || formatToNairaCurrency(data?.data?.amount)
   );
 
-  const linkValue = `https://www.mybalanceapp.com/share-escrow-link/share-escrow-link?ref=${ref}`;
+  const linkValue = `https://www.mybalanceapp.com/share-escrow-link?ref=${ref}`;
   if (isLoading || userLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
