@@ -172,7 +172,7 @@ export const useCreateEscrow = () => {
       localStorage.setItem("transactionRef", data.data.reference);
       if (user?.userType === "SELLER") {
         navigate(
-          `/Payment-successful?amt=${data.data.amount}&ref=${data.data.reference}`
+          `/escrow-payment?amt=${data.data.amount}&ref=${data.data.reference}`
         );
       }
     },
@@ -190,16 +190,15 @@ export const useLockFunds = () => {
     mutationFn: lockFunds,
     onSuccess: (data) => {
       console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
-     
-        localStorage.removeItem("transactionRef");
-       
-        queryClient.invalidateQueries(["transactions"]);
-        queryClient.invalidateQueries(["lockedFunds"]);
-        queryClient.invalidateQueries(["user"]);
-        navigate(
-          `/Payment-successful?amt=${data.data.amount}&ref=${data.data.transactionReference}`
-        );
-      
+
+      localStorage.removeItem("transactionRef");
+
+      queryClient.invalidateQueries(["transactions"]);
+      queryClient.invalidateQueries(["lockedFunds"]);
+      queryClient.invalidateQueries(["user"]);
+      navigate(
+        `/escrow-payment?amt=${data.data.amount}&ref=${data.data.transactionReference}`
+      );
     },
     onError: (error: any) => {},
   });
@@ -319,7 +318,7 @@ export const useFundEscrow = () => {
     onSuccess: (data) => {
       console.log("🚀 ~ file: index.tsx:323 ~ useFundEscrow ~ data:", data);
       //  navigate(
-      //    `/Payment-successful?amt=${amt}&ref=${data.data.transactionReference}`
+      //    `/escrow-payment?amt=${amt}&ref=${data.data.transactionReference}`
       //  );
       queryClient.invalidateQueries(["user"]);
     },

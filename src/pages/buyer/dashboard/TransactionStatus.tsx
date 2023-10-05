@@ -83,10 +83,10 @@ const TransactionStatus = () => {
                 <div className="Text self-stretch text-center text-red-600 text-[29px] font-medium">
                   Payment Failed!
                 </div>
-                <div className="SupportingText self-stretch text-center text-zinc-800 text-[16px] font-normal leading-normal">
+                <button className="SupportingText self-stretch text-center text-zinc-800 text-[16px] font-normal leading-normal">
                   Unfortunately, your payment was not successful! Click the
                   button below to return to MyBalance dashboard.
-                </div>
+                </button>
               </div>
             </div>
           </div>
