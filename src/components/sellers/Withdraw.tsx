@@ -92,7 +92,7 @@ const Withdraw = ({ open, setOpen }: any) => {
   }, [withdrawSuccess]);
   useEffect(() => {
     if (accNum.length === 10) {
-      LookupMutate({ bankCode: "004", accountNumber: accNum });
+      LookupMutate({ bankCode: code, accountNumber: accNum });
     }
   }, [accNum, code]);
   useEffect(() => {
