@@ -309,6 +309,7 @@ const RegisterIdentity = () => {
       });
       store.setRequestLoading(false);
       store.setTempId(response.data.data?.tempId);
+      localStorage.setItem('tempId ', response.data.data?.tempId);
       //navigate to verification page after submition
       navigate("/email-verification");
     } catch (error: any) {
