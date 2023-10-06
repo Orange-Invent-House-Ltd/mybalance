@@ -45,10 +45,16 @@ export interface GenericResponse {
     tempId: string;
     token: string;
     accountName: string;
-    lastName: string;
+    firstname: string;
     surname: string;
     firstName: string;
-    firstname: string;
+    middleName: string;
+    lastName: string;
+    meta: {
+      firstName: string;
+      middleName: string;
+      lastName: string;
+    }
     user: IUser;
   };
 }

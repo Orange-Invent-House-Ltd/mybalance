@@ -49,7 +49,7 @@ const AddNewDispute = () => {
               htmlFor={"selectBank"}
               className="text-sm mb-[6px] capitalize block"
             >
-              select bank
+              Priority
             </label>
             <select
               className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#B7B7B7] "

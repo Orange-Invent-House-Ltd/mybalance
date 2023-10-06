@@ -211,7 +211,7 @@ const EmailVerification = () => {
                       </div>
                       <Button
                         fullWidth
-                        // disabled={otp.length >=6}
+                        // disabled={otp.length < 6 }
                         onClick={(e) => {
                           e.preventDefault();
                           verifyEmail(otp);

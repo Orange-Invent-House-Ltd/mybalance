@@ -47,6 +47,9 @@ const RegisterContinue = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [banksAndCodes, setBanksAndCodes] = useState([]);
+  const [bankCode, setBankCode] = useState('');
+  const [bankName, setBankName] = useState('')
+  const { data: banks, isLoading: bankIsLoading } = useBanks();
 
   const store = useStore();
   const navigate = useNavigate();
@@ -56,41 +59,32 @@ const RegisterContinue = () => {
 
   const { handleSubmit, setValue, getValues, watch } = methods;
 
-  const [code, setCode] = useState("");
-  const { data: banks, isLoading: bankIsLoading } = useBanks();
-  const {
-    data: LookupData,
-    mutate: LookupMutate,
-    isLoading: LookupIsLoading,
-  } = useLookUpBank();
-
   // get user bank name once bank number input filed  === 10 digits
   useEffect(() => {
+    
     const userAccountNumber = watch("accountNumber");
     if (userAccountNumber.length === 10) {
-      // LookupMutate({ bankCode: code, accountNumber: userAccountNumber});
-      // setValue("accountName", LookupData?.data.accountName);
-      // console.log(userAccountNumber);
-      getAccountName(code, userAccountNumber);
+      const bank = banks.data?.find((bank:any) => bank.name === bankName)
+      setBankCode(bank.code)
+      console.log(bankCode)
+      if(bankCode!=='')getAccountName(bankCode, userAccountNumber);
     }
-  }, [watch("accountNumber")]);
+  }, [bankCode, watch("accountNumber")]);
 
   // get the user's account name.
-  const getAccountName = async (
-    userBankCode: string,
-    userAccountNumber: string
-  ) => {
+  const getAccountName = async (bankCode:string, userAccountNumber:string) => {
     try {
       store.setRequestLoading(true);
       const response = await publicApi.post<GenericResponse>(
         `shared/lookup/nuban`,
         {
-          bankCode: userBankCode,
+          bankCode: bankCode,
           accountNumber: userAccountNumber,
         }
       );
       setValue("accountName", response.data.data?.accountName);
-      setValue("bankCode", userBankCode);
+      setValue("bankCode", bankCode);
+      setValue("bankName", bankName);
       store.setRequestLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -110,18 +104,14 @@ const RegisterContinue = () => {
   };
 
   const registerUser = (data: SignupInput) => {
+    console.log('I got clicked')
+    console.log(data)
     store.setAuthUser({ ...store.authUser, ...data });
     store.setAuthEmail(data.email);
+    localStorage.setItem('email', data.email);
     //navigate to next page
     navigate("identity");
   };
-  // const [code, setCode] = useState("");
-  // useEffect(() => {
-  //   if (userAccountNumber?.length === 10) {
-  //     // LookupMutate({ bankCode: code, accountNumber: accNum });
-  //     LookupMutate({ bankCode: "035", accountNumber: userAccountNumber });
-  //   }
-  // }, [userAccountNumber, code]);
 
   return (
     <div className="relative ">
@@ -176,7 +166,7 @@ const RegisterContinue = () => {
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
             <div className="px- py-5 flex-auto">
               <div className="tab-content tab-space">
-                {/* create account as seller */}
+                {/* create account as seller. */}
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(registerUser)}>
@@ -193,7 +183,11 @@ const RegisterContinue = () => {
                           label="Email"
                           placeholder="e.g tmusty@gmail.com"
                         />
-                        {/* <div className="flex">
+                        <div className="w-[343px] text-[13px] mt-[-20px]">
+                          <span className="text-neutral-600 font-bold leading-tight">NOTE:</span>
+                          <span className="text-neutral-500 font-normal "> Use the email address that was shared with the buyer IF ANY.</span>
+                        </div>
+                        <div className="flex">
                           <TextField
                             name="password"
                             label="Add password"
@@ -201,20 +195,21 @@ const RegisterContinue = () => {
                             type={passwordShown ? 'text' : 'password'}
                           />
                           <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
-                        </div> */}
+                        </div>
                         <div className="w-full mb-3 ">
                           <label htmlFor={"selectBank"} className="block">
-                            select bank
+                            Select Bank
                           </label>
                           <select
-                            className="block border border-[#B7B7B7] w-[316px] md:w-[343px] rounded-md p-2 outline-none focus:border-[#747373] "
-                            value={code}
+                            className="block border border-[#B7B7B7] w-[316px] md:w-[343px] rounded-md p-2 outline-none focus:border-[#747373]"
+                            value={bankName}
+                            name="bankName"
                             onChange={(e) => {
-                              setCode(e.target.value);
+                              setBankName(e.target.value)
                             }}
                           >
-                            {banks?.data?.map((bank: any) => (
-                              <option key={bank.slug} value={bank.code}>
+                            {banks?.data?.map((bank: any) =>(
+                              <option key={bank.name} value={bank.name}>
                                 {bank.name}
                               </option>
                             ))}
@@ -238,7 +233,7 @@ const RegisterContinue = () => {
                             disabled
                           />
                         </div>
-                        <Button fullWidth>Next</Button>
+                        <Button fullWidth >Next</Button>
                       </div>
                     </form>
                   </FormProvider>

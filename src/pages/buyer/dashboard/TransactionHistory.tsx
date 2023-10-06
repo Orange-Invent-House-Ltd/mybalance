@@ -8,6 +8,7 @@ import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
+
 const TransactionHistory = () => {
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
@@ -18,6 +19,7 @@ const TransactionHistory = () => {
     size: 10,
     type: activeButton,
   });
+
   useEffect(() => {
     setPage(1);
   }, [activeButton]);
@@ -89,7 +91,7 @@ const TransactionHistory = () => {
           pageCount={data?.meta?.totalPages}
           previousLabel="Previous"
           renderOnZeroPageCount={null}
-          pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
+          pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           containerClassName="flex gap-3 ml-10 items-center "
