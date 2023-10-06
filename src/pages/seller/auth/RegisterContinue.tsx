@@ -196,7 +196,7 @@ const RegisterContinue = () => {
                           />
                           <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
                         </div>
-                        <div className="w-full mb-3 ">
+                        <div className="w-full mb-3">
                           <label htmlFor={"selectBank"} className="block">
                             Select Bank
                           </label>

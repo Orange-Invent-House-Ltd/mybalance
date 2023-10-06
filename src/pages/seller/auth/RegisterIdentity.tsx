@@ -410,10 +410,10 @@ const RegisterIdentity = () => {
                       className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6"
                     >
                       <option value="select">Select</option>
-                      <option value="IP">International Passport</option>
+                      {/* <option value="IP">International Passport</option> */}
                       <option value="NIN">NIN</option>
-                      <option value="VC">Voter’s Card</option>
-                      <option value="DL">Driver’s License</option>
+                      {/* <option value="VC">Voter’s Card</option>
+                      <option value="DL">Driver’s License</option> */}
                     </select>
                     {selectedValue === "IP" ? (
                       <FormProvider {...methods}>
