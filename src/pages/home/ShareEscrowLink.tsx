@@ -26,7 +26,7 @@ const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");
   const { data: user, isLoading: userLoading } = useUser();
-  const [selectedReason, setSelectedReason] = useState("");
+  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [fundEscrow, setFundEscrow] = useState(false);
   const [openPay, setOpenPay] = useState(false);
   const {
@@ -41,10 +41,6 @@ const ShareEscrowLink = () => {
     isError,
     isSuccess,
   } = useTransactionInfo(ref);
-  console.log(
-    "🚀 ~ file: ShareEscrowLink.tsx:25 ~ ShareEscrowLink ~ data:",
-    data
-  );
 
   const {
     mutate,
@@ -96,10 +92,17 @@ const ShareEscrowLink = () => {
       value: "WRONG_QUANTITY",
     },
     {
-      title: "wrong delivery data",
-      value: "WRONG_DELIVERY_DATA",
+      title: "wrong delivery date",
+      value: "WRONG_DELIVERY_DATE",
     },
   ];
+  const handleReasonSelection = (value: string) => {
+    if (selectedReasons.includes(value)) {
+      setSelectedReasons(selectedReasons.filter((reason) => reason !== value));
+    } else {
+      setSelectedReasons([...selectedReasons, value]);
+    }
+  };
   if (userLoading || transactionLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -131,8 +134,8 @@ const ShareEscrowLink = () => {
                   return (
                     <div className="flex gap-5  capitalize">
                       <input
-                        checked={selectedReason === value}
-                        onChange={() => setSelectedReason(value)}
+                        checked={selectedReasons.includes(value)}
+                        onChange={() => handleReasonSelection(value)}
                         type="checkbox"
                         className="accent-primary-normal cursor-pointer  text-white"
                         id={value}
@@ -156,12 +159,20 @@ const ShareEscrowLink = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    if (selectedReason) {
-                      mutate({
-                        ref: ref,
-                        status: "REJECTED",
-                        rejectedReason: selectedReason, // Pass the selected reason to the API
-                      });
+                    if (selectedReasons.length > 0) {
+                      mutate(
+                        {
+                          ref: ref,
+                          status: "REJECTED",
+                          rejectedReason: selectedReasons, // Pass the selected reason to the API
+                        },
+                        {
+                          onSuccess: () => {
+                            navigate("/buyer/dashboard");
+                          },
+                        }
+                      );
+                      console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
 

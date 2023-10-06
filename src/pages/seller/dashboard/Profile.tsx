@@ -14,11 +14,17 @@ const Profile = () => {
     useUploadAvatar();
 
   const { data: user } = useUser();
+  console.log("🚀 ~ file: Profile.tsx:17 ~ Profile ~ user:", user);
   useEffect(() => {
     reset({
       name: user?.fullName,
       // email: user?.email,
       phone: user?.phoneNumber,
+      businessName: user?.business?.name,
+      address: user?.business?.address,
+      service: user?.business?.description,
+      accNumber: user?.bankAccount?.accountNumber,
+      bankName: user?.bankAccount?.bankName,
     });
   }, [reset]);
   const onSubmit = (data: any) => {
@@ -52,7 +58,7 @@ const Profile = () => {
             {user?.avatar ? (
               <div className="relative w-[60px] h-[60px] object-cover overflow-hidden rounded-full">
                 {upLoadIsLoading && (
-                  <div className="absolute z-10 top-0 w-full h-full flex items-center justify-center left-0 bg-white/70 z-50">
+                  <div className="absolute top-0 w-full h-full flex items-center justify-center left-0 bg-white/70 z-50">
                     <img
                       src={loading}
                       className="animate-spin mx-auto "
@@ -125,6 +131,7 @@ const Profile = () => {
             label="Bank name"
             name="bankName"
             rules={{ required: "this field is required" }}
+            disabled
           />
           <TextField
             control={control}
@@ -132,6 +139,7 @@ const Profile = () => {
             label="Bank account number"
             name="accNumber"
             rules={{ required: "this field is required" }}
+            disabled
           />
           <TextField
             control={control}
@@ -139,6 +147,7 @@ const Profile = () => {
             label="Valid ID number"
             name="validId"
             rules={{ required: "this field is required" }}
+            disabled
           />
 
           <Button fullWidth>update profile</Button>
