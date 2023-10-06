@@ -43,6 +43,7 @@ const Register = () => {
   });
 
   const { handleSubmit } = methods;
+  
 
   const registerUser = (data: SignupInput) => {
     store.setAuthUser(data);

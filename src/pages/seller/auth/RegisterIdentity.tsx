@@ -31,7 +31,12 @@ const registerSchema = z.object({
         .max(52, "name must not be more than 52 character"),
     ])
     .optional(),
-  number: z.union([z.string().length(0), z.string()]).optional(),
+  // number: z.union([z.string().length(0), z.string()]).optional(),
+  number: z
+        .string()
+        .min(11, "NIN should be at least 11 digits")
+        .max(11, "NIN must not be more than 11 character")
+        .regex(/^([0-9]{11})$/, "NIN must be 11 digits only"),
   passportNumber: z
     .union([
       z.string().length(0),
@@ -393,8 +398,7 @@ const RegisterIdentity = () => {
                     We need your identity
                   </h6>
                   <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-                    Enter your NIN, Int’l passport, Driver’s license or Voter’s
-                    card number below.
+                    Enter your valid means of identification below
                   </p>
                   <div className="grid gap-y-3.5">
                     <label
