@@ -103,6 +103,28 @@ const RegisterContinue = () => {
     }
   };
 
+  const checkEmail = async(data:any) => {
+    try{
+      const response = await publicApi.post('console/check-email',
+      {'email': data?.email}
+      )
+      toast.success(response.data.message as string, {
+        position:  'top-right'
+      })
+    }catch(error:any){
+      // const resMessage =
+      //   (error.response &&
+      //     error.response.data &&
+      //     error.response.data.message) ||
+      //   error.message ||
+      //   error.response.data.message.toString();
+      // toast.error( resMessage, {
+      //   position: 'top-right'
+      // })
+      registerUser(data)
+    }
+  }
+
   const registerUser = (data: SignupInput) => {
     console.log('I got clicked')
     console.log(data)
@@ -169,7 +191,7 @@ const RegisterContinue = () => {
                 {/* create account as seller. */}
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   <FormProvider {...methods}>
-                    <form onSubmit={handleSubmit(registerUser)}>
+                    <form onSubmit={handleSubmit(checkEmail)}>
                       <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
                         Create your account now
                       </h6>

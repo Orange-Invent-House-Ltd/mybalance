@@ -57,7 +57,7 @@ const Header = () => {
   }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between mb-8">
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
         <div>
           {user?.avatar ? (
             <img
@@ -72,9 +72,9 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div>
+        <div >
           <h6 className="h6">{user?.fullName || <Skeleton width={100} />}</h6>
-          <p className="max-w-[478px] text-[#303030] capitalize font-normal text-sm leading-[18.9px] ">
+          <p className="mt-[-20px] max-w-[478px] text-[#303030] capitalize font-normal text-sm leading-[18.9px] ">
             your last login was in{" "}
             {user && user.lastLoginDate ? (
               new Date(user.lastLoginDate).toLocaleString()
