@@ -20,9 +20,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: 'Create env file'
-      run: |
-        echo "${{ secrets.VITE_BASE_URL}}" > .env
     - uses: actions/checkout@v3
     - uses: pnpm/action-setup@0609f0983b7a228f052f81ef4c3d6510cae254ad
       with:
@@ -33,3 +30,6 @@ jobs:
         cache: 'pnpm'
     - run: pnpm i
     - run: pnpm run build
+    - name: 'Create environment variable'
+      env: 
+        VITE_BASE_URL: ${{secrets.VITE_BASE_URL}}
