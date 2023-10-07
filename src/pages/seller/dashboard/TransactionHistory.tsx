@@ -31,7 +31,7 @@ const TransactionHistory = () => {
       />
       <div className="px-6 py-10  rounded-lg border border-[#B7B7B7] max-w-[724px] w-full">
         <div className="w-full relative">
-          <div className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row">
+          <div className="flex mb-0  no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row">
             <button
               className="tab"
               data-state={activeButton === "" ? "active" : "inactive"}

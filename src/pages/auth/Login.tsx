@@ -9,9 +9,9 @@ import TextField from "../../components/reuseable/TextField";
 import { useLogin } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
 import { Button } from "../../components/reuseable/Button";
-import eye from '../../assets/Icons/eye.svg'
-import hide from '../../assets/Icons/hide.svg'
-
+import eye from "../../assets/Icons/eye.svg";
+import hide from "../../assets/Icons/hide.svg";
+import MultilineTextField from "../../components/reuseable/MultilineTextField";
 
 //type definition with error messages for the form input
 const loginSchema = object({
@@ -28,7 +28,7 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const Login = () => {
-  const [passwordShown, setPasswordShown] = useState(false)
+  const [passwordShown, setPasswordShown] = useState(false);
   const { mutate, isLoading } = useLogin();
   const [openTab, setOpenTab] = useState(1);
   const methods = useForm<LoginInput>({
@@ -97,7 +97,8 @@ const Login = () => {
             <div className=" py-5 flex-auto">
               <div className="tab-content tab-space">
                 {/* Login as customer */}
-                <div className={openTab === 1 ? "block" : "block"} id="link1">
+
+                <div id="link1">
                   <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(loginUser)}>
                       <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
@@ -107,20 +108,27 @@ const Login = () => {
                         Welcome back! Please enter your details and access your
                         dashboard.
                       </p>
-                      <div className="grid gap-y-3.5">
+
+                      <div className="">
                         <TextField
                           name="email"
                           label="Email"
                           placeholder="e.g al.bert@gmail.com"
                         />
-                        <div className="flex">
+
+                        <div className="relative">
                           <TextField
                             name="password"
                             label="Password"
                             placeholder="************"
-                            type={passwordShown ? 'text' : 'password'}
+                            type={passwordShown ? "text" : "password"}
                           />
-                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                          <img
+                            src={passwordShown ? hide : eye}
+                            alt="show password"
+                            className="absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5"
+                            onClick={() => setPasswordShown(!passwordShown)}
+                          />
                         </div>
                         <div className="flex items-center justify-between py-5">
                           <div className="flex items-center cursor-pointer gap-2">
@@ -129,7 +137,7 @@ const Login = () => {
                               htmlFor="rememberMe"
                               className="cursor-pointer"
                             >
-                            Remember me
+                              Remember me
                             </label>
                           </div>
                           <Link to="/forgot-password" className="font-medium">
@@ -145,7 +153,6 @@ const Login = () => {
                 <div className={openTab === 2 ? "hidden" : "hidden"} id="link1">
                   content 2 is here
                 </div>
-              
               </div>
             </div>
           </div>
@@ -160,11 +167,10 @@ const Login = () => {
           </Link>
         </p>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
-          Can’t verify my email? 
+          Can’t verify my email?
           <Link
             to="/email-verification"
             className="text-[#121212] font-bold cursor-pointer"
-          
           >
             {" "}
             Verify now
