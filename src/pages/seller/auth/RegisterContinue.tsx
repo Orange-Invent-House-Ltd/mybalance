@@ -108,7 +108,7 @@ const RegisterContinue = () => {
       const response = await publicApi.post('console/check-email',
       {'email': data?.email}
       )
-      toast.success(response.data.message as string, {
+      toast.success('user with this email already exists.' , {
         position:  'top-right'
       })
     }catch(error:any){
