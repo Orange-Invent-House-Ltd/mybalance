@@ -17,7 +17,7 @@ body {
 }
 
 .tab {
-  @apply text-lg  font-medium capitalize rounded-t-md p-3 px-4 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14];
+  @apply md:text-lg  font-medium capitalize rounded-t-md p-3 px-4 block leading-normal data-[state='inactive']:pb-[13px] data-[state='inactive']:border-[#6D6D6D] data-[state='inactive']:hover:bg-[#FFF2E8]/30 data-[state='inactive']:text-[#6D6D6D] data-[state='inactive']:border-b data-[state='active']:text-[#121212] data-[state='active']:border-b-2 data-[state='active']:bg-[#FFF2E8]  data-[state='active']:border-[#FD7E14];
 }
 
 /**
@@ -161,7 +161,7 @@ body {
   @apply font-bold text-[32px] leading-[43.2px];
 }
 .h6 {
-  @apply text-headingColor text-[23px] font-bold leading-[31.05px] mb-[30px];
+  @apply text-headingColor text-[23px] font-bold leading-[31.05px] mb-[20px] md:mb-[30px];
 }
 .privacyHeading {
   @apply text-headingColor leading-tight text-[26px] md:text-[32px] mb-2 font-bold;

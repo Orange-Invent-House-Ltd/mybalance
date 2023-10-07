@@ -50,7 +50,7 @@ const DashboardHistoryBox = (data: any) => {
             localStorage.setItem("transactionInfo", JSON.stringify(data));
           }
         }}
-        className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
+        className="  my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
       >
         <div
           className={clsx("", {
@@ -60,7 +60,7 @@ const DashboardHistoryBox = (data: any) => {
           })}
         >
           <p className="text-lg font-medium">{data.meta.title}</p>
-          <p className="text-sm font-normal">{data.meta.description}</p>
+          <p className="text-sm font-normal  w-[150px] truncate ">{data.meta.description}</p>
         </div>
         <div
           className={clsx("", {

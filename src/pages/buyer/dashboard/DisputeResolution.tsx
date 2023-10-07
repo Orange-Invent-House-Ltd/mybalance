@@ -18,24 +18,25 @@ const DisputeResolution = () => {
 
   return (
     <div>
-      <header className="mb-16">
+      <header className="mb-10 md:mb-16">
         <h1 className="text-[23px] capitalize font-medium ">
           Dispute resolution
         </h1>
-        <p className="text-[#303030] text-sm mt-4">
+        <p className="text-[#303030] text-sm mt-2 md:mt-4">
           Manage disputes with vendors by creating a dispute thread here.
         </p>
       </header>
       <div>
         {isLoading && (
-          <div className="flex flex-col gap-3">
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
+          <div className="flex flex-col gap-2 md:gap-3 w-full max-w-[676px]">
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
           </div>
         )}
-        <div className="space-y-10">
+        <div className="flex flex-col gap-4 md:gap-6">
           {data?.data?.map(
             ({ reason, description, createdAt, status }: any) => (
               <DisputeCard
