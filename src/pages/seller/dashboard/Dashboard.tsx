@@ -68,7 +68,7 @@ const Dashboard = () => {
           <Skeleton className="w-full h-[100px] " />
         </div>
       )}
-      <div className="w-[343px]">
+      <div className="w-full sm:w-[343px]">
         <Link to="/seller/transaction-history">
           <Button fullWidth variant="outlined">
             View all transactions
