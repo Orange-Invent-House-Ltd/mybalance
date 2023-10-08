@@ -29,7 +29,7 @@ const EscrowPayment = () => {
   );
   const ref = searchParams.get("ref") || data?.data?.transactionReference;
   const amount = formatToNairaCurrency(
-    searchParams.get("amt") || formatToNairaCurrency(data?.data?.amount)
+    searchParams.get("amt") || data?.data?.amount
   );
 
   const linkValue = `https://www.mybalanceapp.com/share-escrow-link?ref=${ref}`;
