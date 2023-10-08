@@ -123,10 +123,10 @@ const ShareEscrowLink = () => {
             <div className="w-full max-w-[380px] py-2 px-8  rounded-lg absolute bg-white  top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 ">
               <div className="mt-6 text-center">
                 <h1 className="text-2xl font-medium text-center">
-                  Reason For Rejecting
+                  Reason[s] For Rejecting
                 </h1>
                 <p className="text-lg font-normal text-[#3A3A3A]">
-                  Select your reason for <br /> rejecting this transaction.
+                  Select your reason[s] for <br /> rejecting this transaction.
                 </p>
               </div>{" "}
               <div className="space-y-4 my-6">

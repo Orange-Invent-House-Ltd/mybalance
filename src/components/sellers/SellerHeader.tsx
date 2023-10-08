@@ -84,12 +84,8 @@ const Header = () => {
           </p>
         </div>
       </div>
-      <img
-        src={bell}
-        alt="notification bell"
-        className="hidden md:flex ml-auto mr-4"
-      />
-      <div className="hidden md:flex w-[343px] md:w-[300px]">
+     
+      <div className="hidden md:flex w-[343px]  md:w-[300px]">
         <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
           Create One-time MyBalance Link
         </Button>

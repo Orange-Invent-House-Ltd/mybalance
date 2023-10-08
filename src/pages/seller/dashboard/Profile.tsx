@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../../../components/reuseable/Button";
 import TextField from "../../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
-import { useEditProfile, useUploadAvatar } from "../../../hooks/mutations";
+import { useEditBusinessProfile, useEditProfile, useUploadAvatar } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { useUser } from "../../../hooks/queries";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
 
 const Profile = () => {
   const { handleSubmit, control, reset } = useForm();
-  const { mutate, isLoading } = useEditProfile();
+  const { mutate, isLoading } = useEditBusinessProfile();
   const { mutate: uploadAvatar, isLoading: upLoadIsLoading } =
     useUploadAvatar();
 
@@ -17,18 +17,22 @@ const Profile = () => {
   console.log("🚀 ~ file: Profile.tsx:17 ~ Profile ~ user:", user);
   useEffect(() => {
     reset({
-      name: user?.fullName,
+      validId: user?.id,
       // email: user?.email,
       phone: user?.phoneNumber,
-      businessName: user?.business?.name,
+      name: user?.business?.name,
       address: user?.business?.address,
-      service: user?.business?.description,
+      description: user?.business?.description,
       accNumber: user?.bankAccount?.accountNumber,
       bankName: user?.bankAccount?.bankName,
     });
   }, [reset]);
   const onSubmit = (data: any) => {
+    delete data?.validId;
+    delete data?.accNumber;
+    delete data?.bankName;
     mutate(data);
+   
   };
   const words = user?.fullName.split(" ");
   const firstLetter = words?.[0][0]; // Get the first letter of the first word
@@ -100,14 +104,14 @@ const Profile = () => {
             control={control}
             placeholder="eg. musty feet"
             label="eg. musty feet"
-            name="businessName"
+            name="name"
             rules={{ required: "this field is required" }}
           />
           <TextField
             control={control}
             placeholder="sales of sneakers, footwear etc"
             label="Describe your service"
-            name="service"
+            name="description"
             rules={{ required: "this field is required" }}
           />
           <TextField

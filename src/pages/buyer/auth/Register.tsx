@@ -129,22 +129,33 @@ const Register = () => {
                           placeholder="e.g al.bert@gmail.com"
                         />
                         <div className="w-[343px] text-[13px] mt-[-20px]">
-                          <span className="text-neutral-600 font-bold leading-tight">NOTE:</span>
-                          <span className="text-neutral-500 font-normal "> Use the email address that was shared with the seller IF ANY.</span>
+                          <span className="text-neutral-600 font-bold leading-tight">
+                            NOTE:
+                          </span>
+                          <span className="text-neutral-500 font-normal ">
+                            {" "}
+                            Use the email address that was shared with the
+                            seller IF ANY.
+                          </span>
                         </div>
                         <TextField
                           name="phone"
                           label="Phone"
                           placeholder="+234 000 0000 000"
                         />
-                        <div className="flex">
+                        <div className="relative">
                           <TextField
                             name="password"
                             label="Password"
                             placeholder="************"
-                            type={passwordShown ? 'text' : 'password'}
+                            type={passwordShown ? "text" : "password"}
                           />
-                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                          <img
+                            src={passwordShown ? hide : eye}
+                            alt="show password"
+                            className="absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5"
+                            onClick={() => setPasswordShown(!passwordShown)}
+                          />
                         </div>
                         <Button> Next</Button>
                       </div>

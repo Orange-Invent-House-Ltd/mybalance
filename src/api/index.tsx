@@ -128,6 +128,10 @@ export const editProfile = async (data: any) => {
   const res = await privateApi.put(`/auth/profile/edit`, data);
   return res.data;
 };
+export const editBusinessProfile = async (data: any) => {
+  const res = await privateApi.put(`/auth/profile/business`, data);
+  return res.data;
+};
 export const uploadAvatar = async (data: any) => {
   const res = await privateApi.post(`/auth/profile/upload`, data);
   return res.data;

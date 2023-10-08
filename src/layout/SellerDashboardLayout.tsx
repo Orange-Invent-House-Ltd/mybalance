@@ -177,7 +177,7 @@ const SellerDashboardLayout = () => {
             </div>
           </nav>
         </div>
-        <main className="w-full pl-6 pr-[5%] pt-4 md:pt-[70px] pb-10">
+        <main className="w-full px-3 md:px-6  pt-4 md:pt-[70px] pb-10">
           <Outlet />
           {/* Mobile footer */}
           <div className="mt-24 mb-16 md:hidden">

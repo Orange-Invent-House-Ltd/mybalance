@@ -157,7 +157,7 @@ const Dashboard = () => {
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:pl-[16px] overflow-y-scroll md:pr-[34px] "
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
@@ -200,7 +200,7 @@ const Dashboard = () => {
                       rules={{ required: "this field is required" }}
                       name={"itemQuantity"}
                       label="Number of item(s)"
-                      placeholder="give a description"
+                      placeholder="5"
                       type="number"
                     />
                     <TextField
@@ -409,14 +409,14 @@ const Dashboard = () => {
                 subtext="Withdraw your money from your wallet"
               />
             </Link>
-            <Link to="/share-escrow-link">
+            {/* <Link to="/share-escrow-link">
               <DashboardQuickBox
                 disabled={user?.walletBalance === "0.00"}
                 icon={share}
                 text="Share link"
                 subtext="Share your escrow information with everyone"
               />
-            </Link>
+            </Link> */}
           </div>
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history
