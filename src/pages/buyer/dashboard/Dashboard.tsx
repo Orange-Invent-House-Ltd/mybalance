@@ -29,6 +29,9 @@ import {
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
+import moment from 'moment'
+
+
 const Dashboard = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
@@ -41,6 +44,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  var today = moment().format("YYY-MM-DD");
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,
@@ -217,6 +221,7 @@ const Dashboard = () => {
                       name={"deliveryDate"}
                       label="Delivery timeline"
                       type="date"
+                      min = {today}
                     />
                   </div>
                   <h1 className="mt-6 text-[#303030] text-lg font-medium">

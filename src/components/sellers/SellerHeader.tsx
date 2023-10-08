@@ -9,6 +9,7 @@ import { useBanks, useUser } from "../../hooks/queries";
 import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
 import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
+import moment from 'moment';
 
 
 const Header = () => {
@@ -16,6 +17,8 @@ const Header = () => {
   const [code, setCode] = useState("");
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
+
+  var today = moment().format("YYY-MM-DD");
 
   const { handleSubmit, control, reset } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
@@ -128,7 +131,7 @@ const Header = () => {
                 Create your MyBalance escrow information and share with
                 everyone.
               </p>
-              <h1 className="text-[#EDEDED] text-lg font-medium">
+              <h1 className="text-[#393737] text-lg font-medium">
                 ITEM(S) INFORMATION
               </h1>
               <div className="mt-6 flex flex-col gap-4">
@@ -169,6 +172,7 @@ const Header = () => {
                   label="Delivery timeline"
                   placeholder="Select number of days"
                   type="date"
+                  min={today}
                 />
                 <TextField
                   control={control}
@@ -184,7 +188,7 @@ const Header = () => {
                   placeholder="e.g tommy@gmail.com"
                 />
               </div>
-              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+              <h1 className="mt-6 text-[#393737] text-lg font-medium">
                 VENDOR ACCOUNT INFORMATION
               </h1>
               <div className="mt-6 flex flex-col gap-4">
