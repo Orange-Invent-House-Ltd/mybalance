@@ -33,9 +33,9 @@ const TransactionHistory = () => {
         Heading="Transaction History"
         Text="You can view an endless list of transaction you have transacted over time."
       />
-      <div className="px-6 py-10  rounded-lg border border-[#B7B7B7] max-w-[724px] w-full">
-        <div className="relative max-w-[676px]">
-          <div className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row">
+      <div className="px-2 md:px-6 py-3 md:py-10  rounded-lg border border-[#B7B7B7] max-w-[724px] w-full">
+        <div className="relative w-full max-w-[676px]">
+          <div className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto  pt-1 md:pt-3 pb-2 md:pb-4 flex-row">
             <button
               className="tab "
               data-state={activeButton === "" ? "active" : "inactive"}
@@ -66,7 +66,7 @@ const TransactionHistory = () => {
             </button>
           </div>
           {isLoading && (
-            <div className="flex flex-col gap-3 w-full max-w-[676px]">
+            <div className="flex flex-col gap-2 md:gap-3 w-full max-w-[676px]">
               <Skeleton className="w-full h-[100px] " />
               <Skeleton className="w-full h-[100px] " />
               <Skeleton className="w-full h-[100px] " />

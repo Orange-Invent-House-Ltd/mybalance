@@ -11,7 +11,21 @@ import { useUser } from "../hooks/queries";
 import LoadingLogo from "../components/reuseable/LoadingLogo";
 
 const AuthLayout = () => {
-
+  // const { data: user, isLoading } = useUser();
+  // console.log("🚀 ~ file: AuthLayout.tsx:15 ~ AuthLayout ~ user:", user);
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-screen h-screen flex justify-center items-center">
+  //       <LoadingLogo />
+  //     </div>
+  //   );
+  // }
+  // if (user) {
+  //   return <Navigate to="/buyer/dashboard" />;
+  // }
+  if (localStorage.getItem("session_token")) {
+    return <Navigate to="/buyer/dashboard" />;
+  }
   return (
     <div className=" md:flex justify-center flex-row-reverse">
       {/* mobile header */}
@@ -39,7 +53,6 @@ const AuthLayout = () => {
         </header>
 
         <div className="  w-full max-w-[354px] px-5 sm:px-0 mx-auto my-6 ">
-         
           <Outlet />
         </div>
         <footer className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">

@@ -9,7 +9,7 @@ const LockMoneyBox = ({date, heading, text}:{date:any,heading:string,text:string
   return (
     
       
-        <div  className='px-7 w-full py-3 rounded border shadow-lg shadow-[#E4E4E4] border-white mt-6'>
+        <div  className='px-7 w-full py-3 rounded border shadow-lg shadow-[#E4E4E4] border-white mt-4 md:mt-6'>
           <div className='flex items-center gap-3 cursor-pointer'>
             <img src={lockicon} alt="lock" className="w-[20px]"/>
             <p className='text-[10px] text-[#B7B7B7] font-normal'>{date}</p>

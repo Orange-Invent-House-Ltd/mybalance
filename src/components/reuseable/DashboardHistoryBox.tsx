@@ -50,7 +50,7 @@ const DashboardHistoryBox = (data: any) => {
             localStorage.setItem("transactionInfo", JSON.stringify(data));
           }
         }}
-        className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
+        className="  my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
       >
         <div
           className={clsx("", {
@@ -60,7 +60,7 @@ const DashboardHistoryBox = (data: any) => {
           })}
         >
           <p className="text-lg font-medium">{data.meta.title}</p>
-          <p className="text-sm font-normal">{data.meta.description}</p>
+          <p className="text-sm font-normal  w-[150px] truncate ">{data.meta.description}</p>
         </div>
         <div
           className={clsx("", {
@@ -102,7 +102,7 @@ const DashboardHistoryBox = (data: any) => {
           />
 
           <Dialog.Content>
-            <div className="w-[393px]  h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll">
+            <div className="max-w-[393px] w-full  h-full min-h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
               <div className="flex gap-4 items-center pt-10 mb-8">
                 <img
                   onClick={() => setOpen(false)}

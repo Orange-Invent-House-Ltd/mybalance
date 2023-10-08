@@ -123,10 +123,10 @@ const ShareEscrowLink = () => {
             <div className="w-full max-w-[380px] py-2 px-8  rounded-lg absolute bg-white  top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 ">
               <div className="mt-6 text-center">
                 <h1 className="text-2xl font-medium text-center">
-                  Reason For Rejecting
+                  Reason[s] For Rejecting
                 </h1>
                 <p className="text-lg font-normal text-[#3A3A3A]">
-                  Select your reason for <br /> rejecting this transaction.
+                  Select your reason[s] for <br /> rejecting this transaction.
                 </p>
               </div>{" "}
               <div className="space-y-4 my-6">
@@ -198,7 +198,7 @@ const ShareEscrowLink = () => {
         {isLoading && <LoadingOverlay />}
 
         <form action="">
-          <h1 className="text-[#EDEDED] text-lg font-medium mb-2 ">
+          <h1 className="text-[#393737] text-lg font-medium mb-2 ">
             ITEM(S) INFORMATION
           </h1>
 
@@ -245,7 +245,7 @@ const ShareEscrowLink = () => {
               readOnly
             />
           </div>
-          <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+          <h1 className="mt-6 text-[#393737] text-lg font-medium">
             VENDOR ACCOUNT INFORMATION
           </h1>
           <div className="mt-6 flex flex-col gap-4">

@@ -29,6 +29,9 @@ import {
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
+import moment from 'moment'
+
+
 const Dashboard = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
@@ -41,6 +44,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  var today = moment().format("YYY-MM-DD");
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,
@@ -116,7 +120,7 @@ const Dashboard = () => {
     <div className=" overflow-hidden ">
       <div className="md:flex justify-between items-center ">
         <div>
-          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-4 ">
+          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-2 md:mb-4 ">
             <span className="text-[#6D6D6D]">Welcome</span>
             <span className=" font-semibold capitalize flex-1">
               {user?.fullName || <Skeleton width={100} />}
@@ -157,7 +161,7 @@ const Dashboard = () => {
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:pl-[16px] overflow-y-scroll md:pr-[34px] "
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
@@ -200,8 +204,8 @@ const Dashboard = () => {
                       rules={{ required: "this field is required" }}
                       name={"itemQuantity"}
                       label="Number of item(s)"
-                      placeholder="give a description"
-                      type="1"
+                      placeholder="5"
+                      type="number"
                     />
                     <TextField
                       control={control}
@@ -217,6 +221,7 @@ const Dashboard = () => {
                       name={"deliveryDate"}
                       label="Delivery timeline"
                       type="date"
+                      min = {today}
                     />
                   </div>
                   <h1 className="mt-6 text-[#303030] text-lg font-medium">
@@ -303,7 +308,7 @@ const Dashboard = () => {
         </Dialog.Root>
       </div>
 
-      <div className="flex gap-3 mt-16 w-full overflow-x-auto no-scrollbar">
+      <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar">
         <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
           <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
           <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
@@ -336,7 +341,7 @@ const Dashboard = () => {
             style={{
               boxShadow: " 0px 9px 100px 0px rgba(60, 60, 60, 0.25)",
             }}
-            className="border border-#B7B7B7 w-[full] md:max-w-[297px] rounded-[10px] mt-16 px-4 py-6"
+            className="border border-#B7B7B7 w-full md:max-w-[297px] rounded-[10px] mt-10 md:mt-16 px-4 py-6"
           >
             <h6 className="text-2xl font-bold  text-[#6D6D6D] ">Our charges</h6>
             <p className="text-sm mt-2 text-[#6D6D6D]">
@@ -363,11 +368,11 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="mt-16">
+        <div className="mt-10 md:mt-16">
           <h6 className="  mb-6 text-[#6D6D6D] font-bold text-[23px] ">
             Quick actions
           </h6>
-          <div className="flex flex-wrap justify-center gap-4 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4 mb-4">
             <Link
               onClick={() => {
                 setTab("depositMoney");
@@ -378,7 +383,7 @@ const Dashboard = () => {
               <DashboardQuickBox
                 icon={plus}
                 text="Deposit money"
-                subtext="Tap on this to add money to your escrow wallet"
+                subtext="Add money to your escrow wallet"
               />
             </Link>
             <Link
@@ -392,7 +397,7 @@ const Dashboard = () => {
                 disabled={user?.walletBalance === "0.00"}
                 icon={unlock}
                 text="Unlock money"
-                subtext="Tap on this to release the money in your wallet"
+                subtext="Release the money in your wallet"
               />
             </Link>
             <Link
@@ -406,17 +411,17 @@ const Dashboard = () => {
                 disabled={user?.walletBalance === "0.00"}
                 icon={download}
                 text="Withdraw money"
-                subtext="Tap on this to release the money in your wallet"
+                subtext="Withdraw your money from your wallet"
               />
             </Link>
-            <Link to="/share-escrow-link">
+            {/* <Link to="/share-escrow-link">
               <DashboardQuickBox
                 disabled={user?.walletBalance === "0.00"}
                 icon={share}
                 text="Share link"
-                subtext="Tap on this to lock your money in your wallet"
+                subtext="Share your escrow information with everyone"
               />
-            </Link>
+            </Link> */}
           </div>
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history

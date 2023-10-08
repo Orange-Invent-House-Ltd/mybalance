@@ -108,7 +108,7 @@ const QuickAction = () => {
       {/* tabs ************************************************************* */}
       <Tabs.Root defaultValue={defaultTab}>
         <Tabs.List
-          className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
+          className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
           aria-label="Manage your account"
         >
           <Tabs.Trigger className="tab " value="depositMoney">
@@ -122,7 +122,7 @@ const QuickAction = () => {
           </Tabs.Trigger>
         </Tabs.List>
 
-        <div className="mt-10 ">
+        <div className="mt-5 md:mt-10 ">
           <Tabs.Content className="w-full max-w-[350px]" value="depositMoney">
             <div className="relative">
               {depositLoading && <LoadingOverlay />}
@@ -183,13 +183,12 @@ const QuickAction = () => {
                 />
               )}
               {lockedFundsLoading && (
-                <div className="flex flex-col gap-3 w-full max-w-[676px]">
+                <div className="flex flex-col gap-2 md:gap-3 w-full max-w-[676px]">
                   <Skeleton className="w-full h-[100px] " />
                   <Skeleton className="w-full h-[100px] " />
                   <Skeleton className="w-full h-[100px] " />
                   <Skeleton className="w-full h-[100px] " />
                   <Skeleton className="w-full h-[100px] " />
-                 
                 </div>
               )}
               <ReactPaginate
@@ -213,7 +212,7 @@ const QuickAction = () => {
             </div>
             {successModal && (
               <div className=" fixed  top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-50  ">
-                <div className="w-[400px] animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">
+                <div className="w-full max-w-[400px] mx-2 md:mx-0  animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">
                   <div className="flex items-center w-fit rounded-full bg-[#ECFDF3] justify-center">
                     <img className="   " src={check} alt="check" />
                   </div>

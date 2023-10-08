@@ -52,7 +52,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
         />
 
         <Dialog.Content>
-          <div className="w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll">
+          <div className="w-full max-w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white px-5 md:pl-[16px] md:pr-[34px] overflow-y-scroll">
             <div className="flex gap-4 items-center pt-10 mb-8">
               <img
                 onClick={() => setUnlock(false)}
@@ -88,7 +88,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   rules={{ required: false }}
                   name={"number"}
                   label="Number of item(s)"
-                  placeholder="give a description"
+                  placeholder="5"
                   type="number"
                   readOnly
                 />

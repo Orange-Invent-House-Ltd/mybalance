@@ -29,22 +29,29 @@ const TransactionHistory = () => {
         Heading="Transaction History"
         Text="You can view an endless list of transaction you have transacted over time."
       />
-      <div className="px-6 py-10  rounded-lg border border-[#B7B7B7] max-w-[724px] w-full">
-        <div className="w-full relative">
-          <div className="flex mb-0 list-none whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row">
+      <div className="px-2 md:px-6 py-3 md:py-10  rounded-lg border border-[#B7B7B7] max-w-[724px] w-full">
+        <div className="relative w-full max-w-[676px]">
+          <div className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto  pt-1 md:pt-3 pb-2 md:pb-4 flex-row">
             <button
-              className="tab"
+              className="tab "
               data-state={activeButton === "" ? "active" : "inactive"}
               onClick={() => setActiveButton("")}
             >
               All Transaction
             </button>
             <button
-              className="tab"
+              className="tab "
+              data-state={activeButton === "DEPOSIT" ? "active" : "inactive"}
+              onClick={() => setActiveButton("DEPOSIT")}
+            >
+              Deposits
+            </button>
+            <button
+              className="tab "
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}
               onClick={() => setActiveButton("ESCROW")}
             >
-              Escrow
+              Escrows
             </button>
             <button
               className="tab"
@@ -54,39 +61,33 @@ const TransactionHistory = () => {
               Withdrawals
             </button>
           </div>
-
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-            <div className=" py-5 flex-auto">
-              <div className="tab-content tab-space">
-                {data?.data?.map((transaction: any) => (
-                  <DashboardHistoryBox key={transaction.id} {...transaction} />
-                ))}
-                {data?.data.length === 0 && <EmptyTrans />}
-                {isLoading && (
-                  <div className="flex flex-col gap-3 w-full max-w-[676px]">
-                    <Skeleton className="w-full h-[100px] " />
-                    <Skeleton className="w-full h-[100px] " />
-                    <Skeleton className="w-full h-[100px] " />
-                    <Skeleton className="w-full h-[100px] " />
-                    <Skeleton className="w-full h-[100px] " />
-                    <Skeleton className="w-full h-[100px] " />
-                  </div>
-                )}
-              </div>
+          {isLoading && (
+            <div className="flex flex-col gap-2 md:gap-3 w-full max-w-[676px]">
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
+              <Skeleton className="w-full h-[100px] " />
             </div>
-          </div>
-        </div>
+          )}
 
+          {data?.data?.map((transaction: any) => (
+            <DashboardHistoryBox key={transaction.id} {...transaction} />
+          ))}
+          {data?.data.length === 0 && <EmptyTrans />}
+        </div>
         <ReactPaginate
           breakLabel="..."
           nextLabel="Next"
+          // initialPage={data?.meta?.currentPage - 1}
           initialPage={data?.meta?.currentPage - 1 || 0}
           onPageChange={handlePageChange} // Use the handlePageChange function
           pageRangeDisplayed={5}
           pageCount={data?.meta?.totalPages}
           previousLabel="Previous"
           renderOnZeroPageCount={null}
-          pageClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
+          pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
           containerClassName="flex gap-3 ml-10 items-center "
