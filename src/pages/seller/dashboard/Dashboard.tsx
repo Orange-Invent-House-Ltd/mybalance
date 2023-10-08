@@ -34,7 +34,7 @@ const Dashboard = () => {
           Amount={formatToNairaCurrency(user?.walletBalance || 0)}
         />
       </div>
-      <div className="flex flex-col items-center md:flex-row justify-center gap-8 mt-8 max-w-[710px]">
+      <div className="flex flex-col items-center md:flex-row justify-center gap-4 md:gap-8 mt-8 w-full max-w-[710px]">
         <button
           onClick={() => {
             setWithdrawModal(true);
@@ -45,7 +45,7 @@ const Dashboard = () => {
         </button>
 
         <Link to="/seller/transaction-history">
-          <button className="border border-[#9A4D0C] w-[332px] md:w-[220px] text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">
+          <button className="border border-[#9A4D0C] w-[332px] md:w-[220px]  text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">
             Transaction History
           </button>
         </Link>
@@ -68,7 +68,7 @@ const Dashboard = () => {
           <Skeleton className="w-full h-[100px] " />
         </div>
       )}
-      <div className="w-[343px]">
+      <div className="max-w-[343px]">
         <Link to="/seller/transaction-history">
           <Button fullWidth variant="outlined">
             View all transactions

@@ -4,6 +4,7 @@ import {
   createDispute,
   createEscrow,
   depositMoney,
+  editBusinessProfile,
   editProfile,
   forgotPassword,
   fundEscrow,
@@ -287,6 +288,20 @@ export const useEditProfile = () => {
 
   return useMutation({
     mutationFn: editProfile,
+    onSuccess: (data) => {
+      toast.success("Profile Edited Successfully");
+      queryClient.invalidateQueries(["user"]);
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+};
+export const useEditBusinessProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: editBusinessProfile,
     onSuccess: (data) => {
       toast.success("Profile Edited Successfully");
       queryClient.invalidateQueries(["user"]);

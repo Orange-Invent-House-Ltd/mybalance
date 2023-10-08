@@ -45,19 +45,19 @@ const EscrowPayment = () => {
       <div className="flex-[0.6] text-center md:text-left p-5 lg:p-0 flex items-center justify-center">
         <div className="max-w-lg">
           <img src={successIcon} className="mx-auto" alt="" />
-          <h2 className="text-5xl font-bold">
+          <h2 className="text-3xl md:text-5xl font-bold">
             {user?.userType === "BUYER"
               ? "Payment Successful!"
               : "Share Escrow Link"}
           </h2>{" "}
           {user?.userType === "BUYER" ? (
-            <p className=" text-lg mt-2">
+            <p className=" md:text-lg mt-2">
               <strong>Great news! </strong>
               Your recent transaction of <strong>{amount}</strong> has been
               successfully processed. Feel free to share this with your vendor
             </p>
           ) : (
-            <p className=" text-lg  mt-2">
+            <p className=" md:text-lg  mt-2">
               you can share your one time escrow link to customer all over
               social media
             </p>
@@ -78,7 +78,7 @@ const EscrowPayment = () => {
                   navigator.clipboard.writeText(linkValue);
                   toast.success("link has been copied to clipboard");
                 }}
-                className="font-bold text-lg   px-5 py-3 rounded-full bg-[#FD7E14]"
+                className="font-bold  md:text-lg whitespace-nowrap   px-3 py-2 md:px-5 md:py-3 rounded-full bg-[#FD7E14]"
               >
                 Copy URL
               </button>
