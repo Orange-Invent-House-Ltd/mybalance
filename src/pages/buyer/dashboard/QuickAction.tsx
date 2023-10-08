@@ -212,7 +212,7 @@ const QuickAction = () => {
             </div>
             {successModal && (
               <div className=" fixed  top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-50  ">
-                <div className="w-full max-w-[400px] animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">
+                <div className="w-full max-w-[400px] mx-2 md:mx-0  animate-jump bg-white p-[20px] rounded-[5px] flex flex-col ">
                   <div className="flex items-center w-fit rounded-full bg-[#ECFDF3] justify-center">
                     <img className="   " src={check} alt="check" />
                   </div>
