@@ -23,10 +23,7 @@ const EscrowPayment = () => {
     tx_ref,
     transaction_id,
   });
-  console.log(
-    "🚀 ~ file: EscrowPayment.tsx:27 ~ EscrowPayment ~ data:",
-    data
-  );
+  console.log("🚀 ~ file: EscrowPayment.tsx:27 ~ EscrowPayment ~ data:", data);
   const ref = searchParams.get("ref") || data?.data?.transactionReference;
   const amount = formatToNairaCurrency(
     searchParams.get("amt") || data?.data?.amount
