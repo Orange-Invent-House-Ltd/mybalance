@@ -9,7 +9,7 @@ type quickprops = {
 
 const QuickBox = ({ icon, text, subtext, disabled }: quickprops) => {
   return (
-    <button disabled={disabled} className="flex gap-y-2 flex-col justify-center relative overflow-hidden items-start md:items-center px-2 border rounded border-[#FECA9F] w-[154px] h-[110px]">
+    <button disabled={disabled} className="flex gap-y-2 flex-col w-full justify-center relative overflow-hidden items-start md:items-center px-2 border rounded border-[#FECA9F]  h-[110px]">
       {disabled && (
         <div className="w-full h-full absolute top-0 bg-white/50 left-0"></div>
       )}

@@ -39,13 +39,7 @@ const TransactionHistory = () => {
             >
               All Transaction
             </button>
-            <button
-              className="tab "
-              data-state={activeButton === "DEPOSIT" ? "active" : "inactive"}
-              onClick={() => setActiveButton("DEPOSIT")}
-            >
-              Deposits
-            </button>
+         
             <button
               className="tab "
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}

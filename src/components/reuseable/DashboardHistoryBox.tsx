@@ -102,7 +102,7 @@ const DashboardHistoryBox = (data: any) => {
           />
 
           <Dialog.Content>
-            <div className="max-w-[393px] w-full  h-full min-h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
+            <div className="max-w-[393px]  w-full  h-[100svh] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
               <div className="flex gap-4 items-center pt-10 mb-8">
                 <img
                   onClick={() => setOpen(false)}
@@ -199,7 +199,7 @@ const DashboardHistoryBox = (data: any) => {
                     readOnly
                   />
                 </div>
-                <div className="flex flex-col gap-6 mt-6 mb-5">
+                <div className="flex flex-col gap-6 mt-6 mb-10">
                   <Button
                     onClick={() =>
                       navigate(
