@@ -31,7 +31,7 @@ const TextField = ({
         {...field}
         {...props}
         className={clsx(
-          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373]",
+          "border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed",
           {
             "w-[165px]": variant === "short",
             "border-[#DA1E28] focus:border-[#DA1E28]": fieldState.invalid,

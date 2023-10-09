@@ -135,7 +135,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                   After your transaction with a buyer is successful, withdraw
                   your funds with the form below.
                 </p>
-                <h1 className="mt-8 text-[#EDEDED] text-lg font-medium">
+                <h1 className="mt-8 text-[#393737] text-lg font-medium">
                   SENDER ADDITIONAL INFORMATION
                 </h1>
                 <div>
@@ -155,7 +155,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     label="Reason for withdrawing (description)"
                   />
                 </div>
-                <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                <h1 className="mt-6 text-[#393737] text-lg font-medium">
                   RECEIVER ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">

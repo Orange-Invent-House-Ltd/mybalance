@@ -198,7 +198,7 @@ const ShareEscrowLink = () => {
         {isLoading && <LoadingOverlay />}
 
         <form action="">
-          <h1 className="text-[#EDEDED] text-lg font-medium mb-2 ">
+          <h1 className="text-[#393737] text-lg font-medium mb-2 ">
             ITEM(S) INFORMATION
           </h1>
 
@@ -245,7 +245,7 @@ const ShareEscrowLink = () => {
               readOnly
             />
           </div>
-          <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+          <h1 className="mt-6 text-[#393737] text-lg font-medium">
             VENDOR ACCOUNT INFORMATION
           </h1>
           <div className="mt-6 flex flex-col gap-4">

@@ -42,7 +42,7 @@ const FormInput: React.FC<FormInputProps> = ({
         placeholder={placeholder}
         defaultValue={value}
         className={clsx(
-          "block w-full border border-[#B7B7B7] rounded-md p-2 outline-none focus:border-[#747373] ",
+          "block w-full border border-[#B7B7B7] rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed",
           {
             "max-w-[316px] md:max-w-[343px]": variant == "long",
             "max-w-[319px]": variant == "medium",
