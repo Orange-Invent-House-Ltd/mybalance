@@ -372,13 +372,13 @@ const Dashboard = () => {
           <h6 className="  mb-6 text-[#6D6D6D] font-bold text-[23px] ">
             Quick actions
           </h6>
-          <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4  mb-4">
             <Link
               onClick={() => {
                 setTab("depositMoney");
               }}
               to="/buyer/quick-action"
-              // className="mb-4 mr-4"
+      
             >
               <DashboardQuickBox
                 icon={plus}

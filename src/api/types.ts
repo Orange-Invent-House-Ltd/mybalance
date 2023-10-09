@@ -30,7 +30,7 @@ export interface IUserProfile {
   avatar: string;
   profileLink: string;
   bankAccountId: string;
-  kycId: string;
+  kyc: any;
   fullName: string;
   email: string;
   phoneNumber: string;
