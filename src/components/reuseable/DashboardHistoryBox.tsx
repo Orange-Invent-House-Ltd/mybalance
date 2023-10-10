@@ -11,14 +11,6 @@ import { toast } from "react-toastify";
 import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
 
-// type historyprops = {
-//   header: string;
-//   text: string;
-//   price: string;
-//   subtext: string;
-//   data.status: string;
-// };
-
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
@@ -60,7 +52,9 @@ const DashboardHistoryBox = (data: any) => {
           })}
         >
           <p className="text-lg font-medium">{data.meta.title}</p>
-          <p className="text-sm font-normal  w-[150px] truncate ">{data.meta.description}</p>
+          <p className="text-sm font-normal  w-[150px] truncate ">
+            {data.meta.description}
+          </p>
         </div>
         <div
           className={clsx("", {
@@ -102,7 +96,7 @@ const DashboardHistoryBox = (data: any) => {
           />
 
           <Dialog.Content>
-            <div className="max-w-[393px] w-full  h-full min-h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
+            <div className="max-w-[393px]  w-full  h-[100svh] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
               <div className="flex gap-4 items-center pt-10 mb-8">
                 <img
                   onClick={() => setOpen(false)}
@@ -115,7 +109,7 @@ const DashboardHistoryBox = (data: any) => {
                 </h6>
               </div>
               <form action="">
-                <h1 className="text-[#EDEDED] text-lg font-medium">
+                <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
@@ -162,7 +156,7 @@ const DashboardHistoryBox = (data: any) => {
                     readOnly
                   />
                 </div>
-                <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+                <h1 className="mt-6 text-[#393737] text-lg font-medium">
                   RECEIVER ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
@@ -199,7 +193,7 @@ const DashboardHistoryBox = (data: any) => {
                     readOnly
                   />
                 </div>
-                <div className="flex flex-col gap-6 mt-6 mb-5">
+                <div className="flex flex-col gap-6 mt-6 mb-10">
                   <Button
                     onClick={() =>
                       navigate(

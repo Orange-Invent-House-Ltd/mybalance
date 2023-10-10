@@ -17,7 +17,7 @@ const Profile = () => {
   console.log("🚀 ~ file: Profile.tsx:17 ~ Profile ~ user:", user);
   useEffect(() => {
     reset({
-      validId: user?.id,
+      validId: user?.kyc?.nin,
       // email: user?.email,
       phone: user?.phoneNumber,
       name: user?.business?.name,

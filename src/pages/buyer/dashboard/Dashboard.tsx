@@ -44,7 +44,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
-  var today = moment().format("YYY-MM-DD");
+  var today = moment().format("YYYY-MM-DD");
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,
@@ -372,13 +372,13 @@ const Dashboard = () => {
           <h6 className="  mb-6 text-[#6D6D6D] font-bold text-[23px] ">
             Quick actions
           </h6>
-          <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4  mb-4 ">
             <Link
               onClick={() => {
                 setTab("depositMoney");
               }}
               to="/buyer/quick-action"
-              // className="mb-4 mr-4"
+      
             >
               <DashboardQuickBox
                 icon={plus}
@@ -475,7 +475,7 @@ const Dashboard = () => {
                   },
                   {
                     onSuccess: (data) => {
-                      window.open(data?.data?.link, "_blank");
+                      window.open(data?.data?.link);
                     },
                   }
                 );

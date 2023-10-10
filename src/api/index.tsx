@@ -27,6 +27,10 @@ export const resetPassword = async (data: ResetPasswordInput) => {
   const res = await publicApi.put("/auth/reset-password", data);
   return res.data;
 };
+export const changePassword = async (data: any) => {
+  const res = await privateApi.put("/auth/change-password", data);
+  return res.data;
+};
 export const verifyEmail = async (data: { otp: string; tempId: string }) => {
   const res = await publicApi.post("/auth/verify-account", data);
   return res.data;
