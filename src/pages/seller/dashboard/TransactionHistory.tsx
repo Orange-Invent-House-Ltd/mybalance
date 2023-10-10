@@ -39,7 +39,7 @@ const TransactionHistory = () => {
             >
               All Transaction
             </button>
-         
+        
             <button
               className="tab "
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}

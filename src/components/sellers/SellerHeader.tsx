@@ -125,7 +125,7 @@ const Header = () => {
                     onClick={() => setIsVerify(false)}
                   />
                   <h6 className="text-[23px] font-medium">
-                    Create MyBalance Link
+                    Create One-Time MyBalance Link
                   </h6>
                 </div>
                 <p className="text-[16px] text-[#303030] font-normal mb-8">
@@ -141,21 +141,21 @@ const Header = () => {
                     rules={{ required: "this field is required" }}
                     name={"purpose"}
                     label="Purpose of creating  escrow"
-                    placeholder="e.g 20,000"
+                    placeholder="Purchase of sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
                     name={"itemType"}
                     label="Type of item(s)"
-                    placeholder="****"
+                    placeholder="Gucci sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
                     name={"itemQuantity"}
                     label="Number of item(s)"
-                    placeholder="give a description"
+                    placeholder="5"
                     type="number"
                   />
                   <TextField
@@ -163,7 +163,7 @@ const Header = () => {
                     rules={{ required: "this field is required" }}
                     name={"amount"}
                     label="Amount"
-                    placeholder="give a description"
+                    placeholder="20,000"
                     type="number"
                   />
                   <TextField
@@ -186,7 +186,7 @@ const Header = () => {
                     }}
                     name={"partnerEmail"}
                     label="Buyer’s email address"
-                    placeholder="e.g tommy@gmail.com"
+                    placeholder="tommy@gmail.com"
                   />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">
@@ -219,7 +219,7 @@ const Header = () => {
                     control={control}
                     name={"accountName"}
                     label="Account Name"
-                    placeholder="e.g JMusty Feet"
+                    placeholder="JMusty Feet"
                     disabled
                   />
 
