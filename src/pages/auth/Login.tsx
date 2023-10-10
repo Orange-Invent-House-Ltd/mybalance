@@ -126,7 +126,7 @@ const Login = () => {
                           <img
                             src={passwordShown ? hide : eye}
                             alt="show password"
-                            className="absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5"
+                            className="absolute top-9 right-5 hover:cursor-pointer w-[20px] h-5"
                             onClick={() => setPasswordShown(!passwordShown)}
                           />
                         </div>
