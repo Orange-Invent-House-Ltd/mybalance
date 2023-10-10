@@ -11,14 +11,6 @@ import { toast } from "react-toastify";
 import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
 
-// type historyprops = {
-//   header: string;
-//   text: string;
-//   price: string;
-//   subtext: string;
-//   data.status: string;
-// };
-
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
@@ -60,7 +52,9 @@ const DashboardHistoryBox = (data: any) => {
           })}
         >
           <p className="text-lg font-medium">{data.meta.title}</p>
-          <p className="text-sm font-normal  w-[150px] truncate ">{data.meta.description}</p>
+          <p className="text-sm font-normal  w-[150px] truncate ">
+            {data.meta.description}
+          </p>
         </div>
         <div
           className={clsx("", {

@@ -114,7 +114,7 @@ const Header = () => {
           <Dialog.Content>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+              className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
             >
               <div className="relative">
                 {createEscrowIsLoading && <LoadingOverlay />}

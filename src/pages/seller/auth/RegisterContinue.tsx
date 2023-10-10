@@ -47,8 +47,8 @@ const RegisterContinue = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [banksAndCodes, setBanksAndCodes] = useState([]);
-  const [bankCode, setBankCode] = useState('');
-  const [bankName, setBankName] = useState('')
+  const [bankCode, setBankCode] = useState("");
+  const [bankName, setBankName] = useState("");
   const { data: banks, isLoading: bankIsLoading } = useBanks();
 
   const store = useStore();
@@ -61,18 +61,20 @@ const RegisterContinue = () => {
 
   // get user bank name once bank number input filed  === 10 digits
   useEffect(() => {
-    
     const userAccountNumber = watch("accountNumber");
     if (userAccountNumber.length === 10) {
-      const bank = banks.data?.find((bank:any) => bank.name === bankName)
-      setBankCode(bank.code)
-      console.log(bankCode)
-      if(bankCode!=='')getAccountName(bankCode, userAccountNumber);
+      const bank = banks.data?.find((bank: any) => bank.name === bankName);
+      setBankCode(bank.code);
+      console.log(bankCode);
+      if (bankCode !== "") getAccountName(bankCode, userAccountNumber);
     }
   }, [bankCode, watch("accountNumber")]);
 
   // get the user's account name.
-  const getAccountName = async (bankCode:string, userAccountNumber:string) => {
+  const getAccountName = async (
+    bankCode: string,
+    userAccountNumber: string
+  ) => {
     try {
       store.setRequestLoading(true);
       const response = await publicApi.post<GenericResponse>(
@@ -103,15 +105,15 @@ const RegisterContinue = () => {
     }
   };
 
-  const checkEmail = async(data:any) => {
-    try{
-      const response = await publicApi.post('console/check-email',
-      {'email': data?.email}
-      )
-      toast.success('user with this email already exists.' , {
-        position:  'top-right'
-      })
-    }catch(error:any){
+  const checkEmail = async (data: any) => {
+    try {
+      const response = await publicApi.post("console/check-email", {
+        email: data?.email,
+      });
+      toast.success("user with this email already exists.", {
+        position: "top-right",
+      });
+    } catch (error: any) {
       // const resMessage =
       //   (error.response &&
       //     error.response.data &&
@@ -121,16 +123,16 @@ const RegisterContinue = () => {
       // toast.error( resMessage, {
       //   position: 'top-right'
       // })
-      registerUser(data)
+      registerUser(data);
     }
-  }
+  };
 
   const registerUser = (data: SignupInput) => {
-    console.log('I got clicked')
-    console.log(data)
+    console.log("I got clicked");
+    console.log(data);
     store.setAuthUser({ ...store.authUser, ...data });
     store.setAuthEmail(data.email);
-    localStorage.setItem('email', data.email);
+    localStorage.setItem("email", data.email);
     //navigate to next page
     navigate("identity");
   };
@@ -140,7 +142,7 @@ const RegisterContinue = () => {
       {/* tabs */}
       <div className="flex flex-wrap">
         <div className="w-full">
-        <ul
+          <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
           >
@@ -206,31 +208,43 @@ const RegisterContinue = () => {
                           placeholder="e.g tmusty@gmail.com"
                         />
                         <div className="w-[343px] text-[13px] mt-[-20px]">
-                          <span className="text-neutral-600 font-bold leading-tight">NOTE:</span>
-                          <span className="text-neutral-500 font-normal "> Use the email address that was shared with the buyer IF ANY.</span>
+                          <span className="text-neutral-600 font-bold leading-tight">
+                            NOTE:
+                          </span>
+                          <span className="text-neutral-500 font-normal ">
+                            {" "}
+                            Use the email address that was shared with the buyer
+                            IF ANY.
+                          </span>
                         </div>
-                        <div className="flex">
+                        <div className="relative">
                           <TextField
                             name="password"
                             label="Add password"
                             placeholder="************"
-                            type={passwordShown ? 'text' : 'password'}
+                            type={passwordShown ? "text" : "password"}
                           />
-                          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+                          <img
+                            src={passwordShown ? hide : eye}
+                            alt="show password"
+                            className="absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5"
+                            onClick={() => setPasswordShown(!passwordShown)}
+                          />
                         </div>
+
                         <div className="w-full mb-3">
                           <label htmlFor={"selectBank"} className="block">
                             Select Bank
                           </label>
                           <select
-                            className="block border border-[#B7B7B7] w-[316px] md:w-[343px] rounded-md p-2 outline-none focus:border-[#747373]"
+                            className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373]"
                             value={bankName}
                             name="bankName"
                             onChange={(e) => {
-                              setBankName(e.target.value)
+                              setBankName(e.target.value);
                             }}
                           >
-                            {banks?.data?.map((bank: any) =>(
+                            {banks?.data?.map((bank: any) => (
                               <option key={bank.name} value={bank.name}>
                                 {bank.name}
                               </option>
@@ -255,7 +269,7 @@ const RegisterContinue = () => {
                             disabled
                           />
                         </div>
-                        <Button fullWidth >Next</Button>
+                        <Button fullWidth>Next</Button>
                       </div>
                     </form>
                   </FormProvider>

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   LookUpBank,
+  changePassword,
   createDispute,
   createEscrow,
   depositMoney,
@@ -146,6 +147,18 @@ export const useResetPassword = () => {
     },
   });
 };
+export const useChangePassword = () => {
+  
+  return useMutation({
+    mutationFn: changePassword,
+    onSuccess: (data) => {
+      toast.success('your password has been updated successfully');
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.errors.password[0]);
+    },
+  });
+};
 export const useDepositMoney = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -216,7 +229,10 @@ export const useUnLockFunds = () => {
       queryClient.invalidateQueries(["lockedFunds"]);
     },
     onError: (error: any) => {
-      toast.error("an error occurred");
+      console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error)
+      toast.error(
+        error.response.data.errors.transactionReference?.seller || "an error occurred"
+      );
     },
   });
 };

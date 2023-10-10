@@ -27,7 +27,7 @@ const FormInput: React.FC<FormInputProps> = ({
   } = useFormContext();
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 ">
       <label
         htmlFor={name}
         className={clsx("block text-sm mb-[6px] capitalize", {
@@ -44,7 +44,7 @@ const FormInput: React.FC<FormInputProps> = ({
         className={clsx(
           "block w-full border border-[#B7B7B7] rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed",
           {
-            "max-w-[316px] md:max-w-[343px]": variant == "long",
+            "w-full": variant == "long",
             "max-w-[319px]": variant == "medium",
             "max-w-[165px]": variant == "short",
             "border-[#DA1E28] focus:border-[#DA1E28]": errors[name],
