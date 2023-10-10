@@ -28,11 +28,12 @@ const DisputeResolution = () => {
       </header>
       <div>
         {isLoading && (
-          <div className="flex flex-col gap-3">
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
-            <Skeleton width={676} height={100} />
+          <div className="flex flex-col gap-2 md:gap-3 w-full max-w-[676px]">
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
+            <Skeleton className="w-full h-[100px] " />
           </div>
         )}
         <div className="space-y-10">
