@@ -44,7 +44,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
-  var today = moment().format("YYY-MM-DD");
+  var today = moment().format("YYYY-MM-DD");
   const {
     data: createEscrowData,
     mutate: createEscrowMutate,

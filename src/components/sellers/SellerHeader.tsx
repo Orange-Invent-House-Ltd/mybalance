@@ -17,7 +17,7 @@ const Header = () => {
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
 
-  var today = moment().format("YYY-MM-DD");
+  var today = moment().format("YYYY-MM-DD");
 
   const { handleSubmit, control, reset } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
