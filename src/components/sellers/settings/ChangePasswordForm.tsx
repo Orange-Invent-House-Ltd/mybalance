@@ -30,7 +30,7 @@ const ChangePasswordForm = () => {
       </p>
       <form className="space-y-4 relative" onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <LoadingOverlay />}
-        <div className="flex">
+        <div className="relative">
           <TextField
             control={control}
             name="currentPassword"
@@ -40,9 +40,9 @@ const ChangePasswordForm = () => {
             label={"old password"}
             type={showPassword? 'text' : 'password'}
           />
-          <img src={showPassword ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
+          <img src={showPassword ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
         </div>
-        <div className="flex">
+        <div className="relative">
           <TextField
             control={control}
             name="password"
@@ -52,9 +52,9 @@ const ChangePasswordForm = () => {
             label={"new password"}
             type={passwordShown? 'text' : 'password'}
           />
-          <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+          <img src={passwordShown ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
         </div>
-        <div className="flex">
+        <div className="relative">
           <TextField
             control={control}
             name="confirmPassword"
@@ -64,7 +64,7 @@ const ChangePasswordForm = () => {
             label={"retype password"}
             type={passwordShown2? 'text' : 'password'}
           />
-          <img src={passwordShown2 ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown2(!passwordShown2)}/>
+          <img src={passwordShown2 ? hide : eye} alt="show password" className='absolute top-9  right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown2(!passwordShown2)}/>
         </div>
         <p>
           <strong>NOTE : </strong>
