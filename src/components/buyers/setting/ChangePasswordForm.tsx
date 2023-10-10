@@ -5,15 +5,16 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useChangePassword } from "../../../hooks/mutations";
+import LoadingOverlay from "../../reuseable/LoadingOverlay";
 
 const ChangePasswordForm = () => {
   const { handleSubmit, control } = useForm();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate } = useChangePassword()
-  const onSubmit = (data:any) => {
-    mutate(data)
-  }
+  const { mutate, isLoading } = useChangePassword();
+  const onSubmit = (data: any) => {
+    mutate(data);
+  };
   return (
     <div className="w-[350px] ">
       <h2 className="text-[#121212] text-base font-bold capitalize">
@@ -22,7 +23,8 @@ const ChangePasswordForm = () => {
       <p className="text-[#303030] mt-5 text-sm mb-10">
         Use the form below to change your password.
       </p>
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-4 relative" onSubmit={handleSubmit(onSubmit)}>
+        {isLoading && <LoadingOverlay />}
         <TextField
           control={control}
           name="currentPassword"
@@ -31,6 +33,7 @@ const ChangePasswordForm = () => {
           }}
           label={"old password"}
         />
+
         <TextField
           control={control}
           name="password"
