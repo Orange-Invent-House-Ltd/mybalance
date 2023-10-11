@@ -125,7 +125,7 @@ const Header = () => {
                     onClick={() => setIsVerify(false)}
                   />
                   <h6 className="text-[23px] font-medium">
-                    Create One-Time MyBalance Link
+                    Create  MyBalance Link
                   </h6>
                 </div>
                 <p className="text-[16px] text-[#303030] font-normal mb-8">

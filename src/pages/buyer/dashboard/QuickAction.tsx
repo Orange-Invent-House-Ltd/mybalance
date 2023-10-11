@@ -70,10 +70,7 @@ const QuickAction = () => {
   const { data: user } = useUser();
   const { data: lockedFunds, isLoading: lockedFundsLoading } =
     useLockedFunds(page);
-  console.log(
-    "🚀 ~ file: QuickAction.tsx:69 ~ QuickAction ~ lockedFunds:",
-    lockedFunds
-  );
+  
 
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -224,9 +221,12 @@ const QuickAction = () => {
                   </h6>
                   <p className="mt-2   text-base font-normal leading-[21.6px]">
                     Weldone! You have successfully unlocked{" "}
+                    <strong>
+
                     {formatToNairaCurrency(
                       data?.lockedAmount?.amount || data?.amount
                     )}
+                    </strong>
                     . It will reflect in your unlocked amount on your dashboard.
                   </p>
                   <div className="w-full space-y-2 mt-2">
