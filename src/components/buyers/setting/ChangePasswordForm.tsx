@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button } from "../../reuseable/Button";
 import TextField from "../../reuseable/TextField1";
 import { useForm } from "react-hook-form";
@@ -6,8 +6,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useChangePassword } from "../../../hooks/mutations";
 import LoadingOverlay from "../../reuseable/LoadingOverlay";
+import eye from '../../../assets/Icons/eye.svg'
+import hide from '../../../assets/Icons/hide.svg'
 
 const ChangePasswordForm = () => {
+  const [showPassword, setShowPassword] = useState(false)
+  const [passwordShown, setPasswordShown] = useState(false)
+  const [passwordShown2, setPasswordShown2] = useState(false)
   const { handleSubmit, control } = useForm();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -25,31 +30,42 @@ const ChangePasswordForm = () => {
       </p>
       <form className="space-y-4 relative" onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <LoadingOverlay />}
-        <TextField
-          control={control}
-          name="currentPassword"
-          rules={{
-            required: "this field is required",
-          }}
-          label={"old password"}
-        />
-
-        <TextField
-          control={control}
-          name="password"
-          rules={{
-            required: "this field is required",
-          }}
-          label={"new password"}
-        />
-        <TextField
-          control={control}
-          name="confirmPassword"
-          rules={{
-            required: "this field is required",
-          }}
-          label={"retype password"}
-        />
+        <div className="relative">
+          <TextField
+            control={control}
+            name="currentPassword"
+            rules={{
+              required: "this field is required",
+            }}
+            label={"old password"}
+            type={showPassword? 'text' : 'password'}
+          />
+          <img src={showPassword ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
+        </div>
+        <div className="relative">
+          <TextField
+            control={control}
+            name="password"
+            rules={{
+              required: "this field is required",
+            }}
+            label={"new password"}
+            type={passwordShown? 'text' : 'password'}
+          />
+          <img src={passwordShown ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+        </div>
+        <div className="relative">
+          <TextField
+            control={control}
+            name="confirmPassword"
+            rules={{
+              required: "this field is required",
+            }}
+            label={"retype password"}
+            type={passwordShown2? 'text' : 'password'}
+          />
+          <img src={passwordShown2 ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown2(!passwordShown2)}/>
+        </div>
         <p>
           <strong>NOTE : </strong>
           <span className="text-[#6D6D6D]">
