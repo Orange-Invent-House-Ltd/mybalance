@@ -128,7 +128,7 @@ const Register = () => {
                           label="Email"
                           placeholder="e.g al.bert@gmail.com"
                         />
-                        <div className="w-[343px] text-[13px] mt-[-20px]">
+                        <div className="w-full max-w-[343px] text-[13px] mt-[-20px]">
                           <span className="text-neutral-600 font-bold leading-tight">
                             NOTE:
                           </span>
@@ -142,6 +142,7 @@ const Register = () => {
                           name="phone"
                           label="Phone"
                           placeholder="+234 000 0000 000"
+                          type='number'
                         />
                         <div className="relative">
                           <TextField
