@@ -135,7 +135,7 @@ const QuickAction = () => {
               >
                 <TextField
                   control={controlDeposit}
-                  placeholder="e.g 10,000"
+                  placeholder="e.g 10000"
                   label="Enter amount to deposit"
                   name="amount"
                   rules={{
@@ -227,7 +227,7 @@ const QuickAction = () => {
                       data?.lockedAmount?.amount || data?.amount
                     )}
                     </strong>
-                    . It will reflect as Fulfilled in your transaction history and escrow.
+                    . It will reflect as <strong>Fulfilled</strong> in your transaction history and escrow.
                   </p>
                   <div className="w-full space-y-2 mt-2">
                     <Button
