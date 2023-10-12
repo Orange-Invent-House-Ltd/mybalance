@@ -227,7 +227,7 @@ const QuickAction = () => {
                       data?.lockedAmount?.amount || data?.amount
                     )}
                     </strong>
-                    . It will reflect in your unlocked amount on your dashboard.
+                    . It will reflect as Fulfilled in your transaction history and escrow.
                   </p>
                   <div className="w-full space-y-2 mt-2">
                     <Button
