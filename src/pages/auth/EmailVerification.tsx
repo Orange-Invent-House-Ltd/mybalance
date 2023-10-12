@@ -265,9 +265,9 @@ const EmailVerification = () => {
         </div>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
           Existing user?{" "}
-          <a href="/login" className="text-[#121212] font-bold">
+          <Link to="/login" className="text-[#121212] font-bold">
             Log in here
-          </a>
+          </Link>
         </p>
       </div>
     </div>
