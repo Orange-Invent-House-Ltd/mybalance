@@ -109,6 +109,14 @@ export const getTransactionInfo = async (transactionReference: any) => {
   const res = await privateApi.get(`/transaction/link/${transactionReference}`);
   return res.data;
 };
+export const getTransactionUnauthorized = async (
+  transactionReference: string
+) => {
+  const res = await publicApi.get(
+    `console/transactions/${transactionReference}`
+  );
+  return res.data;
+};
 export const respondTransaction = async ({
   ref,
   status,
@@ -164,7 +172,7 @@ export const getEscrowPaymentRedirect = async ({
   transaction_id,
 }: any) => {
   if (status && tx_ref && transaction_id) {
-    const res = await privateApi.get("/shared/escrow-payment-redirect", {
+    const res = await publicApi.get("/shared/escrow-payment-redirect", {
       params: {
         status,
         tx_ref,
