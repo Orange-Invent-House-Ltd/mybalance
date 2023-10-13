@@ -135,13 +135,14 @@ const QuickAction = () => {
               >
                 <TextField
                   control={controlDeposit}
-                  placeholder="e.g 10000"
+                  placeholder="10000"
                   label="Enter amount to deposit"
                   name="amount"
                   rules={{
                     required: "this field is required",
                   }}
                   type="number"
+                  min={1}
                 />
                 <Button>Continue</Button>
               </form>

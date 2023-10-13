@@ -165,6 +165,7 @@ const Header = () => {
                     label="Amount"
                     placeholder="20000"
                     type="number"
+                    min={1}
                   />
                   <TextField
                     control={control}

@@ -193,7 +193,13 @@ export const useCreateEscrow = () => {
       }
     },
     onError: (error: any) => {
-      toast.error("an error occurred");
+      const resMessage =
+      error.response.data.errors.partnerEmail[0].toString() ||
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message;
+      toast.error(resMessage);
     },
   });
 };

@@ -146,6 +146,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     placeholder="e.g 20000"
                     name={"amount"}
                     type="number"
+                    min={1}
                   />
 
                   <TextField
