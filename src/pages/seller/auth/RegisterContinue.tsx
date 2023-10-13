@@ -258,7 +258,7 @@ const RegisterContinue = () => {
                           name="accountNumber"
                           label="Bank account number"
                           type="phone"
-                          placeholder="e.g 0000000000"
+                          placeholder="1456789347"
                         />
                         <div className="relative">
                           {store.requestLoading && <LoadingOverlay />}
