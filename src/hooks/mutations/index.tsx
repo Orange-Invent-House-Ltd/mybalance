@@ -61,6 +61,7 @@ export const useRegisterBuyer = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "buyer");
       navigate("/email-verification");
     },
     onError: (error: any) => {
@@ -82,6 +83,7 @@ export const useRegisterSeller = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "seller");
       navigate("/email-verification");
     },
     onError: (error: any) => {
