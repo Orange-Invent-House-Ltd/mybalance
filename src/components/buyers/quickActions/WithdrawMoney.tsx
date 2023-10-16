@@ -125,7 +125,7 @@ const WithdrawMoney = () => {
               control={controlWithdraw}
               rules={{ required: "this field is required" }}
               label="How much are you withdrawing?"
-              placeholder="e.g 20,000"
+              placeholder="e.g 20000"
               name={"amount"}
               type="number"
             />

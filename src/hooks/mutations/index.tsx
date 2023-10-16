@@ -61,6 +61,7 @@ export const useRegisterBuyer = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "buyer");
       navigate("/email-verification");
     },
     onError: (error: any) => {
@@ -82,6 +83,7 @@ export const useRegisterSeller = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "seller");
       navigate("/email-verification");
     },
     onError: (error: any) => {
@@ -190,7 +192,13 @@ export const useCreateEscrow = () => {
       }
     },
     onError: (error: any) => {
-      toast.error("an error occurred");
+      const resMessage =
+      error.response.data.errors.partnerEmail[0].toString() ||
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message;
+      toast.error(resMessage);
     },
   });
 };

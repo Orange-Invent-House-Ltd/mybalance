@@ -163,8 +163,9 @@ const Header = () => {
                     rules={{ required: "this field is required" }}
                     name={"amount"}
                     label="Amount"
-                    placeholder="20,000"
+                    placeholder="20000"
                     type="number"
+                    min={1}
                   />
                   <TextField
                     control={control}

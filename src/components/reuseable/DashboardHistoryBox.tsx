@@ -46,7 +46,7 @@ const DashboardHistoryBox = (data: any) => {
       >
         <div
           className={clsx("", {
-            "text-[#B7B7B7]": !(
+            "text-[#B7B7B7]" : !(
               data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
             ),
           })}
@@ -64,8 +64,8 @@ const DashboardHistoryBox = (data: any) => {
           })}
         >
           <div
-            className={clsx("status_style  ", {
-              "bg-[#ECFDF3]  text-[#027A48]":
+            className={clsx("status_style", {
+              "bg-[#ECFDF3]  text-[#027A48]" :
                 data.status === "SUCCESSFUL" ||
                 data.status === "FUFILLED" ||
                 data.status === "APPROVED" ||

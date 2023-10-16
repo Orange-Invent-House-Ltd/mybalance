@@ -135,7 +135,7 @@ const QuickAction = () => {
               >
                 <TextField
                   control={controlDeposit}
-                  placeholder="e.g 10,000"
+                  placeholder="10000"
                   label="Enter amount to deposit"
                   name="amount"
                   rules={{
@@ -143,6 +143,7 @@ const QuickAction = () => {
                     
                   }}
                   type="number"
+                  min={1}
                    pattern="[0-9]*"
                 />
                 <Button>Continue</Button>
@@ -229,7 +230,7 @@ const QuickAction = () => {
                       data?.lockedAmount?.amount || data?.amount
                     )}
                     </strong>
-                    . It will reflect in your unlocked amount on your dashboard.
+                    . It will reflect as <strong>Fulfilled</strong> in your transaction history and escrow.
                   </p>
                   <div className="w-full space-y-2 mt-2">
                     <Button
