@@ -43,7 +43,7 @@ const BuyerDashboardLayout = () => {
 
       <div className="md:flex">
         {/* mobile navbar */}
-        <div className="md:hidden bg-white sticky top-0 left-0 z-50 py-[5%] px-5 flex justify-between items-center mb-5 md:mb-10">
+        <div className="md:hidden bg-white sticky top-0 left-0 z-10 py-[5%] px-5 flex justify-between items-center mb-5 md:mb-10">
           <Link to="/buyer/dashboard">
             <img src={logo} alt="My Balance Logo" className="cursor-pointer" />
           </Link>

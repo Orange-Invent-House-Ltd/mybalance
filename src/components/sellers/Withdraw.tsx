@@ -17,6 +17,7 @@ import { useBanks, useUser } from "../../hooks/queries";
 import { Button } from "../reuseable/Button";
 import Pusher from "pusher-js";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
+import formatToNairaCurrency from "../../util/formatNumber";
 
 const Withdraw = ({ open, setOpen }: any) => {
   const [accNum, setAccNum] = useState("");
@@ -44,9 +45,9 @@ const Withdraw = ({ open, setOpen }: any) => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${data.amount} Withdrawn!`);
+      setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${data.amount}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(data.amount)}. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
@@ -168,7 +169,6 @@ const Withdraw = ({ open, setOpen }: any) => {
                       value={code}
                       onChange={(e) => {
                         setCode(e.target.value);
-                        console.log(code);
                       }}
                     >
                       {banks?.data?.map((bank: any) => (
@@ -220,10 +220,10 @@ const Withdraw = ({ open, setOpen }: any) => {
       </Dialog.Root>
       <AlertDialog.Root open={isWithdraw}>
         <AlertDialog.Portal className=" ">
-          <AlertDialog.Overlay className="bg-[#3a3a3a]/50 z-50  fixed inset-0" />
+          <AlertDialog.Overlay className="bg-[#3a3a3a]/50 z-20  fixed inset-0" />
 
           <AlertDialog.Content className=" h-full   fixed top-0 left-0 z-50 w-full  animate-jump">
-            <div className="   w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
+            <div className="w-full max-w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
               <img
                 className="p-4 bg-[#ECFDF3] rounded-[50%]"
                 src={check}
