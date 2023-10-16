@@ -207,7 +207,7 @@ const RegisterContinue = () => {
                           label="Email"
                           placeholder="e.g tmusty@gmail.com"
                         />
-                        <div className="w-[343px] text-[13px] mt-[-20px]">
+                        <div className="max-w-[343px] text-[13px] mt-[-20px]">
                           <span className="text-neutral-600 font-bold leading-tight">
                             NOTE:
                           </span>
@@ -258,7 +258,7 @@ const RegisterContinue = () => {
                           name="accountNumber"
                           label="Bank account number"
                           type="phone"
-                          placeholder="e.g 0000000000"
+                          placeholder="1456789347"
                         />
                         <div className="relative">
                           {store.requestLoading && <LoadingOverlay />}

@@ -38,9 +38,7 @@ const EmailVerification = () => {
 
   // tabs
   const [activeTab, setActiveTab] = useState(1);
-
-  const [isVerify, setIsVerify] = useState(false);
-
+  const userType = localStorage.getItem("userType")
   // otp continue
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -123,6 +121,10 @@ const EmailVerification = () => {
   //     });
   //   }
   // };
+  useEffect(()=>{
+    userType === "seller" && setActiveTab(2)
+  }, [])
+  
   if (!tempId || !email) {
     return <Navigate to="/get-verification-link" />;
   }
@@ -167,9 +169,10 @@ const EmailVerification = () => {
                 }
                 onClick={(e) => {
                   e.preventDefault();
+                  setActiveTab(2);
                 }}
                 data-toggle="tab"
-                href="#link2"
+                href="#link1"
                 role="tablist"
               >
                 Create as a seller
@@ -181,7 +184,7 @@ const EmailVerification = () => {
               <div className="tab-content tab-space">
                 {/* create account as customer */}
                 <div
-                  className={activeTab === 1 ? "block" : "hidden"}
+                  className={activeTab === 1 ? "block" : "block"}
                   id="link1"
                 >
                   <h6 className="h6">Check your email</h6>
@@ -265,9 +268,9 @@ const EmailVerification = () => {
         </div>
         <p className="text-sm font-normal mb-7 w-fit mx-auto">
           Existing user?{" "}
-          <a href="/buyer/login" className="text-[#121212] font-bold">
+          <Link to="/login" className="text-[#121212] font-bold">
             Log in here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

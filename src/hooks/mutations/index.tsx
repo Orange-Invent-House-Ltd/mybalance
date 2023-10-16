@@ -61,6 +61,7 @@ export const useRegisterBuyer = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "buyer");
       navigate("/email-verification");
     },
     onError: (error: any) => {
@@ -82,6 +83,7 @@ export const useRegisterSeller = () => {
     onSuccess: (data) => {
       localStorage.setItem("email", data.data.email);
       localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("userType", "seller");
       navigate("/email-verification");
     },
     onError: (error: any) => {
@@ -148,11 +150,10 @@ export const useResetPassword = () => {
   });
 };
 export const useChangePassword = () => {
-  
   return useMutation({
     mutationFn: changePassword,
     onSuccess: (data) => {
-      toast.success('your password has been updated successfully');
+      toast.success("your password has been updated successfully");
     },
     onError: (error: any) => {
       toast.error(error.response.data.errors.password[0]);
@@ -191,7 +192,13 @@ export const useCreateEscrow = () => {
       }
     },
     onError: (error: any) => {
-      toast.error("an error occurred");
+      const resMessage =
+      error.response.data.errors.partnerEmail[0].toString() ||
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message;
+      toast.error(resMessage);
     },
   });
 };
@@ -224,14 +231,18 @@ export const useUnLockFunds = () => {
   return useMutation({
     mutationFn: unLockFunds,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["transactions"]);
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.refetchQueries({
+        queryKey: ["transactions"],
+      });
       queryClient.invalidateQueries(["user"]);
       queryClient.invalidateQueries(["lockedFunds"]);
     },
     onError: (error: any) => {
-      console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error)
+      console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error);
       toast.error(
-        error.response.data.errors.transactionReference?.seller || "an error occurred"
+        error.response.data.errors.transactionReference?.seller ||
+          "an error occurred"
       );
     },
   });

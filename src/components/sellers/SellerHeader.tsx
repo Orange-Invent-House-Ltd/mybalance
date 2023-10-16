@@ -125,7 +125,7 @@ const Header = () => {
                     onClick={() => setIsVerify(false)}
                   />
                   <h6 className="text-[23px] font-medium">
-                    Create One-Time MyBalance Link
+                    Create  MyBalance Link
                   </h6>
                 </div>
                 <p className="text-[16px] text-[#303030] font-normal mb-8">
@@ -163,8 +163,9 @@ const Header = () => {
                     rules={{ required: "this field is required" }}
                     name={"amount"}
                     label="Amount"
-                    placeholder="20,000"
+                    placeholder="20000"
                     type="number"
+                    min={1}
                   />
                   <TextField
                     control={control}

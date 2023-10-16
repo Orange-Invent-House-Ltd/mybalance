@@ -28,7 +28,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
         type: data?.escrowMetadata.itemType,
         number: data.escrowMetadata.itemQuantity,
         amt: formatToNairaCurrency(data?.lockedAmount?.amount || data?.amount),
-        time: new Date(data?.escrowMetadata?.createdAt),
+        time: data?.escrowMetadata?.deliveryDate,
         bankName: data?.escrowMetadata.meta?.bankName,
         accNum: data?.escrowMetadata.meta?.accountNumber,
         accName: data?.escrowMetadata.meta?.accountName,
@@ -63,7 +63,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
               <h6 className="text-[23px] font-medium">Unlock Amount </h6>
             </div>
             <form action="">
-              <h1 className="text-[#EDEDED] text-lg font-medium">
+              <h1 className="text-[#393737] text-lg font-medium">
                 ITEM(S) INFORMATION
               </h1>
               <div className="mt-6 flex flex-col gap-4">
@@ -99,7 +99,6 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   label="amount"
                   placeholder="amount"
                   readOnly
-              
                 />
                 <TextField
                   control={control}
@@ -111,7 +110,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   readOnly
                 />
               </div>
-              <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+              <h1 className="mt-6 text-[#393737] text-lg font-medium">
                 RECEIVER ACCOUNT INFORMATION
               </h1>
               <div className="mt-6 flex flex-col gap-4">
@@ -153,6 +152,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   onClick={() => navigate("/buyer/dispute-resolution/add")}
                   fullWidth
                   variant="outlined"
+                  disabled={data?.meta?.escrowAction !== "APPROVED"}
                 >
                   Report a dispute
                 </Button>
@@ -162,6 +162,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                     e.preventDefault();
                     mutate(data?.reference);
                   }}
+                  disabled={data?.meta?.escrowAction !== "APPROVED"}
                   fullWidth
                 >
                   {isLoading ? "loading...." : "Unlock amount"}

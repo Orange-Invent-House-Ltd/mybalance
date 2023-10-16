@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import EmptyMoney from "../../../components/reuseable/EmptyMoney";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
+import formatToNairaCurrency from "../../../util/formatNumber";
 
 const QuickAction = () => {
   const navigate = useNavigate();
@@ -69,10 +70,7 @@ const QuickAction = () => {
   const { data: user } = useUser();
   const { data: lockedFunds, isLoading: lockedFundsLoading } =
     useLockedFunds(page);
-  console.log(
-    "🚀 ~ file: QuickAction.tsx:69 ~ QuickAction ~ lockedFunds:",
-    lockedFunds
-  );
+  
 
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -90,7 +88,8 @@ const QuickAction = () => {
   const handlePageChange = useCallback(({ selected }: any) => {
     setPage(selected + 1);
   }, []);
-
+  let data = localStorage.getItem("transactionInfo") as any;
+  data = JSON.parse(data);
   return (
     <>
       {/* <div className="w-screen h-screen flex items-center justify-center  absolute top-0 left-00 z-[900] bg-black/20 ">
@@ -136,13 +135,16 @@ const QuickAction = () => {
               >
                 <TextField
                   control={controlDeposit}
-                  placeholder="e.g 10,000"
+                  placeholder="10000"
                   label="Enter amount to deposit"
                   name="amount"
                   rules={{
                     required: "this field is required",
+                    
                   }}
                   type="number"
+                  min={1}
+                   pattern="[0-9]*"
                 />
                 <Button>Continue</Button>
               </form>
@@ -221,8 +223,14 @@ const QuickAction = () => {
                     New Amount Unlocked! 👍🏾
                   </h6>
                   <p className="mt-2   text-base font-normal leading-[21.6px]">
-                    Weldone! You have successfully unlocked [amount]. It will
-                    reflect in your unlocked amount on your dashboard.
+                    Weldone! You have successfully unlocked{" "}
+                    <strong>
+
+                    {formatToNairaCurrency(
+                      data?.lockedAmount?.amount || data?.amount
+                    )}
+                    </strong>
+                    . It will reflect as <strong>Fulfilled</strong> in your transaction history and escrow.
                   </p>
                   <div className="w-full space-y-2 mt-2">
                     <Button

@@ -212,8 +212,9 @@ const Dashboard = () => {
                       rules={{ required: "this field is required" }}
                       name={"amount"}
                       label="Amount"
-                      placeholder="20,000"
+                      placeholder="20000"
                       type="number"
+                      min={1}
                     />
                     <TextField
                       control={control}
@@ -221,7 +222,7 @@ const Dashboard = () => {
                       name={"deliveryDate"}
                       label="Delivery timeline"
                       type="date"
-                      min = {today}
+                      min={today}
                     />
                   </div>
                   <h1 className="mt-6 text-[#303030] text-lg font-medium">
