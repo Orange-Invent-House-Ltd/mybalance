@@ -99,7 +99,6 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   label="amount"
                   placeholder="amount"
                   readOnly
-              
                 />
                 <TextField
                   control={control}
@@ -153,6 +152,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   onClick={() => navigate("/buyer/dispute-resolution/add")}
                   fullWidth
                   variant="outlined"
+                  disabled={data?.meta?.escrowAction !== "APPROVED"}
                 >
                   Report a dispute
                 </Button>
@@ -162,6 +162,7 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                     e.preventDefault();
                     mutate(data?.reference);
                   }}
+                  disabled={data?.meta?.escrowAction !== "APPROVED"}
                   fullWidth
                 >
                   {isLoading ? "loading...." : "Unlock amount"}

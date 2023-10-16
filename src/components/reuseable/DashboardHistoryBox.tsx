@@ -195,6 +195,7 @@ const DashboardHistoryBox = (data: any) => {
                 </div>
                 <div className="flex flex-col gap-6 mt-6 mb-10">
                   <Button
+                    disabled={data?.meta?.escrowAction !== "APPROVED"}
                     onClick={() =>
                       navigate(
                         `/${user?.userType.toLowerCase()}/dispute-resolution/add`
