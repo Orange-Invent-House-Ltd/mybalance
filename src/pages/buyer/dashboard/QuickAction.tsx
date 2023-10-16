@@ -140,9 +140,11 @@ const QuickAction = () => {
                   name="amount"
                   rules={{
                     required: "this field is required",
+                    
                   }}
                   type="number"
                   min={1}
+                   pattern="[0-9]*"
                 />
                 <Button>Continue</Button>
               </form>

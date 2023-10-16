@@ -16,6 +16,7 @@ import LoadingOverlay from "../../reuseable/LoadingOverlay";
 import { useBanks } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
+import formatToNairaCurrency from "../../../util/formatNumber";
 
 const WithdrawMoney = () => {
   const [accNum, setAccNum] = useState("");
@@ -39,9 +40,11 @@ const WithdrawMoney = () => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${data.amount} Withdrawn!`);
+      setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${data.amount}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
+          data.amount
+        )}. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
@@ -89,8 +92,8 @@ const WithdrawMoney = () => {
   }, [withdrawSuccess]);
   useEffect(() => {
     if (accNum.length === 10) {
-      // LookupMutate({ bankCode: code, accountNumber: accNum });
-      LookupMutate({ bankCode: "044", accountNumber: accNum });
+      LookupMutate({ bankCode: code, accountNumber: accNum });
+      // LookupMutate({ bankCode: "044", accountNumber: accNum });
     }
   }, [accNum, code]);
   return (
@@ -102,7 +105,7 @@ const WithdrawMoney = () => {
           withdrawMutate({
             ...data,
             accountNumber: accNum,
-            bankCode: "044",
+            bankCode: code,
           });
         })}
         className="relative"
@@ -142,9 +145,15 @@ const WithdrawMoney = () => {
               <label htmlFor={"selectBank"} className="block">
                 select bank
               </label>
-              <select className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] ">
+              <select
+                value={code}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                }}
+                className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
+              >
                 {banks?.data?.map((bank: any) => (
-                  <option key={bank.slug} value={bank.slug}>
+                  <option key={bank.slug} value={bank.code}>
                     {bank.name}
                   </option>
                 ))}
@@ -198,10 +207,10 @@ const WithdrawMoney = () => {
         </div>
         <AlertDialog.Root open={isWithdraw}>
           <AlertDialog.Portal className=" ">
-            <AlertDialog.Overlay className="bg-[#3a3a3a]/50  fixed inset-0" />
+            <AlertDialog.Overlay className="bg-[#3a3a3a]/50 z-20  fixed inset-0" />
 
             <AlertDialog.Content className=" h-full   fixed top-0 left-0 z-50 w-full  animate-jump">
-              <div className="   w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
+              <div className="  w-full max-w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
                 <img
                   className="p-4 bg-[#ECFDF3] rounded-[50%]"
                   src={check}
