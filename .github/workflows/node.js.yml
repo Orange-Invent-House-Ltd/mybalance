@@ -34,3 +34,4 @@ jobs:
         pnpm run build
       env: 
         VITE_BASE_URL: ${{secrets.VITE_BASE_URL}}
+        PUSHER_KEY: ${{secrets.PUSHER_KEY}}

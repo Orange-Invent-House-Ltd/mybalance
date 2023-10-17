@@ -108,13 +108,13 @@ const Header = () => {
         <Dialog.Portal className="">
           <Dialog.Overlay
             onClick={() => setIsVerify(false)}
-            className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
+            className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
           />
 
           <Dialog.Content>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white pl-[16px] overflow-y-scroll pr-[34px] "
+              className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-[16px] pb-14 sm:pb-0 overflow-y-scroll"
             >
               <div className="relative">
                 {createEscrowIsLoading && <LoadingOverlay />}
