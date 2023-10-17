@@ -116,7 +116,7 @@ const WithdrawMoney = () => {
           In a case of a dispute with a seller, you can choose to withdraw your
           money into your bank account.
         </p>
-        <h1 className="mt-8 text-[#EDEDED] text-lg font-medium">
+        <h1 className="mt-8 text-[#393737] text-lg font-medium">
           SENDER ADDITIONAL INFORMATION
         </h1>
         <div className="max-w-[359px] w-full ">
@@ -137,7 +137,7 @@ const WithdrawMoney = () => {
               label="Reason for withdrawing (description)"
             />
           </div>
-          <h1 className="mt-6 text-[#EDEDED] text-lg font-medium">
+          <h1 className="mt-6 text-[#393737] text-lg font-medium">
             RECEIVER ACCOUNT INFORMATION
           </h1>
           <div className="mt-6 flex flex-col gap-4">
