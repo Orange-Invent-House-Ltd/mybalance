@@ -44,7 +44,9 @@ const EscrowPayment = () => {
     searchParams.get("amt") || data?.data?.amount
   );
 
-  const linkValue = `https://www.mybalanceapp.com/share-escrow-link?ref=${ref}`;
+  const linkValue = `${
+    import.meta.env.VITE_DOMAIN_URL
+  }/share-escrow-link?ref=${ref}`;
   if (isLoading || transactionLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -118,17 +120,17 @@ const EscrowPayment = () => {
                   </div>
                   <div className="flex mx-auto w-fit  items-center mb-10 gap-10">
                     <a
-                      href={`mailto:?subject=Check%20Out%20This%20Link&body=Here%20is%20the%20link:%20https://www.mybalanceapp.com/share-escrow-link?ref=${searchParams.get(
-                        "ref"
-                      )}`}
+                      href={`mailto:?subject=Check%20Out%20This%20Link&body=Here%20is%20the%20link:%20${
+                        import.meta.env.VITE_DOMAIN_URL
+                      }/share-escrow-link?ref=${searchParams.get("ref")}`}
                       className=""
                     >
                       <img src={emailIcon} className="mx-auto" alt="" />
                     </a>
                     <a
-                      href={`whatsapp://send?text=https://www.mybalanceapp.com/share-escrow-link?ref=${searchParams.get(
-                        "ref"
-                      )}`}
+                      href={`whatsapp://send?text=${
+                        import.meta.env.VITE_DOMAIN_URL
+                      }/share-escrow-link?ref=${searchParams.get("ref")}`}
                     >
                       <img src={whatsappIcon} className="mx-auto" alt="" />
                     </a>
