@@ -71,7 +71,7 @@ const TransactionHistory = () => {
           ))}
           {data?.data.length === 0 && <EmptyTrans />}
         </div>
-        <ReactPaginate
+        {/* <ReactPaginate
           breakLabel="..."
           nextLabel="Next"
           // initialPage={data?.meta?.currentPage - 1}
@@ -88,7 +88,7 @@ const TransactionHistory = () => {
           // Adjust for 0-based page numbering
           activeClassName="bg-[#FD7E14] text-white"
           breakClassName="page-item"
-        />
+        /> */}
       </div>
     </div>
   );
