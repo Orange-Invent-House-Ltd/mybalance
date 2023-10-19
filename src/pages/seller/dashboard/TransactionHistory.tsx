@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import { useTransactions } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
+import Pagination from "../../../components/reuseable/Pagination";
 
 const TransactionHistory = () => {
   const [page, setPage] = useState(1);
@@ -17,9 +18,9 @@ const TransactionHistory = () => {
     type: activeButton,
   });
 
-  const handlePageChange = useCallback(({ selected }: any) => {
-    setPage(selected + 1);
-  }, []);
+ const handlePageChange = (selected: any) => {
+   setPage(selected);
+ };
   useEffect(() => {
     setPage(1);
   }, [activeButton]);
@@ -39,7 +40,7 @@ const TransactionHistory = () => {
             >
               All Transaction
             </button>
-        
+
             <button
               className="tab "
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}
@@ -71,24 +72,13 @@ const TransactionHistory = () => {
           ))}
           {data?.data.length === 0 && <EmptyTrans />}
         </div>
-        {/* <ReactPaginate
-          breakLabel="..."
-          nextLabel="Next"
-          // initialPage={data?.meta?.currentPage - 1}
-          initialPage={data?.meta?.currentPage - 1 || 0}
-          onPageChange={handlePageChange} // Use the handlePageChange function
-          pageRangeDisplayed={5}
-          pageCount={data?.meta?.totalPages}
-          previousLabel="Previous"
-          renderOnZeroPageCount={null}
-          pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-          previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-          nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-          containerClassName="flex gap-3 ml-10 items-center "
-          // Adjust for 0-based page numbering
-          activeClassName="bg-[#FD7E14] text-white"
-          breakClassName="page-item"
-        /> */}
+        {!isLoading && data?.data.length > 0 && (
+          <Pagination
+            initialPage={data?.meta?.currentPage}
+            onPageChange={handlePageChange}
+            pageCount={data?.meta?.totalPages}
+          />
+        )}
       </div>
     </div>
   );

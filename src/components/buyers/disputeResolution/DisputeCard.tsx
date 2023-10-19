@@ -2,7 +2,7 @@ import React from "react";
 
 const DisputeCard = ({ reason, description, time, status }: any) => {
   return (
-    <div className="shadow-lg rounded px-6 md:px-10 py-4 my-4 w-full max-w-[676px]">
+    <div className="shadow-lg rounded px-6 md:px-10 py-4 my-4  ">
       <div className={status === "RESOLVED" ? "text-[#B7B7B7]" : ""}>
         <div className="flex gap-2  items-center justify-between  ">
           <h1 className="text-lg font-medium">{reason}</h1>
