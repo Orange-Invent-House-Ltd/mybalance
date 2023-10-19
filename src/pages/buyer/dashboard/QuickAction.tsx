@@ -1,62 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../../components/reuseable/Button";
 import Header from "../../../components/reuseable/Header";
 import TextField from "../../../components/reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
-import copy from "../../../assets/Icons/copy.svg";
 import check from "../../../assets/Icons/check.svg";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
-import LockNewAmount from "./LockNewAmount";
-import EditLockedAmount from "../../../components/buyers/EditLockedAmount";
-import lockDatas from "../../../util/lockDatas";
 import UnlockAmount from "../../../components/buyers/UnlockAmount";
-import {
-  useDepositMoney,
-  useLookUpBank,
-  useWithdraw,
-  useWithdrawFee,
-} from "../../../hooks/mutations";
+import { useDepositMoney } from "../../../hooks/mutations";
 import { useForm } from "react-hook-form";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import { useBanks, useLockedFunds, useUser } from "../../../hooks/queries";
+import { useLockedFunds } from "../../../hooks/queries";
 import { useTabStore } from "../../../store";
-import { toast } from "react-toastify";
-import loading from "../../../assets/Icons/loadingSpinner.svg";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 import { useNavigate } from "react-router-dom";
 import EmptyMoney from "../../../components/reuseable/EmptyMoney";
 import Skeleton from "react-loading-skeleton";
-import ReactPaginate from "react-paginate";
 import formatToNairaCurrency from "../../../util/formatNumber";
+import Pagination from "../../../components/reuseable/Pagination";
 
 const QuickAction = () => {
   const navigate = useNavigate();
-  const [openTab, setOpenTab] = useState(1);
-  const [openTabs, setOpenTabs] = useState(1);
+
   const [successModal, setSuccessModal] = useState(false);
 
   //lock
-  const [lock, setLock] = useState(false);
-  const [editLocked, setEditLocked] = useState(false);
+
   const [unlock, setUnlock] = useState(false);
   //
-  const [pin, setPin] = useState("");
-  // withdraw
-  const [value, setValue] = useState("");
-
-  const handlePin = (e: any) => {
-    setPin(e.target.value);
-  };
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
-  };
-  //lock function
-  const handleEdit = (e: any) => {
-    let data = e.target.value;
-    setEditLocked(true);
-  };
 
   const { handleSubmit: handleSubmitDeposit, control: controlDeposit } =
     useForm();
@@ -67,44 +38,20 @@ const QuickAction = () => {
   const { defaultTab } = useTabStore();
   const [page, setPage] = useState<number>(1);
 
-  const { data: user } = useUser();
   const { data: lockedFunds, isLoading: lockedFundsLoading } =
     useLockedFunds(page);
-  
 
-  const [accNum, setAccNum] = useState("");
-  const [code, setCode] = useState("");
-  const {
-    data: LookupData,
-    mutate: LookupMutate,
-    isLoading: LookupIsLoading,
-  } = useLookUpBank();
-  useEffect(() => {
-    if (accNum.length === 10) {
-      // LookupMutate({ bankCode: code, accountNumber: accNum });
-      LookupMutate({ bankCode: "035", accountNumber: accNum });
-    }
-  }, [accNum, code]);
-  const handlePageChange = useCallback(({ selected }: any) => {
-    setPage(selected + 1);
-  }, []);
+  const handlePageChange = (selected: any) => {
+    setPage(selected);
+  };
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
   return (
     <>
-      {/* <div className="w-screen h-screen flex items-center justify-center  absolute top-0 left-00 z-[900] bg-black/20 ">
-        <img
-          src={loading}
-          className="animate-spin mx-auto "
-          alt="loading spinner"
-        />
-        <p className="text-center">Loading! Please wait ...</p>
-      </div> */}
       <Header
         Heading="Quick Actions"
         Text="You can either deposit, lock, unlock and/or withdraw your money here."
       />
-      {/* tabs ************************************************************* */}
       <Tabs.Root defaultValue={defaultTab}>
         <Tabs.List
           className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
@@ -126,7 +73,6 @@ const QuickAction = () => {
             <div className="relative">
               {depositLoading && <LoadingOverlay />}
 
-              {/* BanK Card Contents ************************ */}
               <form
                 onSubmit={handleSubmitDeposit((data) => {
                   depositMutate(data.amount);
@@ -140,11 +86,10 @@ const QuickAction = () => {
                   name="amount"
                   rules={{
                     required: "this field is required",
-                    
                   }}
                   type="number"
                   min={1}
-                   pattern="[0-9]*"
+                  pattern="[0-9]*"
                 />
                 <Button>Continue</Button>
               </form>
@@ -193,24 +138,14 @@ const QuickAction = () => {
                   <Skeleton className="w-full h-[100px] " />
                 </div>
               )}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel="Next"
-                // initialPage={data?.meta?.currentPage - 1}
-                initialPage={lockedFunds?.meta?.currentPage - 1 || 0}
-                onPageChange={handlePageChange} // Use the handlePageChange function
-                pageRangeDisplayed={5}
-                pageCount={lockedFunds?.meta?.totalPages}
-                previousLabel="Previous"
-                renderOnZeroPageCount={null}
-                pageClassName="border border-[#6D6D6D] flex item-center justify-center h-[30px] w-[30px] py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer "
-                previousClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-                nextClassName="border border-[#6D6D6D] p-2 py-1 rounded transition-colors duration-300 hover:bg-[#FD7E14] hover:text-white hover:border-[#FD7E14] cursor-pointer"
-                containerClassName="flex gap-3 mt-10 ml-10 items-center "
-                // Adjust for 0-based page numbering
-                activeClassName="bg-[#FD7E14] text-white"
-                breakClassName="page-item"
-              />
+
+              {!lockedFundsLoading && lockedFunds?.data.length > 0 && (
+                <Pagination
+                  initialPage={lockedFunds?.meta?.currentPage}
+                  onPageChange={handlePageChange}
+                  pageCount={lockedFunds?.meta?.totalPages}
+                />
+              )}
             </div>
             {successModal && (
               <div className=" fixed  top-0 left-0 right-0 bottom-0 bg-black-rgba flex items-center justify-center z-50  ">
@@ -225,12 +160,12 @@ const QuickAction = () => {
                   <p className="mt-2   text-base font-normal leading-[21.6px]">
                     Weldone! You have successfully unlocked{" "}
                     <strong>
-
-                    {formatToNairaCurrency(
-                      data?.lockedAmount?.amount || data?.amount
-                    )}
+                      {formatToNairaCurrency(
+                        data?.lockedAmount?.amount || data?.amount
+                      )}
                     </strong>
-                    . It will reflect as <strong>Fulfilled</strong> in your transaction history and escrow.
+                    . It will reflect as <strong>Fulfilled</strong> in your
+                    transaction history and escrow.
                   </p>
                   <div className="w-full space-y-2 mt-2">
                     <Button

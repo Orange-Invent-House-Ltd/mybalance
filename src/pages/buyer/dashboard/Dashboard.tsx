@@ -29,8 +29,7 @@ import {
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
-import moment from 'moment'
-
+import moment from "moment";
 
 const Dashboard = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -40,7 +39,6 @@ const Dashboard = () => {
   const store = useStore();
   const navigate = useNavigate();
   const { data: user } = useUser();
-  const { setTab } = useTabStore();
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
@@ -374,55 +372,28 @@ const Dashboard = () => {
             Quick actions
           </h6>
           <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-4  mb-4 ">
-            <Link
-              onClick={() => {
-                setTab("depositMoney");
-              }}
-              to="/buyer/quick-action"
-      
-            >
-              <DashboardQuickBox
-                icon={plus}
-                text="Deposit money"
-                subtext="Add money to your escrow wallet"
-              />
-            </Link>
-            <Link
-              onClick={() => {
-                setTab("unlockMoney");
-              }}
-              to="/buyer/quick-action"
-              // className="sm:mr-4"
-            >
-              <DashboardQuickBox
-                disabled={user?.walletBalance === "0.00"}
-                icon={unlock}
-                text="Unlock money"
-                subtext="Release the money in your wallet"
-              />
-            </Link>
-            <Link
-              onClick={() => {
-                setTab("withdrawMoney");
-              }}
-              to="/buyer/quick-action"
-              // className="mb-4 mr-4"
-            >
-              <DashboardQuickBox
-                disabled={user?.walletBalance === "0.00"}
-                icon={download}
-                text="Withdraw money"
-                subtext="Withdraw your money from your wallet"
-              />
-            </Link>
-            {/* <Link to="/share-escrow-link">
-              <DashboardQuickBox
-                disabled={user?.walletBalance === "0.00"}
-                icon={share}
-                text="Share link"
-                subtext="Share your escrow information with everyone"
-              />
-            </Link> */}
+            <DashboardQuickBox
+              tab="depositMoney"
+              icon={plus}
+              text="Deposit money"
+              subtext="Add money to your escrow wallet"
+            />
+
+            <DashboardQuickBox
+              tab="unlockMoney"
+              disabled={user?.walletBalance === "0.00"}
+              icon={unlock}
+              text="Unlock money"
+              subtext="Release the money in your wallet"
+            />
+
+            <DashboardQuickBox
+              tab="withdrawMoney"
+              disabled={user?.walletBalance === "0.00"}
+              icon={download}
+              text="Withdraw money"
+              subtext="Withdraw your money from your wallet"
+            />
           </div>
           <h6 className=" mt-10 text-[#6D6D6D] font-bold text-[23px]">
             Transaction history

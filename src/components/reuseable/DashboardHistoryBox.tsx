@@ -46,7 +46,7 @@ const DashboardHistoryBox = (data: any) => {
       >
         <div
           className={clsx("", {
-            "text-[#B7B7B7]" : !(
+            "text-[#B7B7B7]": !(
               data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
             ),
           })}
@@ -65,7 +65,7 @@ const DashboardHistoryBox = (data: any) => {
         >
           <div
             className={clsx("status_style", {
-              "bg-[#ECFDF3]  text-[#027A48]" :
+              "bg-[#ECFDF3]  text-[#027A48]":
                 data.status === "SUCCESSFUL" ||
                 data.status === "FUFILLED" ||
                 data.status === "APPROVED" ||
@@ -210,7 +210,9 @@ const DashboardHistoryBox = (data: any) => {
                     <Button
                       onClick={() => {
                         navigator.clipboard.writeText(
-                          `https://www.mybalanceapp.com/share-escrow-link?ref=${data?.reference}`
+                          `${
+                            import.meta.env.VITE_DOMAIN_URL
+                          }/share-escrow-link?ref=${data?.reference}`
                         );
                         toast.success("link has been copied to clipboard");
                       }}
