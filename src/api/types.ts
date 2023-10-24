@@ -35,7 +35,8 @@ export interface IUserProfile {
   email: string;
   phoneNumber: string;
   withdrawnAmount: string;
-  business:any
+  business: any;
+  freeEscrowTransactions:number
 }
 
 export interface GenericResponse {
