@@ -133,9 +133,8 @@ const Dashboard = () => {
             )}
           </p>
           {user?.freeEscrowTransactions && (
-            <p className="text-sm font-normal px-2  leading-[18.9px] text-[#303030]">
-              <b>{user?.freeEscrowTransactions}</b> free escrow transaction
-              remaining
+            <p className="text-sm font-normal leading-[18.9px] text-[#6D6D6D]">
+              Free Escrow Transaction: <b>{user?.freeEscrowTransactions}</b>
             </p>
           )}
         </div>

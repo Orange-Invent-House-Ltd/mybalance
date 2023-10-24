@@ -85,34 +85,40 @@ const data = [
     list: "Create an account in seconds",
   },
   {
-    list: "Deposit money into your wallet",
+    list: "Deposit money into your MyBalance wallet",
   },
   {
-    list: "Input the account details of the seller",
+    list: "Create a Mybalance escrow link by adding product description, seller account details, email and lock money",
   },
   {
-    list: "Add a description and lock the specified amount",
+    list: "Share link with seller for approval",
   },
   {
-    list: "Unlock money after product has been delivered",
+    list: "Unlock money after product is delivered to you",
   },
 ];
 
 const secondData = [
   {
-    list: "Create an account in seconds",
+    list: "Create an account in seconds and complete KYC (know your customer",
   },
   {
-    list: "Complete your KYC (Know Your Customer)",
+    list: "Create a Mybalance escrow link by adding product description, buyer account details and email",
   },
   {
-    list: "Generate a unique link and send to prospective buyers",
+    list: "Generate escrow link and send to prospective buyer",
   },
   {
-    list: "Deliver products and get notified",
+    list: "Get notified when buyer approves escrow and locks money",
   },
   {
-    list: "Withdraw your money after it has been unlocked",
+    list: "Deliver product(s)",
+  },
+  {
+    list: "Buyer unlocks money into your MyBalance wallet",
+  },
+  {
+    list: "Withdraw money into your local bank account",
   },
 ];
 

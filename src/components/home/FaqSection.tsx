@@ -34,7 +34,7 @@ const FaqSection = () => {
             title="When are funds released?"
           />
           <Accordion
-            content="When creating a transaction, there is an option to select who pays for the charges. Either the buyer or seller may be selected, based on the agreement reached by both parties."
+            content="When a buyer initiates an escrow, they are charged depending on the amount locked. Kindly refer to the dashboard of a buyer to see a breakdown of our affordable charges."
             title="Who pays for the transaction charges?"
           />
           <Accordion

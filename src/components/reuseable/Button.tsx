@@ -18,7 +18,7 @@ export const Button = (props: IButton) => {
         "rounded-md py-3 px-4 capitalize font-bold cursor-pointer transition-all",
         {
           "w-full": fullWidth === true,
-          "bg-primary-normal  text-white hover:bg-primary-dark ":
+          "bg-primary-normal  text-white hover:bg-primary-dark" :
             variant === "contained",
           "!bg-primary-light hover:bg-primary-light hover:cursor-not-allowed":
             variant === "contained" && disabled,
