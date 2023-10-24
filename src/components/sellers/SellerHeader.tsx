@@ -84,6 +84,12 @@ const Header = () => {
               <Skeleton width={100} />
             )}
           </p>
+        {user?.freeEscrowTransactions && (
+          <p className="text-sm font-normal px-2  leading-[18.9px] text-[#303030]">
+            <b>{user?.freeEscrowTransactions}</b> free escrow transaction
+            remaining
+          </p>
+        )}
         </div>
       </div>
 
@@ -125,7 +131,7 @@ const Header = () => {
                     onClick={() => setIsVerify(false)}
                   />
                   <h6 className="text-[23px] font-medium">
-                    Create  MyBalance Link
+                    Create MyBalance Link
                   </h6>
                 </div>
                 <p className="text-[16px] text-[#303030] font-normal mb-8">
