@@ -132,6 +132,11 @@ const Dashboard = () => {
               <Skeleton width={100} />
             )}
           </p>
+          {user?.freeEscrowTransactions && (
+            <p className="text-sm font-normal leading-[18.9px] text-[#6D6D6D]">
+              Free Escrow Transaction: <b>{user?.freeEscrowTransactions}</b>
+            </p>
+          )}
         </div>
         <img
           src={bell}

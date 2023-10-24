@@ -56,39 +56,41 @@ const Contact = () => {
               </p>
               <FormProvider {...methods}>
                 <form>
-                  <div className="md:flex gap-6">
+                  <div className="md:flex gap-6 justify-between">
                     <TextField
-                      variant="medium"
+                      variant="long"
                       label="Full name"
                       name="name"
                       placeholder="enter your full name"
                     />
                     <TextField
-                      variant="medium"
+                      variant="long"
                       label="Email"
                       name="email"
                       placeholder="enter a valid email address"
                     />
                   </div>
-                  <div className="md:flex gap-6">
+                  <div className="md:flex gap-6 justify-between">
                     <TextField
-                      variant="medium"
+                      variant="long"
                       label="Phone (optional)"
                       name="phone"
                       placeholder="enter your phone number"
                     />
                     <TextField
-                      variant="medium"
+                      variant="long"
                       label="Subject"
                       name="subject"
                       placeholder="enter your subject"
                     />
                   </div>
+                  <div>
                   <MultilineTextField
                     name="message"
                     label="Message"
                     placeholder="enter your message here"
                   />
+                  </div>
                   <div className="w-[244px] mt-4 mx-auto md:mx-0">
                     <Button fullWidth>Send message</Button>
                   </div>
@@ -103,7 +105,7 @@ const Contact = () => {
       </div>
       {/* mobile image */}
       <div className="md:hidden mx-auto mb-16">
-        <img src={contactImg} alt="contact" />
+        <img src={contactImg} alt="contact" className="w-full"/>
       </div>
       <div>
         <iframe

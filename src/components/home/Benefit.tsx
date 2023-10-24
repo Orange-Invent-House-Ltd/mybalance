@@ -11,7 +11,7 @@ const Benefit = () => {
   return (
     <div className="my-[50px] md:my-[100px]">
       <div className="px-[5%]">
-        <h3 className=" h6 w-[350px] sm:font-black sm:text-[36px] sm:mb-6 mx-auto sm:text-center sm:leading-[48.6px]">
+        <h3 className=" h6 sm:w-[350px] sm:font-black sm:text-[36px] sm:mb-6 mx-auto sm:text-center sm:leading-[48.6px]">
           {" "}
           <span className="relative" >
             Benefits
