@@ -58,7 +58,7 @@ const Header = () => {
     setAccNum(user?.bankAccount.accountNumber);
   }, [reset]);
   return (
-    <div className="flex flex-col items-center md:flex-row gap-6 justify-between mb-8">
+    <div className="flex flex-col items-center md:flex-row gap-6 justify-between">
       <div className="flex items-center gap-4">
         <div>
           {user?.avatar ? (
