@@ -31,6 +31,7 @@ import {
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import moment from "moment";
+import infoIcon from '../../../assets/Icons/info-icon.svg'
 
 const Dashboard = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -139,7 +140,7 @@ const Dashboard = () => {
                 You have <b>{user?.freeEscrowTransactions}</b> free escrow
                 transactions
               </p>
-              <img src={info} className="inline" alt="" />
+              <img src={infoIcon} className="inline" alt="information" />
             </div>
           )}
         </div>

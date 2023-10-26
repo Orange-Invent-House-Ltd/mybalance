@@ -25,6 +25,7 @@ import {
 import { toast } from "react-toastify";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../queries";
+import useStore from "../../store";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -49,7 +50,10 @@ export const useLogin = () => {
       navigate("/buyer/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      let resMessage;
+      error.response.data.errors === null ? resMessage = error.response.data.message : 
+      resMessage = error.response.data.errors.email[0]
+      toast.error(resMessage);
     },
   });
 };
@@ -99,9 +103,12 @@ export const useRegisterSeller = () => {
   });
 };
 export const useVerifyEmail = () => {
+  const store = useStore();
   return useMutation({
     mutationFn: verifyEmail,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      store.setAuthToken(data.data.token);
+    },
     onError: (error: any) => {
       toast.error(error.response.data.message);
     },
