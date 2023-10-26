@@ -23,7 +23,7 @@ import {
   withdraw,
 } from "../../api";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../queries";
 
 export const useLogin = () => {
@@ -193,7 +193,7 @@ export const useCreateEscrow = () => {
     },
     onError: (error: any) => {
       const resMessage =
-      error.response.data.errors.partnerEmail[0].toString() ||
+        error.response.data.errors.partnerEmail[0].toString() ||
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -298,12 +298,16 @@ export const useRespondTransaction = () => {
 };
 export const useCreateDispute = () => {
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: createDispute,
     onSuccess: (data) => {
       toast.success("Dispute Created Successfully");
       queryClient.invalidateQueries(["disputes"]);
+      queryClient.refetchQueries({
+        queryKey: ["disputes"],
+      });
+      navigate("../dispute-resolution");
     },
     onError: (error: any) => {
       toast.error(error.response.data.errors.transaction[0]);

@@ -20,6 +20,7 @@ import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
+import info from "../../../assets/Icons/InformationCircle.svg";
 import {
   useCreateEscrow,
   useDepositMoney,
@@ -133,9 +134,13 @@ const Dashboard = () => {
             )}
           </p>
           {user?.freeEscrowTransactions && (
-            <p className="text-sm font-normal leading-[18.9px] text-[#6D6D6D]">
-              Free Escrow Transaction: <b>{user?.freeEscrowTransactions}</b>
-            </p>
+            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9]   mt-2 text-[#2D7738]">
+              <p className="">
+                You have <b>{user?.freeEscrowTransactions}</b> free escrow
+                transactions
+              </p>
+              <img src={info} className="inline" alt="" />
+            </div>
           )}
         </div>
         <img
