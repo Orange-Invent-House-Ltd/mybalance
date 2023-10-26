@@ -105,36 +105,73 @@ const RegisterContinue = () => {
     }
   };
 
-  const checkEmail = async (data: any) => {
+  // const checkEmail = async (data: any) => {
+  //   try {
+  //     const response = await publicApi.post("console/check-email", {
+  //       email: data?.email,
+  //     });
+  //     toast.success("user with this email already exists.", {
+  //       position: "top-right",
+  //     });
+  //   } catch (error: any) {
+  //     // const resMessage =
+  //     //   (error.response &&
+  //     //     error.response.data &&
+  //     //     error.response.data.message) ||
+  //     //   error.message ||
+  //     //   error.response.data.message.toString();
+  //     // toast.error( resMessage, {
+  //     //   position: 'top-right'
+  //     // })
+  //     registerUser(data);
+  //   }
+  // };
+
+  // const registerUser = (data: SignupInput) => {
+  //   console.log("I got clicked");
+  //   console.log(data);
+  //   store.setAuthUser({ ...store.authUser, ...data });
+  //   store.setAuthEmail(data.email);
+  //   localStorage.setItem("email", data.email);
+  //   //navigate to next page
+  //   navigate("identity");
+  // };
+
+  const registerUser = async (data: SignupInput) => {
     try {
-      const response = await publicApi.post("console/check-email", {
-        email: data?.email,
-      });
-      toast.success("user with this email already exists.", {
+      console.log(data);
+      //set button loading to true
+      store.setRequestLoading(true);
+      store.setAuthEmail(data.email);
+      localStorage.setItem("email", data.email);
+      //post input datas to database
+      const response = await publicApi.post<GenericResponse>(
+        "auth/register/seller",
+        {
+          ...store.authUser,
+          ...data,
+        }
+      );
+      //Form submition success notifications
+      toast.success(response.data.message as string, {
         position: "top-right",
       });
+      store.setRequestLoading(false);
+      store.setTempId(response.data.data?.tempId);
+      localStorage.setItem('tempId', response.data.data?.tempId);
+      localStorage.setItem("userType", "seller");
+      //navigate to verification page after submition
+      navigate("/email-verification");
     } catch (error: any) {
-      // const resMessage =
-      //   (error.response &&
-      //     error.response.data &&
-      //     error.response.data.message) ||
-      //   error.message ||
-      //   error.response.data.message.toString();
-      // toast.error( resMessage, {
-      //   position: 'top-right'
-      // })
-      registerUser(data);
+      console.log(error);
+      store.setRequestLoading(false);
+      const resMessage = error.response.data.errors.email.toString() ||
+      error.response.data.message.toString()
+      //Form submition error notifications
+      toast.error(resMessage, {
+        position: "top-right",
+      });
     }
-  };
-
-  const registerUser = (data: SignupInput) => {
-    console.log("I got clicked");
-    console.log(data);
-    store.setAuthUser({ ...store.authUser, ...data });
-    store.setAuthEmail(data.email);
-    localStorage.setItem("email", data.email);
-    //navigate to next page
-    navigate("identity");
   };
 
   return (
@@ -193,7 +230,7 @@ const RegisterContinue = () => {
                 {/* create account as seller. */}
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   <FormProvider {...methods}>
-                    <form onSubmit={handleSubmit(checkEmail)}>
+                    <form onSubmit={handleSubmit(registerUser)}>
                       <h6 className="mt-8 text-[#121212] font-medium text-[23px] leading-[31.05px]">
                         Create your account now
                       </h6>

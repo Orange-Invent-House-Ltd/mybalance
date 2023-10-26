@@ -253,7 +253,7 @@ const EmailVerification = () => {
                           disabled={false}
                           fullWidth={true}
                           onClick={() => {
-                            navigate("/login");
+                            userType === "seller" ? navigate('/seller/register/continue/identity')  : navigate("/login")
                           }}
                         >
                           Continue

@@ -6,17 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import TextField from "../../../components/reuseable/TextField";
-import logo from "../../../assets/Icons/logo.svg";
-import phoneImage from "../../../assets/images/R-phone.png";
-import mphone from "../../../assets/images/m-phone.png";
 import { Button } from "../../../components/reuseable/Button";
-import facebook from "../../../assets/Icons/Facebook.svg";
-import twitter from "../../../assets/Icons/Twitter.svg";
-import linkedin from "../../../assets/Icons/LinkedIn.svg";
-import Instagram from "../../../assets/Icons/Instagram.svg";
 
 //type definition with error messages for the form input
 const registerSchema = object({
+  name: string().min(1, "Full name is required"),
   businessName: string().min(1, "Business name is required"),
   businessDescription: string().min(1, "Business description is required"),
   phone: string()
@@ -116,9 +110,14 @@ const Register = () => {
                       </p>
                       <div className="grid gap-y-3.5">
                         <TextField
+                          name="name"
+                          label="Full Name"
+                          placeholder="Aremu Jamiu"
+                        />
+                        <TextField
                           name="businessName"
                           label="Business name"
-                          placeholder="e.g “Musty Feet”"
+                          placeholder="Musty Feet"
                         />
                         <TextField
                           name="businessDescription"

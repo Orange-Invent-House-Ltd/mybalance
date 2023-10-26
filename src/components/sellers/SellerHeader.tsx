@@ -11,6 +11,7 @@ import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
 import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
 import moment from "moment";
+import infoIcon from '../../assets/Icons/info-icon.svg'
 
 const Header = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -86,12 +87,12 @@ const Header = () => {
             )}
           </p>
           {user?.freeEscrowTransactions && (
-            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9]   mt-2 text-[#2D7738]">
+            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9] mt-2 text-[#2D7738]">
               <p className="">
                 You have <b>{user?.freeEscrowTransactions}</b> free escrow
-                transactions
+                transaction(s)
               </p>
-              <img src={info} className="inline" alt="" />
+              <img src={infoIcon} className="inline" alt="information" />
             </div>
           )}
         </div>
