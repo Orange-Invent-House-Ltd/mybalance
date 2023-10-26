@@ -43,6 +43,7 @@ export interface GenericResponse {
   message: string;
   email: string;
   data: {
+    id: string;
     tempId: string;
     token: string;
     accountName: string;

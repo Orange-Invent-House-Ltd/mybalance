@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import bell from "../../assets/Icons/notification.svg";
+import info from "../../assets/Icons/InformationCircle.svg";
+
 import { Button } from "../reuseable/Button";
 import TextField from "../reuseable/TextField1";
 import back from "../../assets/Icons/back.svg";
@@ -10,6 +11,7 @@ import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
 import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
 import moment from "moment";
+import infoIcon from '../../assets/Icons/info-icon.svg'
 
 const Header = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -58,7 +60,7 @@ const Header = () => {
     setAccNum(user?.bankAccount.accountNumber);
   }, [reset]);
   return (
-    <div className="flex flex-col items-center md:flex-row gap-6 justify-between mb-8">
+    <div className="flex flex-col items-center md:flex-row gap-6 justify-between">
       <div className="flex items-center gap-4">
         <div>
           {user?.avatar ? (
@@ -84,12 +86,15 @@ const Header = () => {
               <Skeleton width={100} />
             )}
           </p>
-        {user?.freeEscrowTransactions && (
-          <p className="text-sm font-normal px-2  leading-[18.9px] text-[#303030]">
-            <b>{user?.freeEscrowTransactions}</b> free escrow transaction
-            remaining
-          </p>
-        )}
+          {user?.freeEscrowTransactions && (
+            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9] mt-2 text-[#2D7738]">
+              <p className="">
+                You have <b>{user?.freeEscrowTransactions}</b> free escrow
+                transaction(s)
+              </p>
+              <img src={infoIcon} className="inline" alt="information" />
+            </div>
+          )}
         </div>
       </div>
 

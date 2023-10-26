@@ -4,24 +4,16 @@ import { object, string, TypeOf, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { publicApi } from "../../../api/axios";
+import { privateApi, publicApi} from "../../../api/axios";
 import { GenericResponse } from "../../../api/types";
-import { IUser } from "../../../api/types";
 import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import TextField from "../../../components/reuseable/TextField";
-import logo from "../../../assets/Icons/logo.svg";
-import phoneImage from "../../../assets/images/R-phone.png";
-import mphone from "../../../assets/images/m-phone.png";
 import { Button } from "../../../components/reuseable/Button";
-import facebook from "../../../assets/Icons/Facebook.svg";
-import twitter from "../../../assets/Icons/Twitter.svg";
-import linkedin from "../../../assets/Icons/LinkedIn.svg";
-import Instagram from "../../../assets/Icons/Instagram.svg";
+
 
 //type definition with error messages for the form input
 const registerSchema = z.object({
-  kycType: z.string(),
   name: z
     .union([
       z.string().length(0),
@@ -133,7 +125,9 @@ export type SignupInput = TypeOf<typeof registerSchema>;
 const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("NIN");
+  const [kycMetaId, setKycMetaId] = useState('')
+  const [name, setName] = useState('')
 
   const store = useStore();
   const navigate = useNavigate();
@@ -145,13 +139,12 @@ const RegisterIdentity = () => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(event.target.value);
-    setValue("kycType", event.target.value);
   };
 
   useEffect(() => {
     selectedValue === "IP" && watch("lastName")
       ? verifyPassport()
-      : selectedValue === "NIN" && watch("number")
+      : selectedValue === "NIN" && watch("number").length === 11
       ? verifyNIN()
       : selectedValue === "VC" && watch("lga")
       ? verifyVC()
@@ -165,7 +158,7 @@ const RegisterIdentity = () => {
       //set button loading to true
       store.setRequestLoading(true);
       //post input datas to database
-      const response = await publicApi.post<GenericResponse>(
+      const response = await privateApi.post<GenericResponse>(
         "shared/lookup/passport",
         {
           number: getValues("number"),
@@ -176,7 +169,8 @@ const RegisterIdentity = () => {
       const firstName = response.data?.data.firstName;
       const lastName = response.data?.data.lastName;
       const name = firstName + " " + lastName;
-      setValue("name", name);
+      // setValue("name", name);
+      setName(name)
       toast.success(response.data.message as string, {
         toastId: "success1",
         position: "top-right",
@@ -210,18 +204,21 @@ const RegisterIdentity = () => {
       const middleName = response.data.data.meta?.middleName;
       const lastName = response.data.data.meta?.lastName;
       const name = firstName + " " + middleName + " " + lastName;
-      console.log(name);
-      setValue("name", name);
+      setKycMetaId(response.data.data.id)
+      setName(name)
+      // setValue("name", name);
       toast.success(response.data.message as string, {
+        toastId: "success1",
         position: "top-right",
       });
       store.setRequestLoading(false);
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
-      const resMessage = error.response.data.errors.email.toString();
+      const resMessage = error.response.data.message.toString();
       //Form submition error notifications
       toast.error(resMessage, {
+        toastId: "error1",
         position: "top-right",
       });
     }
@@ -247,7 +244,8 @@ const RegisterIdentity = () => {
       const firstName = response.data?.data.firstName;
       const lastName = response.data?.data.lastName;
       const name = firstName + " " + lastName;
-      setValue("name", name);
+      setName(name)
+      // setValue("name", name);
       toast.success(response.data.message as string, {
         position: "top-right",
       });
@@ -279,7 +277,8 @@ const RegisterIdentity = () => {
       const firstName = response.data?.data.firstName;
       const lastName = response.data?.data.lastName;
       const name = firstName + " " + lastName;
-      setValue("name", name);
+      setName(name)
+      // setValue("name", name);
       toast.success(response.data.message as string, {
         position: "top-right",
       });
@@ -295,49 +294,54 @@ const RegisterIdentity = () => {
     }
   };
 
-  const registerUser = async (data: any) => {
+  const registerKYC = async () => {
     try {
-      console.log(data);
       //set button loading to true
       store.setRequestLoading(true);
       //post input datas to database
-      const response = await publicApi.post<GenericResponse>(
-        "auth/register/seller",
+      const response = await publicApi.put<GenericResponse>(
+        "auth/kyc",
         {
-          ...store.authUser,
-          ...data,
+          kycType: selectedValue,
+          kycMetaId: kycMetaId,
+        },
+        { 
+          headers: {
+            Authorization: `Bearer ${store.authToken}`,
+          }
         }
       );
       //Form submition success notifications
       toast.success(response.data.message as string, {
+        toastId: 'success1',
         position: "top-right",
       });
       store.setRequestLoading(false);
-      store.setTempId(response.data.data?.tempId);
-      localStorage.setItem('tempId', response.data.data?.tempId);
+      localStorage.setItem("session_token", store.authToken);
       localStorage.setItem("userType", "seller");
       //navigate to verification page after submition
-      navigate("/email-verification");
+      navigate("/seller/dashboard");
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
-      const resMessage = error.response.data.errors.email.toString();
+      const resMessage = error.response.data.message.toString();
       //Form submition error notifications
       toast.error(resMessage, {
+        toastId: 'error1',
         position: "top-right",
       });
     }
   };
 
-  //onsubmit run registerUser function with the values collected from the form which is used as data in registerUser
-  const onSubmitHandler: SubmitHandler<SignupInput> = (values) => {
-    const identytyData = {
-      kycType: getValues("kycType"),
-      kycMeta: values,
-      name: getValues("name"),
-    };
-
-    registerUser(identytyData);
+  const handleSkip = async () => {
+    store.setRequestLoading(true);
+    toast.success('Welcome', {
+      position: "top-right",
+    });
+    store.setRequestLoading(false);
+    localStorage.setItem("session_token", store.authToken);
+    localStorage.setItem("userType", "seller");
+    navigate("/seller/dashboard");
   };
 
   return (
@@ -391,7 +395,7 @@ const RegisterIdentity = () => {
             </li>
           </ul>
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
-            <div className="px- py-5 flex-auto">
+            <div className="flex-auto">
               <div className="tab-content tab-space">
                 {/* create account as seller */}
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
@@ -403,7 +407,6 @@ const RegisterIdentity = () => {
                   </p>
                   <div className="grid gap-y-3.5">
                     <label
-                      htmlFor="ID"
                       className="text-sm mb-[6px] capitalize block"
                     >
                       Means of ID
@@ -414,7 +417,7 @@ const RegisterIdentity = () => {
                       onChange={handleSelectChange}
                       className="border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] mb-6"
                     >
-                      <option value="select">Select</option>
+                      {/* <option value="select">Select</option> */}
                       {/* <option value="IP">International Passport</option> */}
                       <option value="NIN">NIN</option>
                       {/* <option value="VC">Voter’s Card</option>
@@ -422,7 +425,7 @@ const RegisterIdentity = () => {
                     </select>
                     {selectedValue === "IP" ? (
                       <FormProvider {...methods}>
-                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                        <form onSubmit={handleSubmit(registerKYC)}>
                           <div>
                             <TextField
                               name="number"
@@ -443,7 +446,7 @@ const RegisterIdentity = () => {
                       </FormProvider>
                     ) : selectedValue === "NIN" ? (
                       <FormProvider {...methods}>
-                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                        <form onSubmit={handleSubmit(registerKYC)} className="mb-4">
                           <div>
                             <TextField
                               name="number"
@@ -452,14 +455,14 @@ const RegisterIdentity = () => {
                               placeholder="e.g 1234 1234 123"
                             />
                             <div className="mt-6">
-                              <Button fullWidth={true}>Next</Button>
+                              <Button disabled={!kycMetaId} fullWidth={true}>Next</Button>
                             </div>
                           </div>
                         </form>
                       </FormProvider>
                     ) : selectedValue === "VC" ? (
                       <FormProvider {...methods}>
-                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                        <form onSubmit={handleSubmit(registerKYC)}>
                           <div>
                             <TextField
                               name="number"
@@ -509,7 +512,7 @@ const RegisterIdentity = () => {
                       </FormProvider>
                     ) : selectedValue === "DL" ? (
                       <FormProvider {...methods}>
-                        <form onSubmit={handleSubmit(onSubmitHandler)}>
+                        <form onSubmit={handleSubmit(registerKYC)}>
                           <div>
                             <TextField
                               name="number"
@@ -536,7 +539,12 @@ const RegisterIdentity = () => {
             </div>
           </div>
         </div>
-        <p className="text-sm font-normal mb-7 w-fit mx-auto">
+        <button onClick={handleSkip}
+          className="text-orange-500 mb-2 text-base font-medium underline w-full text-center">
+          Skip this part
+        </button>
+        <div className="mb-6"><span className="text-neutral-600 text-sm font-bold leading-tight">NOTE:</span><span className="text-neutral-500 text-[13px] font-normal"> Verify your identity for easy funds withdrawal from escrow.</span></div>
+        <p className="text-sm font-normal mb-7 w-full text-center">
           Existing user?{" "}
           <a href="/login" className="text-[#121212] font-bold">
             Log in here

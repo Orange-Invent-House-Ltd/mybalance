@@ -34,7 +34,8 @@ const FaqSection = () => {
             title="When are funds released?"
           />
           <Accordion
-            content="When a buyer initiates an escrow, they are charged depending on the amount locked. Kindly refer to the dashboard of a buyer to see a breakdown of our affordable charges."
+            content="Both parties (Buyer and Seller) are charged a certain percentage for an escrow, depending on the amount locked. Buyer is charged by the time they are unlocking funds, seller is charged when funds are released.
+            Kindly refer to your dashboard to see a breakdown of our affordable charges."
             title="Who pays for the transaction charges?"
           />
           <Accordion
