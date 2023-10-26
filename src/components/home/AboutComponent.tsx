@@ -7,17 +7,17 @@ import { NavLink } from "react-router-dom";
 
 const AboutComponent:FC = () => {
   return (
-    <div className="px-[5%] mt-[50px] text-center lg:text-left lg:flex flex-row-reverse justify-between lg:mt-28">
+    <div className="px-[5%] mt-[50px] lg:text-left lg:flex flex-row-reverse justify-between lg:mt-28">
       <div className="lg:ml-[50px]">
         <h3 className="h6 sm:font-black sm:text-[36px] sm:mb-6">About MyBalance</h3>
         <div className="mb-[40px]">
           {data.map(({paragraph}, key)=>(
-            <p className="para mb-4 mx-auto lg:mx-0 w-[343px] sm:w-[550px] md:w-[614px]" key={key}>{paragraph}</p>
+            <p className="para mb-4 w-fit lg:w-[614px]" key={key}>{paragraph}</p>
           ))}
         </div>
-        <NavLink to='about-us'><div className="mx-auto lg:mx-0 max-w-[244px]"><Button fullWidth={true}> learn more</Button></div></NavLink>
+        <NavLink to='about-us'><div className="max-w-[244px]"><Button fullWidth={true}> learn more</Button></div></NavLink>
       </div>
-      <div className="flex justify-center mt-6">
+      <div className="flex md:justify-center mt-6">
         <div className="relative mt-9 md:mt-0">
           <img className="absolute" src={card} alt="someone with credit card" />
           <img className="mt-[25px] ml-[40px] lg:ml-[20px]" src={rectangle} alt="background rectangle shape" />

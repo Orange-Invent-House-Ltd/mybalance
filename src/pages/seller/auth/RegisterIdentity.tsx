@@ -134,6 +134,7 @@ const RegisterIdentity = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
   const [selectedValue, setSelectedValue] = useState("");
+  const [disable, setDisable] = useState(true)
 
   const store = useStore();
   const navigate = useNavigate();
@@ -151,7 +152,7 @@ const RegisterIdentity = () => {
   useEffect(() => {
     selectedValue === "IP" && watch("lastName")
       ? verifyPassport()
-      : selectedValue === "NIN" && watch("number")
+      : selectedValue === "NIN" && watch("number").length === 11
       ? verifyNIN()
       : selectedValue === "VC" && watch("lga")
       ? verifyVC()
@@ -212,16 +213,20 @@ const RegisterIdentity = () => {
       const name = firstName + " " + middleName + " " + lastName;
       console.log(name);
       setValue("name", name);
+      setDisable(!disable)
       toast.success(response.data.message as string, {
+        toastId: "success1",
         position: "top-right",
       });
       store.setRequestLoading(false);
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
-      const resMessage = error.response.data.errors.email.toString();
+      setDisable(true)
+      const resMessage = error.response.data.message.toString();
       //Form submition error notifications
       toast.error(resMessage, {
+        toastId: "error1",
         position: "top-right",
       });
     }
@@ -321,7 +326,7 @@ const RegisterIdentity = () => {
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
-      const resMessage = error.response.data.errors.email.toString();
+      const resMessage = error.response.data.message.toString();
       //Form submition error notifications
       toast.error(resMessage, {
         position: "top-right",
@@ -452,7 +457,7 @@ const RegisterIdentity = () => {
                               placeholder="e.g 1234 1234 123"
                             />
                             <div className="mt-6">
-                              <Button fullWidth={true}>Next</Button>
+                              <Button disabled={disable} fullWidth={true}>Next</Button>
                             </div>
                           </div>
                         </form>

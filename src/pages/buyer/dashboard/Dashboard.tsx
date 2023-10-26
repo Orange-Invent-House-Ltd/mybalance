@@ -169,7 +169,7 @@ const Dashboard = () => {
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:pl-[16px] overflow-y-scroll md:pr-[34px] "
+                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
