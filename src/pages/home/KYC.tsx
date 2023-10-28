@@ -125,7 +125,7 @@ const KYC = () => {
               placeholder='12341234123'
               type='number'
               control={control}
-              defaultValue={'12'}
+              defaultValue={''}
               rules={{
                 required: 'NIN field is required',
                 pattern: {
