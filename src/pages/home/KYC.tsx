@@ -23,7 +23,7 @@ const KYC = () => {
   const store = useStore();
 
   useEffect(()=>{
-    watch("number").length == 11 && verifyNIN()
+    watch("number")?.length == 11 && verifyNIN()
   }, [watch("number")])
 
   const verifyNIN = async () => {
@@ -125,7 +125,6 @@ const KYC = () => {
               placeholder='12341234123'
               type='number'
               control={control}
-              defaultValue={''}
               rules={{
                 required: 'NIN field is required',
                 pattern: {
