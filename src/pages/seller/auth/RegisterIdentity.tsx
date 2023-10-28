@@ -452,7 +452,7 @@ const RegisterIdentity = () => {
                               name="number"
                               type="phone"
                               label="NIN number"
-                              placeholder="e.g 1234 1234 123"
+                              placeholder="12341234123"
                             />
                             <div className="mt-6">
                               <Button disabled={!kycMetaId} fullWidth={true}>Next</Button>

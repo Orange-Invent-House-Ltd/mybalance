@@ -9,12 +9,14 @@ type Store = {
   requestLoading: boolean;
   authToken: string;
   tempId: string;
+  isSuccessful: boolean;
   setAuthEmail: (email: string) => void;
   setAuthUser: (user: IUser | null) => void;
   setUserProfile: (profile: IUserProfile | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
   setAuthToken: (token: string) => void;
   setTempId: (tempId: string) => void;
+  setIsSuccessfull:(isSuccessful: boolean) => void;
 };
 
 const useStore = create(
@@ -26,6 +28,7 @@ const useStore = create(
       requestLoading: false,
       authToken: "",
       tempId: "",
+      isSuccessful: false,
       setAuthEmail: (email) => set((state) => ({ ...state, authEmail: email })),
       setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
       setUserProfile: (profile) =>
@@ -34,6 +37,7 @@ const useStore = create(
         set((state) => ({ ...state, requestLoading: isLoading })),
       setAuthToken: (token) => set((state) => ({ ...state, authToken: token })),
       setTempId: (tempId) => set((state) => ({ ...state, tempId: tempId })),
+      setIsSuccessfull:(isSuccessful) => set((state)=>({...state, isSuccessful:isSuccessful}))
     }),
     {
       name: "store", // Set a name for your persisted store

@@ -23,6 +23,18 @@ const Dashboard = () => {
       <Withdraw open={withdrawModal} setOpen={setWithdrawModal} />
       <SellerHeader
       />
+      {user?.kyc === null && (
+        <div className="flex flex-col gap-2 justify-start items-start max-w-[752px] mt-8 px-4 py-3 bg-orange-50 rounded-lg border border-orange-200">
+          <p className="w-[285px] text-amber-800 text-sm font-bold">ATTENTION:</p>
+          <div className="w-full border-t border-orange-300"/>
+          <p className="max-w-[650px] text-amber-700 text-[13px] font-normal">
+            Please note that your KYC (Know Your Customer) verification is pending. Completing your KYC is essential for a smooth fund withdrawal process. Take a moment to complete your KYC to avoid any delays.
+          </p>
+          <Link to='/kyc'>
+            <button className="px-10 py-2 bg-orange-500 rounded-[40px] text-white text-sm font-bold">Complete KYC now</button>
+          </Link>
+        </div>
+      )}
       <div className="md:flex justify-between">
         <div>
           <div className="flex justify-center gap-2 mt-16 max-w-[710px]">

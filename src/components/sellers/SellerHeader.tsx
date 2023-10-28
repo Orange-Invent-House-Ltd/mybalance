@@ -86,8 +86,8 @@ const Header = () => {
               <Skeleton width={100} />
             )}
           </p>
-          {user?.freeEscrowTransactions && (
-            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9] mt-2 text-[#2D7738]">
+          {user?.freeEscrowTransactions !== 0 && (
+            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9]   mt-2 text-[#2D7738]">
               <p className="">
                 You have <b>{user?.freeEscrowTransactions}</b> free escrow
                 transaction(s)
