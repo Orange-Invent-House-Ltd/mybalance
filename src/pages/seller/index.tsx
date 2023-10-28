@@ -27,7 +27,6 @@ const Index = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="dispute-resolution" element={<DisputeResolution />} />
         <Route path="dispute-resolution/add" element={<AddNewDispute />} />
-
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/" element={<AuthLayout />}>

@@ -8,7 +8,6 @@ import twitter from "../assets/Icons/Twitter.svg";
 import linkedin from "../assets/Icons/LinkedIn.svg";
 import Instagram from "../assets/Icons/Instagram.svg";
 import { useUser } from "../hooks/queries";
-import LoadingLogo from "../components/reuseable/LoadingLogo";
 
 const AuthLayout = () => {
   // const { data: user, isLoading } = useUser();

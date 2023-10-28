@@ -29,6 +29,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
 import EscrowPayment from "./pages/home/EscrowPayment";
 import Test from "./pages/buyer/dashboard/Test";
+import KYC from "./pages/home/KYC";
+import KYCResponse from "./pages/home/KYCResponse";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -43,6 +45,8 @@ const App: React.FC = () => {
         <Route path="/t&c" element={<TermsAndCondition />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/escrow-payment" element={<EscrowPayment />} />
+        <Route path="/kyc" element={<KYC />} />
+        <Route path="/kyc/response" element={<KYCResponse />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/email-verification" element={<EmailVerification />} />
