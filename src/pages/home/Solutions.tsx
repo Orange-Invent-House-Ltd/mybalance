@@ -20,14 +20,13 @@ const Solutions = () => {
       <div className='mt-[80px]'>
         <HeroSection 
           menu='Solutions' 
-          text='MyBalance is the world’s most secure escrow service provider platform safeguarding all parties involved.'
+          text='Welcome to MyBalance, your trusted partner in secure online transactions. Our platform is dedicated to safeguarding all parties involved, ensuring a seamless and reliable escrow service experience.'
         />
         <div className='py-20 px-[5%] mb-16'>
           <div id='b&s' className='md:flex justify-between gap-10'>
             <div className='max-w-[426px]'>
               <h3 className='h3700'>Buyers & Sellers</h3>
-              <p>For E-commerce, Small Scale Businesses and Individual Sellers,
-                MyBalance helps E-Commerces, Small and Medium Scale businesses or Online Vendors, secure and guarantee transaction success by eradicating the menace of “what I ordered versus what I got” issues which has been affecting trust and confidence in online transactions.
+              <p>MyBalance empowers e-commerce enterprises, small-scale businesses, and individual sellers to ensure the success of their transactions. We eliminate the common problem of discrepancies between what was ordered and what is received, a challenge that is eroding trust and confidence in online transactions.
               </p>
               <div className='w-[244px] mt-6 mb-8 md:mb-0'><a href='/buyer/register'><Button fullWidth>Sign up now</Button></a> </div>
             </div>

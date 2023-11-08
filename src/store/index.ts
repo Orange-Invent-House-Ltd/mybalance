@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { IUser, IUserProfile } from "../api/types";
 
 type Store = {
@@ -41,7 +41,7 @@ const useStore = create(
     }),
     {
       name: "store", // Set a name for your persisted store
-      getStorage: () => sessionStorage, // Choose your preferred storage mechanism
+      //storage: createJSONStorage(()=> sessionStorage) // (optional) by default, 'localStorage' is used
     }
   )
 );

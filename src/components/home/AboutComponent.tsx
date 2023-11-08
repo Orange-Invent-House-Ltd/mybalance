@@ -33,10 +33,13 @@ const AboutComponent:FC = () => {
 
 const data =[
   {
-    paragraph: "MyBalance offers escrow services for businesses, organizations and government parastatals with our world’s most secure payment method from a counterparty risk perspective - thereby protecting both buyer and seller, all funds transacted using escrow are kept in trust."
+    paragraph: "Orange Invent House Ltd. proudly introduces 'MyBalance' Our mission is crystal clear: to eliminate the looming threat of transaction fraud, bridge the gap between expectations and reality in online purchases, and introduce the era of 'Balance After Delivery.'"
   },
   {
-    paragraph: "We are a platform where buyers are assured of getting value for their money and the seller can bank on us to get paid for the product sold."
-  }
+    paragraph: "We firmly believe that every party engaged in an online transaction deserves protection. At 'MyBalance,' we provide a robust platform where both buyers and sellers retain complete control over their financial journey from deposit to withdrawal."
+  },
+  {
+    paragraph: "Imagine a fortress where buyers find assurance in receiving the full value for their money, and sellers trust us for secure and prompt payments. Welcome to the sanctuary of trust and reliability, embodied in our escrow payment solution. We stand as the unswerving bridge connecting buyers and sellers across Nigeria, ensuring the safeguarding of your financial interests."
+  },
 ]
 export default AboutComponent
