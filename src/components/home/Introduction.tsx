@@ -12,7 +12,7 @@ const Introduction: FC = () => {
         <div className="w-[fit] h-[33px] p-2 bg-neutral-400 rounded-[15px] justify-center items-center inline-flex">
           <p className="text-white text-[13px] md:text-base font-bold">WELCOME TO MYBALANCE</p>
         </div>
-        <h1 className="mx-auto lg:mx-0 h4 sm:text-[52px] text-headingColor sm:font-black sm:leading-[70.2px] sm:h-[210px] sm:w-[509px]">
+        <h1 className="lg:mx-0 h4 sm:text-[52px] text-headingColor sm:font-black sm:leading-[70.2px] sm:h-[210px] sm:w-[509px]">
           Your{" "}
           <span className="relative">
             trusted{" "}
@@ -29,7 +29,7 @@ const Introduction: FC = () => {
           </span>{" "}
           escrow payment solution
         </h1>
-        <p className="lg:mx-0 w-[257px] leading-[24.3px] font-lg sm:w-[359px] text-[#3A3A3A] my-[20px]">
+        <p className="lg:mx-0 w-full leading-[24.3px] font-lg md:w-[359px] text-[#3A3A3A] my-[20px]">
           MyBalance offers escrow services for businesses, organizations and government parastatals with our highly secure payment method.
         </p>
         <div className="mb-[20px] sm:flex gap-4">
@@ -44,7 +44,7 @@ const Introduction: FC = () => {
         </div>
       </div>
       <img
-        className="w-full sm:w-[560px] md:w-[600px] lg:w-[700px]"
+        className="w-full md:w-[600px] lg:w-[700px]"
         src={heroImg}
         alt="phone"
       />
