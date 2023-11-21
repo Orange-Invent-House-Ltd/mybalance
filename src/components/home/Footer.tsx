@@ -5,8 +5,10 @@ import facebook from "../../assets/Icons/Facebook.svg";
 import twitter from "../../assets/Icons/Twitter.svg";
 import linkedin from "../../assets/Icons/LinkedIn.svg";
 import Instagram from '../../assets/Icons/Instagram.svg'
+import moment from 'moment'
 
 const Footer = () => {
+  const today = moment().format('YYYY-MM-DD')
   return (
     <div className=" w-full">
       <div className="bg-[#ededed29] py-16 px-[5%] flex flex-col md:flex-row gap-[100px]">
@@ -37,12 +39,12 @@ const Footer = () => {
         </div>
       </div>
       <div className="px-[5%] bg-white py-7 gap-5 md:py-12 flex-wrap-reverse flex justify-between">
-        <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
+        <p className="font-medium">© {today.slice(0,4)} MyBalance. All rights reserved.</p>
         <div className="flex items-center gap-5">
           <a href="https://twitter.com/mybalance_app" target="_blank">
             <img src={twitter} alt="Twitter" />
           </a>
-          <a href="" target="_blank">
+          <a href="https://linkedin.com/company/mybalanceapp" target="_blank">
             <img src={linkedin} alt="LinkedIn" />
           </a>
           <a href="https://www.facebook.com/themybalanceapp" target="_blank">

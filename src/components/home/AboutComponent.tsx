@@ -1,15 +1,20 @@
 import {FC} from "react"
-import rectangle from "../../assets/images/Rectangle-1.png"
-import card from "../../assets/images/online-shopping 1.png"
-import laptop from "../../assets/images/a-pair-of-hands-typing-away 1.png"
+import aboutImg from '../../assets/images/About.png'
 import { Button } from '../reuseable/Button';
 import { NavLink } from "react-router-dom";
+import line from "../../assets/Icons/line.svg";
 
 const AboutComponent:FC = () => {
   return (
-    <div className="px-[5%] mt-[50px] lg:text-left lg:flex flex-row-reverse justify-between lg:mt-28">
+    <div className="lg:flex justify-center items-center gap-10 lg:text-left bg-[#ededed] px-[5%] py-[50px] md:py-[100px]">
+      <img src={aboutImg} alt="About MyBalance" className="w-full max-w-[400px]"/>
       <div className="lg:ml-[50px]">
-        <h3 className="h6 sm:font-black sm:text-[36px] sm:mb-6">About MyBalance</h3>
+        <h3 className="mt-6 md:mt-0 w-[446px]text-neutral-900 text-[23px] md:text-4xl font-bold mb-6">
+          <span className="relative">
+            About
+            <img src={line} className="absolute -bottom-0 left-0" alt="" />{" "}
+          </span> MyBalance
+        </h3>
         <div className="mb-[40px]">
           {data.map(({paragraph}, key)=>(
             <p className="para mb-4 w-fit lg:w-[614px]" key={key}>{paragraph}</p>
@@ -17,29 +22,19 @@ const AboutComponent:FC = () => {
         </div>
         <NavLink to='about-us'><div className="max-w-[244px]"><Button fullWidth={true}> learn more</Button></div></NavLink>
       </div>
-      <div className="flex md:justify-center mt-6">
-        <div className="relative mt-9 md:mt-0">
-          <img className="absolute" src={card} alt="someone with credit card" />
-          <img className="mt-[25px] ml-[40px] lg:ml-[20px]" src={rectangle} alt="background rectangle shape" />
-        </div>
-        <div className="hidden sm:block relative">
-          <img className="absolute top-[130px] left-[25px]" src={laptop} alt="someone shoping online" />
-          <img className="mt-[150px] -z-10" src={rectangle} alt="bacgrund rectangle shape" />
-        </div>
-      </div>
     </div>
   )
 }
 
 const data =[
   {
-    paragraph: "Orange Invent House Ltd. proudly introduces 'MyBalance' Our mission is crystal clear: to eliminate the looming threat of transaction fraud, bridge the gap between expectations and reality in online purchases, and introduce the era of 'Balance After Delivery.'"
+    paragraph: "Welcome to 'MyBalance,' where our mission is straightforward: we aim to enhance confidence in online transactions, simplify the process of buying, and usher in the era of 'Balance After Delivery.'"
   },
   {
-    paragraph: "We firmly believe that every party engaged in an online transaction deserves protection. At 'MyBalance,' we provide a robust platform where both buyers and sellers retain complete control over their financial journey from deposit to withdrawal."
+    paragraph: "We believe in ensuring a secure experience for everyone involved in online transactions. At 'MyBalance,' we've created a robust platform where both buyers and sellers have control over their financial journey, from deposit to withdrawal."
   },
   {
-    paragraph: "Imagine a fortress where buyers find assurance in receiving the full value for their money, and sellers trust us for secure and prompt payments. Welcome to the sanctuary of trust and reliability, embodied in our escrow payment solution. We stand as the unswerving bridge connecting buyers and sellers across Nigeria, ensuring the safeguarding of your financial interests."
+    paragraph: "Imagine a secure space where buyers can trust they'll receive what they paid for, and sellers rely on us for prompt and secure payments.That's the assurance and dependability you'll find in our escrow payment solution. We proudly serve as the reliable bridge connecting buyers and sellers across Nigeria, safeguarding your financial interests."
   },
 ]
 export default AboutComponent
