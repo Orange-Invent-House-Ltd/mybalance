@@ -5,14 +5,14 @@ const FaqSection = () => {
   return (
     <div className="  mb-[50px] pt-[95px]">
       <div className="max-w-[768px] w-full px-5 md:px-0  mx-auto  ">
-        <h1 className="text-[#0B0B0B] text-center   capitalize font-black text-lg md:text-4xl  ">
+        <h1 className="text-[#0B0B0B] md:text-center   capitalize font-black text-lg md:text-4xl  ">
           Frequently Asked Questions
         </h1>
-        <p className="text-[#999999] text-center capitalize mt-[20px] text-sm md:text-[23px] font-medium ">
+        <p className="text-[#999999] md:text-center capitalize md:mt-[20px] text-sm md:text-[23px] font-medium ">
           {" "}
           Frequently asked questions about MyBalance{" "}
         </p>
-        <div className="divide-y divide-[#999999] mt-[64px] ">
+        <div className="divide-y divide-[#999999] md:mt-[64px] ">
           <Accordion
             content="My Balance is a digital escrow platform that gives payment security and assurance to parties involved in a transaction by giving them the power to control the transaction process in a transparent manner."
             title="What is MyBalance?"

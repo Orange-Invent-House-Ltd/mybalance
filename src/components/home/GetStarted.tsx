@@ -6,11 +6,11 @@ import { Button } from '../reuseable/Button';
 import { useNavigate } from "react-router-dom";
 import line from "../../assets/Icons/line.svg";
 
-const Benefit = () => {
+const GetStarted = () => {
   const navigate = useNavigate()
   return (
-    <div className="my-[50px] md:my-[100px]">
-      <div className="px-[5%]">
+    <div className="mt-10 md:mt-0">
+      {/* <div className="px-[5%]">
         <h3 className=" h6 sm:w-[350px] sm:font-black sm:text-[36px] sm:mb-6 mx-auto sm:text-center sm:leading-[48.6px]">
           {" "}
           <span className="relative" >
@@ -36,8 +36,8 @@ const Benefit = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="bg-benefit h-[325px] bg-center mx-[5%]">
+      </div> */}
+      <div className="bg-benefit h-[325px] bg-center md:mx-[5%]">
         <h3 className="h5 w-[289px] text-center pt-[40px] sm:font-black sm:text-[36px] sm:mb-6 sm:w-[470px] mx-auto sm:pt-[70px] ">
           Enough talk, Let’s get you started on the journey!
         </h3>
@@ -73,4 +73,4 @@ const data=[
   }
 ]
 
-export default Benefit
+export default GetStarted
