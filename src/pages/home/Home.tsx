@@ -22,7 +22,6 @@ const Home = () => {
       <UserExperience/>
       <HowToUseSection />
       <GetStarted />
-
       <FaqSection />
       <ContactSection />
       <Footer />

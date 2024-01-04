@@ -20,7 +20,7 @@ module.exports = {
         tertiary: "#B1580E",
       },
       backgroundImage: {
-        benefit: "url('./src/assets/images/bg-pix.png')",
+        benefit: "url('/src/assets/images/bg-pix.png')",
       },
       boxShadow: {
         "3xl":

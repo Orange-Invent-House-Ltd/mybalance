@@ -132,8 +132,7 @@ const Register = () => {
                         <TextField
                           name="phone"
                           label="Phone"
-                         
-                          placeholder="+234 000 0000 000"
+                          placeholder="08023456786"
                           type='number'
                         />
                         <Button fullWidth>Next</Button>
