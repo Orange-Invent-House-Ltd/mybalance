@@ -38,7 +38,7 @@ const GetStarted = () => {
         </div>
       </div> */}
       <div className="bg-benefit h-[325px] bg-center md:mx-[5%]">
-        <h3 className="h5 w-[289px] text-center pt-[40px] sm:font-black sm:text-[36px] sm:mb-6 sm:w-[470px] mx-auto sm:pt-[70px] ">
+        <h3 className="h5 w-[289px] text-center pt-[40px] sm:font-black sm:text-[36px] sm:mb-6 sm:w-[470px] mx-auto sm:pt-[70px]">
           Enough talk, Let’s get you started on the journey!
         </h3>
         <p className="text-center mt-[-8px] ">Create an account now!</p>
