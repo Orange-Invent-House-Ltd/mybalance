@@ -46,6 +46,7 @@ const QuickAction = () => {
   };
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
+
   return (
     <>
       <Header
@@ -57,7 +58,7 @@ const QuickAction = () => {
           className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
           aria-label="Manage your account"
         >
-          <Tabs.Trigger className="tab " value="depositMoney">
+          <Tabs.Trigger className="tab deposit" value="depositMoney">
             Deposit money
           </Tabs.Trigger>
           <Tabs.Trigger className="tab" value="unlockMoney">

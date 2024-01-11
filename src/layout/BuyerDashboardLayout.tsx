@@ -141,7 +141,7 @@ const BuyerDashboardLayout = () => {
           <nav>
             <ul className="flex flex-col gap-2">
               {sidebarDatas.map((item, index) => (
-                <li key={index} className="hover:bg-white hover:text-black">
+                <li key={index} className={`hover:bg-white hover:text-black ${item.name}`}>
                   <NavLink
                     to={item.path}
                     className="flex items-center gap-4 pl-4 py-[10px]"

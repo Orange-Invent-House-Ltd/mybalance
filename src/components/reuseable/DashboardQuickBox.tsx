@@ -21,7 +21,7 @@ const QuickBox = ({ icon, text, subtext, disabled, tab }: quickprops) => {
         navigate("/buyer/quick-action");
       }}
       disabled={disabled}
-      className="flex gap-y-2 disabled:cursor-not-allowed flex-col w-full justify-center relative overflow-hidden items-start md:items-center px-2 border rounded border-[#FECA9F]  h-[110px]"
+      className={`flex gap-y-2 disabled:cursor-not-allowed flex-col w-full justify-center relative overflow-hidden items-start md:items-center px-2 border rounded border-[#FECA9F]  h-[110px] ${tab}`}
     >
       {disabled && (
         <div className="w-full h-full absolute top-0 bg-white/50 left-0"></div>
