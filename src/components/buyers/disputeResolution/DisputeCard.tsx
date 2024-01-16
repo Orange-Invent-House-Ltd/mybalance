@@ -16,12 +16,12 @@ const DisputeCard = ({ reason, description, time, status }: any) => {
                 : "status_style bg-[#FFFCF2] text-[#FDB022] "
             }
           >
-            <p className="capitalize">{status.toLowerCase()}</p>
+            <p className="capitalize line-clamp-1 ">{status.toLowerCase()}</p>
           </div>
         </div>
         <div className="flex gap-2 items-center justify-between mt-[6px]">
-          <h4 className="text-sm">{description}</h4>
-          <h6 className=" text-[#B7B7B7]  text-xs ">
+          <h4 className="text-sm break-all line-clamp-2">{description}</h4>
+          <h6 className=" text-[#B7B7B7] text-xs ">
             {new Date(time).toLocaleString()}
           </h6>
         </div>

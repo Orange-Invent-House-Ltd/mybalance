@@ -26,7 +26,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
-    name:'dashboard',
+    name: "dashboard",
   },
   {
     title: "Quick action",
@@ -46,7 +46,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
-    name:'quick-action',
+    name: "quick-action",
   },
   {
     title: "Transaction history",
@@ -72,7 +72,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
-    name:'transaction-history',
+    name: "transaction-history",
   },
   // {
   //   title: "Notifications",
@@ -138,7 +138,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
-    name:'my-profile',
+    name: "my-profile",
   },
   {
     title: "Dispute resolution",
@@ -158,7 +158,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
-    name:'dispute-resolution',
+    name: "dispute-resolution",
   },
   {
     title: "Settings",
@@ -185,7 +185,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
-    name:'settings',
-  }
+    name: "settings",
+  },
 ];
 export default sidebarDatas;
