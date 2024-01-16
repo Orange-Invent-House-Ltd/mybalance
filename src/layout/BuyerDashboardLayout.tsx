@@ -15,7 +15,7 @@ import LoadingLogo from "../components/reuseable/LoadingLogo";
 import moment from "moment";
 
 const BuyerDashboardLayout = () => {
-  const today = moment().format('YYYY-MM-DD')
+  const today = moment().format("YYYY-MM-DD");
   const [logoutModal, setLogoutModal] = useState(false);
 
   const [sidebar, setSidebar] = useState(false);
@@ -141,7 +141,10 @@ const BuyerDashboardLayout = () => {
           <nav>
             <ul className="flex flex-col gap-2">
               {sidebarDatas.map((item, index) => (
-                <li key={index} className={`hover:bg-white hover:text-black ${item.name}`}>
+                <li
+                  key={index}
+                  className={`hover:bg-white hover:text-black ${item.name}`}
+                >
                   <NavLink
                     to={item.path}
                     className="flex items-center gap-4 pl-4 py-[10px]"
@@ -190,10 +193,16 @@ const BuyerDashboardLayout = () => {
               <a href="https://twitter.com/mybalance_app" target="_blank">
                 <img src={twitter} alt="Twitter" />
               </a>
-              <a href="https://linkedin.com/company/mybalanceapp" target="_blank">
+              <a
+                href="https://linkedin.com/company/mybalanceapp"
+                target="_blank"
+              >
                 <img src={linkedin} alt="LinkedIn" />
               </a>
-              <a href="https://www.facebook.com/themybalanceapp" target="_blank">
+              <a
+                href="https://www.facebook.com/themybalanceapp"
+                target="_blank"
+              >
                 <img src={facebook} alt="Facebook" />
               </a>
               <a href="https://www.instagram.com/mybalance_app" target="_blank">
@@ -201,7 +210,7 @@ const BuyerDashboardLayout = () => {
               </a>
             </div>
             <p className="text-[#121212] text-base font-medium mt-4">
-              © {today.slice(0,4)} MyBalance. All rights reserved.
+              © {today.slice(0, 4)} MyBalance. All rights reserved.
             </p>
           </div>
         </main>

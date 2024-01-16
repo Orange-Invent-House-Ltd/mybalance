@@ -11,7 +11,7 @@ import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
 import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
 import moment from "moment";
-import infoIcon from '../../assets/Icons/info-icon.svg'
+import infoIcon from "../../assets/Icons/info-icon.svg";
 
 const Header = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -87,7 +87,7 @@ const Header = () => {
             )}
           </p>
           {user?.freeEscrowTransactions !== 0 && (
-            <div className="flex gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9]   mt-2 text-[#2D7738]">
+            <div className="flex find-name gap-1 items-center text-sm w-fit bg-[#EBF4EC] px-2 py-1 font-medium rounded-2xl border border-[#D7EAD9]   mt-2 text-[#2D7738]">
               <p className="">
                 You have <b>{user?.freeEscrowTransactions}</b> free escrow
                 transaction(s)
@@ -108,7 +108,7 @@ const Header = () => {
         <p className="font-semibold text-sm">
           Create your one-time MyBalance link.
         </p>
-        <div className="w-[150px]">
+        <div className="w-[150px] createlink">
           <Button fullWidth onClick={() => setIsVerify(true)}>
             Create link
           </Button>
