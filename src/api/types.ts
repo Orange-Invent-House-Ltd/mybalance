@@ -36,7 +36,8 @@ export interface IUserProfile {
   phoneNumber: string;
   withdrawnAmount: string;
   business: any;
-  freeEscrowTransactions:number
+  freeEscrowTransactions: number;
+  showTourGuide: boolean;
 }
 
 export interface GenericResponse {
@@ -56,7 +57,7 @@ export interface GenericResponse {
       firstName: string;
       middleName: string;
       lastName: string;
-    }
+    };
     user: IUser;
   };
 }

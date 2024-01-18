@@ -21,7 +21,7 @@ const Dashboard = () => {
   });
   const [{ run, steps }, setState] = useState({
     // run: user?.first_time_visit,
-    run: true,
+    run: user?.showTourGuide,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,

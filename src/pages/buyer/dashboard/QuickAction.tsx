@@ -111,7 +111,7 @@ const QuickAction = () => {
                           House Limited"—both represent the same entity.
                           <p className="my-2">
                             For concerns, contact{" "}
-                            <Link to="/" className="text-primary-normal">
+                            <Link to="/contact" className="text-primary-normal">
                               customer support.
                             </Link>
                           </p>
