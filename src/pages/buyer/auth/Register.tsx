@@ -141,7 +141,7 @@ const Register = () => {
                         <TextField
                           name="phone"
                           label="Phone"
-                          placeholder="+234 000 0000 000"
+                          placeholder="08133557483"
                           type='number'
                         />
                         <div className="relative">

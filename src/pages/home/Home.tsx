@@ -1,12 +1,16 @@
-import AboutComponent from "../../components/home/AboutComponent";
-import Benefit from "../../components/home/Benefit";
 import Header from "../../components/home/Header";
-import HowToUseSection from "../../components/home/HowToUseSection";
 import Introduction from "../../components/home/Introduction";
+import AboutComponent from "../../components/home/AboutComponent";
+import WhyChoose from "../../components/home/WhyChoose";
+import UserExperience from "../../components/home/UserExperience";
+import HowToUseSection from "../../components/home/HowToUseSection";
+import GetStarted from "../../components/home/GetStarted";
 import ContactSection from "../../components/home/ContactSection";
 import FaqSection from "../../components/home/FaqSection";
-import Features from "../../components/home/Features";
 import Footer from "../../components/home/Footer";
+
+
+
 
 const Home = () => {
   return (
@@ -14,10 +18,10 @@ const Home = () => {
       <Header />
       <Introduction />
       <AboutComponent />
+      <WhyChoose/>
+      <UserExperience/>
       <HowToUseSection />
-      <Benefit />
-
-      <Features />
+      <GetStarted />
       <FaqSection />
       <ContactSection />
       <Footer />

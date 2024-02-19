@@ -5,20 +5,18 @@ import card from "../../assets/Icons/card.svg";
 import moneyPhone from "../../assets/Icons/moneyPhone.svg";
 import line from "../../assets/Icons/line.svg";
 
-const Features = () => {
+const UserExperience = () => {
   return (
-    <div className="bg-[#EDEDED]  py-[76px] px-5 mb-[50px] ">
+    <div className="bg-[#EDEDED] py-[50px] md:py-[100px] px-5">
       <div className="max-w-[552px] w-full mx-auto">
-        <h1 className=" font-black text-xl md:text-4xl text-[#121212] ">
+        <h1 className="md:text-center text-neutral-900 text-[23px] md:text-4xl font-bold mb-6">
           <span  className='relative' >
-            Features
-            <img src={line} className='absolute -bottom-1 left-0' alt="" />
-          </span> That Enhance Your User Experience on MyBalance
+            Enhancing
+            <img src={line} className='absolute -bottom-2 left-0' alt="" />
+          </span>  Your User Experience
         </h1>
-        <p className=" mt-10 hidden md:inline-block ">
-          We have varieties of features that help protect the financial interest
-          of both buyers and sellers when making transactions to ensure all
-          parties are satisfied and happy.
+        <p className="hidden md:inline-block ">
+          We offer various features to protect the financial interests of both buyers and sellers during transactions, ensuring satisfaction for all parties involved:
         </p>
       </div>
       <div className="grid max-w-7xl w-full mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-10 ">
@@ -39,25 +37,22 @@ const data = [
   {
     icon: cash,
     heading: "View, lock, unlock and withdraw money",
-    subHeading:
-      "The power is all in your hands to take charge of your transactions",
+    subHeading:"You have the power to take charge of your transactions.",
   },
   {
     icon: link,
-    heading: "generate link",
-    subHeading:
-      "Send and share your unique transaction link to everyone on your social media ",
+    heading: "Generate link",
+    subHeading: "Share your unique transaction link on social media and other platforms.",
   },
   {
     icon: card,
     heading: "Multiple payment methods",
-    subHeading: "Use your debit or make bank transfer for your transactions",
+    subHeading: "Use debit cards or bank transfers for your transactions.",
   },
   {
     icon: moneyPhone,
     heading: "Multiple escrow transactions",
-    subHeading:
-      "You can create and disburse more than one transaction at the same time",
+    subHeading: "You can create and disburse multiple transactions simultaneously.",
   },
 ];
-export default Features
+export default UserExperience

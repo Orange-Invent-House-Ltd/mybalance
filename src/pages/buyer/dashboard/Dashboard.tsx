@@ -32,6 +32,7 @@ import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import moment from "moment";
 import infoIcon from '../../../assets/Icons/info-icon.svg'
+import Joyride from 'react-joyride';
 
 const Dashboard = () => {
   const [isVerify, setIsVerify] = useState(false);
@@ -116,17 +117,138 @@ const Dashboard = () => {
       LookupMutate({ bankCode: code, accountNumber: accNum });
     }
   }, [accNum, code]);
+
+  // Tour Guide
+  const [{ run, steps }, setState] = useState({
+    // run: user?.first_time_visit,
+    run: true,
+    steps: [
+      {
+        content: <strong>Let's go for a ride!</strong>,
+        placement: "center" as 'center',
+        target: ".start-tour"
+      },
+      {
+        content: 'Your dashboard provides a snapshot of your account status and activities.',
+        placement: "right" as 'right',
+        target: ".dashboard",
+        title: "Dashboard"
+      },
+      {
+        content: 'Find your name and check the time of your last login and the date for your account activity. Get to enjoy 5 free escrow also.',
+        placement: "bottom" as 'bottom',
+        target: ".find-name"
+      },
+      {
+        content: 'Find your available escrow balance, locked amount, unlocked amount and charges rate below.',
+        placement: "bottom" as 'bottom',
+        target: ".balance"
+      },
+      {
+        content: <div>Initiate transactions effortlessly. Create a one-time MyBalance link, where you'll fill in every detail about the product and the buyer or seller. <strong>Don't forget, your email is crucial for a smooth process</strong></div>,
+        placement: "bottom" as 'bottom',
+        target: ".createlink",
+        title: "Create MyBalance Link"
+      },
+      {
+        content: 'Top up your wallet from your local bank securely.',
+        placement: "bottom" as 'bottom',
+        target: ".depositMoney",
+        title: "Deposit"
+      },
+      {
+        content: 'Use this feature to unlock funds, ensuring a seamless and trustworthy experience.',
+        placement: "bottom" as 'bottom',
+        target: ".unlockMoney",
+        title: "Unlock Money"
+      },
+      {
+        content: 'Transfer funds from wallet to your local bank account.',
+        placement: "bottom" as 'bottom',
+        target: ".withdrawMoney",
+        title: "Withdraw Money"
+      },
+      {
+        content: 'See a comprehensive list of all your account activities.',
+        placement: "right" as 'right',
+        target: ".transaction-history",
+        title: "Transaction History"
+      },
+      // {
+      //   content: 'Track money added to your account.',
+      //   placement: "bottom" as 'bottom',
+      //   target: ".deposits-trans",
+      //   title: "Deposits Transactions"
+      // },
+      // {
+      //   content: 'Monitor transactions currently in progress.',
+      //   placement: "bottom" as 'bottom',
+      //   target: ".escrows-trans",
+      //   title: "Escrows Transactions"
+      // },
+      // {
+      //   content: 'Keep tabs on funds leaving your wallet.',
+      //   placement: "bottom" as 'bottom',
+      //   target: ".withdrwals-trans",
+      //   title: "Withdrwals Transactions"
+      // },
+      {
+        content: 'Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.',
+        placement: "right" as 'right',
+        target: ".dispute-resolution",
+        title: "Dispute Resolution"
+      },
+    ]
+  });
+
   return (
     <div className=" overflow-hidden ">
-      <div className="md:flex justify-between items-center ">
+      <Joyride
+        continuous
+        callback={() => {}}
+        run={run}
+        steps={steps}
+        // hideCloseButton
+        scrollToFirstStep
+        showSkipButton
+        showProgress
+        locale= {{ 
+          skip: <strong>Cancel Tour</strong>,
+          last: 'End',
+        }}
+        styles={{
+          tooltipContainer: {
+            textAlign: 'left'
+          },
+          buttonNext: {
+            backgroundColor: "#fff",
+            color: '#000',
+            outline: 'none',
+            textDecoration: 'underline',
+            fontWeight: 600
+          },
+          buttonBack: {
+            marginRight: 10,
+            backgroundColor: "#fff",
+            color: '#000',
+            outline: 'none',
+            textDecoration: 'underline',
+            fontWeight: 600
+          },
+          buttonSkip: {
+            color: '#DA1E28'
+          }
+        }}
+      />
+      <div className="md:flex justify-between items-center start-tour">
         <div>
-          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-2 md:mb-4 ">
+          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-2 md:mb-4">
             <span className="text-[#6D6D6D]">Welcome</span>
-            <span className=" font-semibold capitalize flex-1">
+            <span className=" font-semibold capitalize flex-1 find-name">
               {user?.fullName || <Skeleton width={100} />}
             </span>
           </h6>
-          <p className="max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px] ">
+          <p className="max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px]">
             Your last login was on{" "}
             {user && user.lastLoginDate ? (
               new Date(user.lastLoginDate).toLocaleString()
@@ -149,7 +271,7 @@ const Dashboard = () => {
           alt="notification bell"
           className="hidden md:flex ml-auto mr-4"
         />
-        <div className="hidden md:flex w-[343px] md:w-[270px]">
+        <div className="hidden md:flex w-[343px] md:w-[270px] createlink">
           <Button
             fullWidth
             variant="contained"
@@ -302,7 +424,6 @@ const Dashboard = () => {
                       fullWidth
                       // onClick={() => {
                       //   setIsVerify(false);
-
                       //   // setOpen(true);
                       // }}
                       type="submit"
@@ -318,7 +439,7 @@ const Dashboard = () => {
         </Dialog.Root>
       </div>
 
-      <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar">
+      <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
         <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
           <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
           <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>

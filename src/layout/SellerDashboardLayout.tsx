@@ -9,10 +9,13 @@ import sellerSidebarDatas from "./sellerSidebarDatas";
 import twitter from "../assets/Icons/Twitter.svg";
 import linkedin from "../assets/Icons/LinkedIn.svg";
 import facebook from "../assets/Icons/Facebook.svg";
+import Instagram from "../assets/Icons/Instagram.svg";
 import { useUser } from "../hooks/queries";
 import LoadingLogo from "../components/reuseable/LoadingLogo";
+import moment from "moment";
 
 const SellerDashboardLayout = () => {
+  const today = moment().format("YYYY-MM-DD");
   const [logoutModal, setLogoutModal] = useState(false);
   const { data, isLoading, isError } = useUser();
 
@@ -136,7 +139,10 @@ const SellerDashboardLayout = () => {
           <nav>
             <ul className="flex flex-col gap-2">
               {sellerSidebarDatas.map((item, index) => (
-                <li key={index} className="hover:bg-white hover:text-black">
+                <li
+                  key={index}
+                  className={`hover:bg-white hover:text-black ${item.title} `}
+                >
                   <NavLink
                     to={item.path}
                     className="flex items-center gap-4 pl-4 py-[10px]"
@@ -182,12 +188,27 @@ const SellerDashboardLayout = () => {
           {/* Mobile footer */}
           <div className="mt-24 mb-16 md:hidden">
             <div className="flex gap-6 mb-2 ">
-              <img src={twitter} alt="Twitter" />
-              <img src={linkedin} alt="LinkedIn" />
-              <img src={facebook} alt="Facebook" />
+              <a href="https://twitter.com/mybalance_app" target="_blank">
+                <img src={twitter} alt="Twitter" />
+              </a>
+              <a
+                href="https://linkedin.com/company/mybalanceapp"
+                target="_blank"
+              >
+                <img src={linkedin} alt="LinkedIn" />
+              </a>
+              <a
+                href="https://www.facebook.com/themybalanceapp"
+                target="_blank"
+              >
+                <img src={facebook} alt="Facebook" />
+              </a>
+              <a href="https://www.instagram.com/mybalance_app" target="_blank">
+                <img src={Instagram} alt="Instagram" />
+              </a>
             </div>
             <p className="text-[#121212] text-base font-medium mt-4">
-              © 2022 MyBalance. All rights reserved.
+              © {today.slice(0, 4)} MyBalance. All rights reserved.
             </p>
           </div>
         </main>

@@ -24,8 +24,9 @@ const  Header = () =>{
   
   return (
     <div className= {showMenu ? 'bg-[#F7F7F7]  homeHeader ' : 'bg-white homeHeader'}>
-      <div>
+      <div className='flex justify-center items-center gap-2'>
         <Link to='/'><img src={logo} alt="logo" className='w-[39px]'/></Link> 
+        <p className='text-primary-normal text-[25px] font-bold'>MyBalance</p>
       </div>
       {/* mobile Menu */}
       <div className="md:hidden text-right" >

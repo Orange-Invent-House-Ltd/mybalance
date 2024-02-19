@@ -8,8 +8,10 @@ import twitter from "../assets/Icons/Twitter.svg";
 import linkedin from "../assets/Icons/LinkedIn.svg";
 import Instagram from "../assets/Icons/Instagram.svg";
 import { useUser } from "../hooks/queries";
+import moment from 'moment'
 
 const AuthLayout = () => {
+  const today = moment().format('YYYY-MM-DD')
   // const { data: user, isLoading } = useUser();
   // console.log("🚀 ~ file: AuthLayout.tsx:15 ~ AuthLayout ~ user:", user);
   // if (isLoading) {
@@ -55,12 +57,12 @@ const AuthLayout = () => {
           <Outlet />
         </div>
         <footer className="px-[5%] w-fit mx-auto mb-7 bg-white gap-3 gap-x-10 flex flex-wrap-reverse ">
-          <p className="font-medium">© 2022 MyBalance. All rights reserved.</p>
+          <p className="font-medium">© {today.slice(0,4)} MyBalance. All rights reserved.</p>
           <div className="flex items-center gap-3">
             <a href="https://twitter.com/mybalance_app" target="_blank">
               <img src={twitter} alt="Twitter" />
             </a>
-            <a href="" target="_blank">
+            <a href="https://linkedin.com/company/mybalanceapp" target="_blank">
               <img src={linkedin} alt="LinkedIn" />
             </a>
             <a href="https://www.facebook.com/themybalanceapp" target="_blank">
