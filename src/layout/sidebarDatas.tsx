@@ -26,6 +26,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
+    name: "dashboard",
   },
   {
     title: "Quick action",
@@ -45,6 +46,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
+    name: "quick-action",
   },
   {
     title: "Transaction history",
@@ -70,6 +72,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
+    name: "transaction-history",
   },
   // {
   //   title: "Notifications",
@@ -95,6 +98,7 @@ const sidebarDatas = [
   //       </defs>
   //     </svg>
   //   ),
+  //  name:'notifications',
   // },
   // {
   //   title: "Customer support",
@@ -114,6 +118,7 @@ const sidebarDatas = [
   //       />
   //     </svg>
   //   ),
+  //  name:'customer-support',
   // },
   {
     title: "My profile",
@@ -133,6 +138,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
+    name: "my-profile",
   },
   {
     title: "Dispute resolution",
@@ -152,6 +158,7 @@ const sidebarDatas = [
         />
       </svg>
     ),
+    name: "dispute-resolution",
   },
   {
     title: "Settings",
@@ -178,6 +185,7 @@ const sidebarDatas = [
         </defs>
       </svg>
     ),
-  }
+    name: "settings",
+  },
 ];
 export default sidebarDatas;

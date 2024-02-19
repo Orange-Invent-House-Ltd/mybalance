@@ -4,6 +4,7 @@ import Header from "../../../components/reuseable/Header";
 import TextField from "../../../components/reuseable/TextField1";
 import * as Tabs from "@radix-ui/react-tabs";
 import check from "../../../assets/Icons/check.svg";
+import * as Dialog from "@radix-ui/react-dialog";
 
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
 import UnlockAmount from "../../../components/buyers/UnlockAmount";
@@ -18,6 +19,7 @@ import EmptyMoney from "../../../components/reuseable/EmptyMoney";
 import Skeleton from "react-loading-skeleton";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
+import { Link } from "react-router-dom";
 
 const QuickAction = () => {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const QuickAction = () => {
   //lock
 
   const [unlock, setUnlock] = useState(false);
+  const [alertModal, setAlertModal] = useState(false);
   //
 
   const { handleSubmit: handleSubmitDeposit, control: controlDeposit } =
@@ -46,6 +49,7 @@ const QuickAction = () => {
   };
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
+
   return (
     <>
       <Header
@@ -57,7 +61,7 @@ const QuickAction = () => {
           className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
           aria-label="Manage your account"
         >
-          <Tabs.Trigger className="tab " value="depositMoney">
+          <Tabs.Trigger className="tab deposit" value="depositMoney">
             Deposit money
           </Tabs.Trigger>
           <Tabs.Trigger className="tab" value="unlockMoney">
@@ -75,7 +79,7 @@ const QuickAction = () => {
 
               <form
                 onSubmit={handleSubmitDeposit((data) => {
-                  depositMutate(data.amount);
+                  setAlertModal(true);
                 })}
                 className="mb-4 flex flex-col gap-4 "
               >
@@ -92,6 +96,47 @@ const QuickAction = () => {
                   pattern="[0-9]*"
                 />
                 <Button>Continue</Button>
+                <Dialog.Root open={alertModal}>
+                  <Dialog.Portal>
+                    <Dialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50" />
+                    <Dialog.Content className="animate-fade-up sm:animate-jump  animate-duration-75  fixed  top-0 left-0 z-50 w-full h-full">
+                      <div className="sm:max-w-[400px] w-full py-6   px-6 min-h-[246px] rounded absolute bg-white  bottom-0 sm:bottom-auto sm:top-[50%] sm:left-[50%] sm:-translate-y-1/2 sm:-translate-x-1/2 ">
+                        <h2 className="text-lg font-medium mb-2">
+                          Dear Valued Buyer,
+                        </h2>
+                        <h3>
+                          When depositing funds using <em>bank transfer</em> ,
+                          note that our third-party platform displays
+                          "MyBalance," while your bank app shows "Orange Invent
+                          House Limited"—both represent the same entity.
+                          <p className="my-2">
+                            For concerns, contact{" "}
+                            <Link to="/contact" className="text-primary-normal">
+                              customer support.
+                            </Link>
+                          </p>
+                          <p className="mb-2">
+                            Thank you for your understanding and trust.
+                          </p>
+                        </h3>
+                        <Button
+                          type="submit"
+                          onClick={handleSubmitDeposit((data) => {
+                            depositMutate(data.amount);
+                            setAlertModal(false);
+                          })}
+                        >
+                          continue
+                        </Button>
+                        {/* <Dialog.Close asChild>
+                          <button className="IconButton" aria-label="Close">
+                            dcsd
+                          </button>
+                        </Dialog.Close> */}
+                      </div>
+                    </Dialog.Content>
+                  </Dialog.Portal>
+                </Dialog.Root>
               </form>
             </div>
           </Tabs.Content>

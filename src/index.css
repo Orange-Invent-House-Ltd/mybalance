@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply scroll-smooth;
-}
+
 @font-face {
   font-family: "satoshi";
   src: url("./assets/fonts/Satoshi-Variable.woff2") format("woff2"),
@@ -143,7 +140,7 @@ body {
 
 html,
 body {
-  @apply font-satoshi;
+  @apply font-satoshi scroll-smooth;
 }
 .para {
   @apply leading-[21.6px] text-base font-normal;
@@ -202,6 +199,14 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+
+/* Input type number will not have increase or decrease arrow */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
 }
 
 /* no increase and decrease arrow in input type number for verification code boxes */

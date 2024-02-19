@@ -24,8 +24,9 @@ const  Header = () =>{
   
   return (
     <div className= {showMenu ? 'bg-[#F7F7F7]  homeHeader ' : 'bg-white homeHeader'}>
-      <div>
+      <div className='flex justify-center items-center gap-2'>
         <Link to='/'><img src={logo} alt="logo" className='w-[39px]'/></Link> 
+        <p className='text-primary-normal text-[25px] font-bold'>MyBalance</p>
       </div>
       {/* mobile Menu */}
       <div className="md:hidden text-right" >
@@ -59,6 +60,7 @@ const  Header = () =>{
                 </div>
               </div>
             </li>
+            <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
             <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>
           </ul>
           <div className="" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
@@ -91,6 +93,7 @@ const  Header = () =>{
               </div>
             </div>
           </li>
+          <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>

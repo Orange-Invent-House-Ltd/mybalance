@@ -21,9 +21,9 @@ const Footer = () => {
             government parastatals with our world’s most secure payment method.
           </p>
         </div>
-        <div className="flex gap-14 md:gap-24 flex-wrap ">
+        <div className="flex gap-10 md:gap-24 flex-wrap w-full">
           {footerData.map(({ items, title }) => (
-            <div className="w-[112px]" key={title}>
+            <div className="min-w-[112px]" key={title}>
               <p className="text-tertiary capitalize mb-[16px] font-medium ">
                 {title}
               </p>
@@ -101,6 +101,11 @@ const footerData = [
       {
         name: "contact",
         link: "/contact",
+        target: "_self"
+      },
+      {
+        name: "Learn MyBalance",
+        link: "/learn-mybalance",
         target: "_self"
       },
     ],
