@@ -5,6 +5,9 @@ import TextField from '../../../components/reuseable/TextField1';
 import back from "../../../assets/Icons/back.svg"
 import RejectModal from '../../../components/sellers/RejectModal';
 import { data } from '../../../util/data';
+import { useNotifications, useUser } from '../../../hooks/queries';
+import LoadingOverlay from '../../../components/reuseable/LoadingOverlay';
+import Pagination from '../../../components/reuseable/Pagination';
 
 
 
@@ -12,6 +15,16 @@ const Notifications = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [value, setValue] = useState("");
   const [isReject, setIsReject] = useState(false)
+  const [page, setPage] = useState<number>(1);
+  const {data: user, isLoading: userIsPending} = useUser()
+  const {data:notifications, isLoading: notificationsIsPending} = useNotifications({
+    page,
+    size: 10,
+  });
+
+  const handlePageChange = (selected: any) => {
+    setPage(selected);
+  };
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
@@ -19,23 +32,31 @@ const Notifications = () => {
 
   return (
     <div>
+      {notificationsIsPending && <LoadingOverlay/> }
       <Header
         Heading='Notifications'
         Text='Get instant notification as you perform real-time transaction immediately on MyBalance.'
       />
-      <p className='text-[#121212] text-lg font-bold'>You have  1 unread notifications</p>
+      <p className='text-[#121212] text-lg font-bold'>You have  {user?.unreadNotificationCount} unread notifications</p>
       <div className='mt-6'>
-        {
-          datas.map((data, key) =>(
-            <div key={key} className='w-[325px] mt-4 pl-6 pb-4 rounded border-b border-[#E4E4E4] cursor-pointer'
-              onClick={() => setIsClicked(true)}
-            >
-              <p className='text-[#121212] text-lg font-medium'>{data.name} has {data.action}</p>
-              <p className='text-[#303030] text-sm font-normal'>{data.text}</p>
-              <p className='text-[10px] text-[#B7B7B7] font-normal'>{data.date}</p>
-            </div>
-          ))
-        }
+        {notifications?.data?.map((notification:any, key:any) =>(
+          <div key={notification.id} className='w-[325px] mt-4 pl-6 pb-4 rounded border-b border-[#E4E4E4] cursor-pointer'
+            onClick={() => setIsClicked(true)}
+          >
+            <p className='text-[#121212] text-lg font-medium'>{notification.user} has {notification.action}</p>
+            <p className='text-[#303030] text-sm font-normal'>{notification.text}</p>
+            <p className='text-[10px] text-[#B7B7B7] font-normal'>{notification.date}</p>
+          </div>
+        ))}
+        {!notificationsIsPending  && notifications?.data.length > 0 && (
+          <div className='w-[325px] mt-[50px]'>
+          <Pagination
+            initialPage={notifications?.meta?.currentPage}
+            onPageChange={handlePageChange}
+            pageCount={notifications?.meta?.totalPages}
+          />
+          </div>
+        )}
       </div>
       {isClicked && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-black-rgba flex justify-end z-50">

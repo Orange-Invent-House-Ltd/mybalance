@@ -74,32 +74,32 @@ const sidebarDatas = [
     ),
     name: "transaction-history",
   },
-  // {
-  //   title: "Notifications",
-  //   path: "/buyer/notifications",
-  //   icon: (
-  //     <svg
-  //       className="w-6 h-6 stroke-current"
-  //       xmlns="http://www.w3.org/2000/svg"
-  //       fill="none"
-  //     >
-  //       <g
-  //         stroke-linecap="round"
-  //         stroke-linejoin="round"
-  //         stroke-width="1.5"
-  //         clip-path="url(#a)"
-  //       >
-  //         <path d="M10 5.592a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17.592v1a3 3 0 0 0 6 0v-1" />
-  //       </g>
-  //       <defs>
-  //         <clipPath id="a">
-  //           <path fill="#fff" d="M0 .592h24v24H0z" />
-  //         </clipPath>
-  //       </defs>
-  //     </svg>
-  //   ),
-  //  name:'notifications',
-  // },
+  {
+    title: "Notifications",
+    path: "/buyer/notifications",
+    icon: (
+      <svg
+        className="w-6 h-6 stroke-current"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+      >
+        <g
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          clip-path="url(#a)"
+        >
+          <path d="M10 5.592a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17.592v1a3 3 0 0 0 6 0v-1" />
+        </g>
+        <defs>
+          <clipPath id="a">
+            <path fill="#fff" d="M0 .592h24v24H0z" />
+          </clipPath>
+        </defs>
+      </svg>
+    ),
+   name:'notifications',
+  },
   // {
   //   title: "Customer support",
   //   path: "/buyer/customer-support",

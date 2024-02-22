@@ -16,6 +16,7 @@ export interface IUser {
   accountName?: string;
   bankCode?: string;
   lastLoginDate?: string;
+  unreadNotificationCount?: number;
 }
 
 export interface IUserProfile {
@@ -38,6 +39,7 @@ export interface IUserProfile {
   business: any;
   freeEscrowTransactions: number;
   showTourGuide: boolean;
+  unreadNotificationCount?: number;
 }
 
 export interface GenericResponse {
