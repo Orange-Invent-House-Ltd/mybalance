@@ -2,8 +2,8 @@ import React from 'react'
 
 const TutorialVideo = ({src, title, client}: {src:string; title:string; client:string}) => {
   return (
-    <div className='max-w-[402px]'>
-      <iframe width="394" height="315" 
+    <div className='w-[300px] sm:w-[390px]'>
+      <iframe width="100%" height="315" 
         src={src}
         title="MyBalance video tutorial player" frameBorder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

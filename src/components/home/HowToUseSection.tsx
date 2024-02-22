@@ -49,6 +49,20 @@ const HowToUseSection = () => {
           </ol>
         </div>
       </div>
+
+      {/* Video */}
+      <div className="mt-[50px]">
+        <div className="rounded-[16px] overflow-hidden">
+          <iframe width="100%" height="400" 
+            src="https://www.youtube.com/embed/_JGS-l10fho?si=vXLuuDvkYDUzTJOV" 
+            title="What is MyBalance" frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen>
+          </iframe>
+        </div>
+        <div className=" w-fit mx-auto mt-[20px]">
+          <button className="w-[244px] border border-primary-normal text-primary-normal p-[16px] rounded-[6px] font-bold ">See more videos</button>
+        </div>
+      </div>
     </div>
   );
 };

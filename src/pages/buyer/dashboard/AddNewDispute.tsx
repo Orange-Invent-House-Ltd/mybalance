@@ -21,6 +21,7 @@ const AddNewDispute = () => {
       });
     }
   }, [reset]);
+  
   return (
     <div>
       <header className="mb-16">

@@ -67,7 +67,7 @@ const seller = [
   },
   {
     title: 'How To: Create Link As a Seller',
-    src: 'https://youtube.com/shorts/IAJTpX3FPOQ?si=60CZ5wGFPrnssRk1'
+    src: 'https://www.youtube.com/embed/GpeaNZmXwHw?si=Q8IaECnj-iv0QGI4'
   },
   {
     title: 'How To Open a Seller’s Account',
