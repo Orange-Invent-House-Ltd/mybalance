@@ -100,7 +100,7 @@ const KYC = () => {
 
       <div className="md:w-[52%] lg:w-[65%]">
         <header className="w-fit ml-[5%] mt-[5%]">
-          <Link to="/">
+          <Link to="/seller/dashboard/">
             <img src={logo} alt="my-balance" />
           </Link>
         </header>
@@ -133,8 +133,11 @@ const KYC = () => {
                 }
               }}
             />
-            <div className="mt-6">
+            <div className="flex flex-col gap-4 mt-6">
               <Button disabled={!kycMetaId} fullWidth={true}>Continue</Button>
+              <Button variant='outlined' type='button' fullWidth={true}
+                onClick={()=>navigate('/seller/dashboard/')}
+              >Back to Dashboard</Button>
             </div>
           </form>
         </main>
