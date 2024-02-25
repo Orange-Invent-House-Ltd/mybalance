@@ -13,7 +13,7 @@ const ProtectedRoutes = () => {
     navigate('/login')
   };
 
-  const {isIdle} = useIdle({onIdle: handleLogout, idleTime: 30})
+  const {isIdle} = useIdle({onIdle: handleLogout, idleTime: 5})
 
   return (
     <>

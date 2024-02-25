@@ -155,7 +155,7 @@ const Dashboard = () => {
       />
 
       <div className="mb-16 start-tour">
-        {/* <Withdraw open={withdrawModal} setOpen={setWithdrawModal} /> */}
+        <Withdraw open={withdrawModal} setOpen={setWithdrawModal} />
         <SellerHeader />
         {user?.kyc === null && (
           <div className="flex flex-col gap-2 justify-start items-start max-w-[752px] mt-8 px-4 py-3 bg-orange-50 rounded-lg border border-orange-200">
