@@ -50,6 +50,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.43.9
     version: 7.44.3(react@18.2.0)
+  react-idle-timer:
+    specifier: ^5.7.2
+    version: 5.7.2(react-dom@18.2.0)(react@18.2.0)
   react-joyride:
     specifier: ^2.7.2
     version: 2.7.2(@types/react@18.2.12)(react-dom@18.2.0)(react@18.2.0)
@@ -2036,6 +2039,16 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-idle-timer@5.7.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+BaPfc7XEUU5JFkwZCx6fO1bLVK+RBlFH+iY4X34urvIzZiZINP6v2orePx3E6pAztJGE7t4DzvL7if2SL/0GQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-innertext@1.1.5(@types/react@18.2.12)(react@18.2.0):
