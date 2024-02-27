@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  lucide-react:
+    specifier: ^0.336.0
+    version: 0.336.0(react@18.2.0)
   moment:
     specifier: ^2.29.4
     version: 2.29.4
@@ -47,6 +50,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.43.9
     version: 7.44.3(react@18.2.0)
+  react-idle-timer:
+    specifier: ^5.7.2
+    version: 5.7.2(react-dom@18.2.0)(react@18.2.0)
   react-joyride:
     specifier: ^2.7.2
     version: 2.7.2(@types/react@18.2.12)(react-dom@18.2.0)(react@18.2.0)
@@ -1805,6 +1811,14 @@ packages:
       yallist: 3.1.1
     dev: true
 
+  /lucide-react@0.336.0(react@18.2.0):
+    resolution: {integrity: sha512-e06J4Qrdrk3BP/hf3MnkW3LnymdthfyEtVbdEg0xPQ/olTEKfOfTv03DYmdRm1+XpaNQdCpiHT7Vi6regbxDCQ==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /magic-string@0.26.7:
     resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}
     engines: {node: '>=12'}
@@ -2025,6 +2039,16 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-idle-timer@5.7.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+BaPfc7XEUU5JFkwZCx6fO1bLVK+RBlFH+iY4X34urvIzZiZINP6v2orePx3E6pAztJGE7t4DzvL7if2SL/0GQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-innertext@1.1.5(@types/react@18.2.12)(react@18.2.0):

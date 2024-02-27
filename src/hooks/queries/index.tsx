@@ -4,6 +4,7 @@ import {
   getDisputes,
   getEscrowPaymentRedirect,
   getLockedFunds,
+  getNotifications,
   getPaymentRedirect,
   getTransactionInfo,
   getTransactionUnauthorized,
@@ -78,3 +79,12 @@ export const useEscrowPaymentRedirect = ({
     queryFn: () => getEscrowPaymentRedirect({ status, tx_ref, transaction_id }),
   });
 };
+export const useNotifications = ({page, size }:{ page:number; size:number }) => {
+  return useQuery({
+    queryKey: ["notifications", page, size],
+    queryFn: () => getNotifications({ page, size }),
+  });
+};
+// queryKey: ["transactions", page, type, size],
+//queryFn: () => getTransactions({ search: type, page, size }),
+

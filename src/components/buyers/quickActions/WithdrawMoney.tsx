@@ -132,7 +132,7 @@ const WithdrawMoney = () => {
 
             <TextField
               control={controlWithdraw}
-              rules={{ required: "this field is required" }}
+              // rules={{ required: "this field is required" }}
               name={"description"}
               label="Reason for withdrawing (description)"
             />
