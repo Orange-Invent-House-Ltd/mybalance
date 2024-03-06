@@ -31,6 +31,8 @@ import EscrowPayment from "./pages/home/EscrowPayment";
 import Test from "./pages/buyer/dashboard/Test";
 import KYC from "./pages/home/KYC";
 import KYCResponse from "./pages/home/KYCResponse";
+import LearnMybalance from "./pages/home/LearnMybalance";
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -41,6 +43,7 @@ const App: React.FC = () => {
         <Route path="/about-us" element={<About />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/how-we-work" element={<HowWeWork />} />
+        <Route path="/learn-mybalance" element={<LearnMybalance />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/t&c" element={<TermsAndCondition />} />
         <Route path="/privacy" element={<Privacy />} />

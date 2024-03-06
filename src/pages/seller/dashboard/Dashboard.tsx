@@ -22,8 +22,8 @@ const Dashboard = () => {
     size: 2,
   });
   const [{ run, steps }, setState] = useState({
-    // run: user?.first_time_visit,
-    run: user?.showTourGuide,
+    run: false,
+    // run: user?.showTourGuide,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,
@@ -190,7 +190,7 @@ const Dashboard = () => {
       />
 
       <div className="mb-16 start-tour">
-        {/* <Withdraw open={withdrawModal} setOpen={setWithdrawModal} /> */}
+        <Withdraw open={withdrawModal} setOpen={setWithdrawModal} />
         <SellerHeader />
         {user?.kyc === null && (
           <div className="flex flex-col gap-2 justify-start items-start max-w-[752px] mt-8 px-4 py-3 bg-orange-50 rounded-lg border border-orange-200">

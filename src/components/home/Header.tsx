@@ -60,6 +60,7 @@ const  Header = () =>{
                 </div>
               </div>
             </li>
+            <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
             <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>
           </ul>
           <div className="" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
@@ -92,6 +93,7 @@ const  Header = () =>{
               </div>
             </div>
           </li>
+          <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>

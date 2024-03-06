@@ -194,3 +194,12 @@ export const fundEscrow = async ({
   });
   return res.data;
 };
+export const getNotifications = async ({page, size}: {page?: number; size?: number}) => {
+  const res = await privateApi.get(`/notifications`, {
+    params: {
+      page,
+      size,
+    },
+  });
+  return res.data;
+};

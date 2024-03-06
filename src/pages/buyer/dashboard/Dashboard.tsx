@@ -123,7 +123,7 @@ const Dashboard = () => {
   // Tour Guide
   const [{ run, steps }, setState] = useState({
     // run: user?.first_time_visit,
-    run:  true,
+    run: true,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,
