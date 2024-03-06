@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/reuseable/Button";
 import SellerHeader from "../../../components/sellers/SellerHeader";
 import SellerDashboardBox from "../../../components/reuseable/SellerDashboardBox";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Withdraw from "../../../components/sellers/Withdraw";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import Skeleton from "react-loading-skeleton";
@@ -14,6 +14,8 @@ import ReactJoyride from "react-joyride";
 const Dashboard = () => {
   const { data: user, isError } = useUser();
   const [withdrawModal, setWithdrawModal] = useState(false);
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
 
@@ -114,11 +116,44 @@ const Dashboard = () => {
       },
     ],
   });
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+
+      // Save in localStorage that the tour has been completed
+      localStorage.setItem("sellertourFinished", "true");
+
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/seller/transaction-history");
+    }
+  }, [tourFinished, navigate]);
+
+  useEffect(() => {
+    // Check if the tour has been completed previously
+    const tourPreviouslyFinished = localStorage.getItem("sellertourFinished");
+    if (tourPreviouslyFinished === "true") {
+      // If tour has been finished previously, do not run the tour again
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+    }
+  }, []);
+
   return (
     <div className="overflow-hidden">
       <ReactJoyride
         continuous
-        callback={() => {}}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
         run={run}
         steps={steps}
         // hideCloseButton
@@ -127,7 +162,7 @@ const Dashboard = () => {
         showProgress
         locale={{
           skip: <strong>Cancel Tour</strong>,
-          last: "End",
+          last: "Next",
         }}
         styles={{
           tooltipContainer: {

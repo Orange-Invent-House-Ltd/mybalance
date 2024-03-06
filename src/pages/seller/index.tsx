@@ -15,34 +15,39 @@ import RegisterContinue from "./auth/RegisterContinue";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
 import AddNewDispute from "./dashboard/AddNewDispute";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const Index = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <Routes>
-      <Route path="/" element={<SellerDashboardLayout />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="transaction-history" element={<TransactionHistory />} />
-        <Route path="notifications" element={<Notifications />} />
-        <Route path="customer-support" element={<CustomerSupport />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="dispute-resolution" element={<DisputeResolution />} />
-        <Route path="dispute-resolution/add" element={<AddNewDispute />} />
-        <Route path="profile" element={<Profile />} />
-      </Route>
-      <Route path="/" element={<AuthLayout />}>
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/continue" element={<RegisterContinue />} />
-        <Route
-          path="/register/continue/identity"
-          element={<RegisterIdentity />}
-        />
-        <Route
-          path="/register/continue/identity/verification"
-          element={<RegVerification />}
-        />
-      </Route>
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route path="/" element={<SellerDashboardLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="transaction-history" element={<TransactionHistory />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="customer-support" element={<CustomerSupport />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="dispute-resolution" element={<DisputeResolution />} />
+          <Route path="dispute-resolution/add" element={<AddNewDispute />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="/register" element={<Register />} />
+          <Route path="/register/continue" element={<RegisterContinue />} />
+          <Route
+            path="/register/continue/identity"
+            element={<RegisterIdentity />}
+          />
+          <Route
+            path="/register/continue/identity/verification"
+            element={<RegVerification />}
+          />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </QueryClientProvider>
   );
 };
 

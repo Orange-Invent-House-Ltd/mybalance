@@ -8,8 +8,11 @@ import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import { useTransactions } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
+import ReactJoyride from "react-joyride";
 
 const TransactionHistory = () => {
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState(1);
   const [activeButton, setActiveButton] = useState("");
   const { isLoading, data } = useTransactions({
@@ -18,14 +21,127 @@ const TransactionHistory = () => {
     type: activeButton,
   });
 
- const handlePageChange = (selected: any) => {
-   setPage(selected);
- };
+  //
+  const [{ run, steps }, setState] = useState({
+    // run: user?.first_time_visit,
+    run: true,
+    steps: [
+      {
+        content: "See a comprehensive list of all your account activities.",
+        placement: "right" as "right",
+        target: ".transaction-history",
+        title: "Transaction History",
+      },
+      {
+        content: "Track money added to your account.",
+        placement: "bottom" as "bottom",
+        target: ".deposits-trans",
+        title: "Deposits Transactions",
+      },
+      {
+        content: "Monitor transactions currently in progress.",
+        placement: "bottom" as "bottom",
+        target: ".escrows-trans",
+        title: "Escrows Transactions",
+      },
+      {
+        content: "Keep tabs on funds leaving your wallet.",
+        placement: "bottom" as "bottom",
+        target: ".withdrwals-trans",
+        title: "Withdrwals Transactions",
+      },
+      {
+        content:
+          "Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.",
+        placement: "right" as "right",
+        target: ".dispute-resolution",
+        title: "Dispute Resolution",
+      },
+    ],
+  });
+
+  const handlePageChange = (selected: any) => {
+    setPage(selected);
+  };
   useEffect(() => {
     setPage(1);
   }, [activeButton]);
+
+  //
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+
+      // Save in localStorage that the tour has been completed
+      localStorage.setItem("sellertourFinishedt-h", "true");
+
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/seller/dispute-resolution");
+    }
+  }, [tourFinished, navigate]);
+
+  useEffect(() => {
+    // Check if the tour has been completed previously
+    const tourPreviouslyFinished = localStorage.getItem(
+      "sellertourFinishedt-h"
+    );
+    if (tourPreviouslyFinished === "true") {
+      // If tour has been finished previously, do not run the tour again
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+    }
+  }, []);
+
   return (
     <div>
+      <ReactJoyride
+        continuous
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
+        run={run}
+        steps={steps}
+        // hideCloseButton
+        scrollToFirstStep
+        showSkipButton
+        showProgress
+        locale={{
+          skip: <strong>Cancel Tour</strong>,
+          last: "Next",
+        }}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonBack: {
+            marginRight: 10,
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonSkip: {
+            color: "#DA1E28",
+          },
+        }}
+      />
       <Header
         Heading="Transaction History"
         Text="You can view an endless list of transaction you have transacted over time."
