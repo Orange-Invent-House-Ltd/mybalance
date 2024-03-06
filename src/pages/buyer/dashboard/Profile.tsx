@@ -6,8 +6,11 @@ import { useEditProfile, useUploadAvatar } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { useUser } from "../../../hooks/queries";
 import loading from "../../../assets/Icons/loadingSpinner.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const { handleSubmit, control, reset } = useForm();
   const { mutate, isLoading } = useEditProfile();
   const { mutate: uploadAvatar, isLoading: upLoadIsLoading } =
@@ -52,7 +55,7 @@ const Profile = () => {
             {user?.avatar ? (
               <div className="relative w-[60px] h-[60px] object-cover overflow-hidden rounded-full">
                 {upLoadIsLoading && (
-                  <div className="absolute z-10 top-0 w-full h-full flex items-center justify-center left-0 bg-white/70 z-50">
+                  <div className="absolute z-10 top-0 w-full h-full flex items-center justify-center left-0 bg-white/70">
                     <img
                       src={loading}
                       className="animate-spin mx-auto "
@@ -74,7 +77,7 @@ const Profile = () => {
             )}
           </label>
           <label htmlFor="photoURL">
-            <p className="cursor-pointer">Tap to change photo</p>
+            <p className="cursor-pointer upload-img">Tap to change photo</p>
           </label>
           <input
             onChange={upload}
@@ -87,7 +90,7 @@ const Profile = () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-5 relative mt-5  w-full max-w-[350px]"
+          className="space-y-5 relative mt-5  w-full max-w-[350px] details"
         >
           {isLoading && <LoadingOverlay />}
           <TextField

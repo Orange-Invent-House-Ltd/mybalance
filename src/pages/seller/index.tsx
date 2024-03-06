@@ -15,24 +15,26 @@ import RegisterContinue from "./auth/RegisterContinue";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
 import AddNewDispute from "./dashboard/AddNewDispute";
-import ProtectedRoutes from "../auth/PrivateRoutes";
+import { QueryClientProvider, QueryClient } from 'react-query';
+
 
 const Index = () => {
-  return (
-    <Routes>
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/" element={<SellerDashboardLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="transaction-history" element={<TransactionHistory />} />
-          <Route path="notifications" element={<Notifications />} />
-          <Route path="customer-support" element={<CustomerSupport />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="dispute-resolution" element={<DisputeResolution />} />
-          <Route path="dispute-resolution/add" element={<AddNewDispute />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
-      </Route>
+  const queryClient = new QueryClient();
 
+  return (
+    <QueryClientProvider client={queryClient}>
+
+    <Routes>
+      <Route path="/" element={<SellerDashboardLayout />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="transaction-history" element={<TransactionHistory />} />
+        <Route path="notifications" element={<Notifications />} />
+        <Route path="customer-support" element={<CustomerSupport />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="dispute-resolution" element={<DisputeResolution />} />
+        <Route path="dispute-resolution/add" element={<AddNewDispute />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
       <Route path="/" element={<AuthLayout />}>
         <Route path="/register" element={<Register />} />
         <Route path="/register/continue" element={<RegisterContinue />} />
@@ -47,6 +49,8 @@ const Index = () => {
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </QueryClientProvider>
+
   );
 };
 

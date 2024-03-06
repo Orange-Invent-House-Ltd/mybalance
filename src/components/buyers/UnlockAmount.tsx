@@ -160,7 +160,6 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   >
                     Report a dispute
                   </Button>
-
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
@@ -198,7 +197,6 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                 >
                   cancel
                 </button>
-
                 <button
                   onClick={() => {
                     mutate(data?.reference);
@@ -225,5 +223,4 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
     </>
   );
 };
-
 export default UnlockAmount;
