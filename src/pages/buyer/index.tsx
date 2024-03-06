@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { QueryClientProvider, QueryClient } from 'react-query';
 import { Route, Routes, useNavigate } from "react-router-dom";
 import BuyerDashboardLayout from "../../layout/BuyerDashboardLayout";
 import Register from "./auth/Register";
@@ -18,8 +19,10 @@ import AuthLayout from "../../layout/AuthLayout";
 import TransactionStatus from "./dashboard/TransactionStatus";
 
 const Index = () => {
-  const client = new QueryClient();
+  const queryClient = new QueryClient();
+
   return (
+    <QueryClientProvider client={queryClient}>
     <Routes>
       <Route path="/" element={<BuyerDashboardLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
@@ -39,7 +42,10 @@ const Index = () => {
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </QueryClientProvider>
   );
 };
 
 export default Index;
+
+  

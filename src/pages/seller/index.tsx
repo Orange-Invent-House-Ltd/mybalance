@@ -15,11 +15,15 @@ import RegisterContinue from "./auth/RegisterContinue";
 import PageNotFound from "../home/PageNotFound";
 import AuthLayout from "../../layout/AuthLayout";
 import AddNewDispute from "./dashboard/AddNewDispute";
+import { QueryClientProvider, QueryClient } from 'react-query';
+
 
 const Index = () => {
   const queryClient = new QueryClient();
 
   return (
+    <QueryClientProvider client={queryClient}>
+
     <Routes>
       <Route path="/" element={<SellerDashboardLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
@@ -45,6 +49,8 @@ const Index = () => {
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </QueryClientProvider>
+
   );
 };
 
