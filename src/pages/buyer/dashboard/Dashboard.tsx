@@ -33,19 +33,21 @@ import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import moment from "moment";
 import infoIcon from "../../../assets/Icons/info-icon.svg";
 import Joyride from "react-joyride";
+import { useQueryClient } from '@tanstack/react-query';
+import { privateApi } from "../../../api/axios";
 
 
 const Dashboard = () => {
-  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
-  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
+  const [tourFinished, setTourFinished] = useState(false); 
+  const navigate = useNavigate(); 
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
-  const [value, setValue] = useState("");
   const store = useStore();
   const { data: user } = useUser();
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
+  const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   var today = moment().format("YYYY-MM-DD");
   const {
@@ -73,9 +75,6 @@ const Dashboard = () => {
     isLoading: LookupIsLoading,
   } = useLookUpBank();
 
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
-  };
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
@@ -122,8 +121,8 @@ const Dashboard = () => {
 
   // Tour Guide
   const [{ run, steps }, setState] = useState({
-    // run: user?.first_time_visit,
-    run: true,
+    run: user?.showTourGuide && !store.endTour,
+    // run: true,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,
@@ -198,6 +197,11 @@ const Dashboard = () => {
     }
   }, [tourFinished, navigate]);
 
+  useEffect(()=>{
+    queryClient.invalidateQueries({queryKey: ['user'],
+    refetchType: 'all' // refetch both active and inactive queries
+    });
+  },[store.endTour])
 
   return (
     <div className=" overflow-hidden ">

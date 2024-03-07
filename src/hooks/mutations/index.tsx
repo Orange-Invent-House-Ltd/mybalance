@@ -7,6 +7,7 @@ import {
   depositMoney,
   editBusinessProfile,
   editProfile,
+  endTourGuide,
   forgotPassword,
   fundEscrow,
   getWithdrawFee,
@@ -164,6 +165,17 @@ export const useChangePassword = () => {
     },
     onError: (error: any) => {
       toast.error(error.response.data.errors.password[0]);
+    },
+  });
+};
+export const useEndTourGuide= () => {
+  return useMutation({
+    mutationFn: endTourGuide,
+    onSuccess: (data) => {
+      // toast.success("your password has been updated successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.errors.message);
     },
   });
 };

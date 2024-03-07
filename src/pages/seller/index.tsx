@@ -8,7 +8,6 @@ import Dashboard from "./dashboard/Dashboard";
 import DisputeResolution from "./dashboard/DisputeResolution";
 import Notifications from "./dashboard/Notifications";
 import Profile from "./dashboard/Profile";
-import RegVerification from "./auth/RegVerification";
 import Settings from "./dashboard/Settings";
 import TransactionHistory from "./dashboard/TransactionHistory";
 import RegisterContinue from "./auth/RegisterContinue";
@@ -41,10 +40,6 @@ const Index = () => {
         <Route
           path="/register/continue/identity"
           element={<RegisterIdentity />}
-        />
-        <Route
-          path="/register/continue/identity/verification"
-          element={<RegVerification />}
         />
       </Route>
       <Route path="*" element={<PageNotFound />} />

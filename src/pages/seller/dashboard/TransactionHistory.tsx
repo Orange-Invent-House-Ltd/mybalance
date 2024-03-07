@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
-import { useTransactions } from "../../../hooks/queries";
+import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
 import ReactJoyride from "react-joyride";
@@ -15,16 +15,23 @@ const TransactionHistory = () => {
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState(1);
   const [activeButton, setActiveButton] = useState("");
+  const { data: user} = useUser();
   const { isLoading, data } = useTransactions({
     page,
     size: 10,
     type: activeButton,
   });
-
-  //
+  
+  useEffect(() => {
+    // Set run to true to start the tour guide when the component mounts
+    setState((prevState) => ({
+      ...prevState,
+      run: user?.showTourGuide,
+    }));
+  }, []);
+  //Tour Guide
   const [{ run, steps }, setState] = useState({
-    // run: user?.first_time_visit,
-    run: true,
+    run: user?.showTourGuide,
     steps: [
       {
         content: "See a comprehensive list of all your account activities.",
@@ -33,41 +40,25 @@ const TransactionHistory = () => {
         title: "Transaction History",
       },
       {
-        content: "Track money added to your account.",
+        content: "See a comprehensive list of all your account activities.",
         placement: "bottom" as "bottom",
-        target: ".deposits-trans",
-        title: "Deposits Transactions",
+        target: ".all-transaction",
+        title: "All Transactions",
       },
       {
         content: "Monitor transactions currently in progress.",
         placement: "bottom" as "bottom",
-        target: ".escrows-trans",
+        target: ".escrows",
         title: "Escrows Transactions",
       },
       {
         content: "Keep tabs on funds leaving your wallet.",
         placement: "bottom" as "bottom",
-        target: ".withdrwals-trans",
+        target: ".withdrawals",
         title: "Withdrwals Transactions",
-      },
-      {
-        content:
-          "Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.",
-        placement: "right" as "right",
-        target: ".dispute-resolution",
-        title: "Dispute Resolution",
       },
     ],
   });
-
-  const handlePageChange = (selected: any) => {
-    setPage(selected);
-  };
-  useEffect(() => {
-    setPage(1);
-  }, [activeButton]);
-
-  //
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
@@ -77,27 +68,17 @@ const TransactionHistory = () => {
         run: false,
       }));
 
-      // Save in localStorage that the tour has been completed
-      localStorage.setItem("sellertourFinishedt-h", "true");
-
       // Navigate to the Quick Action page after the tour finishes
       navigate("/seller/dispute-resolution");
     }
   }, [tourFinished, navigate]);
 
+  const handlePageChange = (selected: any) => {
+    setPage(selected);
+  };
   useEffect(() => {
-    // Check if the tour has been completed previously
-    const tourPreviouslyFinished = localStorage.getItem(
-      "sellertourFinishedt-h"
-    );
-    if (tourPreviouslyFinished === "true") {
-      // If tour has been finished previously, do not run the tour again
-      setState((prevState) => ({
-        ...prevState,
-        run: false,
-      }));
-    }
-  }, []);
+    setPage(1);
+  }, [activeButton]);
 
   return (
     <div>
@@ -150,7 +131,7 @@ const TransactionHistory = () => {
         <div className="relative w-full max-w-[676px]">
           <div className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto  pt-1 md:pt-3 pb-2 md:pb-4 flex-row">
             <button
-              className="tab "
+              className="tab all-transaction"
               data-state={activeButton === "" ? "active" : "inactive"}
               onClick={() => setActiveButton("")}
             >
@@ -158,14 +139,14 @@ const TransactionHistory = () => {
             </button>
 
             <button
-              className="tab "
+              className="tab escrows"
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}
               onClick={() => setActiveButton("ESCROW")}
             >
               Escrows
             </button>
             <button
-              className="tab"
+              className="tab withdrawals"
               data-state={activeButton === "WITHDRAW" ? "active" : "inactive"}
               onClick={() => setActiveButton("WITHDRAW")}
             >

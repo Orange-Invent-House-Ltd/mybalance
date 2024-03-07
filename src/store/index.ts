@@ -10,6 +10,7 @@ type Store = {
   authToken: string;
   tempId: string;
   isSuccessful: boolean;
+  endTour:boolean;
   setAuthEmail: (email: string) => void;
   setAuthUser: (user: IUser | null) => void;
   setUserProfile: (profile: IUserProfile | null) => void;
@@ -17,6 +18,7 @@ type Store = {
   setAuthToken: (token: string) => void;
   setTempId: (tempId: string) => void;
   setIsSuccessfull:(isSuccessful: boolean) => void;
+  setEndTour:(isEndTour: boolean) => void;
 };
 
 const useStore = create(
@@ -29,6 +31,7 @@ const useStore = create(
       authToken: "",
       tempId: "",
       isSuccessful: false,
+      endTour: false,
       setAuthEmail: (email) => set((state) => ({ ...state, authEmail: email })),
       setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
       setUserProfile: (profile) =>
@@ -37,7 +40,8 @@ const useStore = create(
         set((state) => ({ ...state, requestLoading: isLoading })),
       setAuthToken: (token) => set((state) => ({ ...state, authToken: token })),
       setTempId: (tempId) => set((state) => ({ ...state, tempId: tempId })),
-      setIsSuccessfull:(isSuccessful) => set((state)=>({...state, isSuccessful:isSuccessful}))
+      setIsSuccessfull:(isSuccessful) => set((state)=>({...state, isSuccessful:isSuccessful})),
+      setEndTour:(isEndTour) => set((state)=>({...state, endTour:isEndTour}))
     }),
     {
       name: "store", // Set a name for your persisted store

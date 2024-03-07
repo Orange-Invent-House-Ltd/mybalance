@@ -7,7 +7,6 @@ import AddNewDispute from "./dashboard/AddNewDispute";
 import CustomerSupport from "./dashboard/CustomerSupport";
 import Dashboard from "./dashboard/Dashboard";
 import DisputeResolution from "./dashboard/DisputeResolution";
-import Home from "./dashboard/Home";
 import LockNewAmount from "./dashboard/LockNewAmount";
 import Notifications from "./dashboard/Notifications";
 import Profile from "./dashboard/Profile";

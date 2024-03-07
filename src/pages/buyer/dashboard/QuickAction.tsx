@@ -12,7 +12,7 @@ import UnlockAmount from "../../../components/buyers/UnlockAmount";
 import { useDepositMoney } from "../../../hooks/mutations";
 import { useForm } from "react-hook-form";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import { useLockedFunds } from "../../../hooks/queries";
+import { useLockedFunds, useUser } from "../../../hooks/queries";
 import { useTabStore } from "../../../store";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,7 @@ import Joyride from "react-joyride";
 const QuickAction = () => {
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
   const navigate = useNavigate();
+  const { data: user } = useUser();
 
   const [successModal, setSuccessModal] = useState(false);
 
@@ -53,10 +54,9 @@ const QuickAction = () => {
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
 
-  //
   // Tour Guide
   const [{ run, steps }, setState] = useState({
-    run: true,
+    run: user?.showTourGuide,
     steps: [
       {
         content: (

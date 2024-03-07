@@ -1,3 +1,4 @@
+export const RE_DIGIT = new RegExp(/^\d+$/);
 export interface IUser {
   email?: string;
   email_verified?: boolean;

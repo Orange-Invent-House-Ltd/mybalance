@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../../components/reuseable/Header";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
-import { useTransactions } from "../../../hooks/queries";
+import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import Skeleton from "react-loading-skeleton";
@@ -16,6 +16,7 @@ const TransactionHistory = () => {
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
+  const { data: user } = useUser();
 
   const { isLoading, data } = useTransactions({
     page,
@@ -35,32 +36,18 @@ const TransactionHistory = () => {
     // Set run to true to start the tour guide when the component mounts
     setState((prevState) => ({
       ...prevState,
-      run: true,
+      run: user?.showTourGuide,
     }));
   }, []);
   // Tour Guide
   const [{ run, steps }, setState] = useState({
-    run: true,
+    run: user?.showTourGuide,
     steps: [
-      {
-        content:
-          "You can view an endless list of transaction you have transacted over time.",
-        placement: "right" as "right",
-        target: ".transaction-history",
-        title: "Transaction History",
-      },
-
       {
         content: "See a comprehensive list of all your account activities.",
         placement: "bottom" as "bottom",
         target: ".all-transaction",
         title: "All Transactions",
-      },
-      {
-        content: "Track money added to your account.",
-        placement: "bottom" as "bottom",
-        target: ".deposit",
-        title: "Deposit",
       },
       {
         content: "Monitor transactions currently in progress.",
@@ -69,16 +56,18 @@ const TransactionHistory = () => {
         title: "Escrow",
       },
       {
-        content: "Keep tabs on funds leaving your wallet.",
+        content: " Keep tabs on funds leaving your wallet.",
         placement: "bottom" as "bottom",
-        target: ".withdraw",
+        target: ".withdraws",
         title: "Withdraw Money",
       },
     ],
   });
 
   useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
+      // Set run to false when the tour finishes
       setState((prevState) => ({
         ...prevState,
         run: false,

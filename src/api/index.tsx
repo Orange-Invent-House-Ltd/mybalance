@@ -38,6 +38,10 @@ export const verifyEmail = async (data: { otp: string; tempId: string }) => {
 export const resendOtp = async (data: GetVerificationInput) => {
   const res = await publicApi.post("/auth/resend-otp", data);
   return res.data;
+}
+export const endTourGuide = async (data: any) => {
+  const res = await privateApi.put("/auth/end-tour-guide", data);
+  return res.data;
 };
 export const depositMoney = async (data: string) => {
   const res = await privateApi.post("/shared/fund-wallet", {
