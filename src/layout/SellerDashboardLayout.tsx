@@ -141,7 +141,7 @@ const SellerDashboardLayout = () => {
               {sellerSidebarDatas.map((item, index) => (
                 <li
                   key={index}
-                  className={`hover:bg-white hover:text-black ${item.title} `}
+                  className={`hover:bg-white hover:text-black ${item.name}`}
                 >
                   <NavLink
                     to={item.path}

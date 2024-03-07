@@ -1,95 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
-// Zod - A typescript-first schema validation library.
-import { object, string, TypeOf } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { publicApi } from "../../api/axios";
-import { GenericResponse } from "../../api/types";
+import { Link, Navigate, useNavigate} from "react-router-dom";
 import useStore from "../../store";
-import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Button } from "../../components/reuseable/Button";
-import { LoadingButton } from "../../components/reuseable/LoadingButton";
-import logo from "../../assets/Icons/logo.svg";
-import mphone from "../../assets/images/m-phone.png";
-import phone from "../../assets/images/R-phone.png";
 import check from "../../assets/Icons/check.svg";
-import facebook from "../../assets/Icons/Facebook.svg";
-import twitter from "../../assets/Icons/Twitter.svg";
-import linkedin from "../../assets/Icons/LinkedIn.svg";
 import { useResendOtp, useVerifyEmail } from "../../hooks/mutations";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
-
-// otp index
-let currentOTPIndex: number = 0;
+import OtpInput from "../../components/reuseable/OtpInput";
 
 const EmailVerification = () => {
+  const [otp, setOtp] = useState("");
   const { mutate, isLoading, isSuccess } = useVerifyEmail();
   const { mutate:resendMutate, isLoading: resendLoading } = useResendOtp();
   const store = useStore();
   const navigate = useNavigate();
-  const userEmail = store.authEmail;
-
   const tempId = localStorage.getItem("tempId");
   const email = localStorage.getItem("email");
-  // otp state
-  const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
-  const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0);
 
   // tabs
   const [activeTab, setActiveTab] = useState(1);
   const userType = localStorage.getItem("userType")
-  // otp continue
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
-    const { value } = target;
-    // the spread operator help to get all the input value
-    const newOTP = [...otp];
-    // get the last value of the input
-    newOTP[currentOTPIndex] = value.substring(value.length - 1);
-
-    // moke the focus to the next box on each change
-    if (!value) setActiveOTPIndex(currentOTPIndex - 1);
-    else setActiveOTPIndex(currentOTPIndex + 1);
-    // all the input values
-    setOtp(newOTP);
-  };
-
-  const handleKeyDown = (
-    { key }: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    currentOTPIndex = index;
-    if (key === "Backspace") setActiveOTPIndex(currentOTPIndex - 1);
-  };
-
-  useEffect(() => {
-    // input box focus
-    inputRef.current?.focus();
-  }, [activeOTPIndex]);
-
-  // useEffect(() => {
-  //   if (verificationCode) {
-  //     const otpCode = verificationCode.split('')
-  //     setOtp(otpCode);
-  //   }
-  // }, []);
-
-  const verifyEmail = async (otp: string[]) => {
+  const verifyEmail = async (otp: string) => {
     console.log(
       "🚀 ~ file: EmailVerification.tsx:82 ~ verifyEmail ~ otp:",
       otp
     );
-    const stringOtp = otp.join("").toString();
+    // const stringOtp = otp.join("").toString();
     console.log(
       "🚀 ~ file: EmailVerification.tsx:87 ~ verifyEmail ~ stringOtp:",
-      stringOtp
+      otp
     );
-    if (stringOtp.length < 6) return;
-    mutate({ otp: stringOtp, tempId: tempId! });
+    if (otp.length < 6) return;
+    mutate({ otp: otp, tempId: tempId! });
   };
 
   // const resendVerifyEmail = async (userEmail:any) => {
@@ -189,32 +131,15 @@ const EmailVerification = () => {
                 >
                   <h6 className="h6">Check your email</h6>
                   <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-                    We sent a verification link to {email}
+                    Hello We sent a verification link to {email}
                   </p>
                   <div className="grid gap-y-3.5">
                     <form>
+                      <OtpInput value={otp} valueLength={6} onChange={(value: string) => setOtp(value)}/>
                       {/* otp input boxes */}
-                      <div className=" mb-6 flex justify-start items-center space-x-2">
-                        {otp.map((_, index) => {
-                          return (
-                            <React.Fragment key={index}>
-                              <input
-                                // make the input box focus start from the first one
-                                ref={index === activeOTPIndex ? inputRef : null}
-                                type="number"
-                                placeholder=""
-                                value={otp[index]}
-                                onChange={handleChange}
-                                onKeyDown={(e) => handleKeyDown(e, index)}
-                                className="w-[50px] h-[50px] rounded bg-transparent text-center font-semibold text-xl spin-button-none outline-none border border-[#cccccc] focus:border-gray-700 text-primary transition"
-                              />
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
                       <Button
                         fullWidth
-                        // disabled={otp.length < 6 }
+                        disabled = {otp.length === 6 ? false : true}
                         onClick={(e) => {
                           e.preventDefault();
                           verifyEmail(otp);

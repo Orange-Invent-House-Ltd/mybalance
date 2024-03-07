@@ -26,6 +26,7 @@ const sellerSidebarDatas = [
         </defs>
       </svg>
     ),
+    name:'dashboard',
   },
   {
     title: "Transaction history",
@@ -51,6 +52,7 @@ const sellerSidebarDatas = [
         </defs>
       </svg>
     ),
+    name: 'transaction-history'
   },
   {
     title: "Notifications",
@@ -76,6 +78,7 @@ const sellerSidebarDatas = [
         </defs>
       </svg>
     ),
+    name: 'notifications'
   },
   // {
   //   title: "Customer support",
@@ -95,6 +98,7 @@ const sellerSidebarDatas = [
   //       />
   //     </svg>
   //   ),
+  // name: 'customer-support'
   // },
   {
     title: "My profile",
@@ -114,6 +118,7 @@ const sellerSidebarDatas = [
         />
       </svg>
     ),
+    name: 'profile'
   },
   {
     title: "Dispute resolution",
@@ -133,6 +138,7 @@ const sellerSidebarDatas = [
         />
       </svg>
     ),
+    name: 'dispute-resolution'
   },
   {
     title: "Settings",
@@ -159,6 +165,7 @@ const sellerSidebarDatas = [
         </defs>
       </svg>
     ),
+    name: 'settings'
   }
 ];
 export default sellerSidebarDatas;

@@ -1,27 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/reuseable/Button";
 import SellerHeader from "../../../components/sellers/SellerHeader";
 import SellerDashboardBox from "../../../components/reuseable/SellerDashboardBox";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Withdraw from "../../../components/sellers/Withdraw";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import Skeleton from "react-loading-skeleton";
 import ReactJoyride from "react-joyride";
+import { useQueryClient } from "@tanstack/react-query";
+import useStore from "../../../store";
 
 const Dashboard = () => {
   const { data: user, isError } = useUser();
   const [withdrawModal, setWithdrawModal] = useState(false);
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
+  const store = useStore();
+  const queryClient = useQueryClient(); //To refresh the user data
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
 
     size: 2,
   });
+
   const [{ run, steps }, setState] = useState({
-    run: false,
-    // run: user?.showTourGuide,
+    run: user?.showTourGuide && !store.endTour,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,
@@ -32,7 +38,7 @@ const Dashboard = () => {
         content:
           "Your dashboard provides a snapshot of your account status and activities.",
         placement: "right" as "right",
-        target: ".Dashboard",
+        target: ".dashboard",
         title: "Dashboard",
       },
       {
@@ -48,77 +54,100 @@ const Dashboard = () => {
         target: ".balance",
       },
       {
-        content: (
-          <div>
-            Initiate transactions effortlessly. Create a one-time MyBalance
-            link, where you'll fill in every detail about the product and the
-            buyer or seller.{" "}
-            <strong>
-              Don't forget, your email is crucial for a smooth process
-            </strong>
-          </div>
-        ),
-        placement: "bottom" as "bottom",
-        target: ".createlink",
-        title: "Create MyBalance Link",
-      },
-      {
-        content: "Top up your wallet from your local bank securely.",
-        placement: "bottom" as "bottom",
-        target: ".depositMoney",
-        title: "Deposit",
-      },
-      {
-        content:
-          "Use this feature to unlock funds, ensuring a seamless and trustworthy experience.",
-        placement: "bottom" as "bottom",
-        target: ".unlockMoney",
-        title: "Unlock Money",
-      },
-      {
         content: "Transfer funds from wallet to your local bank account.",
         placement: "bottom" as "bottom",
-        target: ".withdrawMoney",
+        target: ".withdraw",
         title: "Withdraw Money",
       },
       {
         content: "See a comprehensive list of all your account activities.",
-        placement: "right" as "right",
-        target: ".transaction-history",
+        placement: "bottom" as "bottom",
+        target: ".transaction",
         title: "Transaction History",
       },
       // {
-      //   content: 'Track money added to your account.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".deposits-trans",
-      //   title: "Deposits Transactions"
+      //   content: (
+      //     <div>
+      //       Initiate transactions effortlessly. Create a one-time MyBalance
+      //       link, where you'll fill in every detail about the product and the
+      //       buyer or seller.{" "}
+      //       <strong>
+      //         Don't forget, your email is crucial for a smooth process
+      //       </strong>
+      //     </div>
+      //   ),
+      //   placement: "bottom" as "bottom",
+      //   target: ".createlink",
+      //   title: "Create MyBalance Link",
       // },
       // {
-      //   content: 'Monitor transactions currently in progress.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".escrows-trans",
-      //   title: "Escrows Transactions"
+      //   content: "Top up your wallet from your local bank securely.",
+      //   placement: "bottom" as "bottom",
+      //   target: ".depositMoney",
+      //   title: "Deposit",
       // },
       // {
-      //   content: 'Keep tabs on funds leaving your wallet.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".withdrwals-trans",
-      //   title: "Withdrwals Transactions"
+      //   content:
+      //     "Use this feature to unlock funds, ensuring a seamless and trustworthy experience.",
+      //   placement: "bottom" as "bottom",
+      //   target: ".unlockMoney",
+      //   title: "Unlock Money",
       // },
-      {
-        content:
-          "Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.",
-        placement: "right" as "right",
-        target: ".dispute-resolution",
-        title: "Dispute Resolution",
-      },
+      // {
+      //   content: "Transfer funds from wallet to your local bank account.",
+      //   placement: "bottom" as "bottom",
+      //   target: ".withdrawMoney",
+      //   title: "Withdraw Money",
+      // },
+      // {
+      //   content: "See a comprehensive list of all your account activities.",
+      //   placement: "right" as "right",
+      //   target: ".transaction-history",
+      //   title: "Transaction History",
+      // },
     ],
   });
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/seller/transaction-history");
+    }
+  }, [tourFinished, navigate]);
+
+  useEffect(() => {
+    // Check if the tour has been completed previously
+    const tourPreviouslyFinished = localStorage.getItem("sellertourFinished");
+    if (tourPreviouslyFinished === "true") {
+      // If tour has been finished previously, do not run the tour again
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+    }
+  }, []);
+
+  useEffect(()=>{
+    queryClient.invalidateQueries({queryKey: ['user'],
+    refetchType: 'all' // refetch both active and inactive queries
+    });
+  },[])
+
   return (
     <div className="overflow-hidden">
       <ReactJoyride
         continuous
-        callback={() => {}}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
         run={run}
         steps={steps}
         // hideCloseButton
@@ -127,7 +156,7 @@ const Dashboard = () => {
         showProgress
         locale={{
           skip: <strong>Cancel Tour</strong>,
-          last: "End",
+          last: "Next",
         }}
         styles={{
           tooltipContainer: {
@@ -193,12 +222,12 @@ const Dashboard = () => {
                 onClick={() => {
                   setWithdrawModal(true);
                 }}
-                className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px]"
+                className="bg-[#9A4D0C] capitalize w-[332px] md:w-[220px] text-white rounded-[30px] px-[16px] py-[12px] withdraw"
               >
                 withdraw funds
               </button>
               <Link to="/seller/transaction-history">
-                <button className="border border-[#9A4D0C] w-[332px] md:w-[220px]  text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px]">
+                <button className="border border-[#9A4D0C] w-[332px] md:w-[220px]  text-[#9A4D0C] rounded-[30px] px-[16px] py-[12px] transaction">
                   Transaction History
                 </button>
               </Link>

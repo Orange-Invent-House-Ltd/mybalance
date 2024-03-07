@@ -1,14 +1,23 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import DisputeCard from "../../../components/buyers/disputeResolution/DisputeCard";
 import { Button } from "../../../components/reuseable/Button";
 import { useNavigate } from "react-router-dom";
-import { useDisputes } from "../../../hooks/queries";
+import { useDisputes, useUser } from "../../../hooks/queries";
 import Skeleton from "react-loading-skeleton";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import ReactPaginate from "react-paginate";
 import Pagination from "../../../components/reuseable/Pagination";
+import Joyride from "react-joyride";
+import { useQuery } from "@tanstack/react-query";
+import { useEndTourGuide } from "../../../hooks/mutations";
+import useStore from "../../../store";
 
 const DisputeResolution = () => {
+  const [tourFinished, setTourFinished] = useState(false);// State to track whether the tour guide has finished
+  const { data: user } = useUser();
+  const {mutate } = useEndTourGuide();
+  const store = useStore()
+
   const navigate = useNavigate();
   const { data, isLoading } = useDisputes();
   const [page, setPage] = useState<number>(1);
@@ -17,11 +26,90 @@ const DisputeResolution = () => {
     setPage(selected);
   };
 
+  const endTourGuide = async() => {
+    mutate({email: user?.email})
+  };
+
+  useEffect(() => {
+    // Set run to true to start the tour guide when the component mounts
+    setState((prevState) => ({
+      ...prevState,
+      run: user?.showTourGuide,
+    }));
+  }, []);
+  // Tour Guide
+  const [{ run, steps }, setState] = useState({
+    run: user?.showTourGuide,
+    steps: [
+      {
+        target: ".dispute",
+        content:
+          "Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.",
+        placement: "right" as "right",
+        title: " Dispute resolution",
+      },
+    ],
+  });
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+       setState((prevState) => ({
+         ...prevState,
+         run: false,
+       }));
+       endTourGuide()
+       store.setEndTour(true)
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/buyer/dashboard");
+    }
+  }, [tourFinished, navigate]);
 
   return (
     <div>
-      <header className="mb-10 md:mb-16">
-        <h1 className="text-[23px] capitalize font-medium ">
+      <Joyride
+        continuous
+        run={run}
+        steps={steps}
+        // hideCloseButton
+        scrollToFirstStep
+        showSkipButton
+        // showProgress
+        locale={{
+          skip: <strong>Cancel Tour</strong>,
+          last: "Return to dashboard",
+        }}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonBack: {
+            marginRight: 10,
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonSkip: {
+            color: "#DA1E28",
+          },
+        }}
+      />
+      ;
+      <header className="mb-10 md:mb-16 ">
+        <h1 className="text-[23px] capitalize w-2/5 font-medium dispute">
           Dispute resolution
         </h1>
         <p className="text-[#303030] text-sm mt-2 md:mt-4">

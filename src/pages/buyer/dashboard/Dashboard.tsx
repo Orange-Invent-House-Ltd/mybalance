@@ -31,19 +31,23 @@ import {
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import moment from "moment";
-import infoIcon from '../../../assets/Icons/info-icon.svg'
-import Joyride from 'react-joyride';
+import infoIcon from "../../../assets/Icons/info-icon.svg";
+import Joyride from "react-joyride";
+import { useQueryClient } from '@tanstack/react-query';
+import { privateApi } from "../../../api/axios";
+
 
 const Dashboard = () => {
+  const [tourFinished, setTourFinished] = useState(false); 
+  const navigate = useNavigate(); 
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
-  const [value, setValue] = useState("");
   const store = useStore();
-  const navigate = useNavigate();
   const { data: user } = useUser();
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
+  const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   var today = moment().format("YYYY-MM-DD");
   const {
@@ -60,7 +64,6 @@ const Dashboard = () => {
     isError: lockFundsIsError,
   } = useLockFunds();
   const deficit = error?.response?.data?.errors?.deficit;
-
   const {
     data: fundEscrowData,
     mutate: fundEscrowMutate,
@@ -72,9 +75,6 @@ const Dashboard = () => {
     isLoading: LookupIsLoading,
   } = useLookUpBank();
 
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
-  };
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
@@ -94,6 +94,7 @@ const Dashboard = () => {
     size: 2,
   });
 
+  //
   useEffect(() => {
     if (depositSuccess) setOpen(false);
   }, [depositSuccess]);
@@ -120,124 +121,130 @@ const Dashboard = () => {
 
   // Tour Guide
   const [{ run, steps }, setState] = useState({
-    // run: user?.first_time_visit,
-    run: false,
+    run: user?.showTourGuide && !store.endTour,
+    // run: true,
     steps: [
       {
         content: <strong>Let's go for a ride!</strong>,
-        placement: "center" as 'center',
-        target: ".start-tour"
+        placement: "center" as "center",
+        target: ".start-tour",
       },
       {
-        content: 'Your dashboard provides a snapshot of your account status and activities.',
-        placement: "right" as 'right',
+        content:
+          "Your dashboard provides a snapshot of your account status and activities.",
+        placement: "right" as "right",
         target: ".dashboard",
-        title: "Dashboard"
+        title: "Dashboard",
       },
       {
-        content: 'Find your name and check the time of your last login and the date for your account activity. Get to enjoy 5 free escrow also.',
-        placement: "bottom" as 'bottom',
-        target: ".find-name"
+        content:
+          "Find your name and check the time of your last login and the date for your account activity. Get to enjoy 5 free escrow also.",
+        placement: "bottom" as "bottom",
+        target: ".find-name",
       },
       {
-        content: 'Find your available escrow balance, locked amount, unlocked amount and charges rate below.',
-        placement: "bottom" as 'bottom',
-        target: ".balance"
+        content:
+          "Find your available escrow balance, locked amount, unlocked amount and charges rate below.",
+        placement: "bottom" as "bottom",
+        target: ".balance",
       },
       {
-        content: <div>Initiate transactions effortlessly. Create a one-time MyBalance link, where you'll fill in every detail about the product and the buyer or seller. <strong>Don't forget, your email is crucial for a smooth process</strong></div>,
-        placement: "bottom" as 'bottom',
+        content: (
+          <div>
+            Initiate transactions effortlessly. Create a one-time MyBalance
+            link, where you'll fill in every detail about the product and the
+            buyer or seller.{" "}
+            <strong>
+              Don't forget, your email is crucial for a smooth process
+            </strong>
+          </div>
+        ),
+        placement: "bottom" as "bottom",
         target: ".createlink",
-        title: "Create MyBalance Link"
+        title: "Create MyBalance Link",
       },
       {
-        content: 'Top up your wallet from your local bank securely.',
-        placement: "bottom" as 'bottom',
+        content: "Top up your wallet from your local bank securely.",
+        placement: "bottom" as "bottom",
         target: ".depositMoney",
-        title: "Deposit"
+        title: "Deposit",
       },
       {
-        content: 'Use this feature to unlock funds, ensuring a seamless and trustworthy experience.',
-        placement: "bottom" as 'bottom',
+        content:
+          "Use this feature to unlock funds, ensuring a seamless and trustworthy experience.",
+        placement: "bottom" as "bottom",
         target: ".unlockMoney",
-        title: "Unlock Money"
+        title: "Unlock Money",
       },
       {
-        content: 'Transfer funds from wallet to your local bank account.',
-        placement: "bottom" as 'bottom',
+        content: "Transfer funds from wallet to your local bank account.",
+        placement: "bottom" as "bottom",
         target: ".withdrawMoney",
-        title: "Withdraw Money"
+        title: "Withdraw Money",
       },
-      {
-        content: 'See a comprehensive list of all your account activities.',
-        placement: "right" as 'right',
-        target: ".transaction-history",
-        title: "Transaction History"
-      },
-      // {
-      //   content: 'Track money added to your account.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".deposits-trans",
-      //   title: "Deposits Transactions"
-      // },
-      // {
-      //   content: 'Monitor transactions currently in progress.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".escrows-trans",
-      //   title: "Escrows Transactions"
-      // },
-      // {
-      //   content: 'Keep tabs on funds leaving your wallet.',
-      //   placement: "bottom" as 'bottom',
-      //   target: ".withdrwals-trans",
-      //   title: "Withdrwals Transactions"
-      // },
-      {
-        content: 'Access Support: For any transaction-related issues or disputes, contact our Dispute Resolution team promptly.',
-        placement: "right" as 'right',
-        target: ".dispute-resolution",
-        title: "Dispute Resolution"
-      },
-    ]
+    ],
   });
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/buyer/quick-action");
+    }
+  }, [tourFinished, navigate]);
+
+  useEffect(()=>{
+    queryClient.invalidateQueries({queryKey: ['user'],
+    refetchType: 'all' // refetch both active and inactive queries
+    });
+  },[store.endTour])
 
   return (
     <div className=" overflow-hidden ">
       <Joyride
         continuous
-        callback={() => {}}
+        // callback={() => {}}
         run={run}
         steps={steps}
         // hideCloseButton
         scrollToFirstStep
         showSkipButton
         showProgress
-        locale= {{ 
+        locale={{
           skip: <strong>Cancel Tour</strong>,
-          last: 'End',
+          last: "Next",
+        }}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
         }}
         styles={{
           tooltipContainer: {
-            textAlign: 'left'
+            textAlign: "left",
           },
           buttonNext: {
             backgroundColor: "#fff",
-            color: '#000',
-            outline: 'none',
-            textDecoration: 'underline',
-            fontWeight: 600
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
           },
           buttonBack: {
             marginRight: 10,
             backgroundColor: "#fff",
-            color: '#000',
-            outline: 'none',
-            textDecoration: 'underline',
-            fontWeight: 600
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
           },
           buttonSkip: {
-            color: '#DA1E28'
-          }
+            color: "#DA1E28",
+          },
         }}
       />
       <div className="md:flex justify-between items-center start-tour">

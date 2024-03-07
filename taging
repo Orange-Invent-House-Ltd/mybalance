@@ -1,0 +1,483 @@
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 5bf1bb5..969ca42 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -18,11 +18,13 @@[m
+     "@tanstack/react-query-devtools": "^4.29.13",[m
+     "axios": "^0.27.2",[m
+     "clsx": "^1.2.1",[m
+[32m+[m[32m    "lucide-react": "^0.336.0",[m
+     "moment": "^2.29.4",[m
+     "pusher-js": "^8.3.0",[m
+     "react": "^18.2.0",[m
+     "react-dom": "^18.2.0",[m
+     "react-hook-form": "^7.43.9",[m
+[32m+[m[32m    "react-idle-timer": "^5.7.2",[m
+     "react-joyride": "^2.7.2",[m
+     "react-loading-skeleton": "^3.3.1",[m
+     "react-paginate": "^8.2.0",[m
+[1mdiff --git a/pnpm-lock.yaml b/pnpm-lock.yaml[m
+[1mindex a970b27..98c155b 100644[m
+[1m--- a/pnpm-lock.yaml[m
+[1m+++ b/pnpm-lock.yaml[m
+[36m@@ -32,6 +32,9 @@[m [mdependencies:[m
+   clsx:[m
+     specifier: ^1.2.1[m
+     version: 1.2.1[m
+[32m+[m[32m  lucide-react:[m
+[32m+[m[32m    specifier: ^0.336.0[m
+[32m+[m[32m    version: 0.336.0(react@18.2.0)[m
+   moment:[m
+     specifier: ^2.29.4[m
+     version: 2.29.4[m
+[36m@@ -47,6 +50,9 @@[m [mdependencies:[m
+   react-hook-form:[m
+     specifier: ^7.43.9[m
+     version: 7.44.3(react@18.2.0)[m
+[32m+[m[32m  react-idle-timer:[m
+[32m+[m[32m    specifier: ^5.7.2[m
+[32m+[m[32m    version: 5.7.2(react-dom@18.2.0)(react@18.2.0)[m
+   react-joyride:[m
+     specifier: ^2.7.2[m
+     version: 2.7.2(@types/react@18.2.12)(react-dom@18.2.0)(react@18.2.0)[m
+[36m@@ -1805,6 +1811,14 @@[m [mpackages:[m
+       yallist: 3.1.1[m
+     dev: true[m
+ [m
+[32m+[m[32m  /lucide-react@0.336.0(react@18.2.0):[m
+[32m+[m[32m    resolution: {integrity: sha512-e06J4Qrdrk3BP/hf3MnkW3LnymdthfyEtVbdEg0xPQ/olTEKfOfTv03DYmdRm1+XpaNQdCpiHT7Vi6regbxDCQ==}[m
+[32m+[m[32m    peerDependencies:[m
+[32m+[m[32m      react: ^16.5.1 || ^17.0.0 || ^18.0.0[m
+[32m+[m[32m    dependencies:[m
+[32m+[m[32m      react: 18.2.0[m
+[32m+[m[32m    dev: false[m
+[32m+[m
+   /magic-string@0.26.7:[m
+     resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}[m
+     engines: {node: '>=12'}[m
+[36m@@ -2027,6 +2041,16 @@[m [mpackages:[m
+       react: 18.2.0[m
+     dev: false[m
+ [m
+[32m+[m[32m  /react-idle-timer@5.7.2(react-dom@18.2.0)(react@18.2.0):[m
+[32m+[m[32m    resolution: {integrity: sha512-+BaPfc7XEUU5JFkwZCx6fO1bLVK+RBlFH+iY4X34urvIzZiZINP6v2orePx3E6pAztJGE7t4DzvL7if2SL/0GQ==}[m
+[32m+[m[32m    peerDependencies:[m
+[32m+[m[32m      react: '>=16'[m
+[32m+[m[32m      react-dom: '>=16'[m
+[32m+[m[32m    dependencies:[m
+[32m+[m[32m      react: 18.2.0[m
+[32m+[m[32m      react-dom: 18.2.0(react@18.2.0)[m
+[32m+[m[32m    dev: false[m
+[32m+[m
+   /react-innertext@1.1.5(@types/react@18.2.12)(react@18.2.0):[m
+     resolution: {integrity: sha512-PWAqdqhxhHIv80dT9znP2KvS+hfkbRovFp4zFYHFFlOoQLRiawIic81gKb3U1wEyJZgMwgs3JoLtwryASRWP3Q==}[m
+     peerDependencies:[m
+[1mdiff --git a/src/App.tsx b/src/App.tsx[m
+[1mindex 2e5d610..77f3c2f 100644[m
+[1m--- a/src/App.tsx[m
+[1m+++ b/src/App.tsx[m
+[36m@@ -31,6 +31,8 @@[m [mimport EscrowPayment from "./pages/home/EscrowPayment";[m
+ import Test from "./pages/buyer/dashboard/Test";[m
+ import KYC from "./pages/home/KYC";[m
+ import KYCResponse from "./pages/home/KYCResponse";[m
+[32m+[m[32mimport LearnMybalance from "./pages/home/LearnMybalance";[m
+[32m+[m
+ const App: React.FC = () => {[m
+   return ([m
+     <BrowserRouter>[m
+[36m@@ -41,6 +43,7 @@[m [mconst App: React.FC = () => {[m
+         <Route path="/about-us" element={<About />} />[m
+         <Route path="/solutions" element={<Solutions />} />[m
+         <Route path="/how-we-work" element={<HowWeWork />} />[m
+[32m+[m[32m        <Route path="/learn-mybalance" element={<LearnMybalance />} />[m
+         <Route path="/contact" element={<Contact />} />[m
+         <Route path="/t&c" element={<TermsAndCondition />} />[m
+         <Route path="/privacy" element={<Privacy />} />[m
+[1mdiff --git a/src/api/index.tsx b/src/api/index.tsx[m
+[1mindex 38a0469..792b98a 100644[m
+[1m--- a/src/api/index.tsx[m
+[1m+++ b/src/api/index.tsx[m
+[36m@@ -194,3 +194,12 @@[m [mexport const fundEscrow = async ({[m
+   });[m
+   return res.data;[m
+ };[m
+[32m+[m[32mexport const getNotifications = async ({page, size}: {page?: number; size?: number}) => {[m
+[32m+[m[32m  const res = await privateApi.get(`/notifications`, {[m
+[32m+[m[32m    params: {[m
+[32m+[m[32m      page,[m
+[32m+[m[32m      size,[m
+[32m+[m[32m    },[m
+[32m+[m[32m  });[m
+[32m+[m[32m  return res.data;[m
+[32m+[m[32m};[m
+\ No newline at end of file[m
+[1mdiff --git a/src/api/types.ts b/src/api/types.ts[m
+[1mindex 82c93a1..ada4bd5 100644[m
+[1m--- a/src/api/types.ts[m
+[1m+++ b/src/api/types.ts[m
+[36m@@ -16,6 +16,7 @@[m [mexport interface IUser {[m
+   accountName?: string;[m
+   bankCode?: string;[m
+   lastLoginDate?: string;[m
+[32m+[m[32m  unreadNotificationCount?: number;[m
+ }[m
+ [m
+ export interface IUserProfile {[m
+[36m@@ -38,6 +39,7 @@[m [mexport interface IUserProfile {[m
+   business: any;[m
+   freeEscrowTransactions: number;[m
+   showTourGuide: boolean;[m
+[32m+[m[32m  unreadNotificationCount?: number;[m
+ }[m
+ [m
+ export interface GenericResponse {[m
+[1mdiff --git a/src/components/buyers/quickActions/WithdrawMoney.tsx b/src/components/buyers/quickActions/WithdrawMoney.tsx[m
+[1mindex 1735509..6e6fdc7 100644[m
+[1m--- a/src/components/buyers/quickActions/WithdrawMoney.tsx[m
+[1m+++ b/src/components/buyers/quickActions/WithdrawMoney.tsx[m
+[36m@@ -132,7 +132,7 @@[m [mconst WithdrawMoney = () => {[m
+ [m
+             <TextField[m
+               control={controlWithdraw}[m
+[31m-              rules={{ required: "this field is required" }}[m
+[32m+[m[32m              // rules={{ required: "this field is required" }}[m
+               name={"description"}[m
+               label="Reason for withdrawing (description)"[m
+             />[m
+[1mdiff --git a/src/components/home/Footer.tsx b/src/components/home/Footer.tsx[m
+[1mindex f9f152b..ae91441 100644[m
+[1m--- a/src/components/home/Footer.tsx[m
+[1m+++ b/src/components/home/Footer.tsx[m
+[36m@@ -21,9 +21,9 @@[m [mconst Footer = () => {[m
+             government parastatals with our world’s most secure payment method.[m
+           </p>[m
+         </div>[m
+[31m-        <div className="flex gap-14 md:gap-24 flex-wrap ">[m
+[32m+[m[32m        <div className="flex gap-10 md:gap-24 flex-wrap w-full">[m
+           {footerData.map(({ items, title }) => ([m
+[31m-            <div className="w-[112px]" key={title}>[m
+[32m+[m[32m            <div className="min-w-[112px]" key={title}>[m
+               <p className="text-tertiary capitalize mb-[16px] font-medium ">[m
+                 {title}[m
+               </p>[m
+[36m@@ -103,6 +103,11 @@[m [mconst footerData = [[m
+         link: "/contact",[m
+         target: "_self"[m
+       },[m
+[32m+[m[32m      {[m
+[32m+[m[32m        name: "Learn MyBalance",[m
+[32m+[m[32m        link: "/learn-mybalance",[m
+[32m+[m[32m        target: "_self"[m
+[32m+[m[32m      },[m
+     ],[m
+   },[m
+   {[m
+[1mdiff --git a/src/components/home/Header.tsx b/src/components/home/Header.tsx[m
+[1mindex 0eca978..d578d37 100644[m
+[1m--- a/src/components/home/Header.tsx[m
+[1m+++ b/src/components/home/Header.tsx[m
+[36m@@ -60,6 +60,7 @@[m [mconst  Header = () =>{[m
+                 </div>[m
+               </div>[m
+             </li>[m
+[32m+[m[32m            <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>[m
+             <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>[m
+           </ul>[m
+           <div className="" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>[m
+[36m@@ -92,6 +93,7 @@[m [mconst  Header = () =>{[m
+               </div>[m
+             </div>[m
+           </li>[m
+[32m+[m[32m          <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>[m
+           <li><NavLink to="/contact">Contact</NavLink></li>[m
+         </ul>[m
+       </nav>[m
+[1mdiff --git a/src/components/home/HowToUseSection.tsx b/src/components/home/HowToUseSection.tsx[m
+[1mindex c052d27..b3bde88 100644[m
+[1m--- a/src/components/home/HowToUseSection.tsx[m
+[1m+++ b/src/components/home/HowToUseSection.tsx[m
+[36m@@ -49,6 +49,20 @@[m [mconst HowToUseSection = () => {[m
+           </ol>[m
+         </div>[m
+       </div>[m
+[32m+[m
+[32m+[m[32m      {/* Video */}[m
+[32m+[m[32m      <div className="mt-[50px]">[m
+[32m+[m[32m        <div className="rounded-[16px] overflow-hidden">[m
+[32m+[m[32m          <iframe width="100%" height="400"[m[41m [m
+[32m+[m[32m            src="https://www.youtube.com/embed/_JGS-l10fho?si=vXLuuDvkYDUzTJOV"[m[41m [m
+[32m+[m[32m            title="What is MyBalance" frameBorder="0"[m[41m [m
+[32m+[m[32m            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen>[m
+[32m+[m[32m          </iframe>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m        <div className=" w-fit mx-auto mt-[20px]">[m
+[32m+[m[32m          <button className="w-[244px] border border-primary-normal text-primary-normal p-[16px] rounded-[6px] font-bold ">See more videos</button>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m      </div>[m
+     </div>[m
+   );[m
+ };[m
+[1mdiff --git a/src/components/home/TutorialVideo.tsx b/src/components/home/TutorialVideo.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9982efa[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/home/TutorialVideo.tsx[m
+[36m@@ -0,0 +1,19 @@[m
+[32m+[m[32mimport React from 'react'[m
+[32m+[m
+[32m+[m[32mconst TutorialVideo = ({src, title, client}: {src:string; title:string; client:string}) => {[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className='w-[300px] sm:w-[390px]'>[m
+[32m+[m[32m      <iframe width="100%" height="315"[m[41m [m
+[32m+[m[32m        src={src}[m
+[32m+[m[32m        title="MyBalance video tutorial player" frameBorder="0"[m[41m [m
+[32m+[m[32m        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"[m[41m [m
+[32m+[m[32m        allowFullScreen>[m
+[32m+[m[32m      </iframe>[m
+[32m+[m[32m      <div className='w-fit text-[14px] mt-4 px-4 rounded-lg border border-[#2D7738] bg-[#EBF4EC]'>{client}</div>[m
+[32m+[m[32m      <p className='text-[18px] font-medium'>{title}</p>[m
+[32m+[m[41m      [m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  )[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mexport default TutorialVideo[m
+\ No newline at end of file[m
+[1mdiff --git a/src/components/reuseable/HeroSection.tsx b/src/components/reuseable/HeroSection.tsx[m
+[1mindex 49b7946..0c1eb76 100644[m
+[1m--- a/src/components/reuseable/HeroSection.tsx[m
+[1m+++ b/src/components/reuseable/HeroSection.tsx[m
+[36m@@ -8,13 +8,13 @@[m [mtype HeroProps = {[m
+ const HeroSection = ({menu, text}:HeroProps) => {[m
+   return ([m
+     <div className='px-[7%] h-[400px] md:h-[700px] flex flex-col justify-center items-center bg-primary-normal text-white'>[m
+[31m-          <p className='text-base font-medium text-[#373737] mb-6'>[m
+[31m-            <a href="/" className='underline text-black '>Home</a> | {menu}[m
+[31m-          </p>[m
+[31m-          <h3 className='max-w-[725px] text-center text-[29px] md:text-[36px] font-bold'>[m
+[31m-            {text}[m
+[31m-          </h3>[m
+[31m-        </div>[m
+[32m+[m[32m      <p className='text-base font-medium text-[#373737] mb-6'>[m
+[32m+[m[32m        <a href="/" className='underline text-black '>Home</a> | {menu}[m
+[32m+[m[32m      </p>[m
+[32m+[m[32m      <h3 className='max-w-[725px] text-center text-[29px] md:text-[36px] font-bold'>[m
+[32m+[m[32m        {text}[m
+[32m+[m[32m      </h3>[m
+[32m+[m[32m    </div>[m
+   )[m
+ }[m
+ [m
+[1mdiff --git a/src/components/sellers/Withdraw.tsx b/src/components/sellers/Withdraw.tsx[m
+[1mindex c86df9c..4e83414 100644[m
+[1m--- a/src/components/sellers/Withdraw.tsx[m
+[1m+++ b/src/components/sellers/Withdraw.tsx[m
+[36m@@ -152,7 +152,7 @@[m [mconst Withdraw = ({ open, setOpen }: any) => {[m
+ [m
+                   <TextField[m
+                     control={controlWithdraw}[m
+[31m-                    rules={{ required: "this field is required" }}[m
+[32m+[m[32m                    // rules={{ required: "this field is required" }}[m
+                     name={"description"}[m
+                     label="Reason for withdrawing (description)"[m
+                   />[m
+[1mdiff --git a/src/hooks/queries/index.tsx b/src/hooks/queries/index.tsx[m
+[1mindex 28c2f32..6e8de0a 100644[m
+[1m--- a/src/hooks/queries/index.tsx[m
+[1m+++ b/src/hooks/queries/index.tsx[m
+[36m@@ -4,6 +4,7 @@[m [mimport {[m
+   getDisputes,[m
+   getEscrowPaymentRedirect,[m
+   getLockedFunds,[m
+[32m+[m[32m  getNotifications,[m
+   getPaymentRedirect,[m
+   getTransactionInfo,[m
+   getTransactionUnauthorized,[m
+[36m@@ -78,3 +79,12 @@[m [mexport const useEscrowPaymentRedirect = ({[m
+     queryFn: () => getEscrowPaymentRedirect({ status, tx_ref, transaction_id }),[m
+   });[m
+ };[m
+[32m+[m[32mexport const useNotifications = ({page, size }:{ page:number; size:number }) => {[m
+[32m+[m[32m  return useQuery({[m
+[32m+[m[32m    queryKey: ["notifications", page, size],[m
+[32m+[m[32m    queryFn: () => getNotifications({ page, size }),[m
+[32m+[m[32m  });[m
+[32m+[m[32m};[m
+[32m+[m[32m// queryKey: ["transactions", page, type, size],[m
+[32m+[m[32m//queryFn: () => getTransactions({ search: type, page, size }),[m
+[41m+[m
+[1mdiff --git a/src/hooks/useIdle.tsx b/src/hooks/useIdle.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..52adfd9[m
+[1m--- /dev/null[m
+[1m+++ b/src/hooks/useIdle.tsx[m
+[36m@@ -0,0 +1,33 @@[m
+[32m+[m[32mimport {useState } from 'react';[m
+[32m+[m[32mimport {useIdleTimer} from 'react-idle-timer'[m
+[32m+[m
+[32m+[m[32minterface UseIdleProps{[m
+[32m+[m[32m  onIdle: () => void;[m
+[32m+[m[32m  idleTime: number | undefined;[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport const useIdle = ({[m
+[32m+[m[32m  //ADD THE onIdle AND idleTime props[m
+[32m+[m[32m  onIdle,[m
+[32m+[m[32m  idleTime=1[m
+[32m+[m[32m}:UseIdleProps) => {[m
+[32m+[m[32m  const [isIdle, setIsIdle] = useState(false);[m
+[32m+[m
+[32m+[m[32m  const handleOnIdle = (event:any)=> {[m
+[32m+[m[32m    setIsIdle(true);[m
+[32m+[m[32m    console.log("user is idle", event)[m
+[32m+[m[32m    console.log("Last Active", getLastActiveTime())[m
+[32m+[m[32m    onIdle()[m
+[32m+[m[32m  }[m
+[32m+[m[32m  const {getRemainingTime, getLastActiveTime} = useIdleTimer({[m
+[32m+[m[32m    timeout: 1000 * 60 * idleTime,[m
+[32m+[m[32m    onIdle: handleOnIdle,[m
+[32m+[m[32m    debounce: 500[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m  return {[m
+[32m+[m[32m    getRemainingTime,[m
+[32m+[m[32m    getLastActiveTime,[m
+[32m+[m[32m    isIdle[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/index.css b/src/index.css[m
+[1mindex 4f3741b..be3608d 100644[m
+[1m--- a/src/index.css[m
+[1m+++ b/src/index.css[m
+[36m@@ -2,10 +2,7 @@[m
+ @tailwind components;[m
+ @tailwind utilities;[m
+ [m
+[31m-html,[m
+[31m-body {[m
+[31m-  @apply scroll-smooth;[m
+[31m-}[m
+[32m+[m
+ @font-face {[m
+   font-family: "satoshi";[m
+   src: url("./assets/fonts/Satoshi-Variable.woff2") format("woff2"),[m
+[36m@@ -143,7 +140,7 @@[m [mbody {[m
+ [m
+ html,[m
+ body {[m
+[31m-  @apply font-satoshi;[m
+[32m+[m[32m  @apply font-satoshi scroll-smooth;[m
+ }[m
+ .para {[m
+   @apply leading-[21.6px] text-base font-normal;[m
+[36m@@ -204,6 +201,14 @@[m [mbody {[m
+   }[m
+ }[m
+ [m
+[32m+[m[32m/* Input type number will not have increase or decrease arrow */[m
+[32m+[m[32minput[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {[m[41m [m
+[32m+[m[32m  -webkit-appearance: none;[m
+[32m+[m[32m  -moz-appearance: none;[m
+[32m+[m[32m  appearance: none;[m
+[32m+[m[32m  margin: 0;[m[41m [m
+[32m+[m[32m}[m
+[32m+[m
+ /* no increase and decrease arrow in input type number for verification code boxes */[m
+ .spin-button-none::-webkit-outer-spin-button,[m
+ .spin-button-none::-webkit-inner-spin-button {[m
+[1mdiff --git a/src/layout/sellerSidebarDatas.tsx b/src/layout/sellerSidebarDatas.tsx[m
+[1mindex 4569be8..7960736 100644[m
+[1m--- a/src/layout/sellerSidebarDatas.tsx[m
+[1m+++ b/src/layout/sellerSidebarDatas.tsx[m
+[36m@@ -52,31 +52,31 @@[m [mconst sellerSidebarDatas = [[m
+       </svg>[m
+     ),[m
+   },[m
+[31m-  // {[m
+[31m-  //   title: "Notifications",[m
+[31m-  //   path: "/seller/notifications",[m
+[31m-  //   icon: ([m
+[31m-  //     <svg[m
+[31m-  //       className="w-6 h-6 stroke-current"[m
+[31m-  //       xmlns="http://www.w3.org/2000/svg"[m
+[31m-  //       fill="none"[m
+[31m-  //     >[m
+[31m-  //       <g[m
+[31m-  //         stroke-linecap="round"[m
+[31m-  //         stroke-linejoin="round"[m
+[31m-  //         stroke-width="1.5"[m
+[31m-  //         clip-path="url(#a)"[m
+[31m-  //       >[m
+[31m-  //         <path d="M10 5.592a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17.592v1a3 3 0 0 0 6 0v-1" />[m
+[31m-  //       </g>[m
+[31m-  //       <defs>[m
+[31m-  //         <clipPath id="a">[m
+[31m-  //           <path fill="#fff" d="M0 .592h24v24H0z" />[m
+[31m-  //         </clipPath>[m
+[31m-  //       </defs>[m
+[31m-  //     </svg>[m
+[31m-  //   ),[m
+[31m-  // },[m
+[32m+[m[32m  {[m
+[32m+[m[32m    title: "Notifications",[m
+[32m+[m[32m    path: "/seller/notifications",[m
+[32m+[m[32m    icon: ([m
+[32m+[m[32m      <svg[m
+[32m+[m[32m        className="w-6 h-6 stroke-current"[m
+[32m+[m[32m        xmlns="http://www.w3.org/2000/svg"[m
+[32m+[m[32m        fill="none"[m
+[32m+[m[32m      >[m
+[32m+[m[32m        <g[m
+[32m+[m[32m          stroke-linecap="round"[m
+[32m+[m[32m          stroke-linejoin="round"[m
+[32m+[m[32m          stroke-width="1.5"[m
+[32m+[m[32m          clip-path="url(#a)"[m
+[32m+[m[32m        >[m
+[32m+[m[32m          <path d="M10 5.592a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17.592v1a3 3 0 0 0 6 0v-1" />[m
+[32m+[m[32m        </g>[m
+[32m+[m[32m        <defs>[m
+[32m+[m[32m          <clipPath id="a">[m
+[32m+[m[32m            <path fill="#fff" d="M0 .592h24v24H0z" />[m
+[32m+[m[32m          </clipPath>[m
+[32m+[m[32m        </defs>[m
+[32m+[m[32m      </svg>[m
+[32m+[m[32m    ),[m
+[32m+[m[32m  },[m
+   // {[m
+   //   title: "Customer support",[m
+   //   path: "/seller/customer-support",[m
+[1mdiff --git a/src/layout/sidebarDatas.tsx b/src/layout/sidebarDatas.tsx[m
+[1mindex f72c7ef..ada051e 100644[m
+[1m--- a/src/layout/sidebarDatas.tsx[m
+[1m+++ b/src/layout/sidebarDatas.tsx[m
+[36m@@ -74,32 +74,32 @@[m [mconst sidebarDatas = [[m
+     ),[m
+     name: "transaction-history",[m
+   },[m
+[31m-  // {[m
+[31m-  //   title: "Notifications",[m
+[31m-  //   path: "/buyer/notifications",[m
+[31m-  //   icon: ([m
+[31m-  //     <svg[m
+[31m-  //       className="w-6 h-6 stroke-current"[m
+[31m-  //       xmlns="http://www.w3.org/2000/svg"[m
+[31m-  //       fill="none"[m
+[31m-  //     >[m
+[31m-  //       <g[m
+[31m-  //         stroke-linecap="round"[m
+[31m-  //         stroke-linejoin="round"[m
+[31m-  //         stroke-width="1.5"[m
+[31m-  //         clip-path="url(#a)"[m
+[31m-  //       >[m
+[31m-  //         <path d="M10 5.592a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17.592v1a3 3 0 0 0 6 0v-1" />[m
+[31m-  //       </g>[m
+[31m-  //       <defs>[m
+[31m-  //         <clipPath id="a">[m
+[31m-  //           <path fill="#fff" d="M0 .592h24v24H0z" />[m
+[31m-  //         </clipPath>[m
+[31m-  //       </defs>[m
+[31m-  //     </svg>[m
+[31m-  //   ),[m
+[31m-  //  name:'notifications',[m
+[31m-  // },[m
+[32m+[m[

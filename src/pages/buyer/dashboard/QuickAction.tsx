@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { Button } from "../../../components/reuseable/Button";
 import Header from "../../../components/reuseable/Header";
 import TextField from "../../../components/reuseable/TextField1";
@@ -11,7 +12,7 @@ import UnlockAmount from "../../../components/buyers/UnlockAmount";
 import { useDepositMoney } from "../../../hooks/mutations";
 import { useForm } from "react-hook-form";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import { useLockedFunds } from "../../../hooks/queries";
+import { useLockedFunds, useUser } from "../../../hooks/queries";
 import { useTabStore } from "../../../store";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +21,12 @@ import Skeleton from "react-loading-skeleton";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
 import { Link } from "react-router-dom";
+import Joyride from "react-joyride";
 
 const QuickAction = () => {
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
   const navigate = useNavigate();
+  const { data: user } = useUser();
 
   const [successModal, setSuccessModal] = useState(false);
 
@@ -50,8 +54,101 @@ const QuickAction = () => {
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
 
+  // Tour Guide
+  const [{ run, steps }, setState] = useState({
+    run: user?.showTourGuide,
+    steps: [
+      {
+        content: (
+          <strong>
+            You can either deposit, lock, unlock and/or withdraw your money here
+          </strong>
+        ),
+        placement: "right" as "right",
+        target: ".quick-action",
+        title: "Quick Action",
+      },
+      {
+        content: "Top up your wallet from your local bank securely.",
+        placement: "bottom" as "bottom",
+        target: ".deposit",
+        title: "Deposit",
+      },
+      {
+        content:
+          "Use this feature to unlock funds, ensuring a seamless and trustworthy experience.",
+        placement: "bottom" as "bottom",
+        target: ".unlock",
+        title: "Unlock Money",
+      },
+      {
+        content: "Transfer funds from wallet to your local bank account.",
+        placement: "bottom" as "bottom",
+        target: ".withdraw",
+        title: "Withdraw Money",
+      },
+    ],
+  });
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+
+      // Navigate to the Quick Action page after the tour finishes
+      navigate("/buyer/transaction-history");
+    }
+  }, [tourFinished, navigate]);
+  //
   return (
     <>
+      <Joyride
+        continuous
+        run={run}
+        steps={steps}
+        // hideCloseButton
+        scrollToFirstStep
+        showSkipButton
+        showProgress
+        locale={{
+          skip: <strong>Cancel Tour</strong>,
+          last: "Next",
+        }}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonBack: {
+            marginRight: 10,
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonSkip: {
+            color: "#DA1E28",
+          },
+          spotlight: {
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+          },
+        }}
+      />
       <Header
         Heading="Quick Actions"
         Text="You can either deposit, lock, unlock and/or withdraw your money here."
@@ -61,14 +158,32 @@ const QuickAction = () => {
           className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
           aria-label="Manage your account"
         >
-          <Tabs.Trigger className="tab deposit" value="depositMoney">
+          <Tabs.Trigger
+            className="tab deposit"
+            value="depositMoney"
+            onSelect={() =>
+              setState((prevState) => ({ ...prevState, run: false }))
+            } // Add this line
+          >
             Deposit money
           </Tabs.Trigger>
-          <Tabs.Trigger className="tab" value="unlockMoney">
-            unlock money
+          <Tabs.Trigger
+            className="tab unlock"
+            value="unlockMoney"
+            onSelect={() =>
+              setState((prevState) => ({ ...prevState, run: false }))
+            } // Add this line
+          >
+            Unlock money
           </Tabs.Trigger>
-          <Tabs.Trigger className="tab" value="withdrawMoney">
-            withdraw money
+          <Tabs.Trigger
+            className="tab withdraw"
+            value="withdrawMoney"
+            onSelect={() =>
+              setState((prevState) => ({ ...prevState, run: false }))
+            } // Add this line
+          >
+            Withdraw money
           </Tabs.Trigger>
         </Tabs.List>
 
@@ -100,7 +215,7 @@ const QuickAction = () => {
                   <Dialog.Portal>
                     <Dialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50" />
                     <Dialog.Content className="animate-fade-up sm:animate-jump  animate-duration-75  fixed  top-0 left-0 z-50 w-full h-full">
-                      <div className="sm:max-w-[400px] w-full py-6   px-6 min-h-[246px] rounded absolute bg-white  bottom-0 sm:bottom-auto sm:top-[50%] sm:left-[50%] sm:-translate-y-1/2 sm:-translate-x-1/2 ">
+                      <div className="sm:max-w-[400px] w-full py-6 px-6 min-h-[246px] rounded absolute bg-white  bottom-0 sm:bottom-auto sm:top-[50%] sm:left-[50%] sm:-translate-y-1/2 sm:-translate-x-1/2 ">
                         <h2 className="text-lg font-medium mb-2">
                           Dear Valued Buyer,
                         </h2>
@@ -140,7 +255,7 @@ const QuickAction = () => {
               </form>
             </div>
           </Tabs.Content>
-          <Tabs.Content className="w-full max-w-[449px]" value="unlockMoney">
+          <Tabs.Content className="w-full max-w-[449px] " value="unlockMoney">
             <p className=" text-base font-normal">
               Click on the card with the information of the item you want to
               unlock and click on the unlock button. That’s it.

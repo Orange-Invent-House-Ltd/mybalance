@@ -1,18 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../../components/reuseable/Header";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
-import { useTransactions } from "../../../hooks/queries";
+import { useTransactions, useUser } from "../../../hooks/queries";
 import formatToNairaCurrency from "../../../util/formatNumber";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import Pagination from "../../../components/reuseable/Pagination";
+import Joyride from "react-joyride";
 
 const TransactionHistory = () => {
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
+  const { data: user } = useUser();
 
   const { isLoading, data } = useTransactions({
     page,
@@ -27,8 +31,95 @@ const TransactionHistory = () => {
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
+  //
+  useEffect(() => {
+    // Set run to true to start the tour guide when the component mounts
+    setState((prevState) => ({
+      ...prevState,
+      run: user?.showTourGuide,
+    }));
+  }, []);
+  // Tour Guide
+  const [{ run, steps }, setState] = useState({
+    run: user?.showTourGuide,
+    steps: [
+      {
+        content: "See a comprehensive list of all your account activities.",
+        placement: "bottom" as "bottom",
+        target: ".all-transaction",
+        title: "All Transactions",
+      },
+      {
+        content: "Monitor transactions currently in progress.",
+        placement: "bottom" as "bottom",
+        target: ".escrow",
+        title: "Escrow",
+      },
+      {
+        content: " Keep tabs on funds leaving your wallet.",
+        placement: "bottom" as "bottom",
+        target: ".withdraws",
+        title: "Withdraw Money",
+      },
+    ],
+  });
+
+  useEffect(() => {
+    // Check if the tour guide has finished targeting all the classes
+    if (tourFinished) {
+      // Set run to false when the tour finishes
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+      navigate("/buyer/dispute-resolution");
+    }
+  }, [tourFinished, navigate]);
+  //
   return (
     <div>
+      <Joyride
+        continuous
+        // callback={() => {}}
+        run={run}
+        steps={steps}
+        // hideCloseButton
+        scrollToFirstStep
+        showSkipButton
+        showProgress
+        locale={{
+          skip: <strong>Cancel Tour</strong>,
+          last: "Next",
+        }}
+        callback={({ action }) => {
+          if (action === "reset") {
+            setTourFinished(true);
+          }
+        }}
+        styles={{
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonBack: {
+            marginRight: 10,
+            backgroundColor: "#fff",
+            color: "#000",
+            outline: "none",
+            textDecoration: "underline",
+            fontWeight: 600,
+          },
+          buttonSkip: {
+            color: "#DA1E28",
+          },
+        }}
+      />
       <Header
         Heading="Transaction History"
         Text="You can view an endless list of transaction you have transacted over time."
@@ -37,28 +128,28 @@ const TransactionHistory = () => {
         <div className="relative w-full max-w-[676px]">
           <div className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto  pt-1 md:pt-3 pb-2 md:pb-4 flex-row">
             <button
-              className="tab "
+              className="tab all-transaction"
               data-state={activeButton === "" ? "active" : "inactive"}
               onClick={() => setActiveButton("")}
             >
               All Transaction
             </button>
             <button
-              className="tab "
+              className="tab deposit"
               data-state={activeButton === "DEPOSIT" ? "active" : "inactive"}
               onClick={() => setActiveButton("DEPOSIT")}
             >
               Deposits
             </button>
             <button
-              className="tab "
+              className="tab escrow"
               data-state={activeButton === "ESCROW" ? "active" : "inactive"}
               onClick={() => setActiveButton("ESCROW")}
             >
               Escrows
             </button>
             <button
-              className="tab"
+              className="tab withdraw"
               data-state={activeButton === "WITHDRAW" ? "active" : "inactive"}
               onClick={() => setActiveButton("WITHDRAW")}
             >
