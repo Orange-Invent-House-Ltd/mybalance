@@ -29,6 +29,9 @@ module.exports = {
         "3xl":
           "0px 9.40171px 9.40171px -4.70085px rgba(0, 0, 0, 0.04), 0px 18.8034px 23.5043px -4.70085px rgba(0, 0, 0, 0.1)",
       },
+      height:{
+        h:'150vh'
+      }
     },
   },
   plugins: [require("tailwindcss-animated")],
