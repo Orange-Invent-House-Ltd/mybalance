@@ -2,6 +2,7 @@ import Footer from "../../components/home/Footer";
 import Header from "../../components/home/Header";
 import HeroSection from '../../components/reuseable/HeroSection';
 import GetStarted from '../../components/home/GetStarted'
+import BlogCardParent from "../Blog/BlogCardParent";
 
 const Blog = () => {
   return (
@@ -13,7 +14,7 @@ const Blog = () => {
           text='Find Out The Latest MyBalance News Here'
         />
         <div className="pt-20 px-[5%] mb-24">
-          Blog here
+        <BlogCardParent/>
         </div>
         <GetStarted/>
       </div>
