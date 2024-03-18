@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  lucide:
+    specifier: ^0.356.0
+    version: 0.356.0
   lucide-react:
     specifier: ^0.336.0
     version: 0.336.0(react@18.2.0)
@@ -1853,6 +1856,10 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /lucide@0.356.0:
+    resolution: {integrity: sha512-seHaNzJq6a5xUrd4JDQqswnR9/DzQnO3kr6KF7gxkpBcJoIRMjcT7VsWk1WOru3L2KQxtlQJx3rij5OagLpK1Q==}
     dev: false
 
   /magic-string@0.26.7:

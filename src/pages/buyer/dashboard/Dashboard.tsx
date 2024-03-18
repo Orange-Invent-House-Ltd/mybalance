@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import useStore, { useTabStore } from "../../../store";
-import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/reuseable/Button";
 import DashboardLockedBox from "../../../components/reuseable/DashboardLockedBox";
 import DashboardQuickBox from "../../../components/reuseable/DashboardQuickBox";
 import plus from "../../../assets/Icons/plus.svg";
-import share from "../../../assets/Icons/share.svg";
 import unlock from "../../../assets/Icons/unlock.svg";
 import wallet from "../../../assets/Icons/alertWallet.svg";
 import download from "../../../assets/Icons/download.svg";
@@ -20,7 +18,6 @@ import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
-import info from "../../../assets/Icons/InformationCircle.svg";
 import {
   useCreateEscrow,
   useDepositMoney,
@@ -34,7 +31,6 @@ import moment from "moment";
 import infoIcon from "../../../assets/Icons/info-icon.svg";
 import Joyride from "react-joyride";
 import { useQueryClient } from '@tanstack/react-query';
-import { privateApi } from "../../../api/axios";
 
 
 const Dashboard = () => {
@@ -429,10 +425,6 @@ const Dashboard = () => {
                         LookupIsLoading
                       }
                       fullWidth
-                      // onClick={() => {
-                      //   setIsVerify(false);
-                      //   // setOpen(true);
-                      // }}
                       type="submit"
                     >
                       pay now

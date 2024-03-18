@@ -1,0 +1,4 @@
+.dropdown:hover .hidden,
+.dropdown:focus .hidden {
+  display: block;
+}

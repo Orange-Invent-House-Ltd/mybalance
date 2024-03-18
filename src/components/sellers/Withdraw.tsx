@@ -33,6 +33,7 @@ const Withdraw = ({ open, setOpen }: any) => {
     reset,
     register,
   } = useForm();
+
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
@@ -155,6 +156,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     // rules={{ required: "this field is required" }}
                     name={"description"}
                     label="Reason for withdrawing (description)"
+                    defaultValue='I need the money'
                   />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">

@@ -135,6 +135,7 @@ const WithdrawMoney = () => {
               // rules={{ required: "this field is required" }}
               name={"description"}
               label="Reason for withdrawing (description)"
+              defaultValue='I need the money'
             />
           </div>
           <h1 className="mt-6 text-[#393737] text-lg font-medium">

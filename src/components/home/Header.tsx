@@ -3,8 +3,8 @@ import {NavLink, Link, useNavigate} from "react-router-dom"
 import { Button } from '../reuseable/Button';
 import logo from "../../assets/Icons/logo.svg"
 import handburger from "../../assets/Icons/menuicon.png"
-import close from '../../assets/Icons/blackClose.svg'
-import caret from '../../assets/Icons/dropdown.svg'
+import { ChevronDown } from 'lucide-react';
+import './dropdown.css'
 
 
 const  Header = () =>{
@@ -45,7 +45,7 @@ const  Header = () =>{
             <li className='mb-2'>
             {/* handleDropdown */}
               <NavLink to="/solutions">Solutions </NavLink>
-              <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
+              {/* <div className={display? "mt-2" : "hidden absolute top-[70px] left-0 w-full z-10"}>
                 <div>
                   <NavLink to="#" className='text-base font-medium'>Buyers & Vendors</NavLink>
                   <p className='text-[13px] font-normal pl-6'>For small scale vendors and individual buyers</p>
@@ -58,9 +58,17 @@ const  Header = () =>{
                   <NavLink to="#" className='text-base font-medium'>Government & Contractors</NavLink>
                   <p className='text-[13px] font-normal pl-6'>For government parastatals and contractors</p>
                 </div>
+              </div> */}
+            </li>
+            <li className=''>
+            {/* handleDropdown */}
+            <button onClick={handleDropdown} className={display ? 'w-full text-left' : ''} >Resources <ChevronDown className='inline'/></button>
+              <div className={display ? "px-[5%] py-2 flex flex-col gap-3 items-start" : "hidden absolute top-[70px] w-full z-10"}>
+                <NavLink to='/learn-mybalance' className='text-[14px] font-medium'>Learn MyBalance</NavLink>
+                <NavLink to='/blog' className='text-[14px] font-medium'>Blog</NavLink>
               </div>
             </li>
-            <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
+            {/* <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li> */}
             <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>
           </ul>
           <div className="" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
@@ -68,7 +76,7 @@ const  Header = () =>{
       </div>
       {/* Desktop Menu */}
       <nav className='hidden md:flex'>
-        <ul className="flex gap-6 text-[#373737] font-medium">
+        <ul className="flex items-center gap-6 text-[#373737] font-medium">
           <li className=""><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/about-us">About us</NavLink></li>
           <li>
@@ -93,7 +101,22 @@ const  Header = () =>{
               </div>
             </div>
           </li>
-          <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li>
+          <li className='dropdown relative'>
+            <button  className="flex py-7">Resources <ChevronDown /></button>
+            <div className="hidden absolute right-[-80px] rounded-[8px] w-[296px] bg-white py-4 mt-[3px] z-10">
+              <div className='h-[142px] px-[5%]'>
+                <div>
+                  <NavLink to="/learn-mybalance" className='text-[18px] text-[#101828] font-semibold'>Learn Mybalance</NavLink>
+                  <p className='text-sm font-regular text-[#6D6D6D] mb-4'>Discover MyBalance with Our Easy Video Tutorials!</p>
+                </div>
+                <div>
+                  <NavLink to="/blog" className='text-[18px] text-[#101828] font-semibold'>Blog</NavLink>
+                  <p className='text-sm font-regular text-[#6D6D6D]'>Find out the latest MyBalance news</p>
+                </div>
+              </div>
+
+            </div>
+          </li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>

@@ -260,8 +260,8 @@ export const useUnLockFunds = () => {
     onError: (error: any) => {
       console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error);
       toast.error(
-        error.response.data.errors.transactionReference?.seller ||
-          "an error occurred"
+        // error.response.data.errors.transactionReference?.seller ||
+        error.response.data.message  
       );
     },
   });
