@@ -1,16 +1,20 @@
-import React from 'react'
-import { MdArrowDownward } from 'react-icons/md';
+import { ArrowDown } from 'lucide-react';
+import React from 'react';
 
 
-function BlogButton() {
-  return (
-    <div className='flex justify-center items-center w-full mt-6'>
-        <button className='flex justify-center items-center gap-1 bg-primary-blog text-primary-blogCol p-2 px-4 rounded-lg mt-10 mb-[-30px]'>
-            <span><MdArrowDownward /></span>
-            <span className=' text-sm font-bold'>Load more</span>
-        </button>
-    </div>
-  )
+interface BlogButtonProps {
+  onClick: () => void; // Define onClick prop type
 }
 
-export default BlogButton
+function BlogButton({ onClick }: BlogButtonProps) {
+  return (
+    <div className='flex justify-center items-center w-full mt-6'>
+      <button onClick={onClick} className='flex justify-center items-center gap-1 bg-primary-blog text-primary-blogCol p-2 px-4 rounded-lg mt-10 mb-[-30px]'>
+        <span><ArrowDown size={25} /></span>
+        <span className=' text-sm font-bold'>Load more</span>
+      </button>
+    </div>
+  );
+}
+
+export default BlogButton;

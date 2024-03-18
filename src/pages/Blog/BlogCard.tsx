@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardData } from './Datatypes';
-import { MdArrowUpward } from 'react-icons/md';
+import { ArrowUp } from 'lucide-react';
 
 
 interface CardProps {
@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ data}) => {
         <p className='text-sm text-primary-balanceColor font-bold'>{data.subheading}</p>
         <div className='flex justify-between items-center w-full'>
         <h2 className=" text-xl font-semibold  mt-2">{data.title}</h2>
-        <MdArrowUpward className="transform rotate-45 text-4xl ml-4" />
+        <ArrowUp size={32} className="transform rotate-45 text-4xl ml-4" />
         </div>
         <div className="flex items-center mt-4">
           <p className="text-gray-400 text-sm">{data.description}</p>
