@@ -207,3 +207,7 @@ export const getNotifications = async ({page, size}: {page?: number; size?: numb
   });
   return res.data;
 };
+export const getNotification  = async (id: string) => {
+  const res = await privateApi.get(`/notifications/${id}`);
+  return res.data;
+};

@@ -4,6 +4,7 @@ import {
   getDisputes,
   getEscrowPaymentRedirect,
   getLockedFunds,
+  getNotification,
   getNotifications,
   getPaymentRedirect,
   getTransactionInfo,
@@ -87,4 +88,9 @@ export const useNotifications = ({page, size }:{ page:number; size:number }) => 
 };
 // queryKey: ["transactions", page, type, size],
 //queryFn: () => getTransactions({ search: type, page, size }),
-
+export const useNotification = (id: string) => {
+  return useQuery({
+    queryKey: ["notification", id],
+    queryFn: () => getNotification(id),
+  });
+};
