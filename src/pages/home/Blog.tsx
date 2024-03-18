@@ -2,7 +2,7 @@ import Footer from "../../components/home/Footer";
 import Header from "../../components/home/Header";
 import HeroSection from '../../components/reuseable/HeroSection';
 import GetStarted from '../../components/home/GetStarted'
-import BlogCardParent from "../Blog/BlogCardParent";
+import BlogCardParent from "../../components/blog/BlogCardParent";
 
 const Blog = () => {
   return (

@@ -1,13 +1,8 @@
 import React from 'react';
-import { CardData } from './Datatypes';
 import { ArrowUp } from 'lucide-react';
 
 
-interface CardProps {
-  data: CardData;
-}
-
-const Card: React.FC<CardProps> = ({ data}) => {
+const Card = ({data}:any) => {
   return (
    
       <div className="bg-white shadow-lg p-6">
