@@ -104,7 +104,7 @@ const BlogDetails = () => {
     <img src={user} alt="User Profile" className="h-full w-full object-cover" />
   </div>
   <div>
-    <div className="text-gray-400 text-sm font-semibold">Olivia Rhye</div>
+    <div className="text-gray-400 text-sm font-semibold">{blogData.userprofile}</div>
     <div className="text-gray-400 text-xs">Product Designer</div>
   </div>
 </div>
