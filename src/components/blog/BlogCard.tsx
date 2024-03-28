@@ -5,8 +5,8 @@ import { ArrowUp } from 'lucide-react';
 const Card = ({data}:any) => {
   return (
    
-      <div className="bg-white shadow-lg p-6">
-        <img src={data.imgs} alt="Card Image" className=" mb-4" />
+      <div className="bg-white shadow-lg p-6 ">
+        <img src={data.imgs} alt="Card Image" className=" mb-4 h-68 w-full" />
         <p className='text-sm text-primary-balanceColor font-bold'>{data.subheading}</p>
         <div className='flex justify-between items-center w-full'>
         <h2 className=" text-xl font-semibold  mt-2">{data.title}</h2>

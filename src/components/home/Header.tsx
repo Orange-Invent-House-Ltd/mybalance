@@ -110,7 +110,7 @@ const  Header = () =>{
                   <p className='text-sm font-regular text-[#6D6D6D] mb-4'>Discover MyBalance with Our Easy Video Tutorials!</p>
                 </div>
                 <div>
-                  <NavLink to="/blog" className='text-[18px] text-[#101828] font-semibold'>Blog</NavLink>
+                  <NavLink to="" className='text-[18px] text-[#101828] font-semibold'>Blog</NavLink>
                   <p className='text-sm font-regular text-[#6D6D6D]'>Find out the latest MyBalance news</p>
                 </div>
               </div>

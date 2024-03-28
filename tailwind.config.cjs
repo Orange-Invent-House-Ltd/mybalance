@@ -12,8 +12,6 @@ module.exports = {
           normal: " #FD7E14",
           dark: " #9A4D0C",
           balanceColor: '#9A4D0C',
-          blog: '#FFF2E8',
-          blogCol: '#FD7E14',
         },
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
@@ -21,6 +19,12 @@ module.exports = {
         greyBg: "rgba(237, 237, 237, 0.16)",
         headingColor: "#121212",
         tertiary: "#B1580E",
+        col1:'#6941C6',
+        col1bg:'#F9F5FF',
+        col2:'#3538CD',
+        col2bg:'#EEF4FF',
+        col3:'#C11574',
+        col3bg:'#FDF2FA',
       },
       backgroundImage: {
         benefit: "url('/src/assets/images/bg-pix.png')",
@@ -30,7 +34,13 @@ module.exports = {
           "0px 9.40171px 9.40171px -4.70085px rgba(0, 0, 0, 0.04), 0px 18.8034px 23.5043px -4.70085px rgba(0, 0, 0, 0.1)",
       },
       height:{
-        h:'150vh'
+        '98':'72rem',
+        '68':'16rem',
+        '34':'34rem',
+        '45':'45rem',
+      },
+      padding:{
+        'pad':'0 28rem'
       }
     },
   },
