@@ -24,7 +24,7 @@ const Modal = ({
     <AlertDialog.Root open={logoutModal}>
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50" />
-        <AlertDialog.Content className=" animate-fade-up sm:animate-jump  animate-duration-75  fixed  top-0 left-0 z-50 w-full h-full  ">
+        <AlertDialog.Content className=" animate-fade-up sm:animate-jump  animate-duration-75  fixed  top-0 left-0 z-50 w-full h-full">
           <div className="sm:max-w-[400px] w-full py-6  mr-20 px-6 min-h-fit rounded absolute bg-white  bottom-0 sm:bottom-auto sm:top-[50%] sm:left-[50%] sm:-translate-y-1/2 sm:-translate-x-1/2 ">
             <img src={warningIcon} className="mb-5" alt="" />
             <div className="mb-8  ">

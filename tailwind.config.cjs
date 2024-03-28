@@ -12,9 +12,6 @@ module.exports = {
           normal: " #FD7E14",
           dark: " #9A4D0C",
           balanceColor: '#9A4D0C',
-          blog: '#FFF2E8',
-          blogCol: '#FD7E14',
-         
         },
         secondary: "#4F4F4F",
         gray: "#6D6D6D",
