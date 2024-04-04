@@ -107,7 +107,6 @@ const DisputeResolution = () => {
           },
         }}
       />
-      ;
       <header className="mb-10 md:mb-16 ">
         <h1 className="text-[23px] capitalize w-2/5 font-medium dispute">
           Dispute resolution
