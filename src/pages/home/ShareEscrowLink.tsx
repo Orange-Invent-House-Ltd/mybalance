@@ -194,7 +194,7 @@ const ShareEscrowLink = () => {
         </span>{" "}
         Shared an Escrow Link With You
       </h1>
-      <div className="w-fit mx-auto relative  ">
+      <div className="w-fit mx-auto relative bg-[#FFF2E8] ">
         {isLoading && <LoadingOverlay />}
 
         <form action="">
@@ -208,7 +208,7 @@ const ShareEscrowLink = () => {
               name="purpose"
               rules={{ required: "this field is required" }}
               label="Purpose of escrow"
-              placeholder="e.g 20,000"
+              placeholder="Payment for Yellow Wool Beanie"
               readOnly
             />
             <TextField
@@ -216,7 +216,7 @@ const ShareEscrowLink = () => {
               name="type"
               rules={{ required: "this field is required" }}
               label="Type of item(s)"
-              placeholder="****"
+              placeholder="Beanie"
               readOnly
             />
             <TextField
@@ -224,7 +224,7 @@ const ShareEscrowLink = () => {
               name="itemQuantity"
               rules={{ required: "this field is required" }}
               label="Number of item(s)"
-              placeholder="give a description"
+              placeholder="3"
               readOnly
             />
             <TextField
@@ -232,7 +232,7 @@ const ShareEscrowLink = () => {
               name="amount"
               rules={{ required: "this field is required" }}
               label="Amount"
-              placeholder="give a description"
+              placeholder="5,000"
               readOnly
             />
             <TextField
@@ -241,7 +241,7 @@ const ShareEscrowLink = () => {
               type="date"
               rules={{ required: "this field is required" }}
               label="Delivery timeline"
-              placeholder="Select number of days"
+              placeholder="24/08/2023"
               readOnly
             />
           </div>
