@@ -120,17 +120,27 @@ const EscrowPayment = () => {
                   </div>
                   <div className="flex mx-auto w-fit  items-center mb-10 gap-10">
                     <a
-                      href={`mailto:?subject=Check%20Out%20This%20Link&body=Here%20is%20the%20link:%20${
-                        import.meta.env.VITE_DOMAIN_URL
-                      }/share-escrow-link?ref=${searchParams.get("ref")}`}
-                      className=""
+                      // href={`mailto:?subject=Check%20Out%20This%20Link&body=Here%20is%20the%20link:%20${
+                      //   import.meta.env.VITE_DOMAIN_URL
+                      // }/share-escrow-link?ref=${searchParams.get("ref")}`}
+                      href={`mailto:?subject=Check%20Out%20This%20Escrow%20Transaction%20on%20mybalanceapp.com&body=Here%20is%20the%20transaction%20link:%20${linkValue}`}
                     >
                       <img src={emailIcon} className="mx-auto" alt="" />
                     </a>
                     <a
-                      href={`whatsapp://send?text=${
-                        import.meta.env.VITE_DOMAIN_URL
-                      }/share-escrow-link?ref=${searchParams.get("ref")}`}
+                      className="md:hidden"
+                      href={`whatsapp://send?text=Check%20Out%20This%20Escrow%20Transaction%20Link:%20${linkValue}%20on%20mybalanceapp.com`}
+                      // href={`whatsapp://send?text=${
+                      //   import.meta.env.VITE_DOMAIN_URL
+                      // }/share-escrow-link?ref=${searchParams.get("ref")}`}
+                    >
+                      <img src={whatsappIcon} className="mx-auto" alt="" />
+                    </a>
+                    <a
+                      className="hidden md:block"
+                      href={`https://web.whatsapp.com/send?text=Check%20Out%20This%20Escrow%20Transaction%20Link:%20${linkValue}%20on%20mybalanceapp.com`}
+                      rel="nofollow noopener"
+                      target="_blank"
                     >
                       <img src={whatsappIcon} className="mx-auto" alt="" />
                     </a>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Zod - A typescript-first schema validation library.
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useStore from "../../../store";
 import { useForm, FormProvider } from "react-hook-form";
 import TextField from "../../../components/reuseable/TextField";
-import { useRegisterBuyer } from "../../../hooks/mutations";
+import { useCheckPhoneNumber, useRegisterBuyer } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { Button } from "../../../components/reuseable/Button";
 import eye from '../../../assets/Icons/eye.svg'
@@ -39,6 +39,7 @@ export type SignupInput = TypeOf<typeof registerSchema>;
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false)
+  const {mutate:checkPhone} = useCheckPhoneNumber()
   // tabs
   const { mutate, isLoading } = useRegisterBuyer();
   const [openTab, setOpenTab] = useState(1);
@@ -46,11 +47,25 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { handleSubmit } = methods;
+  const {watch, handleSubmit } = methods;
 
   const registerUser = async (data: SignupInput) => {
     mutate(data);
   };
+
+  const checkPhoneNumber = async(phone:any) => {
+    checkPhone({
+      phone: phone
+    })
+  }
+
+  useEffect(()=>{
+    const phone = watch('phone')
+    if(phone.length === 11){
+      checkPhoneNumber (phone)
+      console.log(phone)
+    }
+  },[watch('phone')])
 
   return (
     <div className="relative  ">

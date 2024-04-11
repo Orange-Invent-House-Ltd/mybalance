@@ -34,6 +34,7 @@ import KYCResponse from "./pages/home/KYCResponse";
 import LearnMybalance from "./pages/home/LearnMybalance";
 import Blog from "./pages/home/Blog";
 import BlogDetails from "./pages/home/BlogDetails";
+import ChangePhoneNumber from "./pages/auth/ChangePhoneNumber";
 
 const App: React.FC = () => {
   return (
@@ -74,6 +75,10 @@ const App: React.FC = () => {
           <Route
             path="/reset-password/password-reset"
             element={<PasswordReset />}
+          />
+          <Route
+            path="/change-phone-number"
+            element={<ChangePhoneNumber />}
           />
         </Route>
         {/* <Route path="/buyer/register" element={<Register />} /> */}

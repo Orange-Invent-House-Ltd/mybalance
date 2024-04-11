@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   LookUpBank,
   changePassword,
+  checkPhoneNumber,
   createDispute,
   createEscrow,
   depositMoney,
@@ -47,8 +48,11 @@ export const useLogin = () => {
         navigate(location.state.from);
         return;
       }
-
-      navigate("/buyer/dashboard");
+      if(data?.data?.phoneNumberFlagged){
+        navigate("/change-phone-number");
+      }else{
+        navigate("/buyer/dashboard");
+      }
     },
     onError: (error: any) => {
       let resMessage;
@@ -389,6 +393,19 @@ export const useFundEscrow = () => {
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);
+    },
+  });
+};
+export const useCheckPhoneNumber = () => {
+  return useMutation({
+    mutationFn: checkPhoneNumber,
+    onSuccess: (data) => {
+      toast.error('user with this phone number already exist. Use another Phone number',{
+        toastId: "error1",
+      });
+    },
+    onError: (error: any) => {
+      // toast.error(error.response.data.message);
     },
   });
 };
