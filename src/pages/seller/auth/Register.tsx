@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Zod - A typescript-first schema validation library.
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +7,7 @@ import useStore from "../../../store";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import TextField from "../../../components/reuseable/TextField";
 import { Button } from "../../../components/reuseable/Button";
+import { useCheckPhoneNumber } from "../../../hooks/mutations";
 
 //type definition with error messages for the form input
 const registerSchema = object({
@@ -29,6 +30,7 @@ export type SignupInput = TypeOf<typeof registerSchema>;
 const Register = () => {
   // tabs
   const [openTab, setOpenTab] = useState(2);
+  const {mutate, isLoading} = useCheckPhoneNumber()
 
   const store = useStore();
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { handleSubmit } = methods;
+  const {watch, handleSubmit } = methods;
   
 
   const registerUser = (data: SignupInput) => {
@@ -44,6 +46,21 @@ const Register = () => {
     //navigate to next page
     navigate("/seller/register/continue");
   };
+
+  const checkPhoneNumber = async(phone:any) => {
+    mutate({
+      phone: phone
+    })
+  }
+
+  useEffect(()=>{
+    const phone = watch('phone')
+    if(phone.length === 11){
+      checkPhoneNumber (phone)
+      console.log(phone)
+    }
+  },[watch('phone')])
+
 
   return (
     <div className="relative">

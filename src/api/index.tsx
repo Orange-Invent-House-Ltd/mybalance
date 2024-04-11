@@ -211,3 +211,7 @@ export const getNotification  = async (id: string) => {
   const res = await privateApi.get(`/notifications/${id}`);
   return res.data;
 };
+export const checkPhoneNumber  = async (phone: any) => {
+  const res = await publicApi.post(`/console/check-phone-number`, phone);
+  return res.data;
+};
