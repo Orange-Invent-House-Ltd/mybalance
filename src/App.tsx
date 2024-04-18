@@ -35,6 +35,8 @@ import LearnMybalance from "./pages/home/LearnMybalance";
 import Blog from "./pages/home/Blog";
 import BlogDetails from "./pages/home/BlogDetails";
 import ChangePhoneNumber from "./pages/auth/ChangePhoneNumber";
+import PasswordlessLogin from "./pages/auth/PasswordlessLogin";
+import PasswordlessOTPVerification from "./pages/auth/PasswordlessOTPVerification";
 
 const App: React.FC = () => {
   return (
@@ -58,6 +60,8 @@ const App: React.FC = () => {
         <Route path="/" element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/email-verification" element={<EmailVerification />} />
+          <Route path="/passwordless-login" element={<PasswordlessLogin />} />
+          <Route path="/passwordless-otp-verification" element={<PasswordlessOTPVerification />} />
           <Route
             path="/get-verification-link"
             element={<GetVerificationLink />}

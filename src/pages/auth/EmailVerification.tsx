@@ -11,7 +11,6 @@ const EmailVerification = () => {
   const [otp, setOtp] = useState("");
   const { mutate, isLoading, isSuccess } = useVerifyEmail();
   const { mutate:resendMutate, isLoading: resendLoading } = useResendOtp();
-  const store = useStore();
   const navigate = useNavigate();
   const tempId = localStorage.getItem("tempId");
   const email = localStorage.getItem("email");
@@ -34,35 +33,6 @@ const EmailVerification = () => {
     mutate({ otp: otp, tempId: tempId! });
   };
 
-  // const resendVerifyEmail = async (userEmail:any) => {
-  //   try {
-  //     const response = await publicApi.post(
-  //       'auth/resend-otp',
-  //       {
-  //         email: userEmail
-  //       }
-  //     );
-  //     //Form submition success notifications
-  //     toast.success(response.data.message as string, {
-  //       toastId: 'success1',
-  //       position: "top-right",
-  //     });
-  //     store.setTempId(response.data.data?.tempId);
-  //   } catch (error:any) {
-  //     console.error(error);
-  //     const resMessage =
-  //       (error.response &&
-  //         error.response.data &&
-  //         error.response.data.message) ||
-  //       error.message ||
-  //       error.toString();
-  //     //Form submition error notifications
-  //     toast.error(resMessage, {
-  //       toastId: 'error1',
-  //       position: "top-right",
-  //     });
-  //   }
-  // };
   useEffect(()=>{
     userType === "seller" && setActiveTab(2)
   }, [])

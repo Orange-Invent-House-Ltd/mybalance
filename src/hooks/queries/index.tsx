@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   getBanks,
+  getBlog,
+  getBlogs,
   getDisputes,
   getEscrowPaymentRedirect,
   getLockedFunds,
@@ -86,11 +88,23 @@ export const useNotifications = ({page, size }:{ page:number; size:number }) => 
     queryFn: () => getNotifications({ page, size }),
   });
 };
-// queryKey: ["transactions", page, type, size],
-//queryFn: () => getTransactions({ search: type, page, size }),
 export const useNotification = (id: string) => {
   return useQuery({
     queryKey: ["notification", id],
     queryFn: () => getNotification(id),
+  });
+};
+
+// Blogs
+export const useBlogs = () => {
+  return useQuery({
+    queryKey: ["blogs"],
+    queryFn: getBlogs,
+  });
+};
+export const useBlog = (id: string) => {
+  return useQuery({
+    queryKey: ["blog", id],
+    queryFn: () => getBlog(id),
   });
 };
