@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button } from "../../components/reuseable/Button";
 import OtpInput from "../../components/reuseable/OtpInput";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
-import { useResendOtp, useVerifyEmail } from "../../hooks/mutations";
+import { usePasswordlessOtpVerification, useResendOtp, useVerifyEmail } from "../../hooks/mutations";
 
 const PasswordlessOTPVerification = () => {
   const [otp, setOtp] = useState("");
-  const { mutate, isLoading, isSuccess } = useVerifyEmail();
+  const { mutate, isLoading, isSuccess } = usePasswordlessOtpVerification();
   const { mutate:resendMutate, isLoading: resendLoading } = useResendOtp();
   const tempId = localStorage.getItem("tempId");
   const email = localStorage.getItem("email");
@@ -50,7 +50,7 @@ const PasswordlessOTPVerification = () => {
           >
             Verify
           </Button>
-          <p className="mt-4 text-[#121212]">
+          {/* <p className="mt-4 text-[#121212]">
             Didn’t receive the email?
             <span
               className="font-semibold cursor-pointer"
@@ -62,7 +62,7 @@ const PasswordlessOTPVerification = () => {
               {" "}
               Click to resend
             </span>
-          </p>
+          </p> */}
         </form>
       </div>
     </div>
