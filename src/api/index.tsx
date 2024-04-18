@@ -11,6 +11,14 @@ export const login = async (data: LoginInput) => {
   const res = await publicApi.post("/auth/login", data);
   return res.data;
 };
+export const passwordlessLogin = async (data: string) => {
+  const res = await publicApi.post("/auth/send-login-otc", data);
+  return res.data;
+};
+export const passwordlessOtpVerification = async (data: string) => {
+  const res = await publicApi.post("/auth/verify-login-otc", data);
+  return res.data;
+};
 export const registerBuyer = async (data: buyerType) => {
   const res = await publicApi.post("/auth/register", data);
   return res.data;
@@ -213,5 +221,15 @@ export const getNotification  = async (id: string) => {
 };
 export const checkPhoneNumber  = async (phone: any) => {
   const res = await publicApi.post(`/console/check-phone-number`, phone);
+  return res.data;
+};
+
+// Blogs
+export const getBlogs  = async () => {
+  const res = await publicApi.get(`/blog/`);
+  return res.data;
+};
+export const getBlog  = async (id: string) => {
+  const res = await publicApi.get(`/blog/${id}/`);
   return res.data;
 };

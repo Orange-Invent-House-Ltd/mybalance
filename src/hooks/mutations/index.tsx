@@ -14,6 +14,8 @@ import {
   getWithdrawFee,
   lockFunds,
   login,
+  passwordlessLogin,
+  passwordlessOtpVerification,
   registerBuyer,
   registerSeller,
   resendOtp,
@@ -36,14 +38,13 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (data) => {
       localStorage.setItem("session_token", data.data.token);
+      toast.success(data.message);
       if (data.data.user.isBuyer) {
         localStorage.setItem("userType", "buyer");
       }
       if (data.data.user.isSeller) {
         localStorage.setItem("userType", "seller");
       }
-      toast.success(data.message);
-
       if (location.state?.from) {
         navigate(location.state.from);
         return;
@@ -53,6 +54,62 @@ export const useLogin = () => {
       }else{
         navigate("/buyer/dashboard");
       }
+    },
+    onError: (error: any) => {
+      let resMessage;
+      error.response.data.errors === null ? resMessage = error.response.data.message : 
+      resMessage = error.response.data.errors.email[0]
+      toast.error(resMessage);
+    },
+  });
+};
+
+export const usePasswordlessLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  return useMutation({
+    mutationFn: passwordlessLogin,
+    onSuccess: (data) => {
+      localStorage.setItem("tempId", data.data.tempId);
+      localStorage.setItem("email", data.data.email);
+      toast.success(data.message);
+
+      if (location.state?.from) {
+        navigate(location.state.from);
+        return;
+      }
+      if(data?.data?.phoneNumberFlagged){
+        navigate("/change-phone-number");
+      }else{
+        navigate("/passwordless-otp-verification");
+      }
+    },
+    onError: (error: any) => {
+      let resMessage;
+      error.response.data.errors === null ? resMessage = error.response.data.message : 
+      resMessage = error.response.data.errors.email[0]
+      toast.error(resMessage);
+    },
+  });
+};
+
+export const usePasswordlessOtpVerification = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  return useMutation({
+    mutationFn: passwordlessOtpVerification,
+    onSuccess: (data) => {
+      localStorage.setItem("session_token", data.data.token);
+      localStorage.setItem("email", data.data.email);
+      toast.success(data.message);
+      if(data?.data?.phoneNumberFlagged){
+        navigate("/change-phone-number");
+      }else if(data?.data?.user?.isBuyer) {
+        navigate("/buyer/dashboard");
+      }else{
+        navigate("/seller/dashboard");
+      }
+      // navigate("/passwordless-otp-verification"); 
     },
     onError: (error: any) => {
       let resMessage;

@@ -157,7 +157,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <p className="text-sm font-normal mb-1 w-fit mx-auto">
+        <p className="text-sm font-normal mb-1 w-fit ">
           Don’t have an account?{" "}
           <Link
             to="/buyer/register"
@@ -166,7 +166,7 @@ const Login = () => {
             Create one
           </Link>
         </p>
-        <p className="text-sm font-normal mb-7 w-fit mx-auto">
+        <p className="text-sm font-normal mb-1 w-fit ">
           Can’t verify my email?
           <Link
             to="/email-verification"
@@ -174,6 +174,15 @@ const Login = () => {
           >
             {" "}
             Verify now
+          </Link>
+        </p>
+        <p className="text-sm font-normal mb-7 w-fit ">
+          Don’t have a password?{" "}
+          <Link
+            to="/passwordless-login"
+            className="text-[#121212] font-bold cursor-pointer"
+          >
+            Passwordless login
           </Link>
         </p>
       </div>

@@ -14,9 +14,6 @@ const ChangePhoneNumber = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
 
-  // const changePhoneNumber = async(data:any) => {
-  //   mutate(data)
-  // }
   const changePhoneNumber= async (data:any) => {
     setIsLoading(true)
     try {
@@ -60,6 +57,7 @@ const ChangePhoneNumber = () => {
           name='phone'
           label='Phone Number'
           placeholder='09034545678'
+          type='number'
           control={control}
           rules={{
             required: "This field is required",
