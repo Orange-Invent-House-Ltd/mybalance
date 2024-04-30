@@ -13,7 +13,6 @@ import SetNewPassword from "./pages/auth/SetNewPassword";
 import PageNotFound from "./pages/home/PageNotFound";
 import Home from "./pages/home/Home";
 import Login from "./pages/auth/Login";
-import Register from "./pages/buyer/auth/Register";
 import ShareEscrowLink from "./pages/home/ShareEscrowLink";
 import About from "./pages/home/About";
 import HowWeWork from "./pages/home/HowWeWork";
@@ -28,7 +27,6 @@ import AuthLayout from "./layout/AuthLayout";
 import "react-loading-skeleton/dist/skeleton.css";
 import ScrollToTop from "./components/reuseable/ScrollToTop";
 import EscrowPayment from "./pages/home/EscrowPayment";
-import Test from "./pages/buyer/dashboard/Test";
 import KYC from "./pages/home/KYC";
 import KYCResponse from "./pages/home/KYCResponse";
 import LearnMybalance from "./pages/home/LearnMybalance";
@@ -37,6 +35,7 @@ import BlogDetails from "./pages/home/BlogDetails";
 import ChangePhoneNumber from "./pages/auth/ChangePhoneNumber";
 import PasswordlessLogin from "./pages/auth/PasswordlessLogin";
 import PasswordlessOTPVerification from "./pages/auth/PasswordlessOTPVerification";
+import Test from "./pages/auth/Test";
 
 const App: React.FC = () => {
   return (
@@ -44,7 +43,8 @@ const App: React.FC = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/test" element={<Test itemsPerPage={4} />} />
+        {/* <Route path="/test" element={<Test itemsPerPage={4} />} /> */}
+        <Route path="/test" element={<Test />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/how-we-work" element={<HowWeWork />} />

@@ -1,6 +1,5 @@
 import React from "react";
 import loading from "../../assets/Icons/loadingSpinner.svg";
-import ImagePreloader from "./ImagePreloader";
 
 const LoadingOverlay = () => {
   return (

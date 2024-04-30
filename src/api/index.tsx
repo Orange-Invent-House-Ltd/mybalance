@@ -11,7 +11,7 @@ export const login = async (data: LoginInput) => {
   const res = await publicApi.post("/auth/login", data);
   return res.data;
 };
-export const passwordlessLogin = async (data: string) => {
+export const passwordlessLogin = async (data: any) => {
   const res = await publicApi.post("/auth/send-login-otc", data);
   return res.data;
 };
@@ -231,5 +231,17 @@ export const getBlogs  = async () => {
 };
 export const getBlog  = async (id: string) => {
   const res = await publicApi.get(`/blog/${id}/`);
+  return res.data;
+};
+
+
+// This section is a test Api call as regards the Api services
+// Generate Marchange Wiget Section
+export const generateWidgetSection  = async (data: any) => {
+  const res = await publicApi.post(`/merchants/generate-widget-session`, {
+    headers: {
+      // 'Authorization': `Bearer ${token}` 
+      'API-KEY': 'test_priv_5e57d6tzc4x7yoharo680gu6'
+    }}, data);
   return res.data;
 };
