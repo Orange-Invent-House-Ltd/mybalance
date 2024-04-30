@@ -1,6 +1,7 @@
 import React from "react";
 import arrowIcon from "../../assets/Icons/arrow.svg";
 const Pagination = ({ pageCount, initialPage, onPageChange }: any) => {
+  // where pageCount is the totalPage and initialPage is the currentPage
     const handlePrevClick = () => {
       if (initialPage > 1) {
         onPageChange(initialPage - 1);
@@ -12,6 +13,7 @@ const Pagination = ({ pageCount, initialPage, onPageChange }: any) => {
         onPageChange(initialPage + 1);
       }
     };
+
   return (
     <div className="py-3 border-t border-[#D0D5DD] mt-3 flex  justify-between items-center px-4rounded">
       <button

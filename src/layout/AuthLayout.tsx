@@ -7,23 +7,10 @@ import facebook from "../assets/Icons/Facebook.svg";
 import twitter from "../assets/Icons/Twitter.svg";
 import linkedin from "../assets/Icons/LinkedIn.svg";
 import Instagram from "../assets/Icons/Instagram.svg";
-import { useUser } from "../hooks/queries";
 import moment from 'moment'
 
 const AuthLayout = () => {
   const today = moment().format('YYYY-MM-DD')
-  // const { data: user, isLoading } = useUser();
-  // console.log("🚀 ~ file: AuthLayout.tsx:15 ~ AuthLayout ~ user:", user);
-  // if (isLoading) {
-  //   return (
-  //     <div className="w-screen h-screen flex justify-center items-center">
-  //       <LoadingLogo />
-  //     </div>
-  //   );
-  // }
-  // if (user) {
-  //   return <Navigate to="/buyer/dashboard" />;
-  // }
   if (localStorage.getItem("session_token")) {
     return <Navigate to="/buyer/dashboard" />;
   }
@@ -36,7 +23,7 @@ const AuthLayout = () => {
         </Link>
       </header>
       {/* mobile phone Image */}
-      {/* <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%]  " /> */}
+      <img src={mphone} alt="Image of a phone" className="md:hidden w-[100%]  " />
       {/* Desktop Image */}
 
       <img

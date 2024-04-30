@@ -260,7 +260,6 @@ const Header = () => {
                 </div>
               </div>
             </form>
-
             {/* </div> */}
           </Dialog.Content>
         </Dialog.Portal>

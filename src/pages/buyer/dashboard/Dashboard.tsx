@@ -444,7 +444,7 @@ const Dashboard = () => {
           <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
 
           <p className="mb-2 font-base font-normal leading-[21.6px]">
-            Available balance in escrow
+            Available balance in wallet
           </p>
           <h4 className="font-bold text-[32px] leading-[43.2px]">
             {formatToNairaCurrency(user?.walletBalance || 0)}

@@ -1,36 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../components/reuseable/Button";
 import OtpInput from "../../components/reuseable/OtpInput";
 import LoadingOverlay from "../../components/reuseable/LoadingOverlay";
-import { usePasswordlessOtpVerification, useResendOtp, useVerifyEmail } from "../../hooks/mutations";
+import { usePasswordlessLogin, usePasswordlessOtpVerification} from "../../hooks/mutations";
 
 const PasswordlessOTPVerification = () => {
   const [otp, setOtp] = useState("");
+  const { mutate:mutat } = usePasswordlessLogin();
   const { mutate, isLoading, isSuccess } = usePasswordlessOtpVerification();
-  const { mutate:resendMutate, isLoading: resendLoading } = useResendOtp();
   const tempId = localStorage.getItem("tempId");
   const email = localStorage.getItem("email");
 
+  const passwordlessLogin = async (email:any) => {
+    mutat({email: email});
+  };
+
   const passwordlessOTPVerification = async (otp: string) => {
-    console.log(
-      "🚀 ~ file: EmailVerification.tsx:82 ~ verifyEmail ~ otp:",
-      otp
-    );
-    // const stringOtp = otp.join("").toString();
-    console.log(
-      "🚀 ~ file: EmailVerification.tsx:87 ~ verifyEmail ~ stringOtp:",
-      otp
-    );
     if (otp.length < 6) return;
     mutate({ otp: otp, tempId: tempId! });
   };
+
+  useEffect(()=>{
+    // Function to get URL parameters
+    const getUrlParam = (name:any) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    };
+    // Get the email parameter value from the URL
+    const email = getUrlParam('email');
+    passwordlessLogin(email)
+  },[]) // eslint-disable-line react-hooks/exhaustive-deps
+  
 
   return (
     <div className="relative mb-20">
       {isLoading && <LoadingOverlay />}
       <h6 className="h6">Verify One-Time Login Code</h6>
       <p className="mt-2 mb-8 text-[#6D6D6D] text-base leading-5 font-normal">
-        Hello We sent a verification link to {email}
+        Hello, we sent a verification code to {email}
       </p>
       <div className="grid gap-y-3.5">
         <form>

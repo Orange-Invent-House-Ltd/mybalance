@@ -213,7 +213,7 @@ const Dashboard = () => {
                 Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
               />
               <SellerDashboardBox
-                Text="Total amount in escrow"
+                Text="Available balance in wallet"
                 Amount={formatToNairaCurrency(user?.walletBalance || 0)}
               />
             </div>

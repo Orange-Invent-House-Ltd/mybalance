@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative ">
+    <div className="relative mb-20">
       {isLoading && <LoadingOverlay />}
       <div className="flex flex-wrap">
         {/* tabs */}
@@ -176,7 +176,7 @@ const Login = () => {
             Verify now
           </Link>
         </p>
-        <p className="text-sm font-normal mb-7 w-fit ">
+        {/* <p className="text-sm font-normal mb-7 w-fit ">
           Don’t have a password?{" "}
           <Link
             to="/passwordless-login"
@@ -184,7 +184,7 @@ const Login = () => {
           >
             Passwordless login
           </Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );
