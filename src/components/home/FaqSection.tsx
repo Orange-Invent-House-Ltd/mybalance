@@ -42,6 +42,18 @@ const FaqSection = () => {
             content="It is possible for disputes to arise during a transaction which is why when creating an escrow, users are asked to select dispute resolution options ( Users resolution or My Balance resolution). While a transaction is in dispute, the funds stay in My Balance until a resolution is reached."
             title="How are transaction disputes resolved?"
           />
+          <Accordion
+            content="If a Seller delivers an item to a Buyer and the Buyer fails to unlock the funds within 48 hours, the Seller can raise a dispute. MyBalance team will then attempt to reach the Buyer via email, SMS, and phone calls to understand the reason for the delay. If the Buyer is unreachable through these channels within 48 hours, MyBalance will proceed to unlock the funds for the Seller, regardless of fault."
+            title="What happens if a Buyer fails to unlock funds after 48 hours of item delivery?"
+          />
+          <Accordion
+            content="The excess balance will be credited back to your local account. For example, if a buyer is supposed to top up with 500 naira but instead tops up with 1000 naira, the additional 500 naira will be refunded into the Buyer's local account within minutes. If you don't receive the refund after 30 minutes, please contact your bank for assistance."
+            title="What happens when a Buyer tops up above the top-up limit?"
+          />
+          <Accordion
+            content="If a Seller fails to deliver an item within the stipulated deadline and the Buyer raises a dispute, the MyBalance team will contact the Seller via email, SMS, and phone calls to inquire about the delay. If the Seller is unreachable through these channels within 48 hours, MyBalance will proceed to unlock the funds back to the Buyer, regardless of fault."
+            title="What happens if a Seller fails to deliver an item 48 hours after the stipulated deadline?"
+          />
         </div>
       </div>
     </div>
