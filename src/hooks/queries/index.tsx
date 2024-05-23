@@ -32,7 +32,6 @@ export const useTransactions = ({
 }) => {
   return useQuery({
     queryFn: () => getTransactions({ search: type, page, size }),
-
     queryKey: ["transactions", page, type, size],
   });
 };

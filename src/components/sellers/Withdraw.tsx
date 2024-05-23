@@ -31,7 +31,6 @@ const Withdraw = ({ open, setOpen }: any) => {
     handleSubmit: handleSubmitWithdraw,
     control: controlWithdraw,
     reset,
-    register,
   } = useForm();
 
   const subscribeToChannel = (txReference: any) => {
@@ -72,11 +71,13 @@ const Withdraw = ({ open, setOpen }: any) => {
     isSuccess: withdrawSuccess,
     data: withdrawData,
   } = useWithdraw();
+
   const {
     mutate: withdrawFeeMutate,
     isLoading: withdrawFeeLoading,
     data: withdrawFeeData,
   } = useWithdrawFee();
+
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   const { data: user } = useUser();
   console.log("🚀 ~ file: Withdraw.tsx:75 ~ Withdraw ~ user:", user);
@@ -92,6 +93,7 @@ const Withdraw = ({ open, setOpen }: any) => {
       setOpen(false);
     }
   }, [withdrawSuccess]);
+
   useEffect(() => {
     if (accNum.length === 10) {
       LookupMutate({ bankCode: code, accountNumber: accNum });
@@ -221,10 +223,10 @@ const Withdraw = ({ open, setOpen }: any) => {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+
       <AlertDialog.Root open={isWithdraw}>
         <AlertDialog.Portal className=" ">
           <AlertDialog.Overlay className="bg-[#3a3a3a]/50 z-20  fixed inset-0" />
-
           <AlertDialog.Content className=" h-full   fixed top-0 left-0 z-50 w-full  animate-jump">
             <div className="w-full max-w-[400px] z-[999999]  fixed top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 bg-white p-[20px] rounded-[5px] flex flex-col items-center">
               <img
@@ -249,10 +251,10 @@ const Withdraw = ({ open, setOpen }: any) => {
           </AlertDialog.Content>
         </AlertDialog.Portal>
       </AlertDialog.Root>
+
       <AlertDialog.Root open={pusherLoading}>
         <AlertDialog.Overlay />
-
-        <AlertDialog.Content className="   fixed top-0 left-0 z-50 w-screen h-screen ">
+        <AlertDialog.Content className="fixed top-0 left-0 z-50 w-screen h-screen ">
           <div className=" fixed top-0 left-0 right-0  bottom-0 bg-white flex items-center justify-center z-40">
             <div className="w-screen h-screen flex items-center justify-center">
               <div className="text-center space-y-2 my-auto">

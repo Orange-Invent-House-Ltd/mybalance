@@ -69,7 +69,8 @@ const  Header = () =>{
               </div>
             </li>
             {/* <li><NavLink to="/learn-mybalance">Learn Mybalance</NavLink></li> */}
-            <li className='mb-4'><NavLink to="/contact">Contact</NavLink></li>
+            <li className=''><NavLink to="/contact">Contact</NavLink></li>
+            <li className='mb-4'><a href="https://documenter.getpostman.com/view/15948667/2sA3JFA4J3" target='_blank'>Developer Docs</a></li>
           </ul>
           <div className="" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
         </nav>
@@ -118,6 +119,7 @@ const  Header = () =>{
             </div>
           </li>
           <li><NavLink to="/contact">Contact</NavLink></li>
+          <li><a href="https://documenter.getpostman.com/view/15948667/2sA3JFA4J3" target='_blank'>Developer Docs</a></li>
         </ul>
       </nav>
       <div className="w-[130px] hidden md:flex" onClick={()=>navigate('/buyer/register')}><Button fullWidth={true}>Get Started</Button></div>
