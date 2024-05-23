@@ -77,7 +77,11 @@ const footerData = [
         link: "/solutions",
         target: "_self"
       },
-    
+      {
+        name: "Developer Docs",
+        link: "https://documenter.getpostman.com/view/15948667/2sA3JFA4J3",
+        target: "_blank"
+      },
     ],
   },
   {

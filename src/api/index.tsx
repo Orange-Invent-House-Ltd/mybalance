@@ -113,7 +113,6 @@ export const getLockedFunds = async (page: number) => {
   const res = await privateApi.get("/transaction/locked-escrows", {
     params: {
       page,
-    
     },
   });
   return res.data;

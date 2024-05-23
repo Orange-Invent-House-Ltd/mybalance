@@ -1,7 +1,7 @@
 import Footer from "../../components/home/Footer";
 import Header from "../../components/home/Header";
 import user from "../../assets/images/user.jpg";
-import detailimg from "../../assets/images/office.png";
+import detailimg from "../../assets/images/coverimg.jpg";
 import { Facebook, Twitter, Linkedin, Copy } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const BlogDetails = () => {
     <div>
       <Header />
       <div className="mt-[9rem] flex flex-col justify-center items-center text-center lg:px-0 px-9">
-        <p className="mb-7 text-primary-blogCol font-bold">
+        <p className="mb-7 text-primary-normal font-bold">
           Published 20 Jan 2022
         </p>
         <h1 className="text-4xl font-bold mb-7">UX review presentations</h1>
@@ -37,8 +37,12 @@ const BlogDetails = () => {
           </span>
         </div>
       </div>
-      <div className="w-full lg:px-[10rem] md:px-8 px-3">
-        <img src={detailimg} alt="" className="w-full lg:h-[600px] h-[full]" />
+      <div className="w-full lg:px-[12rem] md:px-8 px-3">
+        <img
+          src={detailimg}
+          alt=""
+          className="w-full lg:h-[600px] h-[full] shadow-md"
+        />
       </div>
 
       <section className="lg:p-pad md:px-96 px-4 mt-16 mb-36">
