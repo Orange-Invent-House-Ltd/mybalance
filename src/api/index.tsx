@@ -2,7 +2,7 @@ import { z } from "zod";
 import { LoginInput } from "../pages/auth/Login";
 import { IUserProfile } from "./types";
 import { SignupInput as buyerType } from "../pages/buyer/auth/Register";
-import { privateApi, publicApi } from "./axios";
+import { blogApi, privateApi, publicApi } from "./axios";
 import { GetVerificationInput } from "../pages/auth/GetVerificationLink";
 import { SignupInput } from "../pages/seller/auth/Register";
 import { ResetPasswordInput } from "../pages/auth/SetNewPassword";
@@ -46,7 +46,7 @@ export const verifyEmail = async (data: { otp: string; tempId: string }) => {
 export const resendOtp = async (data: GetVerificationInput) => {
   const res = await publicApi.post("/auth/resend-otp", data);
   return res.data;
-}
+};
 export const endTourGuide = async (data: any) => {
   const res = await privateApi.put("/auth/end-tour-guide", data);
   return res.data;
@@ -205,7 +205,13 @@ export const fundEscrow = async ({
   });
   return res.data;
 };
-export const getNotifications = async ({page, size}: {page?: number; size?: number}) => {
+export const getNotifications = async ({
+  page,
+  size,
+}: {
+  page?: number;
+  size?: number;
+}) => {
   const res = await privateApi.get(`/notifications`, {
     params: {
       page,
@@ -214,33 +220,41 @@ export const getNotifications = async ({page, size}: {page?: number; size?: numb
   });
   return res.data;
 };
-export const getNotification  = async (id: string) => {
+export const getNotification = async (id: string) => {
   const res = await privateApi.get(`/notifications/${id}`);
   return res.data;
 };
-export const checkPhoneNumber  = async (phone: any) => {
+export const checkPhoneNumber = async (phone: any) => {
   const res = await publicApi.post(`/console/check-phone-number`, phone);
   return res.data;
 };
 
 // Blogs
-export const getBlogs  = async () => {
-  const res = await publicApi.get(`/blog/`);
-  return res.data;
-};
-export const getBlog  = async (id: string) => {
-  const res = await publicApi.get(`/blog/${id}/`);
-  return res.data;
-};
-
+// export const getBlogs  = async () => {
+//   const res = await publicApi.get(`/blog/`);
+//   return res.data;
+// };
+// export const getBlog  = async (id: string) => {
+//   const res = await publicApi.get(`/blog/${id}/`);
+//   return res.data;
+// };
 
 // This section is a test Api call as regards the Api services
 // Generate Marchange Wiget Section
-export const generateWidgetSection  = async (data: any) => {
-  const res = await publicApi.post(`/merchants/generate-widget-session`, {
-    headers: {
-      // 'Authorization': `Bearer ${token}` 
-      'API-KEY': 'test_priv_5e57d6tzc4x7yoharo680gu6'
-    }}, data);
+export const generateWidgetSection = async (data: any) => {
+  const res = await publicApi.post(
+    `/merchants/generate-widget-session`,
+    {
+      headers: {
+        // 'Authorization': `Bearer ${token}`
+        "API-KEY": "test_priv_5e57d6tzc4x7yoharo680gu6",
+      },
+    },
+    data
+  );
+  return res.data;
+};
+export const getBlog = async () => {
+  const res = await blogApi.get("/blog/");
   return res.data;
 };

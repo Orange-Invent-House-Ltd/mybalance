@@ -21,6 +21,8 @@ const DashboardHistoryBox = (data: any) => {
   useEffect(() => {
     if (data) {
       reset({
+        buyersEmail: data?.email,
+        buyersName: data?.fullName,
         purpose: data?.escrowMetadata?.purpose,
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
@@ -109,6 +111,28 @@ const DashboardHistoryBox = (data: any) => {
                 </h6>
               </div>
               <form action="">
+                <h1 className="text-slate-700 text-lg font-medium">
+                  BUYER'S INFORMATION
+                </h1>
+                <div className="my-6 flex flex-col gap-4">
+                  <TextField
+                    control={control}
+                    rules={{ required: false }}
+                    name={"buyersName"}
+                    label="Buyer's name"
+                    placeholder="Jamiu Aremu"
+                    readOnly
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: false }}
+                    name={"buyersEmail"}
+                    label="Buyer's email"
+                    placeholder="e.g@gmail.com"
+                    readOnly
+                  />
+                </div>
+                {/*  */}
                 <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>
