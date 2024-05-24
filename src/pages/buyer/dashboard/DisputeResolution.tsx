@@ -13,10 +13,10 @@ import { useEndTourGuide } from "../../../hooks/mutations";
 import useStore from "../../../store";
 
 const DisputeResolution = () => {
-  const [tourFinished, setTourFinished] = useState(false);// State to track whether the tour guide has finished
+  const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
   const { data: user } = useUser();
-  const {mutate } = useEndTourGuide();
-  const store = useStore()
+  const { mutate } = useEndTourGuide();
+  const store = useStore();
 
   const navigate = useNavigate();
   const { data, isLoading } = useDisputes();
@@ -26,8 +26,8 @@ const DisputeResolution = () => {
     setPage(selected);
   };
 
-  const endTourGuide = async() => {
-    mutate({email: user?.email})
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
   };
 
   useEffect(() => {
@@ -53,13 +53,14 @@ const DisputeResolution = () => {
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
-       setState((prevState) => ({
-         ...prevState,
-         run: false,
-       }));
-       endTourGuide()
-       store.setEndTour(true)
+      setState((prevState) => ({
+        ...prevState,
+        run: false,
+      }));
+      endTourGuide();
+      store.setEndTour(true);
       // Navigate to the Quick Action page after the tour finishes
+
       navigate("/buyer/dashboard");
     }
   }, [tourFinished, navigate]);
@@ -75,7 +76,6 @@ const DisputeResolution = () => {
         showSkipButton
         // showProgress
         locale={{
-          skip: <strong>Cancel Tour</strong>,
           last: "Return to dashboard",
         }}
         callback={({ action }) => {

@@ -12,11 +12,14 @@ import Skeleton from "react-loading-skeleton";
 import ReactJoyride from "react-joyride";
 import { useQueryClient } from "@tanstack/react-query";
 import useStore from "../../../store";
+import { useEndTourGuide } from "../../../hooks/mutations";
 
 const Dashboard = () => {
   const { data: user, isError } = useUser();
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const { mutate } = useEndTourGuide();
+  const [cancleTour, setCancleTour] = useState(false);
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const store = useStore();
   const queryClient = useQueryClient(); //To refresh the user data
@@ -26,6 +29,10 @@ const Dashboard = () => {
     size: 2,
   });
 
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
+    setCancleTour(true);
+  };
   const [{ run, steps }, setState] = useState({
     run: user?.showTourGuide && !store.endTour,
     steps: [
@@ -110,34 +117,24 @@ const Dashboard = () => {
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
+      //Navigate to the Quick Action page only if cancletour is false
+      if (!cancleTour) {
+        navigate("/seller/transaction-history");
+      }
       // Set run to false when the tour finishes
       setState((prevState) => ({
         ...prevState,
         run: false,
       }));
-
-      // Navigate to the Quick Action page after the tour finishes
-      navigate("/seller/transaction-history");
     }
-  }, [tourFinished, navigate]);
+  }, [cancleTour, tourFinished, navigate]);
 
   useEffect(() => {
-    // Check if the tour has been completed previously
-    const tourPreviouslyFinished = localStorage.getItem("sellertourFinished");
-    if (tourPreviouslyFinished === "true") {
-      // If tour has been finished previously, do not run the tour again
-      setState((prevState) => ({
-        ...prevState,
-        run: false,
-      }));
-    }
-  }, []);
-
-  useEffect(()=>{
-    queryClient.invalidateQueries({queryKey: ['user'],
-    refetchType: 'all' // refetch both active and inactive queries
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
     });
-  },[])
+  }, [store.endTour]);
 
   return (
     <div className="overflow-hidden">
@@ -155,7 +152,16 @@ const Dashboard = () => {
         showSkipButton
         showProgress
         locale={{
-          skip: <strong>Cancel Tour</strong>,
+          skip: (
+            <button
+              onClick={() => {
+                endTourGuide();
+                store.setEndTour(true);
+              }}
+            >
+              <strong>Cancel Tour</strong>
+            </button>
+          ),
           last: "Next",
         }}
         styles={{

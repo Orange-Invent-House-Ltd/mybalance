@@ -9,11 +9,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 
 import LockMoneyBox from "../../../components/reuseable/LockMoneyBox";
 import UnlockAmount from "../../../components/buyers/UnlockAmount";
-import { useDepositMoney } from "../../../hooks/mutations";
+import { useDepositMoney, useEndTourGuide } from "../../../hooks/mutations";
 import { useForm } from "react-hook-form";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { useLockedFunds, useUser } from "../../../hooks/queries";
-import { useTabStore } from "../../../store";
+import useStore, { useTabStore } from "../../../store";
 import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney";
 import { useNavigate } from "react-router-dom";
 import EmptyMoney from "../../../components/reuseable/EmptyMoney";
@@ -22,11 +22,16 @@ import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
 import { Link } from "react-router-dom";
 import Joyride from "react-joyride";
+import { useQueryClient } from "@tanstack/react-query";
 
 const QuickAction = () => {
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const { mutate } = useEndTourGuide();
+  const store = useStore();
+  const [cancleTour, setCancleTour] = useState(false);
   const navigate = useNavigate();
   const { data: user } = useUser();
+  const queryClient = useQueryClient(); //To refresh the user data
 
   const [successModal, setSuccessModal] = useState(false);
 
@@ -53,6 +58,11 @@ const QuickAction = () => {
   };
   let data = localStorage.getItem("transactionInfo") as any;
   data = JSON.parse(data);
+
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
+    setCancleTour(true);
+  };
 
   // Tour Guide
   const [{ run, steps }, setState] = useState({
@@ -92,16 +102,26 @@ const QuickAction = () => {
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
+      // Navigate to the Quick Action page only if cancletour is false
+      if (!cancleTour) {
+        navigate("/buyer/transaction-history");
+      }
+
       // Set run to false when the tour finishes
       setState((prevState) => ({
         ...prevState,
         run: false,
       }));
-
-      // Navigate to the Quick Action page after the tour finishes
-      navigate("/buyer/transaction-history");
     }
-  }, [tourFinished, navigate]);
+  }, [cancleTour, tourFinished, navigate]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
+  }, [store.endTour]);
+
   //
   return (
     <>
@@ -114,7 +134,16 @@ const QuickAction = () => {
         showSkipButton
         showProgress
         locale={{
-          skip: <strong>Cancel Tour</strong>,
+          skip: (
+            <button
+              onClick={() => {
+                endTourGuide();
+                store.setEndTour(true);
+              }}
+            >
+              <strong>Cancel Tour</strong>
+            </button>
+          ),
           last: "Next",
         }}
         callback={({ action }) => {

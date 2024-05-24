@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useEditProfile } from '../../hooks/mutations'
+import React, { useEffect, useState } from 'react'
+import { useCheckPhoneNumber, useEditProfile } from '../../hooks/mutations'
 import { useForm } from 'react-hook-form'
 import TextField from '../../components/reuseable/TextField1'
 import { Button } from '../../components/reuseable/Button'
@@ -9,10 +9,25 @@ import { useNavigate } from 'react-router-dom'
 import LoadingOverlay from '../../components/reuseable/LoadingOverlay'
 
 const ChangePhoneNumber = () => {
-  const {control, handleSubmit} = useForm()
+  const {control, watch, handleSubmit} = useForm()
   // const {mutate, isLoading} = useEditProfile()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const {mutate:checkPhone } = useCheckPhoneNumber()
+
+  const checkPhoneNumber = async(phone:any) => {
+    checkPhone({
+      phone: phone
+    })
+  }
+
+  useEffect(()=>{
+    const phone = watch('phone')
+    if(phone?.length === 11){
+      checkPhoneNumber (phone)
+      console.log(phone)
+    }
+  },[watch('phone')])
 
   const changePhoneNumber= async (data:any) => {
     setIsLoading(true)

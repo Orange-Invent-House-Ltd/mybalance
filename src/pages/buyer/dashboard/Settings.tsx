@@ -6,7 +6,6 @@ import Joyride from "react-joyride";
 const Settings = () => {
   return (
     <div>
-      ;
       <header className="mb-16">
         <h1 className="text-[23px] capitalize font-medium ">Settings</h1>
         <p className="text-[#303030] text-sm mt-4">
