@@ -72,24 +72,26 @@ const SetNewPassword = () => {
         Enter your new password below. Password must be 8 characters or more.
       </p>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(resetUserPassword)}>
-          <div className="flex">
+        <form onSubmit={handleSubmit(resetUserPassword)} className="w-full">
+          <div className="relative">
             <TextField
               name="password"
               label="New password"
               placeholder="******"
               type={showPassword? 'text' : 'password'}
+              variant="long"
             />
-            <img src={showPassword ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
+            <img src={showPassword ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
           </div>
-          <div className="flex">
+          <div className="relative">
             <TextField
               name="confirmPassword"
               label="Retype new password"
               placeholder="******"
               type={passwordShown? 'text' : 'password'}
+              variant="long"
             />
-            <img src={passwordShown ? hide : eye} alt="show password" className='relative top-9 right-8 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
+            <img src={passwordShown ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setPasswordShown(!passwordShown)}/>
           </div>
           {" "}
           <br />

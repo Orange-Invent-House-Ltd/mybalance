@@ -61,7 +61,7 @@ const Register = () => {
 
   useEffect(()=>{
     const phone = watch('phone')
-    if(phone.length === 11){
+    if(phone?.length === 11){
       checkPhoneNumber (phone)
       console.log(phone)
     }

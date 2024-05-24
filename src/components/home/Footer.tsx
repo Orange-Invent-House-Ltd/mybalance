@@ -108,6 +108,11 @@ const footerData = [
         target: "_self"
       },
       {
+        name: "Blog",
+        link: "/blog",
+        target: "_self"
+      },
+      {
         name: "Learn MyBalance",
         link: "/learn-mybalance",
         target: "_self"

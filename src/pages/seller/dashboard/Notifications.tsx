@@ -12,8 +12,10 @@ import { Circle } from 'lucide-react';
 import * as Dialog from "@radix-ui/react-dialog";
 import { useForm } from 'react-hook-form';
 import { privateApi } from '../../../api/axios';
+import { InvalidateQueryFilters, useQueryClient } from '@tanstack/react-query';
 
 const Notifications = () => {
+  const queryClient = useQueryClient()
   const [isVerify, setIsVerify] = useState(false);
   const [notification, setNotification] = useState<any>({});
   const [id, setId] = useState("");
@@ -133,13 +135,19 @@ const Notifications = () => {
       <Dialog.Root open={isVerify}>
         <Dialog.Portal className="">
           <Dialog.Overlay
-            onClick={() => setIsVerify(false)}
+            onClick={() => {
+              queryClient.invalidateQueries(["notifications"] as InvalidateQueryFilters);
+              setIsVerify(false)
+            }}
             className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
           />
           <Dialog.Content>
             <div className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll">
               <div className="flex gap-4 items-center mt-10 mb-4">
-                <img src={back} alt="back" onClick={() => setIsVerify(false)} />
+                <img src={back} alt="back" onClick={() => {
+                   queryClient.invalidateQueries(["notifications"] as InvalidateQueryFilters);
+                  setIsVerify(false)
+                }} />
                 <h6 className="text-[23px] font-medium">
                   {notification?.title}
                 </h6>
@@ -147,6 +155,27 @@ const Notifications = () => {
               {notification.category === "FUNDS_LOCKED_SELLER" ? (
                 <div>
                   {transactionIsLoading && <LoadingOverlay/> }
+                  <h1 className="text-[#393737] text-lg font-medium">
+                    BUYER INFORMATION
+                  </h1>
+                  <div className="mt-6 flex flex-col gap-4 mb-4">
+                    <TextField
+                      name='buyerName'
+                      label="Buyer's name"
+                      placeholder="Aremu Jamiu"
+                      readOnly={true}
+                      value={transactionInfo?.amount}
+                      control={control}
+                    />
+                    <TextField
+                      name='buyerEmail'
+                      label="Buyer's email"
+                      placeholder="jaremu@oinvent.com"
+                      readOnly={true}
+                      value={transactionInfo?.escrowMetadata?.purpose}
+                      control={control}
+                    />
+                  </div>
                   <h1 className="text-[#393737] text-lg font-medium">
                     ITEM(S) INFORMATION
                   </h1>

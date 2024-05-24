@@ -12,12 +12,15 @@ import LoadingOverlay from "../reuseable/LoadingOverlay";
 import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
 import moment from "moment";
 import infoIcon from "../../assets/Icons/info-icon.svg";
+import { useNavigate } from "react-router-dom";
+import bell from "../../assets/Icons/notification.svg";
 
 const Header = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [code, setCode] = useState("");
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
+  const navigate = useNavigate()
 
   var today = moment().format("YYYY-MM-DD");
 
@@ -98,11 +101,25 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex w-[343px]  md:w-[300px]">
-        <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
-          Create One-time MyBalance Link
-        </Button>
+      <div className="hidden md:flex items-center gap-x-4">
+        <div className="relative">
+          { user?.unreadNotificationCount !== 0 &&
+            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center" >{user?.unreadNotificationCount}</span>
+          }
+          <img
+            src={bell}
+            alt="notification bell"
+            className=""
+            onClick={()=>navigate('/seller/notifications')}
+          />
+        </div>
+        <div className="w-[343px]  md:w-[300px]">
+          <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
+            Create One-time MyBalance Link
+          </Button>
+        </div>
       </div>
+
       {/* Create MyBalance link - mobile view */}
       <div className="md:hidden mt-4 p-2 flex gap-2 justify-between items-center border border-[#FFF2E8]">
         <p className="font-semibold text-sm">

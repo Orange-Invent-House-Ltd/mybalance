@@ -288,19 +288,27 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-        <img
-          src={bell}
-          alt="notification bell"
-          className="hidden md:flex ml-auto mr-4"
-        />
-        <div className="hidden md:flex w-[343px] md:w-[270px] createlink">
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => setIsVerify(true)}
-          >
-            Create MyBalance Link
-          </Button>
+        <div className="hidden md:flex items-center gap-x-4">
+          <div className="relative">
+            { user?.unreadNotificationCount !== 0 &&
+              <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center" >{user?.unreadNotificationCount}</span>
+            }
+            <img
+              src={bell}
+              alt="notification bell"
+              className=""
+              onClick={()=>navigate('/buyer/notifications')}
+            />
+          </div>
+          <div className="w-[343px] md:w-[270px] createlink">
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => setIsVerify(true)}
+            >
+              Create MyBalance Link
+            </Button>
+          </div>
         </div>
 
         <Dialog.Root open={isVerify}>
