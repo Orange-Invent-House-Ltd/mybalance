@@ -21,6 +21,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import {
   useCreateEscrow,
   useDepositMoney,
+  useEndTourGuide,
   useFundEscrow,
   useLockFunds,
   useLookUpBank,
@@ -30,16 +31,17 @@ import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import moment from "moment";
 import infoIcon from "../../../assets/Icons/info-icon.svg";
 import Joyride from "react-joyride";
-import { useQueryClient } from '@tanstack/react-query';
-
+import { useQueryClient } from "@tanstack/react-query";
 
 const Dashboard = () => {
-  const [tourFinished, setTourFinished] = useState(false); 
-  const navigate = useNavigate(); 
+  const [tourFinished, setTourFinished] = useState(false);
+  const navigate = useNavigate();
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
   const store = useStore();
+  const { mutate } = useEndTourGuide();
+  const [cancleTour, setCancleTour] = useState(false);
   const { data: user } = useUser();
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register } = useForm();
@@ -115,6 +117,11 @@ const Dashboard = () => {
     }
   }, [accNum, code]);
 
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
+    setCancleTour(true);
+  };
+
   // Tour Guide
   const [{ run, steps }, setState] = useState({
     run: user?.showTourGuide && !store.endTour,
@@ -183,21 +190,24 @@ const Dashboard = () => {
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
+      //Navigate to the Quick Action page only if cancletour is false
+      if (!cancleTour) {
+        navigate("/buyer/quick-action");
+      }
       // Set run to false when the tour finishes
       setState((prevState) => ({
         ...prevState,
         run: false,
       }));
-      // Navigate to the Quick Action page after the tour finishes
-      navigate("/buyer/quick-action");
     }
-  }, [tourFinished, navigate]);
+  }, [cancleTour, tourFinished, navigate]);
 
-  useEffect(()=>{
-    queryClient.invalidateQueries({queryKey: ['user'],
-    refetchType: 'all' // refetch both active and inactive queries
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
     });
-  },[store.endTour])
+  }, [store.endTour]);
 
   return (
     <div className=" overflow-hidden ">
@@ -211,7 +221,16 @@ const Dashboard = () => {
         showSkipButton
         showProgress
         locale={{
-          skip: <strong>Cancel Tour</strong>,
+          skip: (
+            <button
+              onClick={() => {
+                endTourGuide();
+                store.setEndTour(true);
+              }}
+            >
+              <strong>Cancel Tour</strong>
+            </button>
+          ),
           last: "Next",
         }}
         callback={({ action }) => {

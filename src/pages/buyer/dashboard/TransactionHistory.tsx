@@ -10,13 +10,20 @@ import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import Pagination from "../../../components/reuseable/Pagination";
 import Joyride from "react-joyride";
+import { useEndTourGuide } from "../../../hooks/mutations";
+import useStore from "../../../store";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TransactionHistory = () => {
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
+  const { mutate } = useEndTourGuide();
+  const store = useStore();
+  const [cancleTour, setCancleTour] = useState(false);
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
   const { data: user } = useUser();
+  const queryClient = useQueryClient(); //To refresh the user data
 
   const { isLoading, data } = useTransactions({
     page,
@@ -32,13 +39,18 @@ const TransactionHistory = () => {
     setPage(selected);
   };
   //
-  useEffect(() => {
-    // Set run to true to start the tour guide when the component mounts
-    setState((prevState) => ({
-      ...prevState,
-      run: user?.showTourGuide,
-    }));
-  }, []);
+  // useEffect(() => {
+  //   // Set run to true to start the tour guide when the component mounts
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     run: user?.showTourGuide,
+  //   }));
+  // }, []);
+
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
+    setCancleTour(true);
+  };
   // Tour Guide
   const [{ run, steps }, setState] = useState({
     run: user?.showTourGuide,
@@ -67,15 +79,24 @@ const TransactionHistory = () => {
   useEffect(() => {
     // Check if the tour guide has finished targeting all the classes
     if (tourFinished) {
+      // Navigate to the Quick Action page only if cancletour is false
+      if (!cancleTour) {
+        navigate("/buyer/dispute-resolution");
+      }
       // Set run to false when the tour finishes
       setState((prevState) => ({
         ...prevState,
         run: false,
       }));
-      navigate("/buyer/dispute-resolution");
     }
-  }, [tourFinished, navigate]);
+  }, [cancleTour, tourFinished, navigate]);
   //
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
+  }, [store.endTour]);
   return (
     <div>
       <Joyride
@@ -88,7 +109,16 @@ const TransactionHistory = () => {
         showSkipButton
         showProgress
         locale={{
-          skip: <strong>Cancel Tour</strong>,
+          skip: (
+            <button
+              onClick={() => {
+                endTourGuide();
+                store.setEndTour(true);
+              }}
+            >
+              <strong>Cancel Tour</strong>
+            </button>
+          ),
           last: "Next",
         }}
         callback={({ action }) => {
