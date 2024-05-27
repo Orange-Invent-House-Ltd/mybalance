@@ -15,14 +15,16 @@ const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
   const { data: user } = useUser();
+  console.log(data);
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (data) {
+      console.log(data);
       reset({
-        buyersEmail: data?.email,
-        buyersName: data?.fullName,
+        buyersEmail: data?.escrowMetadata?.parties?.buyer?.email,
+        buyersName: data?.escrowMetadata?.parties?.buyer?.name,
         purpose: data?.escrowMetadata?.purpose,
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
