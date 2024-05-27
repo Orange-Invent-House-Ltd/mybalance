@@ -254,7 +254,7 @@ export const generateWidgetSection = async (data: any) => {
   );
   return res.data;
 };
-export const getBlog = async () => {
-  const res = await blogApi.get("/blog/");
+export const getBlog = async (data: any) => {
+  const res = await blogApi.get("/blog/", data);
   return res.data;
 };

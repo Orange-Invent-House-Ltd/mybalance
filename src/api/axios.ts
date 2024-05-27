@@ -3,7 +3,7 @@ import axios from "axios";
 
 // const BASE_URL = "https://staging-api.mybalanceapp.com/v1";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const BLOG_URL = import.meta.env.BLOG_BASE_URL;
+const BLOG_URL = import.meta.env.VITE_BLOG_BASE_URL;
 
 export const publicApi = axios.create({
   baseURL: BASE_URL,

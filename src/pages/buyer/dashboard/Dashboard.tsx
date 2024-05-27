@@ -47,6 +47,7 @@ const Dashboard = () => {
   const { handleSubmit, control, register } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+
   var today = moment().format("YYYY-MM-DD");
   const {
     data: createEscrowData,
@@ -290,14 +291,16 @@ const Dashboard = () => {
         </div>
         <div className="hidden md:flex items-center gap-x-4">
           <div className="relative">
-            { user?.unreadNotificationCount !== 0 &&
-              <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center" >{user?.unreadNotificationCount}</span>
-            }
+            {user?.unreadNotificationCount !== 0 && (
+              <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+                {user?.unreadNotificationCount}
+              </span>
+            )}
             <img
               src={bell}
               alt="notification bell"
               className=""
-              onClick={()=>navigate('/buyer/notifications')}
+              onClick={() => navigate("/buyer/notifications")}
             />
           </div>
           <div className="w-[343px] md:w-[270px] createlink">
