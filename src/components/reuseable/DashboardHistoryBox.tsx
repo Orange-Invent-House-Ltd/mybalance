@@ -15,12 +15,16 @@ const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
   const { data: user } = useUser();
+  console.log(data);
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (data) {
+      console.log(data);
       reset({
+        buyersEmail: data?.escrowMetadata?.parties?.buyer?.email,
+        buyersName: data?.escrowMetadata?.parties?.buyer?.name,
         purpose: data?.escrowMetadata?.purpose,
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
@@ -109,6 +113,49 @@ const DashboardHistoryBox = (data: any) => {
                 </h6>
               </div>
               <form action="">
+                <h1 className="text-slate-700 text-lg font-medium">
+                  BUYER'S INFORMATION
+                </h1>
+                <div className="my-6 flex flex-col gap-4">
+                  <TextField
+                    control={control}
+                    rules={{ required: false }}
+                    name={"buyersName"}
+                    label="Buyer's name"
+                    placeholder="Jamiu Aremu"
+                    readOnly
+                  />
+                  <TextField
+                    control={control}
+                    rules={{ required: false }}
+                    name={"buyersEmail"}
+                    label="Buyer's email"
+                    placeholder="e.g@gmail.com"
+                    readOnly
+                  />
+                </div>
+                {/*  */}
+                <h1 className="text-[#393737] text-lg font-medium">
+                  BUYER INFORMATION
+                </h1>
+                <div className="mt-6 flex flex-col gap-4 mb-4">
+                  <TextField
+                    name='buyerName'
+                    label="Buyer's name"
+                    placeholder="Aremu Jamiu"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.name}
+                    control={control}
+                  />
+                  <TextField
+                    name='buyerEmail'
+                    label="Buyer's email"
+                    placeholder="jaremu@oinvent.com"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.email}
+                    control={control}
+                  />
+                </div>
                 <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>

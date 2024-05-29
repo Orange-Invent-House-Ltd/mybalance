@@ -4,11 +4,14 @@ import Card from "./BlogCard";
 import user from "../../assets/images/user.jpg";
 import user2 from "../../assets/images/shirt_50.png";
 import { Link } from "react-router-dom";
+import { useBlogs } from "../../hooks/queries";
 
 function BlogCardParent() {
   const [expanded, setExpanded] = useState(false);
   const [overflow, setOverflow] = useState("hidden");
 
+  const { data: blog } = useBlogs();
+  console.log(blog);
   const toggleExpanded = () => {
     setExpanded(!expanded);
     setOverflow(expanded ? "hidden" : "visible");

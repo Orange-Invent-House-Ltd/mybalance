@@ -157,7 +157,7 @@ const BuyerDashboardLayout = () => {
             </ul>
             <div
               onClick={() => setLogoutModal(true)}
-              className="mt-[20px] pl-4 text-[#DA1E28] hover:bg-white focus:bg-white"
+              className="mt-[20px] pl-4 text-[#DA1E28] hover:bg-white focus:bg-white cursor-pointer "
             >
               <div className="flex gap-4 py-2">
                 <svg

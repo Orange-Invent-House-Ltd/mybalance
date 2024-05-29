@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getBanks,
   getBlog,
-  getBlogs,
+  // getBlog,
+  // getBlogs,
   getDisputes,
   getEscrowPaymentRedirect,
   getLockedFunds,
@@ -81,7 +82,13 @@ export const useEscrowPaymentRedirect = ({
     queryFn: () => getEscrowPaymentRedirect({ status, tx_ref, transaction_id }),
   });
 };
-export const useNotifications = ({page, size }:{ page:number; size:number }) => {
+export const useNotifications = ({
+  page,
+  size,
+}: {
+  page: number;
+  size: number;
+}) => {
   return useQuery({
     queryKey: ["notifications", page, size],
     queryFn: () => getNotifications({ page, size }),
@@ -98,12 +105,12 @@ export const useNotification = (id: string) => {
 export const useBlogs = () => {
   return useQuery({
     queryKey: ["blogs"],
-    queryFn: getBlogs,
+    queryFn: getBlog,
   });
 };
-export const useBlog = (id: string) => {
-  return useQuery({
-    queryKey: ["blog", id],
-    queryFn: () => getBlog(id),
-  });
-};
+// export const useBlog = (id: string) => {
+//   return useQuery({
+//     queryKey: ["blog", id],
+//     queryFn: () => getBlog(id),
+//   });
+// };
