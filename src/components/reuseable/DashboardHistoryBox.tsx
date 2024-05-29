@@ -136,6 +136,27 @@ const DashboardHistoryBox = (data: any) => {
                 </div>
                 {/*  */}
                 <h1 className="text-[#393737] text-lg font-medium">
+                  BUYER INFORMATION
+                </h1>
+                <div className="mt-6 flex flex-col gap-4 mb-4">
+                  <TextField
+                    name='buyerName'
+                    label="Buyer's name"
+                    placeholder="Aremu Jamiu"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.name}
+                    control={control}
+                  />
+                  <TextField
+                    name='buyerEmail'
+                    label="Buyer's email"
+                    placeholder="jaremu@oinvent.com"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.email}
+                    control={control}
+                  />
+                </div>
+                <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">

@@ -164,7 +164,7 @@ const Notifications = () => {
                       label="Buyer's name"
                       placeholder="Aremu Jamiu"
                       readOnly={true}
-                      value={transactionInfo?.amount}
+                      value={transactionInfo?.escrowMetadata?.parties?.buyer?.name}
                       control={control}
                     />
                     <TextField
@@ -172,7 +172,7 @@ const Notifications = () => {
                       label="Buyer's email"
                       placeholder="jaremu@oinvent.com"
                       readOnly={true}
-                      value={transactionInfo?.escrowMetadata?.purpose}
+                      value={transactionInfo?.escrowMetadata?.parties?.buyer?.email}
                       control={control}
                     />
                   </div>
