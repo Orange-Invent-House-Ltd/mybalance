@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
+import { Copy } from "lucide-react";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
@@ -55,9 +56,15 @@ const DashboardHistoryBox = (data: any) => {
             ),
           })}
         >
-          <p className="text-lg font-medium">{data.meta.title}</p>
+          <div className="text-[#999999] text-[14px] flex items-center gap-x-2">{data?.reference} 
+            <Copy className="" onClick={()=>{
+              navigator.clipboard.writeText(data?.reference)
+              toast.success('Reference id copied successfully!')
+            }} />
+          </div>
+          <p className="text-lg font-medium">{data?.meta?.title}</p>
           <p className="text-sm font-normal  w-[150px] truncate ">
-            {data.meta.description}
+            {data?.meta.description}
           </p>
         </div>
         <div

@@ -99,17 +99,18 @@ const Profile = () => {
             name="name"
             rules={{ required: "this field is required" }}
           />
-          {/* <TextField
-            control={control}
-            label="email"
-            name="email"
-            rules={{ required: "this field is required" }}
-          /> */}
           <TextField
-            control={control}
-            label="phone"
             name="phone"
-            rules={{ required: "this field is required" }}
+            label="phone"
+            placeholder="09088776565"
+            control={control}
+            rules={{ 
+              required: "this field is required",
+              pattern: {
+                message: "Phone number must be 11 digits",
+                value: /^\d{11}$/,
+              },
+            }}
           />
 
           <Button fullWidth>update profile</Button>

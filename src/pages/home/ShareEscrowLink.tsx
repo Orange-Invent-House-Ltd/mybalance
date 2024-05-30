@@ -197,7 +197,7 @@ const ShareEscrowLink = () => {
       <div className="w-fit mx-auto relative bg-[#FFF2E8] ">
         {isLoading && <LoadingOverlay />}
 
-        <form action="">
+        <form className="mb-16">
           <h1 className="text-[#393737] text-lg font-medium mb-2 ">
             ITEM(S) INFORMATION
           </h1>
@@ -282,45 +282,66 @@ const ShareEscrowLink = () => {
               readOnly
             />
           </div>
+          {/* If user has not approved or reject show the button */}
+          {data?.data?.meta?.escrowAction === undefined && (
+            <div className="mt-6 space-y-3">
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={(e) => {
+                  e.preventDefault();
 
-          <div className="mt-6 space-y-3 mb-16">
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={(e) => {
-                e.preventDefault();
-
-                setModal(true);
-              }}
-            >
-              {" "}
-              reject information{" "}
-            </Button>
-            <Button
-              fullWidth
-              onClick={(e) => {
-                e.preventDefault();
-                mutate(
-                  {
-                    ref: ref,
-                    status: "APPROVED",
-                  },
-                  {
-                    onSuccess: () => {
-                      if (data.data.escrowMetadata.author === "SELLER") {
-                        setOpenPay(true);
-                      } else {
-                        navigate("/seller/dashboard");
-                      }
+                  setModal(true);
+                }}
+              >
+                {" "}
+                reject information{" "}
+              </Button>
+              <Button
+                fullWidth
+                onClick={(e) => {
+                  e.preventDefault();
+                  mutate(
+                    {
+                      ref: ref,
+                      status: "APPROVED",
                     },
-                  }
-                );
-              }}
-            >
-              {" "}
-              accept information{" "}
-            </Button>
-          </div>
+                    {
+                      onSuccess: () => {
+                        if (data.data.escrowMetadata.author === "SELLER") {
+                          setOpenPay(true);
+                        } else {
+                          navigate("/seller/dashboard");
+                        }
+                      },
+                    }
+                  );
+                }}
+              >
+                {" "}
+                accept information{" "}
+              </Button>
+            </div>
+          )}
+          {/* If user has approved but has not paid show pay button*/}
+          {data?.data?.meta?.escrowAction === "APPROVED" && (
+            <div className="mt-6">
+              <Button
+                fullWidth
+                disabled={data?.data?.status === "SUCCESSFUL" || user?.userType === "SELLER"}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (data.data.escrowMetadata.author === "SELLER") {
+                    setOpenPay(true);
+                  } else {
+                    navigate("/seller/dashboard");
+                  }    
+                }}
+              >
+                {data?.data?.status === "PENDING" ? 'Pay Now' : 'Pament Made'}
+              </Button>
+            </div>
+          )}
         </form>
       </div>
       <AlertDialog.Root open={fundEscrow} onOpenChange={setFundEscrow}>
