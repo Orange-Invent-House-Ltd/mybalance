@@ -127,7 +127,13 @@ const Profile = () => {
             placeholder="09088776565"
             label="Phone"
             name="phone"
-            rules={{ required: "this field is required" }}
+            rules={{ 
+              required: "this field is required",
+              pattern: {
+                message: "Phone number must be 11 digits",
+                value: /^\d{11}$/,
+              },
+            }}
           />
           <TextField
             control={control}
