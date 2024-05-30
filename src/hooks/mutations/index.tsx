@@ -310,7 +310,9 @@ export const useLockFunds = () => {
         `/escrow-payment?amt=${data.data.amount}&ref=${data.data.transactionReference}`
       );
     },
-    onError: (error: any) => {},
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message)
+    },
   });
 };
 export const useUnLockFunds = () => {
