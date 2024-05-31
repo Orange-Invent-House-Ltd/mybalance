@@ -7,19 +7,34 @@ import back from "../../assets/Icons/back.svg";
 import TextField from "./TextField1";
 import { Button } from "./Button";
 import { toast } from "react-toastify";
-
 import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
 import { Copy } from "lucide-react";
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import {
+  useFundEscrow,
+  useLockFunds,
+  useRespondTransaction,
+} from "../../hooks/mutations";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
+  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const navigate = useNavigate();
   const { data: user } = useUser();
+  const [modal, setModal] = useState(false);
   console.log(data);
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
+
+  const {
+    mutate,
+    isLoading,
+    isSuccess: respondSuccessful,
+  } = useRespondTransaction();
+
   useEffect(() => {
     if (data) {
       console.log(data);
@@ -38,8 +53,112 @@ const DashboardHistoryBox = (data: any) => {
       });
     }
   }, [reset, data]);
+
+  const rejectedReason = [
+    {
+      title: "wrong amount",
+      value: "WRONG_AMOUNT",
+    },
+    {
+      title: "wrong description",
+      value: "WRONG_DESCRIPTION",
+    },
+    {
+      title: "wrong choice of item(s)",
+      value: "WRONG_ITEM_CHOICE",
+    },
+    {
+      title: "wrong quantity",
+      value: "WRONG_QUANTITY",
+    },
+    {
+      title: "wrong delivery date",
+      value: "WRONG_DELIVERY_DATE",
+    },
+  ];
+  
+  const handleReasonSelection = (value: string) => {
+    if (selectedReasons.includes(value)) {
+      setSelectedReasons(selectedReasons.filter((reason) => reason !== value));
+    } else {
+      setSelectedReasons([...selectedReasons, value]);
+    }
+  };
+
   return (
     <>
+      {/* Rejection Moodal */}
+      <AlertDialog.Root open={modal}>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50 " />
+          <AlertDialog.Content className="animate-jump   fixed top-0 left-0 z-50 w-full h-full  ">
+            <div className="w-full max-w-[380px] py-2 px-8  rounded-lg absolute bg-white  top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 ">
+              <div className="mt-6 text-center">
+                <h1 className="text-2xl font-medium text-center">
+                  Reason[s] For Rejecting
+                </h1>
+                <p className="text-lg font-normal text-[#3A3A3A]">
+                  Select your reason[s] for <br /> rejecting this transaction.
+                </p>
+              </div>{" "}
+              <div className="space-y-4 my-6">
+                {rejectedReason.map(({ title, value }) => {
+                  return (
+                    <div className="flex gap-5  capitalize">
+                      <input
+                        checked={selectedReasons.includes(value)}
+                        onChange={() => handleReasonSelection(value)}
+                        type="checkbox"
+                        className="accent-primary-normal cursor-pointer  text-white"
+                        id={value}
+                      />
+                      <label className="cursor-pointer" htmlFor={value}>
+                        {title}
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex gap-3 flex-col">
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setModal(false);
+                  }}
+                  disabled={isLoading}
+                >
+                  cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (selectedReasons.length > 0) {
+                      mutate(
+                        {
+                          ref: data?.reference,
+                          status: "REJECTED",
+                          rejectedReason: selectedReasons, // Pass the selected reason to the API
+                        },
+                        {
+                          onSuccess: () => {
+                            navigate("/buyer/dashboard");
+                          },
+                        }
+                      );
+                      console.log(selectedReasons);
+                    } else {
+                      toast.error("you have to select a reason for rejection");
+
+                      // Handle the case where no reason is selected
+                    }
+                  }}
+                >
+                  {isLoading ? "Loading...." : " reject information"}
+                </Button>
+              </div>
+            </div>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
       <div
         onClick={() => {
           if (data?.type === "ESCROW" && data?.status === "SUCCESSFUL") {
@@ -63,6 +182,9 @@ const DashboardHistoryBox = (data: any) => {
             }} />
           </div>
           <p className="text-lg font-medium">{data?.meta?.title}</p>
+          {user?.userType === "SELLER" && (
+            <p className="mr-2">{data?.escrowMetadata?.parties?.buyer?.email}</p>
+          )}
           <p className="text-sm font-normal  w-[150px] truncate ">
             {data?.meta.description}
           </p>
@@ -99,16 +221,17 @@ const DashboardHistoryBox = (data: any) => {
           </p>
         </div>
       </div>
+      {/* Transaction Details */}
       <Dialog.Root open={open}>
         <Dialog.Portal className="">
           <Dialog.Overlay
             onClick={() => setOpen(false)}
-            className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
+            className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
           />
 
           <Dialog.Content>
-            <div className="max-w-[393px]  w-full  h-[100svh] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] overflow-y-scroll">
-              <div className="flex gap-4 items-center pt-10 mb-8">
+            <div className="max-w-[393px] w-full h-[100svh] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] pb-8 overflow-y-scroll">
+              <div className="flex gap-4 items-center pt-10 pb-8">
                 <img
                   onClick={() => setOpen(false)}
                   src={back}
@@ -120,27 +243,29 @@ const DashboardHistoryBox = (data: any) => {
                 </h6>
               </div>
               <form action="">
-                <h1 className="text-[#393737] text-lg font-medium">
-                  BUYER INFORMATION
-                </h1>
-                <div className="mt-6 flex flex-col gap-4 mb-4">
-                  <TextField
-                    name='buyerName'
-                    label="Buyer's name"
-                    placeholder="Aremu Jamiu"
-                    readOnly={true}
-                    value={data?.escrowMetadata?.parties?.buyer?.name}
-                    control={control}
-                  />
-                  <TextField
-                    name='buyerEmail'
-                    label="Buyer's email"
-                    placeholder="jaremu@oinvent.com"
-                    readOnly={true}
-                    value={data?.escrowMetadata?.parties?.buyer?.email}
-                    control={control}
-                  />
-                </div>
+                {/* {user?.userType === "SELLER" && (<> */}
+                  <h1 className="text-[#393737] text-lg font-medium">
+                    BUYER INFORMATION
+                  </h1>
+                  <div className="mt-6 flex flex-col gap-4 mb-4">
+                    <TextField
+                      name='buyerName'
+                      label="Buyer's name"
+                      placeholder="Aremu Jamiu"
+                      readOnly={true}
+                      value={data?.escrowMetadata?.parties?.buyer?.name}
+                      control={control}
+                    />
+                    <TextField
+                      name='buyerEmail'
+                      label="Buyer's email"
+                      placeholder="jaremu@oinvent.com"
+                      readOnly={true}
+                      value={data?.escrowMetadata?.parties?.buyer?.email}
+                      control={control}
+                    />
+                  </div>
+                {/* </>)} */}
                 <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
                 </h1>
@@ -225,7 +350,7 @@ const DashboardHistoryBox = (data: any) => {
                     readOnly
                   />
                 </div>
-                <div className="flex flex-col gap-6 mt-6 mb-10">
+                <div className="flex flex-col gap-y-4 mt-6">
                   <Button
                     disabled={data?.meta?.escrowAction !== "APPROVED"}
                     onClick={() =>
@@ -255,6 +380,46 @@ const DashboardHistoryBox = (data: any) => {
                     </Button>
                   )}
                 </div>
+                {/* Accept and Reject Button */}
+                {(data?.meta?.escrowAction === undefined && user?.userType !== data?.escrowMetadata?.author ) && (
+                  <div className="mt-4 space-y-3">
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setModal(true);
+                      }}
+                    >
+                      {" "}
+                      reject information{" "}
+                    </Button>
+                    <Button
+                      fullWidth
+                      onClick={(e) => {
+                        e.preventDefault();
+                        mutate(
+                          {
+                            ref: data?.reference,
+                            status: "APPROVED",
+                          },
+                          {
+                            onSuccess: () => {
+                              if (data.data.escrowMetadata.author === "SELLER") {
+                                setOpenPay(true);
+                              } else {
+                                navigate("/seller/dashboard");
+                              }
+                            },
+                          }
+                        );
+                      }}
+                    >
+                      {" "}
+                      accept information{" "}
+                    </Button>
+                  </div>
+                )}
               </form>
             </div>
           </Dialog.Content>

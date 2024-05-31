@@ -96,6 +96,7 @@ const ShareEscrowLink = () => {
       value: "WRONG_DELIVERY_DATE",
     },
   ];
+
   const handleReasonSelection = (value: string) => {
     if (selectedReasons.includes(value)) {
       setSelectedReasons(selectedReasons.filter((reason) => reason !== value));
@@ -103,6 +104,7 @@ const ShareEscrowLink = () => {
       setSelectedReasons([...selectedReasons, value]);
     }
   };
+
   if (userLoading || transactionLoading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -116,6 +118,7 @@ const ShareEscrowLink = () => {
 
   return (
     <div className="px-[5%]">
+      {/* Rejection Moodal */}
       <AlertDialog.Root open={modal}>
         <AlertDialog.Portal>
           <AlertDialog.Overlay className="bg-[#3a3a3a]/50  backdrop-blur-md fixed inset-0 z-50 " />
