@@ -52,7 +52,7 @@ const Login = () => {
             className="flex mb-0 text-sm list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
           >
-            {/* customer tab */}
+            {/* Buyer tab */}
             <li className="-mb-px last:mr-0 flex-auto text-center">
               <Link
                 className={
@@ -69,7 +69,7 @@ const Login = () => {
                 to="#link1"
                 role="tablist"
               >
-                Login as a customer
+                Login as a Buyer
               </Link>
             </li>
             {/* seller tab */}
@@ -96,7 +96,7 @@ const Login = () => {
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full">
             <div className=" py-5 flex-auto">
               <div className="tab-content tab-space">
-                {/* Login as customer */}
+                {/* Login as Buyer */}
 
                 <div id="link1">
                   <FormProvider {...methods}>
