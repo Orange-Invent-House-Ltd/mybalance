@@ -87,7 +87,7 @@ const Register = () => {
                 to="/buyer/register"
                 role="tablist"
               >
-                Create as a customer
+                Create as a buyer
               </Link>
             </li>
             {/* seller tab */}

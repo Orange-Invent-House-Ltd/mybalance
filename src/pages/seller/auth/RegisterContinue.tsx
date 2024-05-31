@@ -200,7 +200,7 @@ const RegisterContinue = () => {
                 href="#link1"
                 role="tablist"
               >
-                Create as a customer
+                Create as a buyer
               </a>
             </li>
             {/* seller tab */}
