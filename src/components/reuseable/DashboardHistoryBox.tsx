@@ -37,7 +37,6 @@ const DashboardHistoryBox = (data: any) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       reset({
         buyersEmail: data?.escrowMetadata?.parties?.buyer?.email,
         buyersName: data?.escrowMetadata?.parties?.buyer?.name,
@@ -76,7 +75,7 @@ const DashboardHistoryBox = (data: any) => {
       value: "WRONG_DELIVERY_DATE",
     },
   ];
-  
+
   const handleReasonSelection = (value: string) => {
     if (selectedReasons.includes(value)) {
       setSelectedReasons(selectedReasons.filter((reason) => reason !== value));
@@ -175,15 +174,21 @@ const DashboardHistoryBox = (data: any) => {
             ),
           })}
         >
-          <div className="text-[#999999] text-[14px] flex items-center gap-x-2">{data?.reference} 
-            <Copy className="" onClick={()=>{
-              navigator.clipboard.writeText(data?.reference)
-              toast.success('Reference id copied successfully!')
-            }} />
+          <div className="text-[#999999] text-[14px] flex items-center gap-x-2">
+            {data?.reference}
+            <Copy
+              className=""
+              onClick={() => {
+                navigator.clipboard.writeText(data?.reference);
+                toast.success("Reference id copied successfully!");
+              }}
+            />
           </div>
           <p className="text-lg font-medium">{data?.meta?.title}</p>
           {user?.userType === "SELLER" && (
-            <p className="mr-2">{data?.escrowMetadata?.parties?.buyer?.email}</p>
+            <p className="mr-2">
+              {data?.escrowMetadata?.parties?.buyer?.email}
+            </p>
           )}
           <p className="text-sm font-normal  w-[150px] truncate ">
             {data?.meta.description}
@@ -244,27 +249,27 @@ const DashboardHistoryBox = (data: any) => {
               </div>
               <form action="">
                 {/* {user?.userType === "SELLER" && (<> */}
-                  <h1 className="text-[#393737] text-lg font-medium">
-                    BUYER INFORMATION
-                  </h1>
-                  <div className="mt-6 flex flex-col gap-4 mb-4">
-                    <TextField
-                      name='buyerName'
-                      label="Buyer's name"
-                      placeholder="Aremu Jamiu"
-                      readOnly={true}
-                      value={data?.escrowMetadata?.parties?.buyer?.name}
-                      control={control}
-                    />
-                    <TextField
-                      name='buyerEmail'
-                      label="Buyer's email"
-                      placeholder="jaremu@oinvent.com"
-                      readOnly={true}
-                      value={data?.escrowMetadata?.parties?.buyer?.email}
-                      control={control}
-                    />
-                  </div>
+                <h1 className="text-[#393737] text-lg font-medium">
+                  BUYER INFORMATION
+                </h1>
+                <div className="mt-6 flex flex-col gap-4 mb-4">
+                  <TextField
+                    name="buyerName"
+                    label="Buyer's name"
+                    placeholder="Aremu Jamiu"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.name}
+                    control={control}
+                  />
+                  <TextField
+                    name="buyerEmail"
+                    label="Buyer's email"
+                    placeholder="jaremu@oinvent.com"
+                    readOnly={true}
+                    value={data?.escrowMetadata?.parties?.buyer?.email}
+                    control={control}
+                  />
+                </div>
                 {/* </>)} */}
                 <h1 className="text-[#393737] text-lg font-medium">
                   ITEM(S) INFORMATION
@@ -381,45 +386,48 @@ const DashboardHistoryBox = (data: any) => {
                   )}
                 </div>
                 {/* Accept and Reject Button */}
-                {(data?.meta?.escrowAction === undefined && user?.userType !== data?.escrowMetadata?.author ) && (
-                  <div className="mt-4 space-y-3">
-                    <Button
-                      fullWidth
-                      variant="outlined"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setModal(true);
-                      }}
-                    >
-                      {" "}
-                      reject information{" "}
-                    </Button>
-                    <Button
-                      fullWidth
-                      onClick={(e) => {
-                        e.preventDefault();
-                        mutate(
-                          {
-                            ref: data?.reference,
-                            status: "APPROVED",
-                          },
-                          {
-                            onSuccess: () => {
-                              if (data.data.escrowMetadata.author === "SELLER") {
-                                setOpenPay(true);
-                              } else {
-                                navigate("/seller/dashboard");
-                              }
+                {data?.meta?.escrowAction === undefined &&
+                  user?.userType !== data?.escrowMetadata?.author && (
+                    <div className="mt-4 space-y-3">
+                      <Button
+                        fullWidth
+                        variant="outlined"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setModal(true);
+                        }}
+                      >
+                        {" "}
+                        reject information{" "}
+                      </Button>
+                      <Button
+                        fullWidth
+                        onClick={(e) => {
+                          e.preventDefault();
+                          mutate(
+                            {
+                              ref: data?.reference,
+                              status: "APPROVED",
                             },
-                          }
-                        );
-                      }}
-                    >
-                      {" "}
-                      accept information{" "}
-                    </Button>
-                  </div>
-                )}
+                            {
+                              onSuccess: () => {
+                                if (
+                                  data.data.escrowMetadata.author === "SELLER"
+                                ) {
+                                  setOpenPay(true);
+                                } else {
+                                  navigate("/seller/dashboard");
+                                }
+                              },
+                            }
+                          );
+                        }}
+                      >
+                        {" "}
+                        accept information{" "}
+                      </Button>
+                    </div>
+                  )}
               </form>
             </div>
           </Dialog.Content>
