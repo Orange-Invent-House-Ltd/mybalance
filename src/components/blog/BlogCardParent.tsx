@@ -22,16 +22,12 @@ function BlogCardParent() {
   const queryClient = useQueryClient();
   const [expanded, setExpanded] = useState(false);
   const [overflow, setOverflow] = useState("hidden");
-  const { data, isLoading, isFetching } = useBlogs();
+  const { data, isLoading } = useBlogs();
   const blogData = data?.data;
-
-  useEffect(() => {
-    // Load blog data when the component mounts
-    queryClient.invalidateQueries({
-      queryKey: ["blogs"],
-      refetchType: "all",
-    });
-  }, []);
+  //
+  if (!blogData) {
+    return <div>No blog available</div>;
+  }
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -40,7 +36,7 @@ function BlogCardParent() {
 
   return (
     <div>
-      {isFetching && isLoading ? (
+      {isLoading ? (
         <LoadingOverlay />
       ) : (
         <div className="transition-all duration-700 ease-in-out">
@@ -55,7 +51,7 @@ function BlogCardParent() {
                 to={`/blog/${blog.id}/details`}
                 state={{ blogData: blog }}
               >
-                <Card data={blog} />
+                <Card data={blog} key={blog.id} />
               </Link>
             ))}
           </div>
