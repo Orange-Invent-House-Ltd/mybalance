@@ -22,12 +22,9 @@ function BlogCardParent() {
   const queryClient = useQueryClient();
   const [expanded, setExpanded] = useState(false);
   const [overflow, setOverflow] = useState("hidden");
-  const { data, isLoading } = useBlogs();
+  const { data, isLoading, isFetching } = useBlogs();
   const blogData = data?.data;
   //
-  if (!blogData) {
-    return <div>No blog available</div>;
-  }
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -36,7 +33,7 @@ function BlogCardParent() {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoading && isFetching ? (
         <LoadingOverlay />
       ) : (
         <div className="transition-all duration-700 ease-in-out">
