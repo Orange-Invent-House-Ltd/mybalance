@@ -4,7 +4,7 @@ import { formatDate } from "../../util/DateFormat";
 
 const Card = ({ data }: any) => {
   return (
-    <div className="bg-white shadow-lg p-6 ">
+    <div className="bg-white shadow-lg p-6 h-[600px] ">
       <img
         src={data.coverImageUrl}
         alt="Card Image"
