@@ -187,7 +187,7 @@ const DashboardHistoryBox = (data: any) => {
           <p className="text-lg font-medium">{data?.meta?.title}</p>
           {user?.userType === "SELLER" && (
             <p className="mr-2">
-              {data?.escrowMetadata?.parties?.buyer?.email}
+              {data?.escrowMetadata?.parties?.buyer?.name}
             </p>
           )}
           <p className="text-sm font-normal  w-[150px] truncate ">
