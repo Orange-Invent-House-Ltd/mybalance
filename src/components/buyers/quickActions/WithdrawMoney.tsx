@@ -17,8 +17,10 @@ import { useBanks } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
 import formatToNairaCurrency from "../../../util/formatNumber";
+import { useNavigate } from "react-router-dom";
 
 const WithdrawMoney = () => {
+  const navigate = useNavigate()
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
   const [modalMessageTitle, setModalMessageTitle] = useState("");
@@ -225,7 +227,10 @@ const WithdrawMoney = () => {
                   <Button
                     //   disabled={LookupIsLoading}
                     fullWidth={true}
-                    onClick={() => setIsWithdraw(false)}
+                    onClick={() => {
+                      setIsWithdraw(false)
+                      navigate("/buyer/dashboard")
+                    }}
                   >
                     Return to dashboard
                   </Button>

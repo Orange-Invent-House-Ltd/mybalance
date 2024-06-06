@@ -168,6 +168,25 @@ const Notifications = () => {
                       control={control}
                     />
                     <TextField
+                      control={control}
+                      rules={{ required: false }}
+                      name={"type"}
+                      label="Type of item(s)"
+                      placeholder="i phone"
+                      value={transactionInfo?.escrowMetadata?.itemType}
+                      readOnly
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: false }}
+                      name={"number"}
+                      label="Number of item(s)"
+                      placeholder="give a description"
+                      type="number"
+                      value={transactionInfo?.escrowMetadata?.itemQuantity}
+                      readOnly
+                    />
+                    <TextField
                       name='buyerEmail'
                       label="Buyer's email"
                       placeholder="jaremu@oinvent.com"
