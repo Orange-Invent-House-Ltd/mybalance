@@ -103,11 +103,11 @@ const Withdraw = ({ open, setOpen }: any) => {
     reset({
       email: user?.email,
       bank: user?.bankAccount?.bankCode,
-      accountNumber: user?.bankAccount.accountNumber,
-      accountName: user?.bankAccount.accountName,
+      accountNumber: user?.bankAccount?.accountNumber,
+      accountName: user?.bankAccount?.accountName,
     });
-    setAccNum(user?.bankAccount.accountNumber);
-    setCode(user?.bankAccount.bankCode || "");
+    setAccNum(user?.bankAccount?.accountNumber);
+    setCode(user?.bankAccount?.bankCode || "");
   }, [user]);
   return (
     <>
@@ -121,8 +121,8 @@ const Withdraw = ({ open, setOpen }: any) => {
           <Dialog.Content className="relative">
             <form
               onSubmit={handleSubmitWithdraw((data) => {
-                delete data.accountName;
-                delete data.accountNumber;
+                delete data?.accountName;
+                delete data?.accountNumber;
                 withdrawMutate({
                   ...data,
                   accountNumber: accNum,
@@ -173,12 +173,12 @@ const Withdraw = ({ open, setOpen }: any) => {
                       className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
                       value={code}
                       onChange={(e) => {
-                        setCode(e.target.value);
+                        setCode(e?.target?.value);
                       }}
                     >
                       {banks?.data?.map((bank: any) => (
-                        <option key={bank.slug} value={bank.code}>
-                          {bank.name}
+                        <option key={bank?.slug} value={bank?.code}>
+                          {bank?.name}
                         </option>
                       ))}
                       {bankIsLoading && <option value="">loading...</option>}
@@ -201,7 +201,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                       control={controlWithdraw}
                       name={"accountName"}
                       label="Account Name"
-                      value={LookupData?.data.accountName}
+                      value={LookupData?.data?.accountName}
                       placeholder="e.g JMusty Feet"
                     />
                   </div>

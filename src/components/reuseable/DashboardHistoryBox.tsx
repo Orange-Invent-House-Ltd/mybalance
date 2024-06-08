@@ -190,7 +190,7 @@ const DashboardHistoryBox = (data: any) => {
               {data?.escrowMetadata?.parties?.buyer?.name}
             </p>
           )}
-          <p className="text-sm font-normal  w-[150px] truncate ">
+          <p className="text-sm font-normal w-[150px] truncate ">
             {data?.meta.description}
           </p>
         </div>
@@ -415,8 +415,10 @@ const DashboardHistoryBox = (data: any) => {
                                   data.data.escrowMetadata.author === "SELLER"
                                 ) {
                                   setOpenPay(true);
+                                  setOpen(false)
                                 } else {
-                                  navigate("/seller/dashboard");
+                                  // navigate("/seller/dashboard");
+                                  setOpen(false)
                                 }
                               },
                             }

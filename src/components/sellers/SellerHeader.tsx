@@ -56,11 +56,11 @@ const Header = () => {
   const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
   useEffect(() => {
     reset({
-      accountNumber: user?.bankAccount.accountNumber,
-      accountName: user?.bankAccount.accountName,
+      accountNumber: user?.bankAccount?.accountNumber,
+      accountName: user?.bankAccount?.accountName,
     });
     setCode(user?.bankAccount?.bankCode);
-    setAccNum(user?.bankAccount.accountNumber);
+    setAccNum(user?.bankAccount?.accountNumber);
   }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between">

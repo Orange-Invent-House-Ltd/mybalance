@@ -72,46 +72,6 @@ const Dashboard = () => {
         target: ".transaction",
         title: "Transaction History",
       },
-      // {
-      //   content: (
-      //     <div>
-      //       Initiate transactions effortlessly. Create a one-time MyBalance
-      //       link, where you'll fill in every detail about the product and the
-      //       buyer or seller.{" "}
-      //       <strong>
-      //         Don't forget, your email is crucial for a smooth process
-      //       </strong>
-      //     </div>
-      //   ),
-      //   placement: "bottom" as "bottom",
-      //   target: ".createlink",
-      //   title: "Create MyBalance Link",
-      // },
-      // {
-      //   content: "Top up your wallet from your local bank securely.",
-      //   placement: "bottom" as "bottom",
-      //   target: ".depositMoney",
-      //   title: "Deposit",
-      // },
-      // {
-      //   content:
-      //     "Use this feature to unlock funds, ensuring a seamless and trustworthy experience.",
-      //   placement: "bottom" as "bottom",
-      //   target: ".unlockMoney",
-      //   title: "Unlock Money",
-      // },
-      // {
-      //   content: "Transfer funds from wallet to your local bank account.",
-      //   placement: "bottom" as "bottom",
-      //   target: ".withdrawMoney",
-      //   title: "Withdraw Money",
-      // },
-      // {
-      //   content: "See a comprehensive list of all your account activities.",
-      //   placement: "right" as "right",
-      //   target: ".transaction-history",
-      //   title: "Transaction History",
-      // },
     ],
   });
   useEffect(() => {
@@ -247,7 +207,7 @@ const Dashboard = () => {
               </div>
             )}
             {transactionData?.data?.map((transaction: any) => (
-              <div key={transaction.id} className="max-w-[676px] w-full">
+              <div key={transaction?.id} className="max-w-[676px] w-full">
                 <DashboardHistoryBox {...transaction} />
               </div>
             ))}
@@ -264,7 +224,7 @@ const Dashboard = () => {
                 </Button>
               </Link>
             </div>
-            {transactionData?.data.length === 0 && <EmptyTrans />}
+            {transactionData?.data?.length === 0 && <EmptyTrans />}
           </div>
           <div>
             {/* Right side box - Charges box */}
