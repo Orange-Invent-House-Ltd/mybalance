@@ -379,6 +379,7 @@ export const useRespondTransaction = () => {
   return useMutation({
     mutationFn: respondTransaction,
     onSuccess: (data) => {
+      queryClient.invalidateQueries(["transactions"]);
       // navigate("/buyer/dashboard");
       toast.success(data.message);
     },

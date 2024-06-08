@@ -62,9 +62,9 @@ const RegisterContinue = () => {
   // get user bank name once bank number input filed  === 10 digits
   useEffect(() => {
     const userAccountNumber = watch("accountNumber");
-    if (userAccountNumber.length === 10) {
-      const bank = banks.data?.find((bank: any) => bank.name === bankName);
-      setBankCode(bank.code);
+    if (userAccountNumber?.length === 10) {
+      const bank = banks?.data?.find((bank: any) => bank?.name === bankName);
+      setBankCode(bank?.code);
       console.log(bankCode);
       if (bankCode !== "") getAccountName(bankCode, userAccountNumber);
     }
@@ -142,8 +142,8 @@ const RegisterContinue = () => {
       console.log(data);
       //set button loading to true
       store.setRequestLoading(true);
-      store.setAuthEmail(data.email);
-      localStorage.setItem("email", data.email);
+      store.setAuthEmail(data?.email);
+      localStorage.setItem("email", data?.email);
       //post input datas to database
       const response = await publicApi.post<GenericResponse>(
         "auth/register/seller",
@@ -157,15 +157,15 @@ const RegisterContinue = () => {
         position: "top-right",
       });
       store.setRequestLoading(false);
-      store.setTempId(response.data.data?.tempId);
-      localStorage.setItem('tempId', response.data.data?.tempId);
+      store.setTempId(response?.data?.data?.tempId);
+      localStorage.setItem('tempId', response?.data?.data?.tempId);
       localStorage.setItem("userType", "seller");
       //navigate to verification page after submition
       navigate("/email-verification");
     } catch (error: any) {
       console.log(error);
       store.setRequestLoading(false);
-      const resMessage = error.response.data.errors.email.toString() ||
+      const resMessage = error.response.data.errors?.email.toString() ||
       error.response.data.message.toString()
       //Form submition error notifications
       toast.error(resMessage, {
@@ -278,12 +278,13 @@ const RegisterContinue = () => {
                             value={bankName}
                             name="bankName"
                             onChange={(e) => {
-                              setBankName(e.target.value);
+                              setBankName(e?.target?.value);
                             }}
                           >
+                            {/* <option value="">Select your bank</option> */}
                             {banks?.data?.map((bank: any) => (
-                              <option key={bank.name} value={bank.name}>
-                                {bank.name}
+                              <option key={bank?.name} value={bank?.name}>
+                                {bank?.name}
                               </option>
                             ))}
                             {bankIsLoading && (
