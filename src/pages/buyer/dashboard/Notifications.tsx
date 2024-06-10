@@ -38,17 +38,17 @@ const Notifications = () => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [page]);
+  }, []);
 
   // Polling for new notifications
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchNotifications();
-      console.log("notified new Notification");
-    }, 5000); // Poll every 10 seconds
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     fetchNotifications();
+  //     console.log("notified new Notification");
+  //   }, 5000); // Poll every 10 seconds
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handlePageChange = (selected: any) => {
     setPage(selected);
