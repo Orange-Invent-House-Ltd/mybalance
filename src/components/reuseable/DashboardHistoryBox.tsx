@@ -130,7 +130,7 @@ const DashboardHistoryBox = (data: any) => {
                 </Button>
                 <Button
                   onClick={() => {
-                    if (selectedReasons.length > 0) {
+                    if (selectedReasons?.length > 0) {
                       mutate(
                         {
                           ref: data?.reference,
@@ -426,6 +426,7 @@ const DashboardHistoryBox = (data: any) => {
                           setOpen(false)
                         }}
                       >
+
                         {" "}
                         accept information{" "}
                       </Button>

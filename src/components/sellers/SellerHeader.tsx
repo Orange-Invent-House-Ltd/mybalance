@@ -47,13 +47,13 @@ const Header = () => {
     });
   };
   useEffect(() => {
-    if (accNum.length === 10) {
+    if (accNum?.length === 10) {
       LookupMutate({ bankCode: code, accountNumber: accNum });
     }
   }, [accNum, code]);
   const words = user?.fullName.split(" ");
   const firstLetter = words?.[0][0];
-  const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
+  const secondLetter = words?.[1] && words[1]?.length > 0 ? words[1][0] : "";
   useEffect(() => {
     reset({
       accountNumber: user?.bankAccount?.accountNumber,

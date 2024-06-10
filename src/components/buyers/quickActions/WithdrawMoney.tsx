@@ -93,7 +93,7 @@ const WithdrawMoney = () => {
     }
   }, [withdrawSuccess]);
   useEffect(() => {
-    if (accNum.length === 10) {
+    if (accNum?.length === 10) {
       LookupMutate({ bankCode: code, accountNumber: accNum });
       // LookupMutate({ bankCode: "044", accountNumber: accNum });
     }

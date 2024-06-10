@@ -63,7 +63,7 @@ export default function OtpInput({ value, valueLength, onChange }: Props) {
 
     targetValue = isTargetValueDigit ? targetValue : " ";
 
-    const targetValueLength = targetValue.length;
+    const targetValueLength = targetValue?.length;
 
     if (targetValueLength === 1) {
       const newValue =
@@ -101,7 +101,7 @@ export default function OtpInput({ value, valueLength, onChange }: Props) {
 
     // keep the selection range position
     // if the same digit was typed
-    target.setSelectionRange(0, targetValue.length);
+    target.setSelectionRange(0, targetValue?.length);
 
     if (e.key !== "Backspace" || targetValue !== "") {
       return;
@@ -121,7 +121,7 @@ export default function OtpInput({ value, valueLength, onChange }: Props) {
       return prevInputEl.focus();
     }
 
-    target.setSelectionRange(0, target.value.length);
+    target.setSelectionRange(0, target?.value?.length);
   };
 
   return (
