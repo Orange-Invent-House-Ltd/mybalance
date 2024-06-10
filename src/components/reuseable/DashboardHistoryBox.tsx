@@ -423,6 +423,7 @@ const DashboardHistoryBox = (data: any) => {
                               },
                             }
                           );
+                          setOpen(false)
                         }}
                       >
                         {" "}
