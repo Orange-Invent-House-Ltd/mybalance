@@ -51,7 +51,7 @@ const Notifications = () => {
     const intervalId = setInterval(fetchNotifications, 2000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [page]);
 
   //
   const handlePageChange = (selected: any) => {
