@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/reuseable/Header";
-import { Button } from "../../../components/reuseable/Button";
-import TextField from "../../../components/reuseable/TextField1";
-import back from "../../../assets/Icons/back.svg";
-import RejectModal from "../../../components/sellers/RejectModal";
+import {
+  useNotifications,
+  useTransactionInfo,
+  useUser,
+} from "../../../hooks/queries";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import Pagination from "../../../components/reuseable/Pagination";
 import { Circle } from "lucide-react";
+import Pagination from "../../../components/reuseable/Pagination";
+import back from "../../../assets/Icons/back.svg";
 import * as Dialog from "@radix-ui/react-dialog";
-import { useForm } from "react-hook-form";
 import { privateApi } from "../../../api/axios";
-import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "../../../hooks/queries";
+import TextField from "../../../components/reuseable/TextField1";
+import { useForm } from "react-hook-form";
+import {
+  InvalidateQueryFilters,
+  useIsMutating,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 const Notifications = () => {
   const queryClient = useQueryClient();
@@ -20,43 +26,30 @@ const Notifications = () => {
   const [id, setId] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [transactionInfo, setTransactionInfo] = useState<any>({});
+  const [page, setPage] = useState<number>(1);
   const [notificationIsLoading, setNotificationIsLoading] = useState(false);
   const [transactionIsLoading, setTransactionIsLoading] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [value, setValue] = useState("");
-  const [isReject, setIsReject] = useState(false);
-  const [page, setPage] = useState<number>(1);
-  const [notifications, setNotifications] = useState<any[]>([]);
-  const [isLoadingNotifications, setIsLoadingNotifications] = useState(true);
+  const { data: notifications, isLoading: notificationsIsPending } =
+    useNotifications({
+      page,
+      size: 10,
+    });
   const { data: user, isLoading: userIsPending } = useUser();
-  const { control } = useForm();
+  // const {data: transactionInfo} = useTransactionInfo(transactionId,)
 
-  // Polling for notifications
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        setIsLoadingNotifications(true);
-        const response = await privateApi.get(
-          `/notifications?page=${page}&size=10`
-        );
-        setNotifications(response.data.data);
-        setIsLoadingNotifications(false);
-      } catch (error) {
-        console.error("Failed to fetch notifications", error);
-        setIsLoadingNotifications(false);
-      }
-    };
-    fetchNotifications();
+    if (notifications) {
+      queryClient.invalidateQueries({
+        queryKey: ["notifications", page],
+        refetchType: "all", // refetch both active and inactive queries
+      });
+    }
   }, [page]);
 
-  //
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
-
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
-  };
+  const { control } = useForm();
 
   const getNotification = async () => {
     try {
@@ -87,15 +80,15 @@ const Notifications = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      getNotification();
-      getTransactionInfo();
-    }
+    getNotification();
+    getTransactionInfo();
   }, [id]);
+
+  useEffect(() => {}, [isVerify === false]);
 
   return (
     <div>
-      {(userIsPending || isLoadingNotifications) && <LoadingOverlay />}
+      {notificationsIsPending && <LoadingOverlay />}
       <Header
         Heading="Notifications"
         Text="Get instant notification as you perform real-time transaction immediately on MyBalance."
@@ -104,7 +97,7 @@ const Notifications = () => {
         You have {user?.unreadNotificationCount} unread notifications
       </p>
       <div className="mt-6">
-        {notifications.map((notification: any) => {
+        {notifications?.data?.map((notification: any, key: any) => {
           const dateTime = new Date(notification.createdAt);
           const dateFormatted = dateTime.toISOString().split("T")[0];
           const timeFormatted = dateTime.toTimeString().split(" ")[0];
@@ -115,8 +108,11 @@ const Notifications = () => {
                 onClick={() => {
                   const urlParts = notification?.actionUrl.split("/");
                   setTransactionId(urlParts[urlParts.length - 1]);
+                  console.log(urlParts[urlParts.length - 1]);
                   setId(notification?.id);
                   setIsVerify(true);
+                  console.log(`notification id: ${id}`);
+                  console.log(`transactionId: ${transactionId}`);
                 }}
               >
                 <Circle
@@ -140,12 +136,12 @@ const Notifications = () => {
             </div>
           );
         })}
-        {notifications.length > 0 && (
+        {!notificationsIsPending && notifications?.data.length > 0 && (
           <div className="w-[325px] mt-[50px]">
             <Pagination
-              initialPage={page}
+              initialPage={notifications?.meta?.currentPage}
               onPageChange={handlePageChange}
-              pageCount={Math.ceil(notifications.length / 10)}
+              pageCount={notifications?.meta?.totalPages}
             />
           </div>
         )}
@@ -179,53 +175,9 @@ const Notifications = () => {
                   {notification?.title}
                 </h6>
               </div>
-              {notification.category === "FUNDS_LOCKED_SELLER" ? (
+              {notification.category === "FUNDS_LOCKED_BUYER" ? (
                 <div>
                   {transactionIsLoading && <LoadingOverlay />}
-                  <h1 className="text-[#393737] text-lg font-medium">
-                    BUYER INFORMATION
-                  </h1>
-                  <div className="mt-6 flex flex-col gap-4 mb-4">
-                    <TextField
-                      name="buyerName"
-                      label="Buyer's name"
-                      placeholder="Aremu Jamiu"
-                      readOnly={true}
-                      value={
-                        transactionInfo?.escrowMetadata?.parties?.buyer?.name
-                      }
-                      control={control}
-                    />
-                    <TextField
-                      control={control}
-                      rules={{ required: false }}
-                      name={"type"}
-                      label="Type of item(s)"
-                      placeholder="i phone"
-                      value={transactionInfo?.escrowMetadata?.itemType}
-                      readOnly
-                    />
-                    <TextField
-                      control={control}
-                      rules={{ required: false }}
-                      name={"number"}
-                      label="Number of item(s)"
-                      placeholder="give a description"
-                      type="number"
-                      value={transactionInfo?.escrowMetadata?.itemQuantity}
-                      readOnly
-                    />
-                    <TextField
-                      name="buyerEmail"
-                      label="Buyer's email"
-                      placeholder="jaremu@oinvent.com"
-                      readOnly={true}
-                      value={
-                        transactionInfo?.escrowMetadata?.parties?.buyer?.email
-                      }
-                      control={control}
-                    />
-                  </div>
                   <h1 className="text-[#393737] text-lg font-medium">
                     ITEM(S) INFORMATION
                   </h1>
@@ -246,6 +198,25 @@ const Notifications = () => {
                       readOnly={true}
                       value={transactionInfo?.escrowMetadata?.purpose}
                       control={control}
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: false }}
+                      name={"type"}
+                      label="Type of item(s)"
+                      placeholder="i phone"
+                      value={transactionInfo?.escrowMetadata?.itemType}
+                      readOnly
+                    />
+                    <TextField
+                      control={control}
+                      rules={{ required: false }}
+                      name={"number"}
+                      label="Number of item(s)"
+                      placeholder="give a description"
+                      type="number"
+                      value={transactionInfo?.escrowMetadata?.itemQuantity}
+                      readOnly
                     />
                     <TextField
                       name={"itemQuantity"}
@@ -311,5 +282,23 @@ const Notifications = () => {
     </div>
   );
 };
+
+const datas = [
+  {
+    heading: "You have locked 10,000",
+    text: "For Apple Series 2 ...",
+    date: "Just now",
+  },
+  {
+    heading: "You have locked 20,000",
+    text: "For White pair of Air Jordans ...",
+    date: "3 days ago",
+  },
+  {
+    heading: "You have locked 30,000",
+    text: "You have deposited 30,000 into your wallet",
+    date: "10 days ago",
+  },
+];
 
 export default Notifications;

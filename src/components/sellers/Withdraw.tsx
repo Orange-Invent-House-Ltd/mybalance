@@ -41,13 +41,14 @@ const Withdraw = ({ open, setOpen }: any) => {
     const channelName = `WALLET_WITHDRAWAL_${txReference}`;
     const channel = pusher.subscribe(channelName);
     setPusherLoading(true);
-    console.log("STARTING CONNECTION", channelName);
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       console.log("WALLET_WITHDRAWAL_SUCCESS", data);
       setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(data.amount)}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
+          data.amount
+        )}. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
@@ -80,7 +81,7 @@ const Withdraw = ({ open, setOpen }: any) => {
 
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   const { data: user } = useUser();
-  console.log("🚀 ~ file: Withdraw.tsx:75 ~ Withdraw ~ user:", user);
+
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -158,7 +159,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     // rules={{ required: "this field is required" }}
                     name={"description"}
                     label="Reason for withdrawing (description)"
-                    defaultValue='I need the money'
+                    defaultValue="I need the money"
                   />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">

@@ -264,7 +264,7 @@ const Dashboard = () => {
         }}
       />
       <div className="md:flex justify-between items-center start-tour">
-        <div className="flex md:hidden items-center gap-x-4 mb-4 mt-[1rem]">
+        <div className="flex md:hidden items-center justify-end gap-x-4 mb-4 mt-[1rem] mr-3  ">
           <div className="relative">
             {user?.unreadNotificationCount !== 0 && (
               <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
