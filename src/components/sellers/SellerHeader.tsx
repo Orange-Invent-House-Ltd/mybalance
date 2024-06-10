@@ -20,7 +20,7 @@ const Header = () => {
   const [code, setCode] = useState("");
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   var today = moment().format("YYYY-MM-DD");
 
@@ -64,6 +64,21 @@ const Header = () => {
   }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between">
+      <div className="flex md:hidden items-center gap-x-4">
+        <div className="relative">
+          {user?.unreadNotificationCount !== 0 && (
+            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+              {user?.unreadNotificationCount}
+            </span>
+          )}
+          <img
+            src={bell}
+            alt="notification bell"
+            className=""
+            onClick={() => navigate("/seller/notifications")}
+          />
+        </div>
+      </div>
       <div className="flex items-center gap-4">
         <div>
           {user?.avatar ? (
@@ -103,18 +118,24 @@ const Header = () => {
 
       <div className="hidden md:flex items-center gap-x-4">
         <div className="relative">
-          { user?.unreadNotificationCount !== 0 &&
-            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center" >{user?.unreadNotificationCount}</span>
-          }
+          {user?.unreadNotificationCount !== 0 && (
+            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+              {user?.unreadNotificationCount}
+            </span>
+          )}
           <img
             src={bell}
             alt="notification bell"
             className=""
-            onClick={()=>navigate('/seller/notifications')}
+            onClick={() => navigate("/seller/notifications")}
           />
         </div>
         <div className="w-[343px]  md:w-[300px]">
-          <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => setIsVerify(true)}
+          >
             Create One-time MyBalance Link
           </Button>
         </div>

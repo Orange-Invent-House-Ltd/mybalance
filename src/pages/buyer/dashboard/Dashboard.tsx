@@ -264,6 +264,21 @@ const Dashboard = () => {
         }}
       />
       <div className="md:flex justify-between items-center start-tour">
+        <div className="flex md:hidden items-center gap-x-4 mb-4">
+          <div className="relative">
+            {user?.unreadNotificationCount !== 0 && (
+              <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+                {user?.unreadNotificationCount}
+              </span>
+            )}
+            <img
+              src={bell}
+              alt="notification bell"
+              className=""
+              onClick={() => navigate("/seller/notifications")}
+            />
+          </div>
+        </div>
         <div>
           <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-2 md:mb-4">
             <span className="text-[#6D6D6D]">Welcome</span>
@@ -583,8 +598,10 @@ const Dashboard = () => {
       <AlertDialog.Root open={open} onOpenChange={setOpen}>
         <AlertDialog.Portal>
           <AlertDialog.Overlay className="bg-black/10 backdrop-blur z-50 fixed inset-0" />
-          <AlertDialog.Content className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] 
-          translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] ">
+          <AlertDialog.Content
+            className="z-50  fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[400px] 
+          translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[24px] "
+          >
             <img src={wallet} className="mb-[20px]" alt="" />
             <AlertDialog.Title className=" text-[18px] font-medium">
               Insufficient Balance!
