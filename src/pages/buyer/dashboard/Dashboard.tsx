@@ -265,7 +265,7 @@ const Dashboard = () => {
       />
       <div className="md:flex justify-between items-center start-tour">
         <div className="flex md:hidden items-center gap-x-4 mb-4">
-          <div className="relative">
+          <div>
             {user?.unreadNotificationCount !== 0 && (
               <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
                 {user?.unreadNotificationCount}
@@ -275,7 +275,7 @@ const Dashboard = () => {
               src={bell}
               alt="notification bell"
               className=""
-              onClick={() => navigate("/seller/notifications")}
+              onClick={() => navigate("/buyer/notifications")}
             />
           </div>
         </div>
