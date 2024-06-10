@@ -163,10 +163,12 @@ const DashboardHistoryBox = (data: any) => {
         <div className="mx-6 md:mx-[40px] absolute top-5 text-[#999999] text-[14px] flex items-center gap-x-2">
           {data?.reference}
           <Copy
-            className=""
+            className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(data?.reference);
-              toast.success("Reference id copied successfully!");
+              toast.success("Reference id copied successfully!",{
+                toastId: 'success1'
+              });
             }}
           />
         </div>
