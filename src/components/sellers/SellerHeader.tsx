@@ -64,7 +64,7 @@ const Header = () => {
   }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between">
-      <div className="flex md:hidden items-center gap-x-4">
+      <div className="flex md:hidden items-center gap-x-4 mt-[1rem]">
         <div className="relative">
           {user?.unreadNotificationCount !== 0 && (
             <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
