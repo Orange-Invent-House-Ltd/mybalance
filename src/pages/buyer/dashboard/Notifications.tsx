@@ -47,10 +47,6 @@ const Notifications = () => {
       }
     };
     fetchNotifications();
-
-    const intervalId = setInterval(fetchNotifications, 2000);
-
-    return () => clearInterval(intervalId);
   }, [page]);
 
   //
