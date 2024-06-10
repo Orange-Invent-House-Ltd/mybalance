@@ -27,13 +27,30 @@ const Notifications = () => {
   const [value, setValue] = useState("");
   const [isReject, setIsReject] = useState(false);
   const [page, setPage] = useState<number>(1);
+
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(true);
   const { data: user, isLoading: userIsPending } = useUser();
-  const { data: notifications, isLoading: notificationsIsPending } =
-    useNotifications({
-      page,
-      size: 10,
-    });
   const { control } = useForm();
+
+  // Polling for notifications
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        setIsLoadingNotifications(true);
+        const response = await privateApi.get(
+          `/notifications?page=${page}&size=10`
+        );
+        setNotifications(response.data.data);
+        setIsLoadingNotifications(false);
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+        setIsLoadingNotifications(false);
+      }
+    };
+    fetchNotifications();
+  }, [page]);
+
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
@@ -80,7 +97,7 @@ const Notifications = () => {
 
   return (
     <div>
-      {notificationsIsPending && <LoadingOverlay />}
+      {isLoadingNotifications && <LoadingOverlay />}
       <Header
         Heading="Notifications"
         Text="Get instant notification as you perform real-time transaction immediately on MyBalance."
@@ -89,7 +106,7 @@ const Notifications = () => {
         You have {user?.unreadNotificationCount} unread notifications
       </p>
       <div className="mt-6">
-        {notifications?.data?.map((notification: any, key: any) => {
+        {notifications?.map((notification: any, key: any) => {
           const dateTime = new Date(notification.createdAt);
           const dateFormatted = dateTime.toISOString().split("T")[0];
           const timeFormatted = dateTime.toTimeString().split(" ")[0];
@@ -128,12 +145,12 @@ const Notifications = () => {
             </div>
           );
         })}
-        {!notificationsIsPending && notifications?.data.length > 0 && (
+        {notifications?.length > 0 && (
           <div className="w-[325px] mt-[50px]">
             <Pagination
-              initialPage={notifications?.meta?.currentPage}
+              initialPage={page}
               onPageChange={handlePageChange}
-              pageCount={notifications?.meta?.totalPages}
+              pageCount={Math.ceil(notifications.length / 10)}
             />
           </div>
         )}
