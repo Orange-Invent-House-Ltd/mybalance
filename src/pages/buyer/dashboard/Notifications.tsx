@@ -38,7 +38,7 @@ const Notifications = () => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [page]);
+  }, []);
 
   // Polling for new notifications
   // useEffect(() => {
