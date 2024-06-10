@@ -54,6 +54,9 @@ const Notifications = () => {
       // toast.error(resMessage,{toastId: "error1"});
     }
   };
+  useEffect(() => {
+    getNotification();
+  }, []); //
 
   const getTransactionInfo = async () => {
     try {
@@ -69,9 +72,6 @@ const Notifications = () => {
       // toast.error(resMessage,{toastId: "error1"});
     }
   };
-  useEffect(() => {
-    getNotification();
-  }, []); //
 
   useEffect(() => {
     getNotification();

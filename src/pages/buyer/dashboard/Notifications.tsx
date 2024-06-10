@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/reuseable/Header";
-import { useNotifications, useUser } from "../../../hooks/queries";
-import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
-import { Circle } from "lucide-react";
-import Pagination from "../../../components/reuseable/Pagination";
-import back from "../../../assets/Icons/back.svg";
-import * as Dialog from "@radix-ui/react-dialog";
-import { privateApi } from "../../../api/axios";
+import { Button } from "../../../components/reuseable/Button";
 import TextField from "../../../components/reuseable/TextField1";
+import back from "../../../assets/Icons/back.svg";
+import RejectModal from "../../../components/sellers/RejectModal";
+import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
+import Pagination from "../../../components/reuseable/Pagination";
+import { Circle } from "lucide-react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
+import { privateApi } from "../../../api/axios";
 import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../../../hooks/queries";
 
 const Notifications = () => {
   const queryClient = useQueryClient();
@@ -18,40 +20,46 @@ const Notifications = () => {
   const [id, setId] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [transactionInfo, setTransactionInfo] = useState<any>({});
-  const [page, setPage] = useState<number>(1);
   const [notificationIsLoading, setNotificationIsLoading] = useState(false);
   const [transactionIsLoading, setTransactionIsLoading] = useState(false);
-  const [notificationsData, setNotificationsData] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
+  const [value, setValue] = useState("");
+  const [isReject, setIsReject] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(true);
   const { data: user, isLoading: userIsPending } = useUser();
   const { control } = useForm();
 
-  const fetchNotifications = async () => {
-    try {
-      const response = await privateApi.get(
-        `/notifications?page=${page}&size=10`
-      );
-      setNotificationsData(response.data.data);
-    } catch (error) {
-      console.error("Failed to fetch notifications", error);
-    }
-  };
-
+  // Polling for notifications
   useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        setIsLoadingNotifications(true);
+        const response = await privateApi.get(
+          `/notifications?page=${page}&size=10`
+        );
+        setNotifications(response.data.data);
+        setIsLoadingNotifications(false);
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+        setIsLoadingNotifications(false);
+      }
+    };
     fetchNotifications();
+
+    const intervalId = setInterval(fetchNotifications, 2000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Polling for new notifications
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     fetchNotifications();
-  //     console.log("notified new Notification");
-  //   }, 5000); // Poll every 10 seconds
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
+  //
   const handlePageChange = (selected: any) => {
     setPage(selected);
+  };
+
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
   };
 
   const getNotification = async () => {
@@ -62,7 +70,8 @@ const Notifications = () => {
       setNotificationIsLoading(false);
     } catch (error: any) {
       setNotificationIsLoading(false);
-      // toast.error(error.message, { toastId: "error1" });
+      let resMessage;
+      // toast.error(resMessage,{toastId: "error1"});
     }
   };
 
@@ -76,7 +85,8 @@ const Notifications = () => {
       setTransactionIsLoading(false);
     } catch (error: any) {
       setTransactionIsLoading(false);
-      // toast.error(error.message, { toastId: "error1" });
+      let resMessage;
+      // toast.error(resMessage,{toastId: "error1"});
     }
   };
 
@@ -89,7 +99,7 @@ const Notifications = () => {
 
   return (
     <div>
-      {(notificationIsLoading || userIsPending) && <LoadingOverlay />}
+      {(userIsPending || isLoadingNotifications) && <LoadingOverlay />}
       <Header
         Heading="Notifications"
         Text="Get instant notification as you perform real-time transaction immediately on MyBalance."
@@ -98,7 +108,7 @@ const Notifications = () => {
         You have {user?.unreadNotificationCount} unread notifications
       </p>
       <div className="mt-6">
-        {notificationsData.map((notification: any) => {
+        {notifications.map((notification: any) => {
           const dateTime = new Date(notification.createdAt);
           const dateFormatted = dateTime.toISOString().split("T")[0];
           const timeFormatted = dateTime.toTimeString().split(" ")[0];
@@ -134,12 +144,12 @@ const Notifications = () => {
             </div>
           );
         })}
-        {notificationsData.length > 0 && (
+        {notifications.length > 0 && (
           <div className="w-[325px] mt-[50px]">
             <Pagination
               initialPage={page}
               onPageChange={handlePageChange}
-              pageCount={notificationsData.length / 10}
+              pageCount={Math.ceil(notifications.length / 10)}
             />
           </div>
         )}
@@ -173,28 +183,21 @@ const Notifications = () => {
                   {notification?.title}
                 </h6>
               </div>
-              {notification.category === "FUNDS_LOCKED_BUYER" ? (
+              {notification.category === "FUNDS_LOCKED_SELLER" ? (
                 <div>
                   {transactionIsLoading && <LoadingOverlay />}
                   <h1 className="text-[#393737] text-lg font-medium">
-                    ITEM(S) INFORMATION
+                    BUYER INFORMATION
                   </h1>
-                  <div className="mt-6 flex flex-col gap-4">
+                  <div className="mt-6 flex flex-col gap-4 mb-4">
                     <TextField
-                      name="amount"
-                      label="Amount locked"
-                      placeholder="5"
-                      type="number"
+                      name="buyerName"
+                      label="Buyer's name"
+                      placeholder="Aremu Jamiu"
                       readOnly={true}
-                      value={transactionInfo?.amount}
-                      control={control}
-                    />
-                    <TextField
-                      name="purpose"
-                      label="Reason for locking (description)"
-                      placeholder="Purchase of sneakers"
-                      readOnly={true}
-                      value={transactionInfo?.escrowMetadata?.purpose}
+                      value={
+                        transactionInfo?.escrowMetadata?.parties?.buyer?.name
+                      }
                       control={control}
                     />
                     <TextField
@@ -215,6 +218,38 @@ const Notifications = () => {
                       type="number"
                       value={transactionInfo?.escrowMetadata?.itemQuantity}
                       readOnly
+                    />
+                    <TextField
+                      name="buyerEmail"
+                      label="Buyer's email"
+                      placeholder="jaremu@oinvent.com"
+                      readOnly={true}
+                      value={
+                        transactionInfo?.escrowMetadata?.parties?.buyer?.email
+                      }
+                      control={control}
+                    />
+                  </div>
+                  <h1 className="text-[#393737] text-lg font-medium">
+                    ITEM(S) INFORMATION
+                  </h1>
+                  <div className="mt-6 flex flex-col gap-4">
+                    <TextField
+                      name="amount"
+                      label="Amount locked"
+                      placeholder="5"
+                      type="number"
+                      readOnly={true}
+                      value={transactionInfo?.amount}
+                      control={control}
+                    />
+                    <TextField
+                      name="purpose"
+                      label="Reason for locking (description)"
+                      placeholder="Purchase of sneakers"
+                      readOnly={true}
+                      value={transactionInfo?.escrowMetadata?.purpose}
+                      control={control}
                     />
                     <TextField
                       name={"itemQuantity"}
@@ -250,6 +285,7 @@ const Notifications = () => {
                       <TextField
                         name={"accountName"}
                         label="Account Name"
+                        placeholder="JMusty Feet"
                         readOnly={true}
                         value={
                           transactionInfo?.escrowMetadata?.meta?.accountName
@@ -257,10 +293,18 @@ const Notifications = () => {
                         control={control}
                       />
                     </div>
+                    <TextField
+                      name={"partnerEmail"}
+                      label="Email Address"
+                      placeholder="JMustyfeet@gmail.com"
+                      value={transactionInfo?.lockedAmount?.sellerEmail}
+                      control={control}
+                    />
                   </div>
                 </div>
               ) : (
                 <div>
+                  {notificationIsLoading && <LoadingOverlay />}
                   <p>{notification?.content}</p>
                 </div>
               )}
