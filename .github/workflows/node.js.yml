@@ -36,3 +36,4 @@ jobs:
         VITE_BASE_URL: ${{secrets.VITE_BASE_URL}}
         VITE_PUSHER_KEY: ${{secrets.PUSHER_KEY}}
         VITE_DOMAIN_URL: ${{secrets.VITE_DOMAIN_URL}}
+        VITE_BLOG_BASE_URL: ${{secrets.VITE_BLOG_BASE_URL}}
