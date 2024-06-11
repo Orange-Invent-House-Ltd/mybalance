@@ -23,6 +23,7 @@ const DashboardHistoryBox = (data: any) => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const [modal, setModal] = useState(false);
+  console.log(data);
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
@@ -145,7 +146,6 @@ const DashboardHistoryBox = (data: any) => {
                       console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
-
                       // Handle the case where no reason is selected
                     }
                   }}
@@ -157,39 +157,19 @@ const DashboardHistoryBox = (data: any) => {
           </AlertDialog.Content>
         </AlertDialog.Portal>
       </AlertDialog.Root>
-      <div
-        onClick={() => {
-          if (data?.type === "ESCROW" && data?.status === "SUCCESSFUL") {
-            setOpen(true);
-            localStorage.setItem("transactionInfo", JSON.stringify(data));
-          }
-        }}
-        className="  my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white  px-6 md:px-[40px] py-[20px]"
-      >
-        <div
-          className={clsx("", {
-            "text-[#B7B7B7]": !(
-              data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
-            ),
-          })}
-        >
-          <div className="text-[#999999] text-[14px] flex items-center gap-x-2">
-            {data?.reference}
-            <Copy
-              className=""
-              onClick={() => {
-                navigator.clipboard.writeText(data?.reference);
-                toast.success("Reference id copied successfully!");
-              }}
-            />
-          </div>
-          <p className="text-lg font-medium">{data?.meta?.title}</p>
-          {user?.userType === "SELLER" && (
-            <p className="mr-2">{data?.escrowMetadata?.parties?.buyer?.name}</p>
-          )}
-          <p className="text-sm font-normal w-[150px] truncate ">
-            {data?.meta.description}
-          </p>
+      <div className="relative">
+        {/* Card Reference id */}
+        <div className="mx-6 md:mx-[40px] absolute top-5 text-[#999999] text-[14px] flex items-center gap-x-2">
+          {data?.reference?.slice(0,8)}
+          <Copy
+            className="cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(data?.reference);
+              toast.success("Reference id copied successfully!",{
+                toastId: 'success1'
+              });
+            }}
+          />
         </div>
         <div
           onClick={() => {
@@ -439,17 +419,18 @@ const DashboardHistoryBox = (data: any) => {
                                   data.data.escrowMetadata.author === "SELLER"
                                 ) {
                                   setOpenPay(true);
-                                  setOpen(false);
+                                  setOpen(false)
                                 } else {
                                   // navigate("/seller/dashboard");
-                                  setOpen(false);
+                                  setOpen(false)
                                 }
                               },
                             }
                           );
-                          setOpen(false);
+                          setOpen(false)
                         }}
                       >
+
                         {" "}
                         accept information{" "}
                       </Button>
