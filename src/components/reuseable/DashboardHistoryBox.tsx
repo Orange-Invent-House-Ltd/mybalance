@@ -16,6 +16,7 @@ import {
   useLockFunds,
   useRespondTransaction,
 } from "../../hooks/mutations";
+import { convertDate } from "./ConvertDate";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
@@ -45,7 +46,7 @@ const DashboardHistoryBox = (data: any) => {
         number: data?.escrowMetadata?.itemQuantity,
         amt: formatToNairaCurrency(data?.amount),
         email: data?.escrowMetadata?.partnerEmail,
-        time: data?.escrowMetadata?.deliveryDate,
+        time: convertDate(data?.escrowMetadata?.deliveryDate),
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,
         bankName: data?.escrowMetadata?.meta?.bankName,
@@ -317,8 +318,7 @@ const DashboardHistoryBox = (data: any) => {
                     rules={{ required: false }}
                     name={"time"}
                     label="Delivery timeline"
-                    placeholder="Select number of days"
-                    type="date"
+                    // value={convertDate(data?.escrowMetadata?.deliveryDate)}
                     readOnly
                   />
                 </div>
