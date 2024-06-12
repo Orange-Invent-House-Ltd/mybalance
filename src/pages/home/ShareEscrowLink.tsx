@@ -175,7 +175,7 @@ const ShareEscrowLink = () => {
                           },
                         }
                       );
-                      console.log(selectedReasons);
+                      // console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
 

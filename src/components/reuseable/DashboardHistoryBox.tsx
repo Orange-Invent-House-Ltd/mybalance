@@ -23,7 +23,7 @@ const DashboardHistoryBox = (data: any) => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const [modal, setModal] = useState(false);
-  console.log(data);
+  // console.log(data);
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
@@ -143,7 +143,7 @@ const DashboardHistoryBox = (data: any) => {
                           },
                         }
                       );
-                      console.log(selectedReasons);
+                      // console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
                       // Handle the case where no reason is selected
@@ -165,7 +165,7 @@ const DashboardHistoryBox = (data: any) => {
             className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(data?.reference);
-              toast.success("Reference id copied successfully!",{
+              toast.success("Reference ID copied successfully!",{
                 toastId: 'success1'
               });
             }}

@@ -43,7 +43,7 @@ const Withdraw = ({ open, setOpen }: any) => {
     setPusherLoading(true);
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_SUCCESS", data);
+      // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
       setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
         `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
@@ -56,7 +56,7 @@ const Withdraw = ({ open, setOpen }: any) => {
     });
 
     channel.bind("WALLET_WITHDRAWAL_FAILURE", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_FAILURE", data);
+      // console.log("WALLET_WITHDRAWAL_FAILURE", data);
       setModalMessageTitle("Withdrawal failed");
       setModalMessageDescription(`Oops, something went wrong`);
 
