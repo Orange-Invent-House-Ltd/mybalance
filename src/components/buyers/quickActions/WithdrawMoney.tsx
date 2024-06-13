@@ -38,10 +38,10 @@ const WithdrawMoney = () => {
     const channelName = `WALLET_WITHDRAWAL_${txReference}`;
     const channel = pusher.subscribe(channelName);
     setPusherLoading(true);
-    console.log("STARTING CONNECTION", channelName);
+    // console.log("STARTING CONNECTION", channelName);
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_SUCCESS", data);
+      // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
       setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
         `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
@@ -54,7 +54,7 @@ const WithdrawMoney = () => {
     });
 
     channel.bind("WALLET_WITHDRAWAL_FAILURE", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_FAILURE", data);
+      // console.log("WALLET_WITHDRAWAL_FAILURE", data);
       setModalMessageTitle("Withdrawal failed");
       setModalMessageDescription(`Oops, something went wrong`);
 
@@ -84,10 +84,10 @@ const WithdrawMoney = () => {
 
   useEffect(() => {
     if (withdrawSuccess) {
-      console.log(
-        "🚀 ~ file: WithdrawMoney.tsx:77 ~ useEffect ~ withdrawData:",
-        withdrawData
-      );
+      // console.log(
+      //   "🚀 ~ file: WithdrawMoney.tsx:77 ~ useEffect ~ withdrawData:",
+      //   withdrawData
+      // );
       subscribeToChannel(withdrawData?.data?.transactionReference);
       //   setIsWithdraw(true);
     }

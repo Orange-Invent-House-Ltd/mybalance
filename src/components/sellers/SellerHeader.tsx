@@ -188,16 +188,16 @@ const Header = () => {
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
-                    name={"purpose"}
-                    label="Purpose of creating  escrow"
-                    placeholder="Purchase of sneakers"
+                    name={"itemType"}
+                    label="Title"
+                    placeholder="Gucci sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
-                    name={"itemType"}
-                    label="Type of item(s)"
-                    placeholder="Gucci sneakers"
+                    name={"purpose"}
+                    label="Description"
+                    placeholder="Purchase of sneakers"
                   />
                   <TextField
                     control={control}

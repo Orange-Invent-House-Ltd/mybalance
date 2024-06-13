@@ -129,6 +129,7 @@ const Notifications = () => {
                 onClick={() => {
                   const urlParts = notification?.actionUrl.split("/");
                   setTransactionId(urlParts[urlParts.length - 1]);
+                  console.log(urlParts[urlParts.length - 1]);
                   setId(notification?.id);
                   setIsVerify(true);
                 }}

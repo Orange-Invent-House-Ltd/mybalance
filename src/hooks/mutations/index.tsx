@@ -142,10 +142,10 @@ export const useRegisterBuyer = () => {
     onError: (error: any) => {
       for (const key in error.response.data.errors) {
         const value = error.response.data.errors[key][0];
-        console.log(
-          "🚀 ~ file: index.tsx:36 ~ useRegisterBuyer ~ value:",
-          value
-        );
+        // console.log(
+        //   "🚀 ~ file: index.tsx:36 ~ useRegisterBuyer ~ value:",
+        //   value
+        // );
         toast.error(value);
       }
     },
@@ -164,10 +164,10 @@ export const useRegisterSeller = () => {
     onError: (error: any) => {
       for (const key in error.response.data.errors) {
         const value = error.response.data.errors[key][0];
-        console.log(
-          "🚀 ~ file: index.tsx:36 ~ useRegisterBuyer ~ value:",
-          value
-        );
+        // console.log(
+        //   "🚀 ~ file: index.tsx:36 ~ useRegisterBuyer ~ value:",
+        //   value
+        // );
         toast.error(value);
       }
     },
@@ -205,7 +205,7 @@ export const useForgotPassword = () => {
   return useMutation({
     mutationFn: forgotPassword,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: index.tsx:99 ~ useForgotPassword ~ data:", data);
+      // console.log("🚀 ~ file: index.tsx:99 ~ useForgotPassword ~ data:", data);
 
       navigate("/forgot-password/email-verification");
       toast.success(data.message);
@@ -270,7 +270,7 @@ export const useCreateEscrow = () => {
   return useMutation({
     mutationFn: createEscrow,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
+      // console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
       queryClient.invalidateQueries(["transactions"]);
       localStorage.setItem("escrowAmt", data.data.amount);
       localStorage.setItem("transactionRef", data.data.reference);
@@ -299,7 +299,7 @@ export const useLockFunds = () => {
   return useMutation({
     mutationFn: lockFunds,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
+      // console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
 
       localStorage.removeItem("transactionRef");
 
@@ -330,7 +330,7 @@ export const useUnLockFunds = () => {
       queryClient.invalidateQueries(["lockedFunds"]);
     },
     onError: (error: any) => {
-      console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error);
+      // console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error);
       toast.error(
         // error.response.data.errors.transactionReference?.seller ||
         error.response.data.message  
@@ -454,7 +454,7 @@ export const useFundEscrow = () => {
   return useMutation({
     mutationFn: fundEscrow,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: index.tsx:323 ~ useFundEscrow ~ data:", data);
+      // console.log("🚀 ~ file: index.tsx:323 ~ useFundEscrow ~ data:", data);
       //  navigate(
       //    `/escrow-payment?amt=${amt}&ref=${data.data.transactionReference}`
       //  );

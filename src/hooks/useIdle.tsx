@@ -15,8 +15,8 @@ export const useIdle = ({
 
   const handleOnIdle = (event:any)=> {
     setIsIdle(true);
-    console.log("user is idle", event)
-    console.log("Last Active", getLastActiveTime())
+    // console.log("user is idle", event)
+    // console.log("Last Active", getLastActiveTime())
     onIdle()
   }
   const {getRemainingTime, getLastActiveTime} = useIdleTimer({

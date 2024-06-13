@@ -16,6 +16,7 @@ import {
   useLockFunds,
   useRespondTransaction,
 } from "../../hooks/mutations";
+import { convertDate } from "./ConvertDate";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
@@ -23,6 +24,10 @@ const DashboardHistoryBox = (data: any) => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const [modal, setModal] = useState(false);
+<<<<<<< HEAD
+=======
+  // console.log(data);
+>>>>>>> 6bb0f22b0164c715296a32aad33de65d8b4afeff
 
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
@@ -44,7 +49,7 @@ const DashboardHistoryBox = (data: any) => {
         number: data?.escrowMetadata?.itemQuantity,
         amt: formatToNairaCurrency(data?.amount),
         email: data?.escrowMetadata?.partnerEmail,
-        time: data?.escrowMetadata?.deliveryDate,
+        time: convertDate(data?.escrowMetadata?.deliveryDate),
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,
         bankName: data?.escrowMetadata?.meta?.bankName,
@@ -142,7 +147,7 @@ const DashboardHistoryBox = (data: any) => {
                           },
                         }
                       );
-                      console.log(selectedReasons);
+                      // console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
                       // Handle the case where no reason is selected
@@ -164,8 +169,13 @@ const DashboardHistoryBox = (data: any) => {
             className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(data?.reference);
+<<<<<<< HEAD
               toast.success("Reference id copied successfully!", {
                 toastId: "success1",
+=======
+              toast.success("Reference ID copied successfully!",{
+                toastId: 'success1'
+>>>>>>> 6bb0f22b0164c715296a32aad33de65d8b4afeff
               });
             }}
           />
@@ -316,8 +326,7 @@ const DashboardHistoryBox = (data: any) => {
                     rules={{ required: false }}
                     name={"time"}
                     label="Delivery timeline"
-                    placeholder="Select number of days"
-                    type="date"
+                    // value={convertDate(data?.escrowMetadata?.deliveryDate)}
                     readOnly
                   />
                 </div>

@@ -58,11 +58,11 @@ const ShareEscrowLink = () => {
         type: data.data.escrowMetadata.itemType,
         itemQuantity: data.data.escrowMetadata.itemQuantity,
         amount: formatToNairaCurrency(data.data?.amount),
-        timeline: data.data.escrowMetadata?.deliveryDate,
-        bankName: data.data?.escrowMetadata.meta?.bankName,
-        accNum: data.data?.escrowMetadata.meta?.accountNumber,
-        accName: data.data?.escrowMetadata.meta?.accountName,
-        email: data.data.escrowMetadata.partnerEmail,
+        timeline: data?.data.escrowMetadata?.deliveryDate,
+        bankName: data?.data?.escrowMetadata.meta?.bankName,
+        accNum: data?.data?.escrowMetadata.meta?.accountNumber,
+        accName: data?.data?.escrowMetadata.meta?.accountName,
+        email: data?.data?.escrowMetadata.parties?.seller?.email,
       });
     }
   }, [reset, isSuccess]);
@@ -175,7 +175,7 @@ const ShareEscrowLink = () => {
                           },
                         }
                       );
-                      console.log(selectedReasons);
+                      // console.log(selectedReasons);
                     } else {
                       toast.error("you have to select a reason for rejection");
 

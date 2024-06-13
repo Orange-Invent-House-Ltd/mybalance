@@ -126,11 +126,11 @@ const Notifications = () => {
                 onClick={() => {
                   const urlParts = notification?.actionUrl.split("/");
                   setTransactionId(urlParts[urlParts.length - 1]);
-                  console.log(urlParts[urlParts.length - 1]);
+                  // console.log(urlParts[urlParts.length - 1]);
                   setId(notification?.id);
                   setIsVerify(true);
-                  console.log(`notification id: ${id}`);
-                  console.log(`transactionId: ${transactionId}`);
+                  // console.log(`notification id: ${id}`);
+                  // console.log(`transactionId: ${transactionId}`);
                 }}
               >
                 <Circle
