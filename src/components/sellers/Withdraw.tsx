@@ -124,6 +124,7 @@ const Withdraw = ({ open, setOpen }: any) => {
               onSubmit={handleSubmitWithdraw((data) => {
                 delete data?.accountName;
                 delete data?.accountNumber;
+                data?.description === "" && delete data.description;
                 withdrawMutate({
                   ...data,
                   accountNumber: accNum,

@@ -28,7 +28,7 @@ const WithdrawMoney = () => {
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
 
-  const { handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
+  const {setValue, handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
     useForm();
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
@@ -104,6 +104,7 @@ const WithdrawMoney = () => {
         onSubmit={handleSubmitWithdraw((data) => {
           delete data.accountName;
           delete data.accountNumber;
+          data?.description === "" && delete data.description;
           withdrawMutate({
             ...data,
             accountNumber: accNum,
