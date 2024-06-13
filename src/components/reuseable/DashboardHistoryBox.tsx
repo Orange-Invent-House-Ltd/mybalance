@@ -24,8 +24,6 @@ const DashboardHistoryBox = (data: any) => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const [modal, setModal] = useState(false);
-  // console.log(data);
-
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
   const [openPay, setOpenPay] = useState(false);
@@ -161,13 +159,14 @@ const DashboardHistoryBox = (data: any) => {
       <div className="relative">
         {/* Card Reference id */}
         <div className="mx-6 md:mx-[40px] absolute top-5 text-[#999999] text-[14px] flex items-center gap-x-2">
-          {data?.reference?.slice(0,8)}
+          {data?.reference?.slice(0, 8)}
           <Copy
             className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(data?.reference);
-              toast.success("Reference ID copied successfully!",{
-                toastId: 'success1'
+
+              toast.success("Reference id copied successfully!", {
+                toastId: "success1",
               });
             }}
           />
@@ -418,18 +417,17 @@ const DashboardHistoryBox = (data: any) => {
                                   data.data.escrowMetadata.author === "SELLER"
                                 ) {
                                   setOpenPay(true);
-                                  setOpen(false)
+                                  setOpen(false);
                                 } else {
                                   // navigate("/seller/dashboard");
-                                  setOpen(false)
+                                  setOpen(false);
                                 }
                               },
                             }
                           );
-                          setOpen(false)
+                          setOpen(false);
                         }}
                       >
-
                         {" "}
                         accept information{" "}
                       </Button>

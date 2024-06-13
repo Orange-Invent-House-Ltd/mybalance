@@ -29,13 +29,19 @@ const Notifications = () => {
   const [page, setPage] = useState<number>(1);
   const [notificationIsLoading, setNotificationIsLoading] = useState(false);
   const [transactionIsLoading, setTransactionIsLoading] = useState(false);
-  const { data: notifications, isLoading: notificationsIsPending } =
-    useNotifications({
-      page,
-      size: 10,
-    });
-  const { data: user, isLoading: userIsPending } = useUser();
-  // const {data: transactionInfo} = useTransactionInfo(transactionId,)
+  const {
+    data: notifications,
+    isLoading: notificationsIsPending,
+    refetch: refetchNotifications,
+  } = useNotifications({
+    page,
+    size: 10,
+  });
+  const {
+    data: user,
+    isLoading: userIsPending,
+    refetch: refetchUser,
+  } = useUser();
 
   useEffect(() => {
     if (notifications) {
@@ -45,6 +51,15 @@ const Notifications = () => {
       });
     }
   }, [page]);
+
+  useEffect(() => {
+    if (user) {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+        refetchType: "all", // refetch both active and inactive queries
+      });
+    }
+  }, [user]);
 
   const handlePageChange = (selected: any) => {
     setPage(selected);
@@ -57,6 +72,8 @@ const Notifications = () => {
       const response = await privateApi.get(`/notifications/${id}`);
       setNotification(response.data.data);
       setNotificationIsLoading(false);
+      await refetchNotifications(); // Refetch notifications when a notification is fetched
+      await refetchUser(); // Refetch user to update unread notifications count
     } catch (error: any) {
       setNotificationIsLoading(false);
       let resMessage;
@@ -80,9 +97,13 @@ const Notifications = () => {
   };
 
   useEffect(() => {
-    getNotification();
-    getTransactionInfo();
-  }, [id]);
+    if (id) {
+      getNotification();
+    }
+    if (transactionId) {
+      getTransactionInfo();
+    }
+  }, [id, transactionId]);
 
   useEffect(() => {}, [isVerify === false]);
 
@@ -108,11 +129,9 @@ const Notifications = () => {
                 onClick={() => {
                   const urlParts = notification?.actionUrl.split("/");
                   setTransactionId(urlParts[urlParts.length - 1]);
-                  // console.log(urlParts[urlParts.length - 1]);
+                  console.log(urlParts[urlParts.length - 1]);
                   setId(notification?.id);
                   setIsVerify(true);
-                  // console.log(`notification id: ${id}`);
-                  // console.log(`transactionId: ${transactionId}`);
                 }}
               >
                 <Circle

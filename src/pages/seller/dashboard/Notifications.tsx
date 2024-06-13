@@ -27,12 +27,20 @@ const Notifications = () => {
   const [value, setValue] = useState("");
   const [isReject, setIsReject] = useState(false);
   const [page, setPage] = useState<number>(1);
-  const { data: user, isLoading: userIsPending } = useUser();
-  const { data: notifications, isLoading: notificationsIsPending } =
-    useNotifications({
-      page,
-      size: 10,
-    });
+  const {
+    data: notifications,
+    isLoading: notificationsIsPending,
+    refetch: refetchNotifications,
+  } = useNotifications({
+    page,
+    size: 10,
+  });
+  const {
+    data: user,
+    isLoading: userIsPending,
+    refetch: refetchUser,
+  } = useUser();
+
   const { control } = useForm();
   const handlePageChange = (selected: any) => {
     setPage(selected);
@@ -46,6 +54,13 @@ const Notifications = () => {
       });
     }
   }, [page]);
+  //
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
+  }, [user]);
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
@@ -57,6 +72,8 @@ const Notifications = () => {
       const response = await privateApi.get(`/notifications/${id}`);
       setNotification(response.data.data);
       setNotificationIsLoading(false);
+      await refetchNotifications(); // Refetch notifications when a notification is fetched
+      await refetchUser(); // Refetch user to update unread notifications count
     } catch (error: any) {
       setNotificationIsLoading(false);
       let resMessage;
