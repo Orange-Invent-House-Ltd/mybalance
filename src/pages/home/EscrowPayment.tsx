@@ -31,15 +31,15 @@ const EscrowPayment = () => {
   const ref = searchParams.get("ref") || data?.data?.transactionReference;
   const { data: transactionData, isLoading: transactionLoading } =
     useTransactionUnauthorized(ref);
-  console.log(
-    "🚀 ~ file: EscrowPayment.tsx:38 ~ EscrowPayment ~ transactionData:",
-    transactionData
-  );
+  // console.log(
+  //   "🚀 ~ file: EscrowPayment.tsx:38 ~ EscrowPayment ~ transactionData:",
+  //   transactionData
+  // );
   const author = transactionData?.data?.escrowMetadata?.author;
-  console.log(
-    "🚀 ~ file: EscrowPayment.tsx:41 ~ EscrowPayment ~ author:",
-    author
-  );
+  // console.log(
+  //   "🚀 ~ file: EscrowPayment.tsx:41 ~ EscrowPayment ~ author:",
+  //   author
+  // );
   const amount = formatToNairaCurrency(
     searchParams.get("amt") || data?.data?.amount
   );

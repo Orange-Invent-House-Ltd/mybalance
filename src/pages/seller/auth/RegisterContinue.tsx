@@ -139,7 +139,7 @@ const RegisterContinue = () => {
 
   const registerUser = async (data: SignupInput) => {
     try {
-      console.log(data);
+      // console.log(data);
       //set button loading to true
       store.setRequestLoading(true);
       store.setAuthEmail(data?.email);

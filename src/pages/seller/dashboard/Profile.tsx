@@ -14,7 +14,7 @@ const Profile = () => {
     useUploadAvatar();
 
   const { data: user } = useUser();
-  console.log("🚀 ~ file: Profile.tsx:17 ~ Profile ~ user:", user);
+  // console.log("🚀 ~ file: Profile.tsx:17 ~ Profile ~ user:", user);
   useEffect(() => {
     reset({
       validId: user?.kyc?.nin,

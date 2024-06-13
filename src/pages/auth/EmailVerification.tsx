@@ -20,10 +20,10 @@ const EmailVerification = () => {
   const userType = localStorage.getItem("userType")
 
   const verifyEmail = async (otp: string) => {
-    console.log(
-      "🚀 ~ file: EmailVerification.tsx:82 ~ verifyEmail ~ otp:",
-      otp
-    );
+    // console.log(
+    //   "🚀 ~ file: EmailVerification.tsx:82 ~ verifyEmail ~ otp:",
+    //   otp
+    // );
     // const stringOtp = otp.join("").toString();
     console.log(
       "🚀 ~ file: EmailVerification.tsx:87 ~ verifyEmail ~ stringOtp:",

@@ -25,7 +25,7 @@ const ChangePhoneNumber = () => {
     const phone = watch('phone')
     if(phone?.length === 11){
       checkPhoneNumber (phone)
-      console.log(phone)
+      // console.log(phone)
     }
   },[watch('phone')])
 

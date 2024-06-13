@@ -60,7 +60,7 @@ const KYC = () => {
   };
 
   const registerKYC = async (data:any) => {
-    console.log(`data: ${data}`)
+    // console.log(`data: ${data}`)
     try {
       setIsLoading(true);
       const response = await privateApi.put<GenericResponse>(

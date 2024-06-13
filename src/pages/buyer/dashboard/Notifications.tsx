@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/reuseable/Header";
-import { useNotifications, useUser } from "../../../hooks/queries";
+import {
+  useNotifications,
+  useTransactionInfo,
+  useUser,
+} from "../../../hooks/queries";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import { Circle } from "lucide-react";
 import Pagination from "../../../components/reuseable/Pagination";
@@ -9,7 +13,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { privateApi } from "../../../api/axios";
 import TextField from "../../../components/reuseable/TextField1";
 import { useForm } from "react-hook-form";
-import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+import {
+  InvalidateQueryFilters,
+  useIsMutating,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 const Notifications = () => {
   const queryClient = useQueryClient();
@@ -21,38 +29,42 @@ const Notifications = () => {
   const [page, setPage] = useState<number>(1);
   const [notificationIsLoading, setNotificationIsLoading] = useState(false);
   const [transactionIsLoading, setTransactionIsLoading] = useState(false);
-  const [notificationsData, setNotificationsData] = useState([]);
-  const { data: user, isLoading: userIsPending } = useUser();
-  const { control } = useForm();
-
-  const fetchNotifications = async () => {
-    try {
-      const response = await privateApi.get(
-        `/notifications?page=${page}&size=10`
-      );
-      setNotificationsData(response.data.data);
-    } catch (error) {
-      console.error("Failed to fetch notifications", error);
-    }
-  };
+  const {
+    data: notifications,
+    isLoading: notificationsIsPending,
+    refetch: refetchNotifications,
+  } = useNotifications({
+    page,
+    size: 10,
+  });
+  const {
+    data: user,
+    isLoading: userIsPending,
+    refetch: refetchUser,
+  } = useUser();
 
   useEffect(() => {
-    fetchNotifications();
+    if (notifications) {
+      queryClient.invalidateQueries({
+        queryKey: ["notifications", page],
+        refetchType: "all", // refetch both active and inactive queries
+      });
+    }
   }, [page]);
 
-  // Polling for new notifications
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchNotifications();
-      console.log("notified new Notification");
-    }, 5000); // Poll every 10 seconds
-
-    return () => clearInterval(interval);
-  }, []);
+    if (user) {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+        refetchType: "all", // refetch both active and inactive queries
+      });
+    }
+  }, [user]);
 
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
+  const { control } = useForm();
 
   const getNotification = async () => {
     try {
@@ -60,9 +72,12 @@ const Notifications = () => {
       const response = await privateApi.get(`/notifications/${id}`);
       setNotification(response.data.data);
       setNotificationIsLoading(false);
+      await refetchNotifications(); // Refetch notifications when a notification is fetched
+      await refetchUser(); // Refetch user to update unread notifications count
     } catch (error: any) {
       setNotificationIsLoading(false);
-      // toast.error(error.message, { toastId: "error1" });
+      let resMessage;
+      // toast.error(resMessage,{toastId: "error1"});
     }
   };
 
@@ -76,20 +91,25 @@ const Notifications = () => {
       setTransactionIsLoading(false);
     } catch (error: any) {
       setTransactionIsLoading(false);
-      // toast.error(error.message, { toastId: "error1" });
+      let resMessage;
+      // toast.error(resMessage,{toastId: "error1"});
     }
   };
 
   useEffect(() => {
     if (id) {
       getNotification();
+    }
+    if (transactionId) {
       getTransactionInfo();
     }
-  }, [id]);
+  }, [id, transactionId]);
+
+  useEffect(() => {}, [isVerify === false]);
 
   return (
     <div>
-      {(notificationIsLoading || userIsPending) && <LoadingOverlay />}
+      {notificationsIsPending && <LoadingOverlay />}
       <Header
         Heading="Notifications"
         Text="Get instant notification as you perform real-time transaction immediately on MyBalance."
@@ -98,7 +118,7 @@ const Notifications = () => {
         You have {user?.unreadNotificationCount} unread notifications
       </p>
       <div className="mt-6">
-        {notificationsData.map((notification: any) => {
+        {notifications?.data?.map((notification: any, key: any) => {
           const dateTime = new Date(notification.createdAt);
           const dateFormatted = dateTime.toISOString().split("T")[0];
           const timeFormatted = dateTime.toTimeString().split(" ")[0];
@@ -109,6 +129,7 @@ const Notifications = () => {
                 onClick={() => {
                   const urlParts = notification?.actionUrl.split("/");
                   setTransactionId(urlParts[urlParts.length - 1]);
+                  console.log(urlParts[urlParts.length - 1]);
                   setId(notification?.id);
                   setIsVerify(true);
                 }}
@@ -134,12 +155,12 @@ const Notifications = () => {
             </div>
           );
         })}
-        {notificationsData.length > 0 && (
+        {!notificationsIsPending && notifications?.data.length > 0 && (
           <div className="w-[325px] mt-[50px]">
             <Pagination
-              initialPage={page}
+              initialPage={notifications?.meta?.currentPage}
               onPageChange={handlePageChange}
-              pageCount={notificationsData.length / 10}
+              pageCount={notifications?.meta?.totalPages}
             />
           </div>
         )}
@@ -250,6 +271,7 @@ const Notifications = () => {
                       <TextField
                         name={"accountName"}
                         label="Account Name"
+                        placeholder="JMusty Feet"
                         readOnly={true}
                         value={
                           transactionInfo?.escrowMetadata?.meta?.accountName
@@ -257,10 +279,18 @@ const Notifications = () => {
                         control={control}
                       />
                     </div>
+                    <TextField
+                      name={"partnerEmail"}
+                      label="Email Address"
+                      placeholder="JMustyfeet@gmail.com"
+                      value={transactionInfo?.lockedAmount?.sellerEmail}
+                      control={control}
+                    />
                   </div>
                 </div>
               ) : (
                 <div>
+                  {notificationIsLoading && <LoadingOverlay />}
                   <p>{notification?.content}</p>
                 </div>
               )}
@@ -271,5 +301,23 @@ const Notifications = () => {
     </div>
   );
 };
+
+const datas = [
+  {
+    heading: "You have locked 10,000",
+    text: "For Apple Series 2 ...",
+    date: "Just now",
+  },
+  {
+    heading: "You have locked 20,000",
+    text: "For White pair of Air Jordans ...",
+    date: "3 days ago",
+  },
+  {
+    heading: "You have locked 30,000",
+    text: "You have deposited 30,000 into your wallet",
+    date: "10 days ago",
+  },
+];
 
 export default Notifications;

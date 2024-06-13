@@ -28,7 +28,7 @@ const WithdrawMoney = () => {
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
 
-  const { handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
+  const {setValue, handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
     useForm();
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
@@ -38,10 +38,10 @@ const WithdrawMoney = () => {
     const channelName = `WALLET_WITHDRAWAL_${txReference}`;
     const channel = pusher.subscribe(channelName);
     setPusherLoading(true);
-    console.log("STARTING CONNECTION", channelName);
+    // console.log("STARTING CONNECTION", channelName);
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_SUCCESS", data);
+      // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
       setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
       setModalMessageDescription(
         `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
@@ -54,7 +54,7 @@ const WithdrawMoney = () => {
     });
 
     channel.bind("WALLET_WITHDRAWAL_FAILURE", (data: any) => {
-      console.log("WALLET_WITHDRAWAL_FAILURE", data);
+      // console.log("WALLET_WITHDRAWAL_FAILURE", data);
       setModalMessageTitle("Withdrawal failed");
       setModalMessageDescription(`Oops, something went wrong`);
 
@@ -84,16 +84,16 @@ const WithdrawMoney = () => {
 
   useEffect(() => {
     if (withdrawSuccess) {
-      console.log(
-        "🚀 ~ file: WithdrawMoney.tsx:77 ~ useEffect ~ withdrawData:",
-        withdrawData
-      );
+      // console.log(
+      //   "🚀 ~ file: WithdrawMoney.tsx:77 ~ useEffect ~ withdrawData:",
+      //   withdrawData
+      // );
       subscribeToChannel(withdrawData?.data?.transactionReference);
       //   setIsWithdraw(true);
     }
   }, [withdrawSuccess]);
   useEffect(() => {
-    if (accNum.length === 10) {
+    if (accNum?.length === 10) {
       LookupMutate({ bankCode: code, accountNumber: accNum });
       // LookupMutate({ bankCode: "044", accountNumber: accNum });
     }
@@ -104,6 +104,7 @@ const WithdrawMoney = () => {
         onSubmit={handleSubmitWithdraw((data) => {
           delete data.accountName;
           delete data.accountNumber;
+          data?.description === "" && delete data.description;
           withdrawMutate({
             ...data,
             accountNumber: accNum,

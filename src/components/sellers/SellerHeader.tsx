@@ -20,7 +20,7 @@ const Header = () => {
   const [code, setCode] = useState("");
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   var today = moment().format("YYYY-MM-DD");
 
@@ -47,13 +47,13 @@ const Header = () => {
     });
   };
   useEffect(() => {
-    if (accNum.length === 10) {
+    if (accNum?.length === 10) {
       LookupMutate({ bankCode: code, accountNumber: accNum });
     }
   }, [accNum, code]);
   const words = user?.fullName.split(" ");
   const firstLetter = words?.[0][0];
-  const secondLetter = words?.[1] && words[1].length > 0 ? words[1][0] : "";
+  const secondLetter = words?.[1] && words[1]?.length > 0 ? words[1][0] : "";
   useEffect(() => {
     reset({
       accountNumber: user?.bankAccount?.accountNumber,
@@ -64,6 +64,21 @@ const Header = () => {
   }, [reset]);
   return (
     <div className="flex flex-col items-center md:flex-row gap-6 justify-between">
+      <div className="flex md:hidden items-center justify-end gap-x-4 mb-4 mt-[1rem] mr-3 w-full">
+        <div className="relative">
+          {user?.unreadNotificationCount !== 0 && (
+            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+              {user?.unreadNotificationCount}
+            </span>
+          )}
+          <img
+            src={bell}
+            alt="notification bell"
+            className="text-end cursor-pointer"
+            onClick={() => navigate("/seller/notifications")}
+          />
+        </div>
+      </div>
       <div className="flex items-center gap-4">
         <div>
           {user?.avatar ? (
@@ -103,18 +118,24 @@ const Header = () => {
 
       <div className="hidden md:flex items-center gap-x-4">
         <div className="relative">
-          { user?.unreadNotificationCount !== 0 &&
-            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center" >{user?.unreadNotificationCount}</span>
-          }
+          {user?.unreadNotificationCount !== 0 && (
+            <span className="absolute -right-2 -top-3 rounded-[50%] border border-[#fff2e8] text-primary-normal text-sm w-5 h-5 flex justify-center items-center">
+              {user?.unreadNotificationCount}
+            </span>
+          )}
           <img
             src={bell}
             alt="notification bell"
-            className=""
-            onClick={()=>navigate('/seller/notifications')}
+            className="cursor-pointer"
+            onClick={() => navigate("/seller/notifications")}
           />
         </div>
         <div className="w-[343px]  md:w-[300px]">
-          <Button fullWidth variant="contained" onClick={() => setIsVerify(true)}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => setIsVerify(true)}
+          >
             Create One-time MyBalance Link
           </Button>
         </div>
@@ -167,16 +188,16 @@ const Header = () => {
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
-                    name={"purpose"}
-                    label="Purpose of creating  escrow"
-                    placeholder="Purchase of sneakers"
+                    name={"itemType"}
+                    label="Title"
+                    placeholder="Gucci sneakers"
                   />
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
-                    name={"itemType"}
-                    label="Type of item(s)"
-                    placeholder="Gucci sneakers"
+                    name={"purpose"}
+                    label="Description"
+                    placeholder="Purchase of sneakers"
                   />
                   <TextField
                     control={control}

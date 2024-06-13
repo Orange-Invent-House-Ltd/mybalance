@@ -200,9 +200,9 @@ const TransactionHistory = () => {
           {data?.data?.map((transaction: any) => (
             <DashboardHistoryBox key={transaction.id} {...transaction} />
           ))}
-          {data?.data.length === 0 && <EmptyTrans />}
+          {data?.data?.length === 0 && <EmptyTrans />}
         </div>
-        {!isLoading && data?.data.length > 0 && (
+        {!isLoading && data?.data?.length > 0 && (
           <Pagination
             initialPage={data?.meta?.currentPage}
             onPageChange={handlePageChange}
