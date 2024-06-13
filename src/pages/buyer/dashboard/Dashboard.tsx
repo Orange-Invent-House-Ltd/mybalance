@@ -210,6 +210,13 @@ const Dashboard = () => {
     });
   }, [store.endTour]);
 
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
+  }, [user]);
+
   return (
     <div className=" overflow-hidden ">
       <Joyride
@@ -274,7 +281,7 @@ const Dashboard = () => {
             <img
               src={bell}
               alt="notification bell"
-              className=""
+              className="cursor-pointer"
               onClick={() => navigate("/buyer/notifications")}
             />
           </div>
@@ -314,7 +321,7 @@ const Dashboard = () => {
             <img
               src={bell}
               alt="notification bell"
-              className=""
+              className="cursor-pointer"
               onClick={() => navigate("/buyer/notifications")}
             />
           </div>

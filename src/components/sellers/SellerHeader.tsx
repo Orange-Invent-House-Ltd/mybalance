@@ -74,7 +74,7 @@ const Header = () => {
           <img
             src={bell}
             alt="notification bell"
-            className="text-end"
+            className="text-end cursor-pointer"
             onClick={() => navigate("/seller/notifications")}
           />
         </div>
@@ -126,7 +126,7 @@ const Header = () => {
           <img
             src={bell}
             alt="notification bell"
-            className=""
+            className="cursor-pointer"
             onClick={() => navigate("/seller/notifications")}
           />
         </div>
