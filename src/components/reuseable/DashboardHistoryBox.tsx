@@ -24,11 +24,6 @@ const DashboardHistoryBox = (data: any) => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const [modal, setModal] = useState(false);
-<<<<<<< HEAD
-=======
-  // console.log(data);
->>>>>>> 6bb0f22b0164c715296a32aad33de65d8b4afeff
-
   let transactionInfo = localStorage.getItem("transactionInfo") as any;
   const [open, setOpen] = useState(false);
   const [openPay, setOpenPay] = useState(false);
@@ -169,13 +164,9 @@ const DashboardHistoryBox = (data: any) => {
             className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(data?.reference);
-<<<<<<< HEAD
+
               toast.success("Reference id copied successfully!", {
                 toastId: "success1",
-=======
-              toast.success("Reference ID copied successfully!",{
-                toastId: 'success1'
->>>>>>> 6bb0f22b0164c715296a32aad33de65d8b4afeff
               });
             }}
           />
