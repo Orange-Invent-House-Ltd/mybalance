@@ -208,22 +208,22 @@ const DashboardHistoryBox = (data: any) => {
             <div
               className={clsx("status_style", {
                 "bg-[#ECFDF3]  text-[#027A48]":
-                  data.status === "SUCCESSFUL" ||
-                  data.status === "FUFILLED" ||
-                  data.status === "APPROVED" ||
-                  data.status === "RESOLVED",
-                " bg-[#FFF2F1] text-[#DA1E28]": data.status === "PENDING",
+                  data?.status === "SUCCESSFUL" ||
+                  data?.status === "FUFILLED" ||
+                  data?.status === "APPROVED" ||
+                  data?.status === "RESOLVED",
+                " bg-[#FFF2F1] text-[#DA1E28]": data?.status === "PENDING",
                 " bg-[#EDEDED] text-[#373737]":
-                  data.status === "REJECTED" ||
-                  data.status === "FAILED" ||
-                  data.status === "CANCELLED",
-                " bg-[#FFFCF2] text-[#FDB022]": data.status === "PAUSED",
+                  data?.status === "REJECTED" ||
+                  data?.status === "FAILED" ||
+                  data?.status === "CANCELLED",
+                " bg-[#FFFCF2] text-[#FDB022]": data?.status === "PAUSED",
               })}
             >
-              <p className="capitalize">{data.status.toLowerCase()}</p>
+              <p className="capitalize">{data?.status?.toLowerCase()}</p>
             </div>
             <p className="text-lg font-bold text-right">
-              {formatToNairaCurrency(data.amount)}
+              {data?.currency}{data?.amount?.toLocaleString()}
             </p>
             <p className="text-[#B7B7B7] text-[10px] font-normal text-right">
               {new Date(data.createdAt).toLocaleString()}
@@ -318,7 +318,6 @@ const DashboardHistoryBox = (data: any) => {
                     rules={{ required: false }}
                     name={"time"}
                     label="Delivery timeline"
-                    // value={convertDate(data?.escrowMetadata?.deliveryDate)}
                     readOnly
                   />
                 </div>

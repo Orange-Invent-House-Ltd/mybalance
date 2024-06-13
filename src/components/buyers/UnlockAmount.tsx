@@ -11,6 +11,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import formatToNairaCurrency from "../../util/formatNumber";
+import { convertDate } from "../reuseable/ConvertDate";
 const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
   const [value, setValue] = useState("");
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
         purpose: data?.meta?.title,
         type: data?.escrowMetadata.itemType,
         number: data.escrowMetadata.itemQuantity,
-        amt: formatToNairaCurrency(data?.lockedAmount?.amount || data?.amount),
-        time: data?.escrowMetadata?.deliveryDate,
+        amt: data?.lockedAmount?.amount?.toLocaleString() || data?.amount?.toLocaleString(),
+        time: convertDate(data?.escrowMetadata?.deliveryDate),
         bankName: data?.escrowMetadata.meta?.bankName,
         accNum: data?.escrowMetadata.meta?.accountNumber,
         accName: data?.escrowMetadata.meta?.accountName,

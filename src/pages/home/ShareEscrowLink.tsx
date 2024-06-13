@@ -21,6 +21,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { toast } from "react-toastify";
 import wallet from "../../assets/Icons/alertWallet.svg";
 import formatToNairaCurrency from "../../util/formatNumber";
+import { convertDate } from "../../components/reuseable/ConvertDate";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
@@ -58,7 +59,7 @@ const ShareEscrowLink = () => {
         type: data.data.escrowMetadata.itemType,
         itemQuantity: data.data.escrowMetadata.itemQuantity,
         amount: formatToNairaCurrency(data.data?.amount),
-        timeline: data?.data.escrowMetadata?.deliveryDate,
+        timeline: convertDate(data?.data.escrowMetadata?.deliveryDate),
         bankName: data?.data?.escrowMetadata.meta?.bankName,
         accNum: data?.data?.escrowMetadata.meta?.accountNumber,
         accName: data?.data?.escrowMetadata.meta?.accountName,
