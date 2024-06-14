@@ -28,7 +28,6 @@ const Dashboard = () => {
 
     size: 2,
   });
-  console.log(user);
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
@@ -178,7 +177,7 @@ const Dashboard = () => {
           </div>
         )}
 
-        <div className="flex  gap-2 mt-16 max-w-full">
+        <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar balance">
           <SellerDashboardBox
             Text="Total amount withdrawn"
             Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
