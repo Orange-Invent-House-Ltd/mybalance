@@ -218,7 +218,7 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-    <div className=" overflow-hidden ">
+    <div className="overflow-hidden ">
       <Joyride
         continuous
         // callback={() => {}}
