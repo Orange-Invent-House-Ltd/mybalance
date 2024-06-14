@@ -43,7 +43,7 @@ const DashboardHistoryBox = (data: any) => {
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
         amt: formatToNairaCurrency(data?.amount),
-        email: data?.escrowMetadata?.partnerEmail,
+        email: data?.escrowMetadata?.parties?.seller?.email,
         time: convertDate(data?.escrowMetadata?.deliveryDate),
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,

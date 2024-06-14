@@ -564,7 +564,7 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="unlockMoney"
-              disabled={user?.walletBalance === "0.00"}
+              // disabled={user?.walletBalance === "0.00"}
               icon={unlock}
               text="Unlock money"
               subtext="Release the money in your wallet"
