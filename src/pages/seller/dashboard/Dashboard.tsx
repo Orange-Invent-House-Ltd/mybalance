@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     size: 2,
   });
-
+  console.log(user);
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
@@ -183,6 +183,10 @@ const Dashboard = () => {
               <SellerDashboardBox
                 Text="Total amount withdrawn"
                 Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
+              />
+              <SellerDashboardBox
+                Text="Total amount in escrow"
+                Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
               />
               <SellerDashboardBox
                 Text="Available balance in wallet"
