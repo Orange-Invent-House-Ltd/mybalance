@@ -159,7 +159,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     control={controlWithdraw}
                     // rules={{ required: "this field is required" }}
                     name={"description"}
-                    label="Reason for withdrawing (description)"
+                    label="Reason for withdrawing (optional)"
                     defaultValue="I need the money"
                   />
                 </div>
