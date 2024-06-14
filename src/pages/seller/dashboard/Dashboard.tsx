@@ -177,22 +177,24 @@ const Dashboard = () => {
             </Link>
           </div>
         )}
-        <div className="md:flex justify-between">
+
+        <div className="flex  gap-2 mt-16 max-w-full">
+          <SellerDashboardBox
+            Text="Total amount withdrawn"
+            Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
+          />
+          <SellerDashboardBox
+            Text="Total amount in escrow"
+            Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
+          />
+          <SellerDashboardBox
+            Text="Available balance in wallet"
+            Amount={formatToNairaCurrency(user?.walletBalance || 0)}
+          />
+        </div>
+
+        <div className="md:flex justify-between w-full">
           <div>
-            <div className="flex justify-center gap-2 mt-16 max-w-[710px]">
-              <SellerDashboardBox
-                Text="Total amount withdrawn"
-                Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
-              />
-              <SellerDashboardBox
-                Text="Total amount in escrow"
-                Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
-              />
-              <SellerDashboardBox
-                Text="Available balance in wallet"
-                Amount={formatToNairaCurrency(user?.walletBalance || 0)}
-              />
-            </div>
             <div className="flex flex-col items-center md:flex-row justify-center gap-4 md:gap-8 mt-8 w-full max-w-[710px]">
               <button
                 onClick={() => {

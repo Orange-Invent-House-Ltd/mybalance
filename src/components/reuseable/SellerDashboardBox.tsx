@@ -7,7 +7,7 @@ type lockprops = {
 
 const LockedBox = ({ Text, Amount }: lockprops) => {
   return (
-    <div className="border balance border-[#FECA9F] rounded min-w-[158px]  sm:w-[350px] h-[125px] p-2 sm:p-6 ">
+    <div className="border balance border-[#FECA9F] rounded w-full sm:w-[350px] h-[125px] p-2 sm:p-6 ">
       <p className="mb-2 font-base font-normal leading-[21.6px]">{Text}</p>
       <h4 className="font-bold text-[23px] sm:text-[32px] leading-[43.2px]">
         {Amount}
