@@ -128,7 +128,7 @@ const BuyerDashboardLayout = () => {
         </div>
 
         {/* desktop navbar */}
-        <div className="hidden overflow-auto md:block min-w-[207px] text-white sticky top-0 left-0 h-screen bg-[#3A3A3A] ">
+        <div className="hidden h-screen overflow-y-scroll no-scrollbar md:block min-w-[207px] text-white sticky top-0 left-0 bg-[#3A3A3A] ">
           <header className="mt-[70px] mb-[65px] flex justify-center items-center">
             <Link to="/buyer/dashboard">
               <img

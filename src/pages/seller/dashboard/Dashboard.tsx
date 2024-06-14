@@ -154,7 +154,7 @@ const Dashboard = () => {
         }}
       />
 
-      <div className="mb-16 start-tour">
+      <div className="pb-16 start-tour">
         <Withdraw open={withdrawModal} setOpen={setWithdrawModal} />
         <SellerHeader />
         {user?.kyc === null && (

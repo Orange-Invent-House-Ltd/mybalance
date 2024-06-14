@@ -230,7 +230,7 @@ const Notifications = () => {
                       readOnly
                     />
                     <TextField
-                      name="buyerEmail"
+                      name='buyerEmail'
                       label="Buyer's email"
                       placeholder="jaremu@oinvent.com"
                       readOnly={true}
