@@ -177,7 +177,7 @@ const Dashboard = () => {
           </div>
         )}
 
-        <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar">
+        <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
           <SellerDashboardBox
             Text="Total amount withdrawn"
             Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
