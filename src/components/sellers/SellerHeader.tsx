@@ -266,7 +266,7 @@ const Header = () => {
                   />
                   <TextField
                     control={control}
-                    label="Enter Account number"
+                    label="Account number"
                     placeholder="1234567890"
                     name={"accountNumber"}
                     value={accNum}
