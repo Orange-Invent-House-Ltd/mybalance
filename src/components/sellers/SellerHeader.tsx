@@ -243,9 +243,9 @@ const Header = () => {
                   VENDOR ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
-                  <div className="w-full mb-3 ">
+                  {/* <div className="w-full mb-3 ">
                     <label htmlFor={"selectBank"} className="block">
-                      select bank
+                      Bank Name
                     </label>
                     <select
                       className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
@@ -255,7 +255,15 @@ const Header = () => {
                         {user?.bankAccount?.bankName}
                       </option>
                     </select>
-                  </div>
+                  </div> */}
+                  <TextField
+                    control={control}
+                    label="Bank Name"
+                    placeholder="1234567890"
+                    name={"bankName"}
+                    value={user?.bankAccount?.bankName}
+                    disabled
+                  />
                   <TextField
                     control={control}
                     label="Enter Account number"

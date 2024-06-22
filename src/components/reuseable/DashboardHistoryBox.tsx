@@ -222,7 +222,8 @@ const DashboardHistoryBox = (data: any) => {
               <p className="capitalize">{data?.status?.toLowerCase()}</p>
             </div>
             <p className="text-lg font-bold text-right">
-              {data?.currency}{data?.amount?.toLocaleString()}
+              {data?.currency}
+              {data?.amount?.toLocaleString()}
             </p>
             <p className="text-[#B7B7B7] text-[10px] font-normal text-right">
               {new Date(data.createdAt).toLocaleString()}
@@ -336,7 +337,7 @@ const DashboardHistoryBox = (data: any) => {
                     control={control}
                     rules={{ required: false }}
                     name={"accNum"}
-                    label="Enter Account number"
+                    label="Account number"
                     placeholder="1234567890"
                     readOnly
                   />

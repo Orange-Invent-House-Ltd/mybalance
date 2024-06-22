@@ -215,7 +215,7 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
-  }, [user]);
+  }, []);
 
   return (
     <div className="overflow-hidden ">
