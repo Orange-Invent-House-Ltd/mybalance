@@ -16,8 +16,8 @@ import LoadingOverlay from "../../reuseable/LoadingOverlay";
 import { useBanks } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
-import formatToNairaCurrency from "../../../util/formatNumber";
 import { useNavigate } from "react-router-dom";
+import { formatToNairaCurrency } from "../../../util/formatNumber";
 
 const WithdrawMoney = () => {
   const navigate = useNavigate();

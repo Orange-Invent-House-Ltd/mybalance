@@ -14,12 +14,20 @@ import {
   getTransactionUnauthorized,
   getTransactions,
   getUser,
+  getUserWallets,
 } from "../../api";
 
 export const useUser = () => {
   return useQuery({
     queryFn: getUser,
     queryKey: ["user"],
+  });
+};
+
+export const useWallets = () => {
+  return useQuery({
+    queryFn: getUserWallets,
+    queryKey: ["wallets"],
   });
 };
 

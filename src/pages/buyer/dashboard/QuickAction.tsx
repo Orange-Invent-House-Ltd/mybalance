@@ -18,11 +18,11 @@ import WithdrawMoney from "../../../components/buyers/quickActions/WithdrawMoney
 import { useNavigate } from "react-router-dom";
 import EmptyMoney from "../../../components/reuseable/EmptyMoney";
 import Skeleton from "react-loading-skeleton";
-import formatToNairaCurrency from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
 import { Link } from "react-router-dom";
 import Joyride from "react-joyride";
 import { useQueryClient } from "@tanstack/react-query";
+import { formatToNairaCurrency } from "../../../util/formatNumber";
 
 const QuickAction = () => {
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished

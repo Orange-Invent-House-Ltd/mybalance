@@ -7,7 +7,6 @@ import back from "../../assets/Icons/back.svg";
 import TextField from "./TextField1";
 import { Button } from "./Button";
 import { toast } from "react-toastify";
-import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
 import { Copy } from "lucide-react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
@@ -17,6 +16,7 @@ import {
   useRespondTransaction,
 } from "../../hooks/mutations";
 import { convertDate } from "./ConvertDate";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();

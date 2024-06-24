@@ -27,6 +27,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   const { data: user } = useUser();
+
   var today = moment().format("YYYY-MM-DD");
 
   const { handleSubmit, control, reset, watch } = useForm();

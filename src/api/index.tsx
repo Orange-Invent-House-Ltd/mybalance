@@ -171,6 +171,12 @@ export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;
 };
+// Get user Wallet
+export const getUserWallets = async () => {
+  const res = await privateApi.get("/auth/wallets");
+  return res.data.data;
+};
+//
 export const getPaymentRedirect = async ({
   status,
   tx_ref,
@@ -235,7 +241,7 @@ export const checkPhoneNumber = async (phone: any) => {
   const res = await publicApi.post(`/console/check-phone-number`, phone);
   return res.data;
 };
-export const checkEmail= async (email: any) => {
+export const checkEmail = async (email: any) => {
   const res = await publicApi.post(`/console/check-email`, email);
   return res.data;
 };

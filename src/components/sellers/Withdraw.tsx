@@ -17,7 +17,7 @@ import { useBanks, useUser } from "../../hooks/queries";
 import { Button } from "../reuseable/Button";
 import Pusher from "pusher-js";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import formatToNairaCurrency from "../../util/formatNumber";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const Withdraw = ({ open, setOpen }: any) => {
   const [accNum, setAccNum] = useState("");

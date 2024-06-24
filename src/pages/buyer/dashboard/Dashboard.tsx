@@ -12,8 +12,16 @@ import bell from "../../../assets/Icons/notification.svg";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import TextField from "../../../components/reuseable/TextField1";
 import back from "../../../assets/Icons/back.svg";
-import { useBanks, useTransactions, useUser } from "../../../hooks/queries";
-import formatToNairaCurrency from "../../../util/formatNumber";
+import {
+  useBanks,
+  useTransactions,
+  useUser,
+  useWallets,
+} from "../../../hooks/queries";
+import {
+  formatToDollarCurrency,
+  formatToNairaCurrency,
+} from "../../../util/formatNumber";
 import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
@@ -45,6 +53,8 @@ const Dashboard = () => {
   const { mutate } = useEndTourGuide();
   const [cancleTour, setCancleTour] = useState(false);
   const { data: user } = useUser();
+  const { data: wallets, isLoading: loadWallets } = useWallets();
+
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register, watch } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
@@ -544,28 +554,43 @@ const Dashboard = () => {
           </Dialog.Portal>
         </Dialog.Root>
       </div>
+      {loadWallets ? (
+        // Show a loading indicator
+        <div></div>
+      ) : (
+        <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
+          <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
+            <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
+            <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
 
-      <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
-        <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
-          <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
-          <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
-
-          <p className="mb-2 font-base font-normal leading-[21.6px]">
-            Available balance in wallet
-          </p>
-          <h4 className="font-bold text-[32px] leading-[43.2px]">
-            {formatToNairaCurrency(user?.walletBalance || 0)}
-          </h4>
+            <p className="mb-2 font-base font-normal leading-[21.6px]">
+              Available balance in wallet
+            </p>
+            <h4 className="font-bold text-[32px] leading-[43.2px]">
+              {/* <p>{formatToDollarCurrency(wallets[0]?.balance || 0)}</p> */}
+              <p>{formatToNairaCurrency(wallets[1]?.balance || 0)}</p>
+            </h4>
+          </div>
+          <DashboardLockedBox
+            Text="Locked amount"
+            AmountInDollars={formatToDollarCurrency(
+              wallets[0]?.lockedAmountOutward || 0
+            )}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.lockedAmountOutward || 0
+            )}
+          />
+          <DashboardLockedBox
+            Text="Unlocked amount"
+            AmountInDollars={formatToDollarCurrency(
+              wallets[0]?.unlockedAmount || 0
+            )}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.unlockedAmount || 0
+            )}
+          />
         </div>
-        <DashboardLockedBox
-          Text="Locked amount"
-          Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
-        />
-        <DashboardLockedBox
-          Text="Unlocked amount"
-          Amount={formatToNairaCurrency(user?.unlockedAmount || 0)}
-        />
-      </div>
+      )}
       {/* Create MyBalance link - mobile view */}
       <div className="md:hidden mt-4 p-2 flex justify-between items-center border border-[#FFF2E8]">
         <p className="font-semibold text-sm">Create your MyBalance link.</p>

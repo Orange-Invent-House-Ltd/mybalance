@@ -20,8 +20,8 @@ import LoadingLogo from "../../components/reuseable/LoadingLogo";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { toast } from "react-toastify";
 import wallet from "../../assets/Icons/alertWallet.svg";
-import formatToNairaCurrency from "../../util/formatNumber";
 import { convertDate } from "../../components/reuseable/ConvertDate";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
@@ -332,17 +332,20 @@ const ShareEscrowLink = () => {
             <div className="mt-6">
               <Button
                 fullWidth
-                disabled={data?.data?.status === "SUCCESSFUL" || user?.userType === "SELLER"}
+                disabled={
+                  data?.data?.status === "SUCCESSFUL" ||
+                  user?.userType === "SELLER"
+                }
                 onClick={(e) => {
-                  e.preventDefault()
+                  e.preventDefault();
                   if (data.data.escrowMetadata.author === "SELLER") {
                     setOpenPay(true);
                   } else {
                     navigate("/seller/dashboard");
-                  }    
+                  }
                 }}
               >
-                {data?.data?.status === "PENDING" ? 'Pay Now' : 'Pament Made'}
+                {data?.data?.status === "PENDING" ? "Pay Now" : "Pament Made"}
               </Button>
             </div>
           )}

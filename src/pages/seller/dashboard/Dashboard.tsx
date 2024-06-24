@@ -3,8 +3,13 @@ import { Button } from "../../../components/reuseable/Button";
 import SellerHeader from "../../../components/sellers/SellerHeader";
 import SellerDashboardBox from "../../../components/reuseable/SellerDashboardBox";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
-import { useTransactions, useUser } from "../../../hooks/queries";
-import formatToNairaCurrency from "../../../util/formatNumber";
+import { useTransactions, useUser, useWallets } from "../../../hooks/queries";
+
+import {
+  formatToDollarCurrency,
+  formatToNairaCurrency,
+} from "../../../util/formatNumber";
+
 import { useEffect, useState } from "react";
 import Withdraw from "../../../components/sellers/Withdraw";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
@@ -16,6 +21,7 @@ import { useEndTourGuide } from "../../../hooks/mutations";
 
 const Dashboard = () => {
   const { data: user, isError } = useUser();
+  const { data: wallets, isLoading: loadWallets } = useWallets();
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
   const { mutate } = useEndTourGuide();
@@ -176,22 +182,40 @@ const Dashboard = () => {
             </Link>
           </div>
         )}
-
-        <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
-          <SellerDashboardBox
-            Text="Total amount withdrawn"
-            Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
-          />
-          <SellerDashboardBox
-            Text="Total amount in escrow"
-            Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
-          />
-          <SellerDashboardBox
-            Text="Available balance in wallet"
-            Amount={formatToNairaCurrency(user?.walletBalance || 0)}
-          />
-        </div>
-
+        {loadWallets ? (
+          // Show a loading indicator
+          <div></div>
+        ) : (
+          <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
+            <SellerDashboardBox
+              Text="Total amount withdrawn"
+              // Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
+              AmountInDollars={formatToDollarCurrency(
+                wallets[0]?.withdrawnAmount || 0
+              )}
+              AmountInNaira={formatToNairaCurrency(
+                wallets[1]?.withdrawnAmount || 0
+              )}
+              loadWallets={loadWallets}
+            />
+            <SellerDashboardBox
+              Text="Total amount in escrow"
+              AmountInDollars={formatToDollarCurrency(
+                wallets[0]?.lockedAmountInward || 0
+              )}
+              AmountInNaira={formatToNairaCurrency(
+                wallets[1]?.lockedAmountInward || 0
+              )}
+              loadWallets={loadWallets}
+            />
+            <SellerDashboardBox
+              Text="Available balance in wallet"
+              AmountInDollars={formatToDollarCurrency(wallets[0]?.balance || 0)}
+              AmountInNaira={formatToNairaCurrency(wallets[1]?.balance || 0)}
+              loadWallets={loadWallets}
+            />
+          </div>
+        )}
         <div className="md:flex justify-between w-full">
           <div>
             <div className="flex flex-col items-center md:flex-row justify-center gap-4 md:gap-8 mt-8 w-full max-w-[710px]">

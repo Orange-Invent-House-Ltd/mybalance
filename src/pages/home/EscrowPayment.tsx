@@ -5,7 +5,6 @@ import copyIcon from "../../assets/Icons/copyIcon.svg";
 import emailIcon from "../../assets/Icons/copyEmailIcon.svg";
 import whatsappIcon from "../../assets/Icons/copyWhatsappIcon.svg";
 import { Link, useSearchParams } from "react-router-dom";
-import formatToNairaCurrency from "../../util/formatNumber";
 import { toast } from "react-toastify";
 import {
   useEscrowPaymentRedirect,
@@ -13,6 +12,7 @@ import {
 } from "../../hooks/queries";
 import LoadingLogo from "../../components/reuseable/LoadingLogo";
 import TransactionFailed from "../../components/reuseable/TransactionFailed";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const EscrowPayment = () => {
   const userType = localStorage.getItem("userType")?.toUpperCase();
