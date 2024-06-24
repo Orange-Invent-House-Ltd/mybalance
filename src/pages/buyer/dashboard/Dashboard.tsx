@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
+  useCheckEmail,
   useCreateEscrow,
   useDepositMoney,
   useEndTourGuide,
@@ -73,12 +74,18 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-
+  const {
+    data: emailData,
+    mutate: checkEmailMutate,
+    isLoading: emailLoading,
+    isSuccess: emailSuccess,
+  } = useCheckEmail();
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
     isSuccess: depositSuccess,
   } = useDepositMoney();
+
   const onSubmit = (data: any) => {
     delete data?.accountName;
     delete data?.accountNumber;
@@ -340,14 +347,14 @@ const Dashboard = () => {
           <Dialog.Portal className="">
             <Dialog.Overlay
               onClick={() => setIsVerify(false)}
-              className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
+              className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
             />
 
             <Dialog.Content>
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
+                className="w-full max-w-[400px] h-[100%] z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
@@ -468,6 +475,23 @@ const Dashboard = () => {
                       label="Email Address"
                       placeholder="JMustyfeet@gmail.com"
                     />
+                    <div>
+                      <TextField
+                        control={control}
+                        rules={{
+                          required: "this field is required",
+                          pattern: {
+                            message: "requires a valid email",
+                            value: /\S+@\S+\.\S+/,
+                          },
+                        }}
+                        name='seller name'
+                        label="Seller name"
+                        placeholder="Jamiu Musty"
+                        value={'g'}
+                        readOnly
+                      />
+                    </div>
                   </div>
                   <div className="mt-6 mb-16">
                     <Button

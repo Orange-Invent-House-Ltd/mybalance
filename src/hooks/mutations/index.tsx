@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   LookUpBank,
   changePassword,
+  checkEmail,
   checkPhoneNumber,
   createDispute,
   createEscrow,
@@ -479,7 +480,19 @@ export const useCheckPhoneNumber = () => {
   });
 };
 
-
+export const useCheckEmail= () => {
+  return useMutation({
+    mutationFn: checkEmail,
+    onSuccess: (data) => {
+      
+    },
+    onError: (error: any) => {
+      toast.error('user with this email is not on MyBalance',{
+        toastId: "error1",
+      });
+    },
+  });
+};
 
 // This section is a test Api call as regards the Api services
 // Generate Marchange Wiget Section

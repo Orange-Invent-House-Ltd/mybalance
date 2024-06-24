@@ -228,6 +228,10 @@ export const checkPhoneNumber = async (phone: any) => {
   const res = await publicApi.post(`/console/check-phone-number`, phone);
   return res.data;
 };
+export const checkEmail= async (email: any) => {
+  const res = await publicApi.post(`/console/check-email`, email);
+  return res.data;
+};
 
 // Blogs
 // export const getBlogs  = async () => {

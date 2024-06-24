@@ -135,7 +135,6 @@ const WithdrawMoney = () => {
               name={"amount"}
               type="number"
             />
-
             <TextField
               control={controlWithdraw}
               // rules={{ required: "this field is required" }}
@@ -270,7 +269,6 @@ const WithdrawMoney = () => {
                     Transaction in progress... Please wait.
                   </h1>
                 </div>
-
                 <img src={waves} className="absolute bottom-0 w-full" alt="" />
               </div>
             </div>
