@@ -3,7 +3,6 @@ import {
   LookUpBank,
   LookUpEmail,
   changePassword,
-  checkEmail,
   checkPhoneNumber,
   createDispute,
   createEscrow,
@@ -516,36 +515,3 @@ export const useGenerateWidgetSection = () => {
     },
   });
 };
-<<<<<<< Updated upstream
-
-export const useCheckEmail= () => {
-  return useMutation({
-    mutationFn: checkEmail,
-    onSuccess: (data) => {
-      
-    },
-    onError: (error: any) => {
-      toast.error('user with this email is not on MyBalance',{
-        toastId: "error1",
-      });
-    },
-  });
-};
-
-// This section is a test Api call as regards the Api services
-// Generate Marchange Wiget Section
-export const useGenerateWidgetSection = () => {
-  return useMutation({
-    mutationFn: generateWidgetSection,
-    onSuccess: (data) => {
-      toast.success(data.data.message,{
-        toastId: "error1",
-      });
-    },
-    onError: (error: any) => {
-      // toast.error(error.response.data.message);
-    },
-  });
-};
-=======
->>>>>>> Stashed changes

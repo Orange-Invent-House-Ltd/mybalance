@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
-  useCheckEmail,
+  // useCheckEmail,
   useCreateEscrow,
   useDepositMoney,
   useEndTourGuide,
@@ -108,12 +108,12 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-  const {
-    data: emailData,
-    mutate: checkEmailMutate,
-    isLoading: emailLoading,
-    isSuccess: emailSuccess,
-  } = useCheckEmail();
+  // const {
+  //   data: emailData,
+  //   mutate: checkEmailMutate,
+  //   isLoading: emailLoading,
+  //   isSuccess: emailSuccess,
+  // } = useCheckEmail();
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
@@ -529,39 +529,6 @@ const Dashboard = () => {
                         placeholder="JMusty Feet"
                       />
                     </div>
-<<<<<<< Updated upstream
-                    <TextField
-                      control={control}
-                      rules={{
-                        required: "this field is required",
-                        pattern: {
-                          message: "requires a valid email",
-                          value: /\S+@\S+\.\S+/,
-                        },
-                      }}
-                      name={"partnerEmail"}
-                      label="Email Address"
-                      placeholder="JMustyfeet@gmail.com"
-                    />
-                    <div>
-                      <TextField
-                        control={control}
-                        rules={{
-                          required: "this field is required",
-                          pattern: {
-                            message: "requires a valid email",
-                            value: /\S+@\S+\.\S+/,
-                          },
-                        }}
-                        name='seller name'
-                        label="Seller name"
-                        placeholder="Jamiu Musty"
-                        value={'g'}
-                        readOnly
-                      />
-                    </div>
-=======
->>>>>>> Stashed changes
                   </div>
                   <div className="mt-6 mb-16">
                     <Button
