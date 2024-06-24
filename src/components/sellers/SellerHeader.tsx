@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form";
 import { useBanks, useUser } from "../../hooks/queries";
 import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
+import {
+  useCreateEscrow,
+  useLookUpBank,
+  useLookUpEmail,
+} from "../../hooks/mutations";
 import moment from "moment";
 import infoIcon from "../../assets/Icons/info-icon.svg";
 import { useNavigate } from "react-router-dom";
@@ -21,12 +25,40 @@ const Header = () => {
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
   const navigate = useNavigate();
-
-  var today = moment().format("YYYY-MM-DD");
-
-  const { handleSubmit, control, reset } = useForm();
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   const { data: user } = useUser();
+  var today = moment().format("YYYY-MM-DD");
+
+  const { handleSubmit, control, reset, watch } = useForm();
+
+  const {
+    data: useremailData,
+    mutate: userEmail,
+    isLoading: emailLoading,
+    isSuccess: emailIsSuccessful,
+  } = useLookUpEmail();
+  const [emailExists, setEmailExists] = useState(false);
+
+  const watchedEmail = watch("partnerEmail");
+  // Function to check email existence
+  const checkEmail = (data: string) => {
+    try {
+      const res = userEmail({ email: data });
+      setEmailExists(true);
+      return res;
+    } catch (error) {
+      setEmailExists(false);
+    }
+  };
+
+  useEffect(() => {
+    if (watchedEmail) {
+      checkEmail(watchedEmail);
+    }
+  }, [watchedEmail]);
+
+  //
+
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -187,6 +219,35 @@ const Header = () => {
                 <div className="mt-6 flex flex-col gap-4">
                   <TextField
                     control={control}
+                    rules={{
+                      required: "this field is required",
+                      pattern: {
+                        message: "requires a valid email",
+                        value: /\S+@\S+\.\S+/,
+                      },
+                    }}
+                    name={"partnerEmail"}
+                    label="Buyer’s email address"
+                    placeholder="tommy@gmail.com"
+                  />
+                  {emailLoading ? (
+                    "Loading... "
+                  ) : emailExists ? (
+                    emailIsSuccessful ? (
+                      <p className="text-sm text-[green] ">
+                        {useremailData?.data?.name}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-[red] ">
+                        User not registered, Please make sure that the customer
+                        register with this email address.
+                      </p>
+                    )
+                  ) : (
+                    ""
+                  )}
+                  <TextField
+                    control={control}
                     rules={{ required: "this field is required" }}
                     name={"itemType"}
                     label="Title"
@@ -224,19 +285,6 @@ const Header = () => {
                     placeholder="Select number of days"
                     type="date"
                     min={today}
-                  />
-                  <TextField
-                    control={control}
-                    rules={{
-                      required: "this field is required",
-                      pattern: {
-                        message: "requires a valid email",
-                        value: /\S+@\S+\.\S+/,
-                      },
-                    }}
-                    name={"partnerEmail"}
-                    label="Buyer’s email address"
-                    placeholder="tommy@gmail.com"
                   />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">

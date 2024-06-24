@@ -46,7 +46,7 @@ const Dashboard = () => {
   const [cancleTour, setCancleTour] = useState(false);
   const { data: user } = useUser();
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, register } = useForm();
+  const { handleSubmit, control, register, watch } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
   //
@@ -57,9 +57,8 @@ const Dashboard = () => {
     isSuccess: emailIsSuccessful,
   } = useLookUpEmail();
   const [emailExists, setEmailExists] = useState(false);
-  const [userEmailCheck, setUserEmailCheck] = useState("");
-  // const [inputFocused, setInputFocused] = useState(false);
 
+  const watchedEmail = watch("partnerEmail");
   // Function to check email existence
   const checkEmail = (data: string) => {
     try {
@@ -72,14 +71,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (userEmailCheck) {
-      // const timer = setTimeout(() => {
-      checkEmail(userEmailCheck);
-      // }, 4000);
-
-      // return () => clearTimeout(timer); // Cleanup timeout on component unmount or when userEmailCheck changes
+    if (watchedEmail) {
+      checkEmail(watchedEmail);
     }
-  }, [userEmailCheck]);
+  }, [watchedEmail]);
 
   //
 
@@ -468,9 +463,6 @@ const Dashboard = () => {
                       name={"partnerEmail"}
                       label="Email Address"
                       placeholder="JMustyfeet@gmail.com"
-                      onChange={(e) => setUserEmailCheck(e.target.value)}
-                      // onFocus={() => setInputFocused(true)}
-                      // onBlur={() => setInputFocused(false)}
                     />
                     {emailLoading ? (
                       "Loading... "
