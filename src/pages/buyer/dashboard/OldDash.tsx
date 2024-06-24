@@ -19,14 +19,12 @@ import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
-  useCheckEmail,
   useCreateEscrow,
   useDepositMoney,
   useEndTourGuide,
   useFundEscrow,
   useLockFunds,
   useLookUpBank,
-  useLookUpEmail,
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
@@ -49,39 +47,6 @@ const Dashboard = () => {
   const { handleSubmit, control, register } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
-  //
-  const {
-    data: useremailData,
-    mutate: userEmail,
-    isLoading: emailLoading,
-    isSuccess: emailIsSuccessful,
-  } = useLookUpEmail();
-  const [emailExists, setEmailExists] = useState(false);
-  const [userEmailCheck, setUserEmailCheck] = useState("");
-  // const [inputFocused, setInputFocused] = useState(false);
-
-  // Function to check email existence
-  const checkEmail = (data: string) => {
-    try {
-      const res = userEmail({ email: data });
-      setEmailExists(true);
-      return res;
-    } catch (error) {
-      setEmailExists(false);
-    }
-  };
-
-  useEffect(() => {
-    if (userEmailCheck) {
-      // const timer = setTimeout(() => {
-      checkEmail(userEmailCheck);
-      // }, 4000);
-
-      // return () => clearTimeout(timer); // Cleanup timeout on component unmount or when userEmailCheck changes
-    }
-  }, [userEmailCheck]);
-
-  //
 
   var today = moment().format("YYYY-MM-DD");
   const {
@@ -108,18 +73,12 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-  const {
-    data: emailData,
-    mutate: checkEmailMutate,
-    isLoading: emailLoading,
-    isSuccess: emailSuccess,
-  } = useCheckEmail();
+
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
     isSuccess: depositSuccess,
   } = useDepositMoney();
-
   const onSubmit = (data: any) => {
     delete data?.accountName;
     delete data?.accountNumber;
@@ -381,14 +340,14 @@ const Dashboard = () => {
           <Dialog.Portal className="">
             <Dialog.Overlay
               onClick={() => setIsVerify(false)}
-              className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
+              className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
             />
 
             <Dialog.Content>
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-[400px] h-[100%] z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
+                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
@@ -468,27 +427,7 @@ const Dashboard = () => {
                       name={"partnerEmail"}
                       label="Email Address"
                       placeholder="JMustyfeet@gmail.com"
-                      onChange={(e) => setUserEmailCheck(e.target.value)}
-                      // onFocus={() => setInputFocused(true)}
-                      // onBlur={() => setInputFocused(false)}
                     />
-                    {emailLoading ? (
-                      "Loading... "
-                    ) : emailExists ? (
-                      emailIsSuccessful ? (
-                        <p className="text-sm text-[green] ">
-                          {useremailData?.data?.name}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-[red] ">
-                          User not registered, Please make sure that the vendor
-                          register with this email address.
-                        </p>
-                      )
-                    ) : (
-                      ""
-                    )}
-
                     <div className="w-full mb-3 ">
                       <label htmlFor={"selectBank"} className="block">
                         select bank
@@ -529,48 +468,13 @@ const Dashboard = () => {
                         placeholder="JMusty Feet"
                       />
                     </div>
-<<<<<<< Updated upstream
-                    <TextField
-                      control={control}
-                      rules={{
-                        required: "this field is required",
-                        pattern: {
-                          message: "requires a valid email",
-                          value: /\S+@\S+\.\S+/,
-                        },
-                      }}
-                      name={"partnerEmail"}
-                      label="Email Address"
-                      placeholder="JMustyfeet@gmail.com"
-                    />
-                    <div>
-                      <TextField
-                        control={control}
-                        rules={{
-                          required: "this field is required",
-                          pattern: {
-                            message: "requires a valid email",
-                            value: /\S+@\S+\.\S+/,
-                          },
-                        }}
-                        name='seller name'
-                        label="Seller name"
-                        placeholder="Jamiu Musty"
-                        value={'g'}
-                        readOnly
-                      />
-                    </div>
-=======
->>>>>>> Stashed changes
                   </div>
                   <div className="mt-6 mb-16">
                     <Button
                       disabled={
                         createEscrowIsLoading ||
                         lockFundsLoading ||
-                        LookupIsLoading ||
-                        emailLoading
-                        // inputFocused
+                        LookupIsLoading
                       }
                       fullWidth
                       type="submit"

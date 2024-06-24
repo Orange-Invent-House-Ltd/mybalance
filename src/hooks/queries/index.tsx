@@ -22,6 +22,7 @@ export const useUser = () => {
     queryKey: ["user"],
   });
 };
+
 export const useTransactions = ({
   page,
   type,

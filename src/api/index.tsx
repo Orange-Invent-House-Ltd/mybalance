@@ -65,6 +65,13 @@ export const LookUpBank = async (data: any) => {
   const res = await privateApi.post("/shared/lookup/nuban", data);
   return res.data;
 };
+
+// lookUpEmail
+export const LookUpEmail = async (data: any) => {
+  const res = await privateApi.post("/console/check-email", data);
+  return res.data;
+};
+//
 export const getTransactions = async ({
   search,
   page,
