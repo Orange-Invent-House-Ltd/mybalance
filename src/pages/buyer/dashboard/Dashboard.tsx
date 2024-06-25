@@ -556,7 +556,7 @@ const Dashboard = () => {
       </div>
       {loadWallets ? (
         // Show a loading indicator
-        <div></div>
+        <></>
       ) : (
         <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
           <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">

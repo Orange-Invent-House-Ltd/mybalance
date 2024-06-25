@@ -184,7 +184,7 @@ const Dashboard = () => {
         )}
         {loadWallets ? (
           // Show a loading indicator
-          <div></div>
+          <></>
         ) : (
           <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
             <SellerDashboardBox
