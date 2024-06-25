@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../../components/reuseable/Header";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import { useTransactions, useUser } from "../../../hooks/queries";
-import formatToNairaCurrency from "../../../util/formatNumber";
+import {formatToNairaCurrency} from "../../../util/formatNumber";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";

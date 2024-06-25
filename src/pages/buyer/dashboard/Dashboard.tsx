@@ -461,36 +461,6 @@ const Dashboard = () => {
                     VENDOR ACCOUNT INFORMATION
                   </h1>
                   <div className="mt-6 flex flex-col gap-4">
-                    <TextField
-                      control={control}
-                      rules={{
-                        required: "this field is required",
-                        pattern: {
-                          message: "requires a valid email",
-                          value: /\S+@\S+\.\S+/,
-                        },
-                      }}
-                      name={"partnerEmail"}
-                      label="Email Address"
-                      placeholder="JMustyfeet@gmail.com"
-                    />
-                    {emailLoading ? (
-                      "Loading... "
-                    ) : emailExists ? (
-                      emailIsSuccessful ? (
-                        <p className="text-sm text-[green] ">
-                          {useremailData?.data?.name}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-[red] ">
-                          User not registered, Please make sure that the vendor
-                          register with this email address.
-                        </p>
-                      )
-                    ) : (
-                      ""
-                    )}
-
                     <div className="w-full mb-3 ">
                       <label htmlFor={"selectBank"} className="block">
                         select bank
@@ -531,6 +501,35 @@ const Dashboard = () => {
                         placeholder="JMusty Feet"
                       />
                     </div>
+                    <TextField
+                      control={control}
+                      rules={{
+                        required: "this field is required",
+                        pattern: {
+                          message: "requires a valid email",
+                          value: /\S+@\S+\.\S+/,
+                        },
+                      }}
+                      name={"partnerEmail"}
+                      label="Email Address"
+                      placeholder="JMustyfeet@gmail.com"
+                    />
+                    {emailLoading ? (
+                      "Loading... "
+                    ) : emailExists ? (
+                      emailIsSuccessful ? (
+                        <p className="text-sm text-[green] -mt-3">
+                          {useremailData?.data?.name}
+                        </p>
+                      ) : (
+                        <p className="text-sm text-[red] -mt-3">
+                          User not registered, Please make sure that the vendor
+                          register with this email address.
+                        </p>
+                      )
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="mt-6 mb-16">
                     <Button
@@ -576,18 +575,14 @@ const Dashboard = () => {
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.lockedAmountOutward || 0
             )}
-            AmountInNaira={formatToNairaCurrency(
-              wallets[1]?.lockedAmountOutward || 0
-            )}
+            AmountInNaira={formatToNairaCurrency(wallets[1]?.lockedAmountOutward || 0)}
           />
           <DashboardLockedBox
             Text="Unlocked amount"
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.unlockedAmount || 0
             )}
-            AmountInNaira={formatToNairaCurrency(
-              wallets[1]?.unlockedAmount || 0
-            )}
+            AmountInNaira={formatToNairaCurrency(wallets[1]?.unlockedAmount || 0)}
           />
         </div>
       )}

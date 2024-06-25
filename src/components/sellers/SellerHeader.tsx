@@ -196,7 +196,7 @@ const Header = () => {
           <Dialog.Content>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-[16px] pb-14 sm:pb-0 overflow-y-scroll"
+              className="w-full max-w-[400px] h-[100%] z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-[16px] pb-14 sm:pb-0 overflow-y-scroll"
             >
               <div className="relative">
                 {createEscrowIsLoading && <LoadingOverlay />}
@@ -235,11 +235,11 @@ const Header = () => {
                     "Loading... "
                   ) : emailExists ? (
                     emailIsSuccessful ? (
-                      <p className="text-sm text-[green] ">
+                      <p className="text-sm text-[green] -mt-3 ">
                         {useremailData?.data?.name}
                       </p>
                     ) : (
-                      <p className="text-sm text-[red] ">
+                      <p className="text-sm text-[red] -mt-3 ">
                         User not registered, Please make sure that the customer
                         register with this email address.
                       </p>
@@ -344,7 +344,7 @@ const Header = () => {
                   placeholder="e.g JMustyfeet@gmail.com"
                 /> */}
                 </div>
-                <div className="mt-6 mb-5">
+                <div className="mt-6 mb-16">
                   <Button
                     disabled={createEscrowIsLoading}
                     fullWidth

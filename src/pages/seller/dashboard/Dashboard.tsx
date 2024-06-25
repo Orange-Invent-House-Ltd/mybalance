@@ -190,12 +190,8 @@ const Dashboard = () => {
             <SellerDashboardBox
               Text="Total amount withdrawn"
               // Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
-              AmountInDollars={formatToDollarCurrency(
-                wallets[0]?.withdrawnAmount || 0
-              )}
-              AmountInNaira={formatToNairaCurrency(
-                wallets[1]?.withdrawnAmount || 0
-              )}
+              AmountInDollars={wallets[0]?.withdrawnAmount || 0}
+              AmountInNaira={formatToNairaCurrency(wallets[1]?.withdrawnAmount) || 0}
               loadWallets={loadWallets}
             />
             <SellerDashboardBox

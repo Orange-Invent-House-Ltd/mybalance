@@ -3,7 +3,7 @@ import React from "react";
 type lockprops = {
   Text: string;
   AmountInDollars: string;
-  AmountInNaira: string;
+  AmountInNaira: Number | any;
   loadWallets: boolean;
 };
 
