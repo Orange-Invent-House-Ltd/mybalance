@@ -28,8 +28,8 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
     // you can do async server request and fill up form
     if (data) {
       reset({
-        purpose: data?.meta?.title,
-        type: data?.escrowMetadata.itemType,
+        type: data?.meta?.title,
+        purpose: data?.meta?.description,
         number: data.escrowMetadata.itemQuantity,
         amt: data?.lockedAmount?.amount?.toLocaleString() || data?.amount?.toLocaleString(),
         time: convertDate(data?.escrowMetadata?.deliveryDate),
@@ -75,17 +75,17 @@ const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
                   <TextField
                     control={control}
                     rules={{ required: false }}
-                    name={"purpose"}
-                    label="Purpose of escrow"
-                    placeholder="e.g 20,000"
+                    name={"type"}
+                    label="Title"
+                    placeholder="i phone"
                     readOnly
                   />
                   <TextField
                     control={control}
                     rules={{ required: false }}
-                    name={"type"}
-                    label="Type of item(s)"
-                    placeholder="i phone"
+                    name={"purpose"}
+                    label="Description"
+                    placeholder="e.g 20,000"
                     readOnly
                   />
                   <TextField

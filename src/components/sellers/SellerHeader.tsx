@@ -292,19 +292,6 @@ const Header = () => {
                   VENDOR ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
-                  {/* <div className="w-full mb-3 ">
-                    <label htmlFor={"selectBank"} className="block">
-                      Bank Name
-                    </label>
-                    <select
-                      className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                      disabled
-                    >
-                      <option value={code}>
-                        {user?.bankAccount?.bankName}
-                      </option>
-                    </select>
-                  </div> */}
                   <TextField
                     control={control}
                     label="Bank Name"
@@ -329,20 +316,6 @@ const Header = () => {
                     placeholder="JMusty Feet"
                     disabled
                   />
-
-                  {/* <TextField
-                  control={control}
-                  rules={{
-                    required: "this field is required",
-                    pattern: {
-                      message: "requires a valid email",
-                      value: /\S+@\S+\.\S+/,
-                    },
-                  }}
-                  name={"sellerEmail"}
-                  label="Email Address"
-                  placeholder="e.g JMustyfeet@gmail.com"
-                /> */}
                 </div>
                 <div className="mt-6 mb-16">
                   <Button
