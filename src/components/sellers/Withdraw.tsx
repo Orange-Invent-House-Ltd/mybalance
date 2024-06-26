@@ -17,7 +17,7 @@ import { useBanks, useUser } from "../../hooks/queries";
 import { Button } from "../reuseable/Button";
 import Pusher from "pusher-js";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import { formatToNairaCurrency } from "../../util/formatNumber";
+import { formatToDollarCurrency, formatToNairaCurrency } from "../../util/formatNumber";
 
 const Withdraw = ({ open, setOpen }: any) => {
   const [accNum, setAccNum] = useState("");
@@ -44,11 +44,9 @@ const Withdraw = ({ open, setOpen }: any) => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
+      setModalMessageTitle(`${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)} Withdrawn!`);
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
-          data.amount
-        )}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)}. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
