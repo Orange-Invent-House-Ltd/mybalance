@@ -16,11 +16,11 @@ import LoadingOverlay from "../../reuseable/LoadingOverlay";
 import { useBanks } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
-import formatToNairaCurrency from "../../../util/formatNumber";
 import { useNavigate } from "react-router-dom";
+import { formatToNairaCurrency } from "../../../util/formatNumber";
 
 const WithdrawMoney = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
   const [modalMessageTitle, setModalMessageTitle] = useState("");
@@ -28,8 +28,11 @@ const WithdrawMoney = () => {
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
 
-  const {setValue, handleSubmit: handleSubmitWithdraw, control: controlWithdraw } =
-    useForm();
+  const {
+    setValue,
+    handleSubmit: handleSubmitWithdraw,
+    control: controlWithdraw,
+  } = useForm();
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
@@ -132,18 +135,28 @@ const WithdrawMoney = () => {
               name={"amount"}
               type="number"
             />
-
             <TextField
               control={controlWithdraw}
               // rules={{ required: "this field is required" }}
               name={"description"}
-              label="Reason for withdrawing (description)"
+              label="Reason for withdrawing (optional)"
               defaultValue="I need the money"
             />
           </div>
           <h1 className="mt-6 text-[#393737] text-lg font-medium">
             RECEIVER ACCOUNT INFORMATION
           </h1>
+          <div className="flex flex-col gap-2 justify-start items-start max-w-[752px] mt-8 px-4 py-3 bg-orange-50 rounded-lg border border-orange-200">
+            <p className="w-[285px] text-amber-800 text-sm font-bold">
+              NOTICE:
+            </p>
+            <div className="w-full border-t border-orange-300" />
+            <p className="max-w-[650px] text-amber-700 text-[13px] font-normal">
+              Withdrawals to microfinance/neo banks (Opay, Kuda, Palmpay) are
+              unavailable. Kindly use any commercial bank (Zenith, Access,
+              GTBank, etc.). We apologize for any inconvenience this may cause.
+            </p>
+          </div>
           <div className="mt-6 flex flex-col gap-4">
             <div className="w-full mb-3 ">
               <label htmlFor={"selectBank"} className="block">
@@ -229,8 +242,8 @@ const WithdrawMoney = () => {
                     //   disabled={LookupIsLoading}
                     fullWidth={true}
                     onClick={() => {
-                      setIsWithdraw(false)
-                      navigate("/buyer/dashboard")
+                      setIsWithdraw(false);
+                      navigate("/buyer/dashboard");
                     }}
                   >
                     Return to dashboard
@@ -256,7 +269,6 @@ const WithdrawMoney = () => {
                     Transaction in progress... Please wait.
                   </h1>
                 </div>
-
                 <img src={waves} className="absolute bottom-0 w-full" alt="" />
               </div>
             </div>

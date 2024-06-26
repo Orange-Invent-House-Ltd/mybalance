@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   LookUpBank,
+  LookUpEmail,
   changePassword,
   checkPhoneNumber,
   createDispute,
@@ -50,16 +51,17 @@ export const useLogin = () => {
         navigate(location.state.from);
         return;
       }
-      if(data?.data?.phoneNumberFlagged){
+      if (data?.data?.phoneNumberFlagged) {
         navigate("/change-phone-number");
-      }else{
+      } else {
         navigate("/buyer/dashboard");
       }
     },
     onError: (error: any) => {
       let resMessage;
-      error.response.data.errors === null ? resMessage = error.response.data.message : 
-      resMessage = error.response.data.errors.email[0]
+      error.response.data.errors === null
+        ? (resMessage = error.response.data.message)
+        : (resMessage = error.response.data.errors.email[0]);
       toast.error(resMessage);
     },
   });
@@ -81,16 +83,17 @@ export const usePasswordlessLogin = () => {
         navigate(location.state.from);
         return;
       }
-      if(data?.data?.phoneNumberFlagged){
+      if (data?.data?.phoneNumberFlagged) {
         navigate("/change-phone-number");
-      }else{
+      } else {
         navigate("/passwordless-otp-verification");
       }
     },
     onError: (error: any) => {
       let resMessage;
-      error.response.data.errors === null ? resMessage = error.response.data.message : 
-      resMessage = error.response.data.errors.email[0]
+      error.response.data.errors === null
+        ? (resMessage = error.response.data.message)
+        : (resMessage = error.response.data.errors.email[0]);
       toast.error(resMessage, {
         toastId: "error1",
       });
@@ -109,19 +112,20 @@ export const usePasswordlessOtpVerification = () => {
       toast.success(data.message, {
         toastId: "success1",
       });
-      if(data?.data?.phoneNumberFlagged){
+      if (data?.data?.phoneNumberFlagged) {
         navigate("/change-phone-number");
-      }else if(data?.data?.user?.isBuyer) {
+      } else if (data?.data?.user?.isBuyer) {
         navigate("/buyer/transaction-history");
-      }else{
+      } else {
         navigate("/seller/transaction-history");
       }
-      // navigate("/passwordless-otp-verification"); 
+      // navigate("/passwordless-otp-verification");
     },
     onError: (error: any) => {
       let resMessage;
-      error.response.data.errors === null ? resMessage = error.response.data.message : 
-      resMessage = error.response.data.errors.email[0]
+      error.response.data.errors === null
+        ? (resMessage = error.response.data.message)
+        : (resMessage = error.response.data.errors.email[0]);
       toast.error(resMessage, {
         toastId: "error1",
       });
@@ -238,7 +242,7 @@ export const useChangePassword = () => {
     },
   });
 };
-export const useEndTourGuide= () => {
+export const useEndTourGuide = () => {
   return useMutation({
     mutationFn: endTourGuide,
     onSuccess: (data) => {
@@ -333,7 +337,7 @@ export const useUnLockFunds = () => {
       // console.log("🚀 ~ file: index.tsx:232 ~ useUnLockFunds ~ error:", error);
       toast.error(
         // error.response.data.errors.transactionReference?.seller ||
-        error.response.data.message  
+        error.response.data.message
       );
     },
   });
@@ -349,6 +353,20 @@ export const useLookUpBank = () => {
     },
   });
 };
+// Uselookup email
+export const useLookUpEmail = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: LookUpEmail,
+    onSuccess: (data) => {},
+    onError: (error: any) => {
+      // toast.error(error.response.data.message);
+    },
+  });
+};
+//
+
 export const useWithdrawFee = () => {
   return useMutation({
     mutationFn: getWithdrawFee,
@@ -469,9 +487,12 @@ export const useCheckPhoneNumber = () => {
   return useMutation({
     mutationFn: checkPhoneNumber,
     onSuccess: (data) => {
-      toast.error('user with this phone number already exist. Use another Phone number',{
-        toastId: "error1",
-      });
+      toast.error(
+        "user with this phone number already exist. Use another Phone number",
+        {
+          toastId: "error1",
+        }
+      );
     },
     onError: (error: any) => {
       // toast.error(error.response.data.message);
@@ -479,15 +500,13 @@ export const useCheckPhoneNumber = () => {
   });
 };
 
-
-
 // This section is a test Api call as regards the Api services
 // Generate Marchange Wiget Section
 export const useGenerateWidgetSection = () => {
   return useMutation({
     mutationFn: generateWidgetSection,
     onSuccess: (data) => {
-      toast.success(data.data.message,{
+      toast.success(data.data.message, {
         toastId: "error1",
       });
     },

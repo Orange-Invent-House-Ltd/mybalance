@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form";
 import { useBanks, useUser } from "../../hooks/queries";
 import Skeleton from "react-loading-skeleton";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import { useCreateEscrow, useLookUpBank } from "../../hooks/mutations";
+import {
+  useCreateEscrow,
+  useLookUpBank,
+  useLookUpEmail,
+} from "../../hooks/mutations";
 import moment from "moment";
 import infoIcon from "../../assets/Icons/info-icon.svg";
 import { useNavigate } from "react-router-dom";
@@ -21,12 +25,41 @@ const Header = () => {
   const [value, setValue] = useState("");
   const [accNum, setAccNum] = useState("");
   const navigate = useNavigate();
+  const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const { data: user } = useUser();
 
   var today = moment().format("YYYY-MM-DD");
 
-  const { handleSubmit, control, reset } = useForm();
-  const { data: banks, isLoading: bankIsLoading } = useBanks();
-  const { data: user } = useUser();
+  const { handleSubmit, control, reset, watch } = useForm();
+
+  const {
+    data: useremailData,
+    mutate: userEmail,
+    isLoading: emailLoading,
+    isSuccess: emailIsSuccessful,
+  } = useLookUpEmail();
+  const [emailExists, setEmailExists] = useState(false);
+
+  const watchedEmail = watch("partnerEmail");
+  // Function to check email existence
+  const checkEmail = (data: string) => {
+    try {
+      const res = userEmail({ email: data });
+      setEmailExists(true);
+      return res;
+    } catch (error) {
+      setEmailExists(false);
+    }
+  };
+
+  useEffect(() => {
+    if (watchedEmail) {
+      checkEmail(watchedEmail);
+    }
+  }, [watchedEmail]);
+
+  //
+
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -163,7 +196,7 @@ const Header = () => {
           <Dialog.Content>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-[16px] pb-14 sm:pb-0 overflow-y-scroll"
+              className="w-full max-w-[400px] h-[100%] z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-[16px] pb-14 sm:pb-0 overflow-y-scroll"
             >
               <div className="relative">
                 {createEscrowIsLoading && <LoadingOverlay />}
@@ -185,6 +218,35 @@ const Header = () => {
                   ITEM(S) INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
+                  <TextField
+                    control={control}
+                    rules={{
+                      required: "this field is required",
+                      pattern: {
+                        message: "requires a valid email",
+                        value: /\S+@\S+\.\S+/,
+                      },
+                    }}
+                    name={"partnerEmail"}
+                    label="Buyer’s email address"
+                    placeholder="tommy@gmail.com"
+                  />
+                  {emailLoading ? (
+                    "Loading... "
+                  ) : emailExists ? (
+                    emailIsSuccessful ? (
+                      <p className="text-sm text-[green] -mt-3 ">
+                        {useremailData?.data?.name}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-[red] -mt-3 ">
+                        User not registered, Please make sure that the customer
+                        register with this email address.
+                      </p>
+                    )
+                  ) : (
+                    ""
+                  )}
                   <TextField
                     control={control}
                     rules={{ required: "this field is required" }}
@@ -225,27 +287,14 @@ const Header = () => {
                     type="date"
                     min={today}
                   />
-                  <TextField
-                    control={control}
-                    rules={{
-                      required: "this field is required",
-                      pattern: {
-                        message: "requires a valid email",
-                        value: /\S+@\S+\.\S+/,
-                      },
-                    }}
-                    name={"partnerEmail"}
-                    label="Buyer’s email address"
-                    placeholder="tommy@gmail.com"
-                  />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">
                   VENDOR ACCOUNT INFORMATION
                 </h1>
                 <div className="mt-6 flex flex-col gap-4">
-                  <div className="w-full mb-3 ">
+                  {/* <div className="w-full mb-3 ">
                     <label htmlFor={"selectBank"} className="block">
-                      select bank
+                      Bank Name
                     </label>
                     <select
                       className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
@@ -255,10 +304,18 @@ const Header = () => {
                         {user?.bankAccount?.bankName}
                       </option>
                     </select>
-                  </div>
+                  </div> */}
                   <TextField
                     control={control}
-                    label="Enter Account number"
+                    label="Bank Name"
+                    placeholder="1234567890"
+                    name={"bankName"}
+                    value={user?.bankAccount?.bankName}
+                    disabled
+                  />
+                  <TextField
+                    control={control}
+                    label="Account number"
                     placeholder="1234567890"
                     name={"accountNumber"}
                     value={accNum}
@@ -287,7 +344,7 @@ const Header = () => {
                   placeholder="e.g JMustyfeet@gmail.com"
                 /> */}
                 </div>
-                <div className="mt-6 mb-5">
+                <div className="mt-6 mb-16">
                   <Button
                     disabled={createEscrowIsLoading}
                     fullWidth

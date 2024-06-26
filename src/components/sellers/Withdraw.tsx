@@ -17,7 +17,7 @@ import { useBanks, useUser } from "../../hooks/queries";
 import { Button } from "../reuseable/Button";
 import Pusher from "pusher-js";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import formatToNairaCurrency from "../../util/formatNumber";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const Withdraw = ({ open, setOpen }: any) => {
   const [accNum, setAccNum] = useState("");
@@ -159,13 +159,27 @@ const Withdraw = ({ open, setOpen }: any) => {
                     control={controlWithdraw}
                     // rules={{ required: "this field is required" }}
                     name={"description"}
-                    label="Reason for withdrawing (description)"
+                    label="Reason for withdrawing (optional)"
                     defaultValue="I need the money"
                   />
                 </div>
                 <h1 className="mt-6 text-[#393737] text-lg font-medium">
                   RECEIVER ACCOUNT INFORMATION
                 </h1>
+                {/*  */}
+                <div className="flex flex-col gap-2 justify-start items-start max-w-[752px] mt-8 px-4 py-3 bg-orange-50 rounded-lg border border-orange-200">
+                  <p className="w-[285px] text-amber-800 text-sm font-bold">
+                    NOTICE:
+                  </p>
+                  <div className="w-full border-t border-orange-300" />
+                  <p className="max-w-[650px] text-amber-700 text-[13px] font-normal">
+                    Withdrawals to microfinance/neo banks (Opay, Kuda, Palmpay)
+                    are unavailable. Kindly use any commercial bank (Zenith,
+                    Access, GTBank, etc.). We apologize for any inconvenience
+                    this may cause.
+                  </p>
+                </div>
+                {/*  */}
                 <div className="mt-6 flex flex-col gap-4">
                   <div className="w-full mb-3 ">
                     <label htmlFor={"selectBank"} className="block">

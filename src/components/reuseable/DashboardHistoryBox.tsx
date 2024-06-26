@@ -7,7 +7,6 @@ import back from "../../assets/Icons/back.svg";
 import TextField from "./TextField1";
 import { Button } from "./Button";
 import { toast } from "react-toastify";
-import formatToNairaCurrency from "../../util/formatNumber";
 import { useUser } from "../../hooks/queries";
 import { Copy } from "lucide-react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
@@ -17,6 +16,7 @@ import {
   useRespondTransaction,
 } from "../../hooks/mutations";
 import { convertDate } from "./ConvertDate";
+import { formatToNairaCurrency } from "../../util/formatNumber";
 
 const DashboardHistoryBox = (data: any) => {
   const { handleSubmit, control, reset } = useForm();
@@ -43,7 +43,7 @@ const DashboardHistoryBox = (data: any) => {
         type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
         amt: formatToNairaCurrency(data?.amount),
-        email: data?.escrowMetadata?.partnerEmail,
+        email: data?.escrowMetadata?.parties?.seller?.email,
         time: convertDate(data?.escrowMetadata?.deliveryDate),
         accName: data?.escrowMetadata?.meta?.accountName,
         accNum: data?.escrowMetadata?.meta?.accountNumber,
@@ -222,7 +222,8 @@ const DashboardHistoryBox = (data: any) => {
               <p className="capitalize">{data?.status?.toLowerCase()}</p>
             </div>
             <p className="text-lg font-bold text-right">
-              {data?.currency}{data?.amount?.toLocaleString()}
+              {data?.currency}
+              {data?.amount?.toLocaleString()}
             </p>
             <p className="text-[#B7B7B7] text-[10px] font-normal text-right">
               {new Date(data.createdAt).toLocaleString()}
@@ -336,7 +337,7 @@ const DashboardHistoryBox = (data: any) => {
                     control={control}
                     rules={{ required: false }}
                     name={"accNum"}
-                    label="Enter Account number"
+                    label="Account number"
                     placeholder="1234567890"
                     readOnly
                   />

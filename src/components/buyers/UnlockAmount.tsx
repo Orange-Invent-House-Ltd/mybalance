@@ -10,7 +10,7 @@ import Spinner from "../reuseable/Spinner";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import formatToNairaCurrency from "../../util/formatNumber";
+import {formatToNairaCurrency} from "../../util/formatNumber";
 import { convertDate } from "../reuseable/ConvertDate";
 const UnlockAmount = ({ setUnlock, setSuccessModal, unlock }: any) => {
   const [value, setValue] = useState("");

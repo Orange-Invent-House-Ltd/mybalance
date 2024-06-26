@@ -6,7 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
 import { useTransactions, useUser } from "../../../hooks/queries";
-import formatToNairaCurrency from "../../../util/formatNumber";
+import {formatToNairaCurrency }from "../../../util/formatNumber";
 import Pagination from "../../../components/reuseable/Pagination";
 import ReactJoyride from "react-joyride";
 import { useEndTourGuide } from "../../../hooks/mutations";

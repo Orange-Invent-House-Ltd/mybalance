@@ -12,19 +12,29 @@ import bell from "../../../assets/Icons/notification.svg";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import TextField from "../../../components/reuseable/TextField1";
 import back from "../../../assets/Icons/back.svg";
-import { useBanks, useTransactions, useUser } from "../../../hooks/queries";
-import formatToNairaCurrency from "../../../util/formatNumber";
+import {
+  useBanks,
+  useTransactions,
+  useUser,
+  useWallets,
+} from "../../../hooks/queries";
+import {
+  formatToDollarCurrency,
+  formatToNairaCurrency,
+} from "../../../util/formatNumber";
 import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
+  // useCheckEmail,
   useCreateEscrow,
   useDepositMoney,
   useEndTourGuide,
   useFundEscrow,
   useLockFunds,
   useLookUpBank,
+  useLookUpEmail,
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import EmptyTrans from "../../../components/reuseable/EmptyTrans";
@@ -43,10 +53,40 @@ const Dashboard = () => {
   const { mutate } = useEndTourGuide();
   const [cancleTour, setCancleTour] = useState(false);
   const { data: user } = useUser();
+  const { data: wallets, isLoading: loadWallets } = useWallets();
+
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, register } = useForm();
+  const { handleSubmit, control, register, watch } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  //
+  const {
+    data: useremailData,
+    mutate: userEmail,
+    isLoading: emailLoading,
+    isSuccess: emailIsSuccessful,
+  } = useLookUpEmail();
+  const [emailExists, setEmailExists] = useState(false);
+
+  const watchedEmail = watch("partnerEmail");
+  // Function to check email existence
+  const checkEmail = (data: string) => {
+    try {
+      const res = userEmail({ email: data });
+      setEmailExists(true);
+      return res;
+    } catch (error) {
+      setEmailExists(false);
+    }
+  };
+
+  useEffect(() => {
+    if (watchedEmail) {
+      checkEmail(watchedEmail);
+    }
+  }, [watchedEmail]);
+
+  //
 
   var today = moment().format("YYYY-MM-DD");
   const {
@@ -73,12 +113,18 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-
+  // const {
+  //   data: emailData,
+  //   mutate: checkEmailMutate,
+  //   isLoading: emailLoading,
+  //   isSuccess: emailSuccess,
+  // } = useCheckEmail();
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
     isSuccess: depositSuccess,
   } = useDepositMoney();
+
   const onSubmit = (data: any) => {
     delete data?.accountName;
     delete data?.accountNumber;
@@ -215,10 +261,10 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
-  }, [user]);
+  }, []);
 
   return (
-    <div className=" overflow-hidden ">
+    <div className="overflow-hidden ">
       <Joyride
         continuous
         // callback={() => {}}
@@ -340,14 +386,14 @@ const Dashboard = () => {
           <Dialog.Portal className="">
             <Dialog.Overlay
               onClick={() => setIsVerify(false)}
-              className="bg-[#3a3a3a]/50 z-50   fixed inset-0"
+              className="bg-[#3a3a3a]/50 z-50 fixed inset-0"
             />
 
             <Dialog.Content>
               {/* <div className="  w-[393px] h-screen z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white pl-[16px] pr-[34px] overflow-y-scroll "> */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-[400px] h-screen z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
+                className="w-full max-w-[400px] h-[100%] z-50 fixed top-0 right-0 animate-fade-left animate-duration-300 animate-ease-out bg-white px-3 md:px-[16px] overflow-y-scroll"
               >
                 <div className="relative">
                   {(createEscrowIsLoading || lockFundsLoading) && (
@@ -468,13 +514,31 @@ const Dashboard = () => {
                       label="Email Address"
                       placeholder="JMustyfeet@gmail.com"
                     />
+                    {emailLoading ? (
+                      "Loading... "
+                    ) : emailExists ? (
+                      emailIsSuccessful ? (
+                        <p className="text-sm text-[green] -mt-3">
+                          {useremailData?.data?.name}
+                        </p>
+                      ) : (
+                        <p className="text-sm text-[red] -mt-3">
+                          User not registered, Please make sure that the vendor
+                          register with this email address.
+                        </p>
+                      )
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="mt-6 mb-16">
                     <Button
                       disabled={
                         createEscrowIsLoading ||
                         lockFundsLoading ||
-                        LookupIsLoading
+                        LookupIsLoading ||
+                        emailLoading
+                        // inputFocused
                       }
                       fullWidth
                       type="submit"
@@ -489,28 +553,39 @@ const Dashboard = () => {
           </Dialog.Portal>
         </Dialog.Root>
       </div>
+      {loadWallets ? (
+        // Show a loading indicator
+        <></>
+      ) : (
+        <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
+          <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
+            <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
+            <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
 
-      <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
-        <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
-          <div className="w-[163px] h-[163px] bg-[#FFF2E8] rounded-full top-[-19px] left-[-96px] z-[-10] absolute"></div>
-          <div className="w-[66px] h-[66px] bg-[#FECA9F] rounded-full top-[-19px] left-[324px] z-[-10] absolute"></div>
-
-          <p className="mb-2 font-base font-normal leading-[21.6px]">
-            Available balance in wallet
-          </p>
-          <h4 className="font-bold text-[32px] leading-[43.2px]">
-            {formatToNairaCurrency(user?.walletBalance || 0)}
-          </h4>
+            <p className="mb-2 font-base font-normal leading-[21.6px]">
+              Available balance in wallet
+            </p>
+            <h4 className="font-bold text-[32px] leading-[43.2px]">
+              {/* <p>{formatToDollarCurrency(wallets[0]?.balance || 0)}</p> */}
+              <p>{formatToNairaCurrency(wallets[1]?.balance || 0)}</p>
+            </h4>
+          </div>
+          <DashboardLockedBox
+            Text="Locked amount"
+            AmountInDollars={formatToDollarCurrency(
+              wallets[0]?.lockedAmountOutward || 0
+            )}
+            AmountInNaira={formatToNairaCurrency(wallets[1]?.lockedAmountOutward || 0)}
+          />
+          <DashboardLockedBox
+            Text="Unlocked amount"
+            AmountInDollars={formatToDollarCurrency(
+              wallets[0]?.unlockedAmount || 0
+            )}
+            AmountInNaira={formatToNairaCurrency(wallets[1]?.unlockedAmount || 0)}
+          />
         </div>
-        <DashboardLockedBox
-          Text="Locked amount"
-          Amount={formatToNairaCurrency(user?.lockedAmount || 0)}
-        />
-        <DashboardLockedBox
-          Text="Unlocked amount"
-          Amount={formatToNairaCurrency(user?.unlockedAmount || 0)}
-        />
-      </div>
+      )}
       {/* Create MyBalance link - mobile view */}
       <div className="md:hidden mt-4 p-2 flex justify-between items-center border border-[#FFF2E8]">
         <p className="font-semibold text-sm">Create your MyBalance link.</p>
@@ -564,7 +639,7 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="unlockMoney"
-              disabled={user?.walletBalance === "0.00"}
+              // disabled={user?.walletBalance === "0.00"}
               icon={unlock}
               text="Unlock money"
               subtext="Release the money in your wallet"
