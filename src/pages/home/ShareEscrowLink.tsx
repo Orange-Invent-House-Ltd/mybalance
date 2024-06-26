@@ -21,7 +21,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { toast } from "react-toastify";
 import wallet from "../../assets/Icons/alertWallet.svg";
 import { convertDate } from "../../components/reuseable/ConvertDate";
-import { formatToNairaCurrency } from "../../util/formatNumber";
+import { formatToDollarCurrency, formatToNairaCurrency } from "../../util/formatNumber";
 
 const ShareEscrowLink = () => {
   const [searchParams] = useSearchParams();
@@ -52,13 +52,14 @@ const ShareEscrowLink = () => {
   const [modal, setModal] = useState(false);
   const { handleSubmit, control, reset } = useForm();
   const location = useLocation();
+  
   useEffect(() => {
     if (isSuccess) {
       reset({
-        purpose: data.data.escrowMetadata.purpose,
         type: data.data.escrowMetadata.itemType,
+        purpose: data.data.escrowMetadata.purpose,
         itemQuantity: data.data.escrowMetadata.itemQuantity,
-        amount: formatToNairaCurrency(data.data?.amount),
+        amount: data.data?.currency === "NGN" ? formatToNairaCurrency(data.data?.amount) : formatToDollarCurrency(data.data?.amount) ,
         timeline: convertDate(data?.data.escrowMetadata?.deliveryDate),
         bankName: data?.data?.escrowMetadata.meta?.bankName,
         accNum: data?.data?.escrowMetadata.meta?.accountNumber,
@@ -209,18 +210,18 @@ const ShareEscrowLink = () => {
           <div className="flex  flex-col gap-4">
             <TextField
               control={control}
-              name="purpose"
+              name="type"
               rules={{ required: "this field is required" }}
-              label="Purpose of escrow"
-              placeholder="Payment for Yellow Wool Beanie"
+              label="Title"
+              placeholder="Beanie"
               readOnly
             />
             <TextField
               control={control}
-              name="type"
+              name="purpose"
               rules={{ required: "this field is required" }}
-              label="Type of item(s)"
-              placeholder="Beanie"
+              label="Description"
+              placeholder="Payment for Yellow Wool Beanie"
               readOnly
             />
             <TextField

@@ -37,10 +37,10 @@ const DashboardHistoryBox = (data: any) => {
   useEffect(() => {
     if (data) {
       reset({
+        type: data?.escrowMetadata?.itemType,
+        purpose: data?.escrowMetadata?.purpose,
         buyersEmail: data?.escrowMetadata?.parties?.buyer?.email,
         buyersName: data?.escrowMetadata?.parties?.buyer?.name,
-        purpose: data?.escrowMetadata?.purpose,
-        type: data?.escrowMetadata?.itemType,
         number: data?.escrowMetadata?.itemQuantity,
         amt: formatToNairaCurrency(data?.amount),
         email: data?.escrowMetadata?.parties?.seller?.email,
@@ -283,17 +283,17 @@ const DashboardHistoryBox = (data: any) => {
                   <TextField
                     control={control}
                     rules={{ required: false }}
-                    name={"purpose"}
-                    label="Purpose of escrow"
-                    placeholder="e.g 20,000"
+                    name={"type"}
+                    label="Title"
+                    placeholder="i phone"
                     readOnly
                   />
                   <TextField
                     control={control}
                     rules={{ required: false }}
-                    name={"type"}
-                    label="Type of item(s)"
-                    placeholder="i phone"
+                    name={"purpose"}
+                    label="Description"
+                    placeholder="e.g 20,000"
                     readOnly
                   />
                   <TextField

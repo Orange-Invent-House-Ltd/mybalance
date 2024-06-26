@@ -202,6 +202,23 @@ const Notifications = () => {
                   </h1>
                   <div className="mt-6 flex flex-col gap-4">
                     <TextField
+                      control={control}
+                      rules={{ required: false }}
+                      name={"type"}
+                      label="Title"
+                      placeholder="i phone"
+                      value={transactionInfo?.escrowMetadata?.itemType}
+                      readOnly
+                    />
+                    <TextField
+                      name="purpose"
+                      label="Reason for locking (Description)"
+                      placeholder="Purchase of sneakers"
+                      readOnly={true}
+                      value={transactionInfo?.escrowMetadata?.purpose}
+                      control={control}
+                    />
+                    <TextField
                       name="amount"
                       label="Amount locked"
                       placeholder="5"
@@ -209,23 +226,6 @@ const Notifications = () => {
                       readOnly={true}
                       value={transactionInfo?.amount}
                       control={control}
-                    />
-                    <TextField
-                      name="purpose"
-                      label="Reason for locking (description)"
-                      placeholder="Purchase of sneakers"
-                      readOnly={true}
-                      value={transactionInfo?.escrowMetadata?.purpose}
-                      control={control}
-                    />
-                    <TextField
-                      control={control}
-                      rules={{ required: false }}
-                      name={"type"}
-                      label="Type of item(s)"
-                      placeholder="i phone"
-                      value={transactionInfo?.escrowMetadata?.itemType}
-                      readOnly
                     />
                     <TextField
                       control={control}
