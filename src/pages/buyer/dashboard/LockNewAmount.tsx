@@ -42,7 +42,12 @@ const LockNewAmount = ({setLock}:any) => {
         <div className="mt-6 flex flex-col gap-4">
           <TextField label="Select bank" name="bank" placeholder="e.g UBA" />
           <TextField label="Select account name" name="account_name" placeholder="e.g John Buz" />
-          <TextField label="Enter account number" name="account_number" placeholder="e.g 4758593837" />
+          <TextField 
+            label="Enter account number" 
+            name="account_number" 
+            placeholder="e.g 4758593837" 
+            type="number"
+          />
           <TextField
             label="Phone number"
             name="phone"

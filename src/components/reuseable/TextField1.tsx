@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useEffect, useRef } from "react";
 import {
   UseControllerProps,
   useController,
@@ -16,6 +16,22 @@ const TextField = ({
   ...props
 }: UseControllerProps<any> & ITextField) => {
   const { field, fieldState } = useController(props);
+
+  // Prevent increase and decrease function of input of type number
+  // useEffect(() => {
+  //   const handleWheel = (event: WheelEvent) => {
+  //     if (document?.activeElement === inputRef?.current) {
+  //       event.preventDefault();
+  //     }
+  //   };
+
+  //   const inputElement = inputRef?.current;
+  //   inputElement?.addEventListener('wheel', handleWheel);
+
+  //   return () => {
+  //     inputElement?.removeEventListener('wheel', handleWheel);
+  //   };
+  // }, []);
 
   return (
     <div className="w-full">
@@ -37,6 +53,7 @@ const TextField = ({
             "border-[#DA1E28] focus:border-[#DA1E28]": fieldState.invalid,
           }
         )}
+        onWheel={ event => event.currentTarget.blur() }
       />
 
       <p
