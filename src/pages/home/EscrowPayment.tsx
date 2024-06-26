@@ -12,7 +12,7 @@ import {
 } from "../../hooks/queries";
 import LoadingLogo from "../../components/reuseable/LoadingLogo";
 import TransactionFailed from "../../components/reuseable/TransactionFailed";
-import { formatToNairaCurrency } from "../../util/formatNumber";
+import { formatToDollarCurrency, formatToNairaCurrency } from "../../util/formatNumber";
 
 const EscrowPayment = () => {
   const userType = localStorage.getItem("userType")?.toUpperCase();
@@ -40,9 +40,11 @@ const EscrowPayment = () => {
   //   "🚀 ~ file: EscrowPayment.tsx:41 ~ EscrowPayment ~ author:",
   //   author
   // );
-  const amount = formatToNairaCurrency(
-    searchParams.get("amt") || data?.data?.amount
-  );
+  const amount = transactionData?.data?.currency ==="NGN" ? formatToNairaCurrency(
+    searchParams.get("amt") || transactionData?.data?.amount
+  ) :  formatToDollarCurrency(
+    searchParams.get("amt") || transactionData?.data?.amount
+  )
 
   const linkValue = `${
     import.meta.env.VITE_DOMAIN_URL
