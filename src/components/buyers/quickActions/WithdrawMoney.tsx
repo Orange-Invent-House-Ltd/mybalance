@@ -13,11 +13,11 @@ import {
   useWithdrawFee,
 } from "../../../hooks/mutations";
 import LoadingOverlay from "../../reuseable/LoadingOverlay";
-import { useBanks } from "../../../hooks/queries";
+import { useBanks, useWallets } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
 import { useNavigate } from "react-router-dom";
-import { formatToNairaCurrency } from "../../../util/formatNumber";
+import { formatToDollarCurrency, formatToNairaCurrency } from "../../../util/formatNumber";
 
 const WithdrawMoney = () => {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ const WithdrawMoney = () => {
   const [isWithdraw, setIsWithdraw] = useState(false);
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
+  const {data:wallets} = useWallets()
 
   const {
     setValue,
@@ -45,11 +46,9 @@ const WithdrawMoney = () => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${formatToNairaCurrency(data.amount)} Withdrawn!`);
+      setModalMessageTitle(`${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)} Withdrawn!`);
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${formatToNairaCurrency(
-          data.amount
-        )}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)}. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
