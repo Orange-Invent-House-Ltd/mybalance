@@ -639,7 +639,6 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="unlockMoney"
-              // disabled={user?.walletBalance === "0.00"}
               icon={unlock}
               text="Unlock money"
               subtext="Release the money in your wallet"
@@ -647,7 +646,7 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="withdrawMoney"
-              disabled={user?.walletBalance === "0.00"}
+              disabled={wallets ? wallets[0]?.balance === "0.00" && wallets[1]?.balance === "0.00" : false}
               icon={download}
               text="Withdraw money"
               subtext="Withdraw your money from your wallet"
