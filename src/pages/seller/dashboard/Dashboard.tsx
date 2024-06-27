@@ -106,6 +106,10 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
+    queryClient.invalidateQueries({
+      queryKey: ["wallets"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
   }, [user]);
 
   return (
@@ -189,12 +193,9 @@ const Dashboard = () => {
         ) : (
           <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
             <SellerDashboardBox
-              Text="Total amount withdrawn"
-              // Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
-              AmountInDollars={wallets[0]?.withdrawnAmount || 0}
-              AmountInNaira={
-                formatToNairaCurrency(wallets[1]?.withdrawnAmount) || 0
-              }
+              Text="Available balance in wallet"
+              AmountInDollars={formatToDollarCurrency(wallets[0]?.balance || 0)}
+              AmountInNaira={formatToNairaCurrency(wallets[1]?.balance || 0)}
               loadWallets={loadWallets}
             />
             <SellerDashboardBox
