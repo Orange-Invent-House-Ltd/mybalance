@@ -259,6 +259,7 @@ export const useDepositMoney = () => {
   return useMutation({
     mutationFn: depositMoney,
     onSuccess: (data) => {
+      queryClient.invalidateQueries(["wallets"]);
       window.open(data.data.link);
     },
     onError: (error: any) => {
@@ -306,10 +307,10 @@ export const useLockFunds = () => {
       // console.log("🚀 ~ file: index.tsx:152 ~ useCreateEscrow ~ data:", data);
 
       localStorage.removeItem("transactionRef");
-
       queryClient.invalidateQueries(["transactions"]);
       queryClient.invalidateQueries(["lockedFunds"]);
       queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["wallets"]);
       navigate(
         `/escrow-payment?amt=${data.data.amount}&ref=${data.data.transactionReference}`
       );
@@ -383,6 +384,7 @@ export const useWithdraw = () => {
     mutationFn: withdraw,
     onSuccess: (data) => {
       queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["wallets"]);
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);
