@@ -346,7 +346,7 @@ const ShareEscrowLink = () => {
                   }
                 }}
               >
-                {data?.data?.status === "PENDING" ? "Pay Now" : "Pament Made"}
+                {data?.data?.status === "PENDING" ? "Pay Now" : "Payment Made"}
               </Button>
             </div>
           )}
