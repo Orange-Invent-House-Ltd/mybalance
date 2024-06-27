@@ -52,7 +52,8 @@ const Dashboard = () => {
   const store = useStore();
   const { mutate } = useEndTourGuide();
   const [cancleTour, setCancleTour] = useState(false);
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
+  // console.log(user);
   const { data: wallets, isLoading: loadWallets } = useWallets();
 
   const [open, setOpen] = useState(false);
@@ -113,12 +114,7 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-  // const {
-  //   data: emailData,
-  //   mutate: checkEmailMutate,
-  //   isLoading: emailLoading,
-  //   isSuccess: emailSuccess,
-  // } = useCheckEmail();
+
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
@@ -167,6 +163,7 @@ const Dashboard = () => {
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
 
   // Tour Guide
@@ -278,8 +275,8 @@ const Dashboard = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>
@@ -576,14 +573,18 @@ const Dashboard = () => {
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.lockedAmountOutward || 0
             )}
-            AmountInNaira={formatToNairaCurrency(wallets[1]?.lockedAmountOutward || 0)}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.lockedAmountOutward || 0
+            )}
           />
           <DashboardLockedBox
             Text="Unlocked amount"
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.unlockedAmount || 0
             )}
-            AmountInNaira={formatToNairaCurrency(wallets[1]?.unlockedAmount || 0)}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.unlockedAmount || 0
+            )}
           />
         </div>
       )}
@@ -647,7 +648,12 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="withdrawMoney"
-              disabled={wallets ? wallets[0]?.balance === "0.00" && wallets[1]?.balance === "0.00" : false}
+              disabled={
+                wallets
+                  ? wallets[0]?.balance === "0.00" &&
+                    wallets[1]?.balance === "0.00"
+                  : false
+              }
               icon={download}
               text="Withdraw money"
               subtext="Withdraw your money from your wallet"

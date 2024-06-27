@@ -20,7 +20,7 @@ const TransactionHistory = () => {
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState(1);
   const [activeButton, setActiveButton] = useState("");
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
   const { isLoading, data } = useTransactions({
     page,
     size: 10,
@@ -39,6 +39,7 @@ const TransactionHistory = () => {
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
   const [{ run, steps }, setState] = useState({
     run: user?.showTourGuide,
@@ -117,8 +118,8 @@ const TransactionHistory = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>
