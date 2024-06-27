@@ -30,7 +30,7 @@ const QuickAction = () => {
   const store = useStore();
   const [cancleTour, setCancleTour] = useState(false);
   const navigate = useNavigate();
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
   const queryClient = useQueryClient(); //To refresh the user data
 
   const [successModal, setSuccessModal] = useState(false);
@@ -62,6 +62,7 @@ const QuickAction = () => {
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
 
   // Tour Guide
@@ -137,8 +138,8 @@ const QuickAction = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>

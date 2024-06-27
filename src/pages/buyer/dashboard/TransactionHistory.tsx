@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../../components/reuseable/Header";
 import DashboardHistoryBox from "../../../components/reuseable/DashboardHistoryBox";
 import { useTransactions, useUser } from "../../../hooks/queries";
-import {formatToNairaCurrency} from "../../../util/formatNumber";
+import { formatToNairaCurrency } from "../../../util/formatNumber";
 import LoadingOverlay from "../../../components/reuseable/LoadingOverlay";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
@@ -22,7 +22,7 @@ const TransactionHistory = () => {
   const navigate = useNavigate(); // Initialize the navigate function from the useNavigate hook
   const [page, setPage] = useState<number>(1);
   const [activeButton, setActiveButton] = useState("");
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
   const queryClient = useQueryClient(); //To refresh the user data
 
   const { isLoading, data } = useTransactions({
@@ -38,18 +38,11 @@ const TransactionHistory = () => {
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
-  //
-  // useEffect(() => {
-  //   // Set run to true to start the tour guide when the component mounts
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     run: user?.showTourGuide,
-  //   }));
-  // }, []);
 
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
   // Tour Guide
   const [{ run, steps }, setState] = useState({
@@ -112,8 +105,8 @@ const TransactionHistory = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>
