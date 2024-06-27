@@ -202,6 +202,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                     control={controlWithdraw}
                     label="Enter account number"
                     placeholder="e.g 4758593837"
+                    type="number"
                     name={"accountNumber"}
                     value={accNum}
                     onChange={(e) => {

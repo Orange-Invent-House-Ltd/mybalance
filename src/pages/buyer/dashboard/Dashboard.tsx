@@ -484,6 +484,7 @@ const Dashboard = () => {
                       control={control}
                       label="Enter Account number"
                       placeholder="1234567890"
+                      type="number"
                       name={"accountNumber"}
                       onChange={(e) => {
                         setAccNum(e.target.value);

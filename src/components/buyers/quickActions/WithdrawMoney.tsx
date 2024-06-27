@@ -186,6 +186,8 @@ const WithdrawMoney = () => {
               label="Enter account number"
               placeholder="e.g 4758593837"
               name={"accountNumber"}
+              type="number"
+              // onWheel={ event => event.currentTarget.blur() }
               value={accNum}
               onChange={(e) => {
                 setAccNum(e.target.value);
