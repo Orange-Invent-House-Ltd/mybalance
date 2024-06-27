@@ -261,6 +261,10 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
+    queryClient.invalidateQueries({
+      queryKey: ["wallets"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
   }, []);
 
   return (
