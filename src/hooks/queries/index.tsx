@@ -14,7 +14,11 @@ import {
   getTransactionUnauthorized,
   getTransactions,
   getUser,
+<<<<<<< Updated upstream
   getUserWallets,
+=======
+  getUserWallet,
+>>>>>>> Stashed changes
 } from "../../api";
 
 export const useUser = () => {
@@ -23,6 +27,7 @@ export const useUser = () => {
     queryKey: ["user"],
   });
 };
+<<<<<<< Updated upstream
 
 export const useWallets = () => {
   return useQuery({
@@ -31,6 +36,14 @@ export const useWallets = () => {
   });
 };
 
+=======
+export const useUserWallet = () => {
+  return useQuery({
+    queryFn: getUserWallet,
+    queryKey: ["wallet"],
+  });
+};
+>>>>>>> Stashed changes
 export const useTransactions = ({
   page,
   type,

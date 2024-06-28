@@ -60,6 +60,8 @@ const Dashboard = () => {
   const { handleSubmit, control, register, watch } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const [currency, setCurrency] = useState('')
+  const [deficit, setDeficit] = useState()
   //
   const {
     data: useremailData,
@@ -103,7 +105,7 @@ const Dashboard = () => {
     error,
     isError: lockFundsIsError,
   } = useLockFunds();
-  const deficit = error?.response?.data?.errors?.deficit;
+  // const deficit = error?.response?.data?.errors?.deficit;
   const {
     data: fundEscrowData,
     mutate: fundEscrowMutate,
@@ -143,6 +145,8 @@ const Dashboard = () => {
     if (createEscrowIsSuccessful) {
       lockFundsMutate(createEscrowData.data.reference, {
         onError: (data) => {
+          setCurrency(data?.response?.data?.errors?.currency)
+          setDeficit(data?.response?.data?.errors?.deficit)
           if (
             data?.response?.data?.errors?.message ===
             "Insufficient funds in wallet."
@@ -701,7 +705,7 @@ const Dashboard = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 Please top up your wallet with{" "}
-                <strong>{formatToNairaCurrency(deficit)}</strong> to complete
+                <strong> {currency === 'NGN' ? formatToNairaCurrency(deficit) : formatToDollarCurrency(deficit)}</strong> to complete
                 this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>

@@ -30,6 +30,8 @@ const ShareEscrowLink = () => {
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [fundEscrow, setFundEscrow] = useState(false);
   const [openPay, setOpenPay] = useState(false);
+  const [currency, setCurrency] = useState('')
+  const [deficit, setDeficit] = useState()
   const {
     data: fundEscrowData,
     mutate: fundEscrowMutate,
@@ -74,7 +76,7 @@ const ShareEscrowLink = () => {
     isLoading: lockFundsLoading,
     error,
   } = useLockFunds();
-  const deficit = error?.response?.data?.errors?.deficit;
+  // const deficit = error?.response?.data?.errors?.deficit;
 
   const rejectedReason = [
     {
@@ -363,7 +365,7 @@ const ShareEscrowLink = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 Please top up your wallet with{" "}
-                <strong>{formatToNairaCurrency(deficit)}</strong> to complete
+                <strong>{currency === 'NGN' ? formatToNairaCurrency(deficit) : formatToDollarCurrency(deficit)}</strong> to complete
                 this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>
@@ -413,6 +415,8 @@ const ShareEscrowLink = () => {
                     setOpenPay(false);
                   },
                   onError: (data) => {
+                    setCurrency(data?.response?.data?.errors?.currency)
+                    setDeficit(data?.response?.data?.errors?.deficit)
                     if (
                       data?.response?.data?.errors?.message ===
                       "Insufficient funds in wallet."

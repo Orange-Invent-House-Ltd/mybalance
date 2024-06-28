@@ -40,10 +40,11 @@ const EscrowPayment = () => {
   //   "🚀 ~ file: EscrowPayment.tsx:41 ~ EscrowPayment ~ author:",
   //   author
   // );
+  // searchParams.get("amt") || 
   const amount = transactionData?.data?.currency ==="NGN" ? formatToNairaCurrency(
-    searchParams.get("amt") || transactionData?.data?.amount
+    transactionData?.data?.amount
   ) :  formatToDollarCurrency(
-    searchParams.get("amt") || transactionData?.data?.amount
+    transactionData?.data?.amount
   )
 
   const linkValue = `${

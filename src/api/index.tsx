@@ -171,12 +171,19 @@ export const getUser = async (): Promise<IUserProfile> => {
   const res = await privateApi.get("/auth/profile");
   return res.data.data;
 };
+<<<<<<< Updated upstream
 // Get user Wallet
 export const getUserWallets = async () => {
   const res = await privateApi.get("/auth/wallets");
   return res.data.data;
 };
 //
+=======
+export const getUserWallet = async (data: any) => {
+  const res = await privateApi.get(`/auth/wallets`);
+  return res.data.data;
+};
+>>>>>>> Stashed changes
 export const getPaymentRedirect = async ({
   status,
   tx_ref,
