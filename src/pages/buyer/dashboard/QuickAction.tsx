@@ -185,7 +185,7 @@ const QuickAction = () => {
       />
       <Tabs.Root defaultValue={defaultTab}>
         <Tabs.List
-          className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row"
+          className="flex mb-0 list-none no-scrollbar whitespace-nowrap overflow-x-auto pt-3 pb-4 flex-row h-[100%] "
           aria-label="Manage your account"
         >
           <Tabs.Trigger

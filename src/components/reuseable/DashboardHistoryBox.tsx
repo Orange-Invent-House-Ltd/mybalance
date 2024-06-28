@@ -149,7 +149,7 @@ const DashboardHistoryBox = (data: any) => {
                     }
                   }}
                 >
-                  {isLoading ? "Loading...." : " reject information"}
+                  {isLoading ? "Loading...." : "reject information"}
                 </Button>
               </div>
             </div>
@@ -240,7 +240,7 @@ const DashboardHistoryBox = (data: any) => {
           />
 
           <Dialog.Content>
-            <div className="max-w-[393px] w-full h-[100svh] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] pb-8 overflow-y-scroll">
+            <div className="max-w-[393px] w-full h-[100%] z-50 fixed animate-fade-left animate-duration-300 top-0 right-0 animate-ease-out bg-white md:pl-[16px] px-3 md:pr-[34px] pb-16 overflow-y-scroll">
               <div className="flex gap-4 items-center pt-10 pb-8">
                 <img
                   onClick={() => setOpen(false)}
