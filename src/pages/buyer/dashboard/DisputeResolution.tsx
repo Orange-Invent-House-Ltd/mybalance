@@ -14,10 +14,9 @@ import useStore from "../../../store";
 
 const DisputeResolution = () => {
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
   const { mutate } = useEndTourGuide();
   const store = useStore();
-
   const navigate = useNavigate();
   const { data, isLoading } = useDisputes();
   const [page, setPage] = useState<number>(1);

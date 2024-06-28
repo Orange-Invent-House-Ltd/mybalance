@@ -27,7 +27,6 @@ const WithdrawMoney = () => {
   const [isWithdraw, setIsWithdraw] = useState(false);
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
-  const {data:wallets} = useWallets()
 
   const {
     setValue,

@@ -23,14 +23,12 @@ export const useUser = () => {
     queryKey: ["user"],
   });
 };
-
 export const useWallets = () => {
   return useQuery({
     queryFn: getUserWallets,
     queryKey: ["wallets"],
   });
 };
-
 export const useTransactions = ({
   page,
   type,

@@ -52,13 +52,16 @@ const Dashboard = () => {
   const store = useStore();
   const { mutate } = useEndTourGuide();
   const [cancleTour, setCancleTour] = useState(false);
-  const { data: user } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
+  // console.log(user);
   const { data: wallets, isLoading: loadWallets } = useWallets();
 
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register, watch } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
   const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const [currency, setCurrency] = useState('')
+  const [deficit, setDeficit] = useState()
   //
   const {
     data: useremailData,
@@ -102,7 +105,7 @@ const Dashboard = () => {
     error,
     isError: lockFundsIsError,
   } = useLockFunds();
-  const deficit = error?.response?.data?.errors?.deficit;
+  // const deficit = error?.response?.data?.errors?.deficit;
   const {
     data: fundEscrowData,
     mutate: fundEscrowMutate,
@@ -113,12 +116,7 @@ const Dashboard = () => {
     mutate: LookupMutate,
     isLoading: LookupIsLoading,
   } = useLookUpBank();
-  // const {
-  //   data: emailData,
-  //   mutate: checkEmailMutate,
-  //   isLoading: emailLoading,
-  //   isSuccess: emailSuccess,
-  // } = useCheckEmail();
+
   const {
     mutate: depositMutate,
     isLoading: depositLoading,
@@ -147,6 +145,8 @@ const Dashboard = () => {
     if (createEscrowIsSuccessful) {
       lockFundsMutate(createEscrowData.data.reference, {
         onError: (data) => {
+          setCurrency(data?.response?.data?.errors?.currency)
+          setDeficit(data?.response?.data?.errors?.deficit)
           if (
             data?.response?.data?.errors?.message ===
             "Insufficient funds in wallet."
@@ -167,6 +167,7 @@ const Dashboard = () => {
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
 
   // Tour Guide
@@ -261,6 +262,10 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
+    queryClient.invalidateQueries({
+      queryKey: ["wallets"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
   }, []);
 
   return (
@@ -278,8 +283,8 @@ const Dashboard = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>
@@ -576,14 +581,18 @@ const Dashboard = () => {
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.lockedAmountOutward || 0
             )}
-            AmountInNaira={formatToNairaCurrency(wallets[1]?.lockedAmountOutward || 0)}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.lockedAmountOutward || 0
+            )}
           />
           <DashboardLockedBox
             Text="Unlocked amount"
             AmountInDollars={formatToDollarCurrency(
               wallets[0]?.unlockedAmount || 0
             )}
-            AmountInNaira={formatToNairaCurrency(wallets[1]?.unlockedAmount || 0)}
+            AmountInNaira={formatToNairaCurrency(
+              wallets[1]?.unlockedAmount || 0
+            )}
           />
         </div>
       )}
@@ -647,7 +656,12 @@ const Dashboard = () => {
 
             <DashboardQuickBox
               tab="withdrawMoney"
-              disabled={wallets ? wallets[0]?.balance === "0.00" && wallets[1]?.balance === "0.00" : false}
+              disabled={
+                wallets
+                  ? wallets[0]?.balance === "0.00" &&
+                    wallets[1]?.balance === "0.00"
+                  : false
+              }
               icon={download}
               text="Withdraw money"
               subtext="Withdraw your money from your wallet"
@@ -691,7 +705,7 @@ const Dashboard = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 Please top up your wallet with{" "}
-                <strong>{formatToNairaCurrency(deficit)}</strong> to complete
+                <strong> {currency === 'NGN' ? formatToNairaCurrency(deficit) : formatToDollarCurrency(deficit)}</strong> to complete
                 this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>

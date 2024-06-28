@@ -384,7 +384,7 @@ export const useWithdraw = () => {
     mutationFn: withdraw,
     onSuccess: (data) => {
       queryClient.invalidateQueries(["user"]);
-      queryClient.invalidateQueries(["wallets"]);
+      
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);

@@ -20,7 +20,7 @@ import useStore from "../../../store";
 import { useEndTourGuide } from "../../../hooks/mutations";
 
 const Dashboard = () => {
-  const { data: user, isError } = useUser();
+  const { data: user, refetch: userRefresh } = useUser();
   const { data: wallets, isLoading: loadWallets } = useWallets();
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [tourFinished, setTourFinished] = useState(false); // State to track whether the tour guide has finished
@@ -37,6 +37,7 @@ const Dashboard = () => {
   const endTourGuide = async () => {
     mutate({ email: user?.email });
     setCancleTour(true);
+    await userRefresh();
   };
   const [{ run, steps }, setState] = useState({
     run: user?.showTourGuide && !store.endTour,
@@ -105,6 +106,10 @@ const Dashboard = () => {
       queryKey: ["user"],
       refetchType: "all", // refetch both active and inactive queries
     });
+    queryClient.invalidateQueries({
+      queryKey: ["wallets"],
+      refetchType: "all", // refetch both active and inactive queries
+    });
   }, [user]);
 
   return (
@@ -126,8 +131,8 @@ const Dashboard = () => {
           skip: (
             <button
               onClick={() => {
-                endTourGuide();
                 store.setEndTour(true);
+                endTourGuide();
               }}
             >
               <strong>Cancel Tour</strong>
@@ -188,10 +193,9 @@ const Dashboard = () => {
         ) : (
           <div className="flex  gap-2 mt-16 max-w-full overflow-x-auto no-scrollbar md:overflow-hidden">
             <SellerDashboardBox
-              Text="Total amount withdrawn"
-              // Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
-              AmountInDollars={wallets[0]?.withdrawnAmount || 0}
-              AmountInNaira={formatToNairaCurrency(wallets[1]?.withdrawnAmount) || 0}
+              Text="Available balance in wallet"
+              AmountInDollars={formatToDollarCurrency(wallets[0]?.balance || 0)}
+              AmountInNaira={formatToNairaCurrency(wallets[1]?.balance || 0)}
               loadWallets={loadWallets}
             />
             <SellerDashboardBox
@@ -205,9 +209,12 @@ const Dashboard = () => {
               loadWallets={loadWallets}
             />
             <SellerDashboardBox
-              Text="Available balance in wallet"
-              AmountInDollars={formatToDollarCurrency(wallets[0]?.balance || 0)}
-              AmountInNaira={formatToNairaCurrency(wallets[1]?.balance || 0)}
+              Text="Total amount withdrawn"
+              // Amount={formatToNairaCurrency(user?.withdrawnAmount || 0)}
+              AmountInDollars={wallets[0]?.withdrawnAmount || 0}
+              AmountInNaira={
+                formatToNairaCurrency(wallets[1]?.withdrawnAmount) || 0
+              }
               loadWallets={loadWallets}
             />
           </div>

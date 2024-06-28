@@ -17,15 +17,16 @@ const DisputeResolution = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useDisputes();
   const [page, setPage] = useState<number>(1);
-  const { data: user} = useUser();
-  const {mutate } = useEndTourGuide();
+  const { data: user, refetch: userRefresh } = useUser();
+  const { mutate } = useEndTourGuide();
   const store = useStore();
   const handlePageChange = (selected: any) => {
     setPage(selected);
   };
 
-  const endTourGuide = async() => {
-    mutate({email: user?.email})
+  const endTourGuide = async () => {
+    mutate({ email: user?.email });
+    await userRefresh();
   };
 
   useEffect(() => {
@@ -67,8 +68,8 @@ const DisputeResolution = () => {
         ...prevState,
         run: false,
       }));
-      endTourGuide()
-      store.setEndTour(true)
+      endTourGuide();
+      store.setEndTour(true);
       // Navigate to the Quick Action page after the tour finishes
       navigate("/seller/dashboard");
     }
