@@ -222,7 +222,7 @@ const WithdrawMoney = () => {
                 />
 
                 {showNames && filteredBank.length > 0 && (
-                  <div className="absolute top-13 z-30 overflow-y-auto h-[150px] text-green-500 w-full p-3 bg-white mb-2 transition-all">
+                  <div className="absolute top-13 z-30 overflow-y-auto max-h-[150px] w-full p-3 bg-white mb-2 transition-all">
                     {filteredBank.map((bank: Bank, index) => (
                       <p
                         key={index}

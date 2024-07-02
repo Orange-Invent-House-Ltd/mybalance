@@ -254,7 +254,7 @@ const Withdraw = ({ open, setOpen }: any) => {
                       className="  border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed"
                     />
                     {isFocused && showNames && filteredBank.length > 0 && (
-                      <div className="absolute top-13 z-30 overflow-y-auto h-[150px] text-green-500 w-full p-3 bg-white mb-2 transition-all">
+                      <div className="absolute top-13 z-30 overflow-y-auto max-h-[150px] w-full p-3 bg-white mb-2 transition-all">
                         {filteredBank.map((bank: Bank, index) => (
                           <p
                             key={index}
