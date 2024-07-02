@@ -215,7 +215,8 @@ export const useForgotPassword = () => {
       toast.success(data.message);
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      error.response.data.message === 'Validation error' ? toast.error(error.response.data.errors?.email[0])
+      : toast.error(error.response.data.message);
     },
   });
 };
