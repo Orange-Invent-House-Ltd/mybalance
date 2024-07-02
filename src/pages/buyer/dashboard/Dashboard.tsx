@@ -43,12 +43,16 @@ import infoIcon from "../../../assets/Icons/info-icon.svg";
 import Joyride from "react-joyride";
 import { useQueryClient } from "@tanstack/react-query";
 
+type Bank = {
+  name: string;
+  code: string;
+};
+
 const Dashboard = () => {
   const [tourFinished, setTourFinished] = useState(false);
   const navigate = useNavigate();
   const [isVerify, setIsVerify] = useState(false);
   const [accNum, setAccNum] = useState("");
-  const [code, setCode] = useState("");
   const store = useStore();
   const { mutate } = useEndTourGuide();
   const [cancleTour, setCancleTour] = useState(false);
@@ -57,11 +61,42 @@ const Dashboard = () => {
   const { data: wallets, isLoading: loadWallets } = useWallets();
 
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, register, watch } = useForm();
+  const { handleSubmit, control, register, watch, setValue } = useForm();
   const queryClient = useQueryClient(); //To refresh the user data
+  //
+  //search bank by name
+  const [code, setCode] = useState("");
+  const [filteredBank, setFilteredBank] = useState([]);
+  const [showNames, setShowNames] = useState(true);
   const { data: banks, isLoading: bankIsLoading } = useBanks();
-  const [currency, setCurrency] = useState('')
-  const [deficit, setDeficit] = useState()
+  const [currency, setCurrency] = useState("");
+  const [deficit, setDeficit] = useState();
+  const searchBank = watch("bankName");
+
+  // Filter names based on the search term
+  useEffect(() => {
+    if (searchBank && banks) {
+      const filtered = banks?.data?.filter((bankName: Bank) =>
+        bankName?.name?.toLowerCase().startsWith(searchBank.toLowerCase())
+      );
+      setFilteredBank(filtered);
+      setShowNames(true); // Show names when search term changes
+    } else {
+      setFilteredBank([]);
+    }
+  }, [searchBank, banks]);
+
+  // Handle name click
+  const handleNameClick = (bankName: string, code: string) => {
+    setValue("bankName", bankName);
+    setCode(code);
+    setShowNames(false);
+    setTimeout(() => setFilteredBank([]), 0);
+  };
+  useEffect(() => {}, [code]);
+
+  //end search bank by name
+  //
   //
   const {
     data: useremailData,
@@ -131,6 +166,7 @@ const Dashboard = () => {
       bankCode: code,
       bankAccountNumber: accNum,
     });
+    console.log(data);
   };
   const { isLoading, data: transactionData } = useTransactions({
     page: 1,
@@ -145,8 +181,8 @@ const Dashboard = () => {
     if (createEscrowIsSuccessful) {
       lockFundsMutate(createEscrowData.data.reference, {
         onError: (data) => {
-          setCurrency(data?.response?.data?.errors?.currency)
-          setDeficit(data?.response?.data?.errors?.deficit)
+          setCurrency(data?.response?.data?.errors?.currency);
+          setDeficit(data?.response?.data?.errors?.deficit);
           if (
             data?.response?.data?.errors?.message ===
             "Insufficient funds in wallet."
@@ -338,10 +374,15 @@ const Dashboard = () => {
           </div>
         </div>
         <div>
-          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-2 md:mb-4">
+          <h6 className="text-[18px] sm-text-[23px] items-center gap-2 flex font-medium mb-1 md:mb-2">
             <span className="text-[#6D6D6D]">Welcome</span>
-            <span className=" font-semibold capitalize flex-1 find-name">
+            <span className=" font-semibold capitalize flex-1 find-name ">
               {user?.fullName || <Skeleton width={100} />}
+            </span>
+          </h6>
+          <h6 className="text-[15px] sm-text-[18px] items-center gap-2 flex  mb-1 md:mb-2">
+            <span className="   flex-1 find-name font-semibold">
+              {user?.email || <Skeleton width={100} />}
             </span>
           </h6>
           <p className="max-w-[478px] text-[#303030] font-normal text-sm leading-[18.9px]">
@@ -466,24 +507,37 @@ const Dashboard = () => {
                     VENDOR ACCOUNT INFORMATION
                   </h1>
                   <div className="mt-6 flex flex-col gap-4">
-                    <div className="w-full mb-3 ">
-                      <label htmlFor={"selectBank"} className="block">
-                        select bank
-                      </label>
-                      <select
-                        className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                        value={code}
-                        onChange={(e) => {
-                          setCode(e.target.value);
-                        }}
-                      >
-                        {banks?.data?.map((bank: any) => (
-                          <option key={bank.slug} value={bank.code}>
-                            {bank.name}
-                          </option>
-                        ))}
-                        {bankIsLoading && <option value="">loading...</option>}
-                      </select>
+                    <div className="w-full mb-1 ">
+                      <div className="w-full mb-2 relative ">
+                        <label htmlFor="bankName" className="text-[15px] mb-2">
+                          Enter bank name
+                        </label>
+                        <input
+                          type="text"
+                          {...register("bankName")}
+                          placeholder="Enter bank name"
+                          onFocus={() => setShowNames(false)} // Hide names when input is focused
+                          onBlur={() => setShowNames(true)} // Show names when input loses focus
+                          className="  border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed"
+                        />
+
+                        {showNames && filteredBank.length > 0 && (
+                          <div className="absolute top-13 z-30 overflow-y-auto h-[150px] text-green-500 w-full p-3 bg-white mb-2 transition-all">
+                            {filteredBank.map((bank: Bank, index) => (
+                              <p
+                                key={index}
+                                onClick={() =>
+                                  handleNameClick(bank.name, bank.code)
+                                }
+                                className="mb-2 transition-all cursor-pointer"
+                              >
+                                {showNames && bank.name}
+                              </p>
+                            ))}
+                            {bankIsLoading && <p>loading...</p>}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <TextField
                       control={control}
@@ -561,7 +615,9 @@ const Dashboard = () => {
       </div>
       {loadWallets ? (
         // Show a loading indicator
-        <></>
+        <div className="flex flex-col mt-8 gap-2 md:gap-3 w-full ">
+          <Skeleton className="w-full h-[120px] " />
+        </div>
       ) : (
         <div className="flex gap-3 mt-10 md:mt-16 w-full overflow-x-auto no-scrollbar balance">
           <div className="border whitespace-nowrap border-[#9A4D0C] overflow-hidden relative rounded min-w-[270px] w-full flex-[0.4] h-[125px] p-6 ">
@@ -705,8 +761,13 @@ const Dashboard = () => {
             <AlertDialog.Description className=" mt-4 mb-5 text-[15px] leading-normal">
               <p>
                 Please top up your wallet with{" "}
-                <strong> {currency === 'NGN' ? formatToNairaCurrency(deficit) : formatToDollarCurrency(deficit)}</strong> to complete
-                this transaction, as the charges are inclusive.
+                <strong>
+                  {" "}
+                  {currency === "NGN"
+                    ? formatToNairaCurrency(deficit)
+                    : formatToDollarCurrency(deficit)}
+                </strong>{" "}
+                to complete this transaction, as the charges are inclusive.
               </p>
             </AlertDialog.Description>
 

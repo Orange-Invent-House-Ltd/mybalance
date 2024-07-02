@@ -17,9 +17,24 @@ import { useBanks, useWallets } from "../../../hooks/queries";
 import { Button } from "../../reuseable/Button";
 import Pusher from "pusher-js";
 import { useNavigate } from "react-router-dom";
-import { formatToDollarCurrency, formatToNairaCurrency } from "../../../util/formatNumber";
+import {
+  formatToDollarCurrency,
+  formatToNairaCurrency,
+} from "../../../util/formatNumber";
 
+type Bank = {
+  name: string;
+  code: string;
+};
 const WithdrawMoney = () => {
+  const {
+    watch,
+    setValue,
+    register,
+    handleSubmit: handleSubmitWithdraw,
+    control: controlWithdraw,
+  } = useForm();
+
   const navigate = useNavigate();
   const [accNum, setAccNum] = useState("");
   const [code, setCode] = useState("");
@@ -28,11 +43,37 @@ const WithdrawMoney = () => {
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
 
-  const {
-    setValue,
-    handleSubmit: handleSubmitWithdraw,
-    control: controlWithdraw,
-  } = useForm();
+  const [filteredBank, setFilteredBank] = useState([]);
+  const [showNames, setShowNames] = useState(true);
+  const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const searchBank = watch("bankName");
+
+  // Filter names based on the search term
+  useEffect(() => {
+    if (searchBank && banks) {
+      const filtered = banks?.data?.filter((bankName: Bank) =>
+        bankName?.name?.toLowerCase().startsWith(searchBank.toLowerCase())
+      );
+      setFilteredBank(filtered);
+      setShowNames(true); // Show names when search term changes
+    } else {
+      setFilteredBank([]);
+    }
+  }, [searchBank, banks]);
+
+  // Handle name click
+  const handleNameClick = (bankName: string, code: string) => {
+    setValue("bankName", bankName);
+    setCode(code);
+    setShowNames(false);
+    setTimeout(() => setFilteredBank([]), 0);
+  };
+  useEffect(() => {}, [code]);
+
+  //end search bank by name
+  //
+  //
+
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
@@ -45,9 +86,19 @@ const WithdrawMoney = () => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)} Withdrawn!`);
+      setModalMessageTitle(
+        `${
+          data?.currency === "NGN"
+            ? formatToNairaCurrency(data?.amount)
+            : formatToDollarCurrency(data?.amount)
+        } Withdrawn!`
+      );
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${
+          data?.currency === "NGN"
+            ? formatToNairaCurrency(data?.amount)
+            : formatToDollarCurrency(data?.amount)
+        }. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
@@ -76,7 +127,7 @@ const WithdrawMoney = () => {
     isLoading: withdrawFeeLoading,
     data: withdrawFeeData,
   } = useWithdrawFee();
-  const { data: banks, isLoading: bankIsLoading } = useBanks();
+
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -156,29 +207,35 @@ const WithdrawMoney = () => {
             </p>
           </div>
           <div className="mt-6 flex flex-col gap-4">
-            <div className="w-full mb-3 ">
-              <label htmlFor={"selectBank"} className="block">
-                select bank
-              </label>
-              <select
-                value={code}
-                onChange={(e) => {
-                  setCode(e.target.value);
-                }}
-                className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-              >
-                {banks?.data?.map((bank: any) => (
-                  <option key={bank.slug} value={bank.code}>
-                    {bank.name}
-                  </option>
-                ))}
-                {bankIsLoading && <option value="">loading...</option>}
-              </select>
-              {/* {errors[name] && (
-                        <span className="text-red-500 text-xs pt-1 block">
-                          {errors[name]?.message as string}
-                        </span>
-                      )} */}
+            <div className="w-full mb-1 ">
+              <div className="w-full mb-2 relative ">
+                <label htmlFor="bankName" className="text-[15px] mb-2">
+                  Enter bank name
+                </label>
+                <input
+                  type="text"
+                  {...register("bankName")}
+                  placeholder="Enter bank name"
+                  onFocus={() => setShowNames(false)} // Hide names when input is focused
+                  onBlur={() => setShowNames(true)} // Show names when input loses focus
+                  className="  border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed"
+                />
+
+                {showNames && filteredBank.length > 0 && (
+                  <div className="absolute top-13 z-30 overflow-y-auto h-[150px] text-green-500 w-full p-3 bg-white mb-2 transition-all">
+                    {filteredBank.map((bank: Bank, index) => (
+                      <p
+                        key={index}
+                        onClick={() => handleNameClick(bank.name, bank.code)}
+                        className="mb-2 transition-all cursor-pointer"
+                      >
+                        {showNames && bank.name}
+                      </p>
+                    ))}
+                    {bankIsLoading && <p>loading...</p>}
+                  </div>
+                )}
+              </div>
             </div>
             <TextField
               control={controlWithdraw}

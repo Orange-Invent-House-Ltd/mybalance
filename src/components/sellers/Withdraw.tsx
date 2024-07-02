@@ -17,22 +17,75 @@ import { useBanks, useUser } from "../../hooks/queries";
 import { Button } from "../reuseable/Button";
 import Pusher from "pusher-js";
 import LoadingOverlay from "../reuseable/LoadingOverlay";
-import { formatToDollarCurrency, formatToNairaCurrency } from "../../util/formatNumber";
+import {
+  formatToDollarCurrency,
+  formatToNairaCurrency,
+} from "../../util/formatNumber";
+
+type Bank = {
+  name: string;
+  code: string;
+};
 
 const Withdraw = ({ open, setOpen }: any) => {
   const [accNum, setAccNum] = useState("");
-  const [code, setCode] = useState("");
   const [modalMessageTitle, setModalMessageTitle] = useState("");
   const [isWithdraw, setIsWithdraw] = useState(false);
   const [modalMessageDescription, setModalMessageDescription] = useState("");
   const [pusherLoading, setPusherLoading] = useState(false);
+  const { data: user } = useUser();
 
   const {
     handleSubmit: handleSubmitWithdraw,
     control: controlWithdraw,
     reset,
+    watch,
+    setValue,
+    register,
   } = useForm();
+  //search bank by name
+  const [code, setCode] = useState("");
+  const [filteredBank, setFilteredBank] = useState([]);
+  const [showNames, setShowNames] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const { data: banks, isLoading: bankIsLoading } = useBanks();
+  const searchBank = watch("bankName");
+  const searchCode = watch("bankcode");
 
+  // Filter names based on the search term
+  useEffect(() => {
+    if (searchBank && banks) {
+      const filtered = banks?.data?.filter((bankName: Bank) =>
+        bankName?.name?.toLowerCase().startsWith(searchBank.toLowerCase())
+      );
+      setFilteredBank(filtered);
+      setShowNames(true); // Show names when search term changes
+    } else {
+      setFilteredBank([]);
+    }
+  }, [searchBank, banks]);
+
+  // Handle name click
+  const handleNameClick = (bankName: string, code: string) => {
+    setValue("bankName", bankName);
+    setValue("bankCode", code);
+    setCode(code);
+    setShowNames(false);
+    setTimeout(() => setFilteredBank([]), 0);
+  };
+
+  // Hide the dropdown when bank name has a default value
+  useEffect(() => {
+    if (user?.bankAccount?.bankName) {
+      setShowNames(false);
+      setIsFocused(false);
+    }
+  }, [user]);
+
+  useEffect(() => {}, [code]);
+
+  //end search bank by name
+  //
   const subscribeToChannel = (txReference: any) => {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
       cluster: "mt1",
@@ -44,9 +97,19 @@ const Withdraw = ({ open, setOpen }: any) => {
 
     channel.bind("WALLET_WITHDRAWAL_SUCCESS", (data: any) => {
       // console.log("WALLET_WITHDRAWAL_SUCCESS", data);
-      setModalMessageTitle(`${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)} Withdrawn!`);
+      setModalMessageTitle(
+        `${
+          data?.currency === "NGN"
+            ? formatToNairaCurrency(data?.amount)
+            : formatToDollarCurrency(data?.amount)
+        } Withdrawn!`
+      );
       setModalMessageDescription(
-        `Weldone! You have successfully withdrawn ${data?.currency === 'NGN' ? formatToNairaCurrency(data?.amount) : formatToDollarCurrency(data?.amount)}. You should receive a credit alert in seconds`
+        `Weldone! You have successfully withdrawn ${
+          data?.currency === "NGN"
+            ? formatToNairaCurrency(data?.amount)
+            : formatToDollarCurrency(data?.amount)
+        }. You should receive a credit alert in seconds`
       );
       //   setModalMessageAmount(data.amount);
       setPusherLoading(false);
@@ -77,9 +140,6 @@ const Withdraw = ({ open, setOpen }: any) => {
     data: withdrawFeeData,
   } = useWithdrawFee();
 
-  const { data: banks, isLoading: bankIsLoading } = useBanks();
-  const { data: user } = useUser();
-
   const {
     data: LookupData,
     mutate: LookupMutate,
@@ -104,10 +164,11 @@ const Withdraw = ({ open, setOpen }: any) => {
       bank: user?.bankAccount?.bankCode,
       accountNumber: user?.bankAccount?.accountNumber,
       accountName: user?.bankAccount?.accountName,
+      bankName: user?.bankAccount?.bankName, // Set default value for bank name
     });
     setAccNum(user?.bankAccount?.accountNumber);
     setCode(user?.bankAccount?.bankCode || "");
-  }, [user]);
+  }, [user, reset]);
   return (
     <>
       <Dialog.Root open={open}>
@@ -177,62 +238,73 @@ const Withdraw = ({ open, setOpen }: any) => {
                     this may cause.
                   </p>
                 </div>
-                {/*  */}
-                <div className="mt-6 flex flex-col gap-4">
-                  <div className="w-full mb-3 ">
-                    <label htmlFor={"selectBank"} className="block">
-                      select bank
+                <div className="grid gap-4 mb-3 mt-5">
+                  <div className="w-full mb-2 relative ">
+                    <label htmlFor="bankName" className="text-[15px] mb-2">
+                      Enter bank name
                     </label>
-                    <select
-                      className="block border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] "
-                      value={code}
-                      onChange={(e) => {
-                        setCode(e?.target?.value);
+                    <input
+                      type="text"
+                      {...register("bankName")}
+                      placeholder="Enter bank name"
+                      onFocus={() => {
+                        setShowNames(true);
+                        setIsFocused(true);
                       }}
-                    >
-                      {banks?.data?.map((bank: any) => (
-                        <option key={bank?.slug} value={bank?.code}>
-                          {bank?.name}
-                        </option>
-                      ))}
-                      {bankIsLoading && <option value="">loading...</option>}
-                    </select>
-                  </div>
-                  <TextField
-                    control={controlWithdraw}
-                    label="Enter account number"
-                    placeholder="e.g 4758593837"
-                    type="number"
-                    name={"accountNumber"}
-                    value={accNum}
-                    onChange={(e) => {
-                      setAccNum(e.target.value);
-                    }}
-                  />
-                  <div className="relative">
-                    {LookupIsLoading && <LoadingOverlay />}
-                    <TextField
-                      readOnly={true}
-                      control={controlWithdraw}
-                      name={"accountName"}
-                      label="Account Name"
-                      value={LookupData?.data?.accountName}
-                      placeholder="e.g JMusty Feet"
+                      className="  border border-[#B7B7B7] w-full rounded-md p-2 outline-none focus:border-[#747373] disabled:opacity-75 disabled:hover:cursor-not-allowed"
                     />
+                    {isFocused && showNames && filteredBank.length > 0 && (
+                      <div className="absolute top-13 z-30 overflow-y-auto h-[150px] text-green-500 w-full p-3 bg-white mb-2 transition-all">
+                        {filteredBank.map((bank: Bank, index) => (
+                          <p
+                            key={index}
+                            onClick={() =>
+                              handleNameClick(bank.name, bank.code)
+                            }
+                            className="mb-2 transition-all cursor-pointer"
+                          >
+                            {bank.name}
+                          </p>
+                        ))}
+                        {bankIsLoading && <p>loading...</p>}
+                      </div>
+                    )}
                   </div>
+                </div>
+                <TextField
+                  control={controlWithdraw}
+                  label="Enter account number"
+                  placeholder="e.g 4758593837"
+                  type="number"
+                  name={"accountNumber"}
+                  value={accNum}
+                  onChange={(e) => {
+                    setAccNum(e.target.value);
+                  }}
+                />
+                <div className="relative mt-4 mb-4">
+                  {LookupIsLoading && <LoadingOverlay />}
                   <TextField
+                    readOnly={true}
                     control={controlWithdraw}
-                    rules={{ required: "this field is required" }}
-                    label="email"
-                    placeholder="placeholder@gmail.com"
-                    name={"email"}
+                    name={"accountName"}
+                    label="Account Name"
+                    value={LookupData?.data?.accountName}
+                    placeholder="e.g JMusty Feet"
                   />
                 </div>
-                <div className="mt-6 mb-16">
-                  <Button disabled={LookupIsLoading} fullWidth type="submit">
-                    Withdraw amount
-                  </Button>
-                </div>
+                <TextField
+                  control={controlWithdraw}
+                  rules={{ required: "this field is required" }}
+                  label="email"
+                  placeholder="placeholder@gmail.com"
+                  name={"email"}
+                />
+              </div>
+              <div className="mt-6 mb-16">
+                <Button disabled={LookupIsLoading} fullWidth type="submit">
+                  Withdraw amount
+                </Button>
               </div>
             </form>
           </Dialog.Content>

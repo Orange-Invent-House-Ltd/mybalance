@@ -1,9 +1,6 @@
 import clsx from "clsx";
 import { InputHTMLAttributes, useEffect, useRef } from "react";
-import {
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { UseControllerProps, useController } from "react-hook-form";
 
 interface ITextField extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -53,7 +50,7 @@ const TextField = ({
             "border-[#DA1E28] focus:border-[#DA1E28]": fieldState.invalid,
           }
         )}
-        onWheel={ event => event.currentTarget.blur()}
+        onWheel={(event) => event.currentTarget.blur()}
       />
 
       <p
