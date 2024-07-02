@@ -173,19 +173,19 @@ const DashboardHistoryBox = (data: any) => {
         </div>
         <div
           onClick={() => {
-            if (data?.type === "ESCROW" && data?.status === "SUCCESSFUL") {
+            // if (data?.type === "ESCROW" && data?.status === "SUCCESSFUL") {
               setOpen(true);
               localStorage.setItem("transactionInfo", JSON.stringify(data));
-            }
+            // }
           }}
           className="my-4 flex w-full cursor-pointer justify-between items-center gap-2 rounded border shadow-lg shadow-[#E4E4E4] border-white px-6 md:px-[40px] py-[20px]"
         >
           <div
-            className={clsx("", {
-              "text-[#B7B7B7]": !(
-                data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
-              ),
-            })}
+            // className={clsx("", {
+            //   "text-[#B7B7B7]": !(
+            //     data?.status === "SUCCESSFUL" && data?.type === "ESCROW"
+            //   ),
+            // })}
           >
             <p className="text-lg font-medium mt-6">{data?.meta?.title}</p>
             {user?.userType === "SELLER" && (
